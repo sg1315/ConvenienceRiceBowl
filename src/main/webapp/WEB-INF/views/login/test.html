@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100%;
+            background: lightgreen;
+            font-size: 24px;
+            text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <div class="box">모니터 높이 기준</div>
+    <script>
+        const screenHeight = window.screen.height;
+        const box = document.querySelector('.box');
+        box.style.height = screenHeight * 0.78 + 'px';
+    </script>
+</body>
+</html>
