@@ -91,15 +91,16 @@
     </div>
     <div class="main">
         <div class="main-in">
-            <table class="main_tb">
+<%--            <table class="main_tb">--%>
+                <table class="table table-hover">
                 <thead>
-                <th class="col-2">직급 |</th>
-                <th class="col-4">아이디 |</th>
-                <th class="col-2">이름 |</th>
-                <th class="col-2">전화번호 |</th>
+                <th class="col-2">직급</th>
+                <th class="col-4">아이디</th>
+                <th class="col-2">이름</th>
+                <th class="col-2">전화번호</th>
                 <th class="col-2">재직</th>
                 </thead>
-                <tbody>
+                <tbody >
                 <td class="col-2">알바</td>
                 <td class="col-2">abc</td>
                 <td class="col-2">니들이 게맛을알아</td>
