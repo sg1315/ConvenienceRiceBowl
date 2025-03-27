@@ -9,5 +9,6 @@
 <jsp:include page="common/header.jsp"/>
 index.jsp
 <a href="/head_order">본사 발주관리</a>
+<a href="/head_order1">이것이 진짜 본사 발주다 이걸 눌러야한다</a>
 </body>
 </html>

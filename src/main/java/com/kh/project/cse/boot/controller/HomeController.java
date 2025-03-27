@@ -18,4 +18,11 @@ public class HomeController {
         return "head_office/ordering";
     }
     //성진
+
+    //성진
+    @RequestMapping("/head_order1")
+    public String home3() {
+        return "head_office/order";
+    }
+    //성진
 }
