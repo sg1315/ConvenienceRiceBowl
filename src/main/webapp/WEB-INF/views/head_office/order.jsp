@@ -15,7 +15,7 @@
         #top-manu{
             border-top: 3px solid black;
             height: 8%;
-            background-color: #cccccc;
+            background-color: #D9D9D9;
             display: flex;
             align-items: center;
         }
@@ -30,6 +30,7 @@
             width: 35%;
         }
         #table-manu{
+            height: 75%;
             width: 100%;
             border-top: 3px solid black;
         }
@@ -39,12 +40,19 @@
             table-layout: auto;
         }
         #table1 thead{
-            background-color: #cccccc;
-            border-bottom: 3px solid #888888;
+            height: 30px;
+            background-color: #D9D9D9;
+            border-bottom: 3px solid #939393;
         }
         #table1 tbody tr{
-            border-bottom: 3px solid #888888;
+            border-bottom: 3px solid #939393;
             height: 50px;
+        }
+        #footer{
+            border-top: 3px solid #939393;
+            background-color: #D9D9D9;
+            height: 8%;
+            border-bottom: 3px solid black;
         }
     </style>
 </head>
@@ -110,6 +118,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div id="footer">
+
         </div>
     </div>
 </body>

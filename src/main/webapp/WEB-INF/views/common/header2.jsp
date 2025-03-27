@@ -194,13 +194,13 @@
       </div>
       <div id="nav-menu">
         <div class="menu-bar" id="menu-1">
-          <a>발주관리</a>
+          <a href="head_order1">발주관리</a>
         </div>
         <div class="menu-bar" id="menu-2">
-          <a>공지사항</a>
+          <a href="head_announcement">공지사항</a>
         </div>
         <div class="menu-bar" id="menu-3">
-          <a>공지사항</a>
+          <a>상품관리</a>
         </div>
         <div class="menu-bar" id="menu-4">
           <div>
