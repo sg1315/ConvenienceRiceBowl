@@ -1,0 +1,231 @@
+.btn {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+}
+
+/* gray 검색bar  -> 메뉴: 발주관리*/
+.gray-search {
+  gap: 1px;
+}
+
+#search-input-gray {
+  width: 300px;
+  height: 40px;
+  background-color: white;
+  border: 3px solid #8a8a8a;
+  border-radius: 4px;
+  color: black;
+  font-weight: bolder;
+}
+
+#search-input-submit-gray {
+  width: 80px;
+  height: 40px;
+  border: 3px solid #4b4b4b;
+  background-color: #8a8a8a;
+  color: white;
+  font-weight: bolder;
+  border-radius: 4px;
+}
+
+/*gray버튼 테두리 없음*/
+#gray-btn {
+  width: 80px;
+  height: 50px;
+
+  border: none;
+  background-color: #8a8a8a;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+/*gray버튼 테두리 있음 -> 메뉴 : 발주관리,*/
+#gray-btn-border {
+  width: 80px;
+  height: 50px;
+
+  border: none;
+  border: 3px solid #4b4b4b;
+  background-color: #8a8a8a;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+#gray-btn-border:hover,
+#gray-btn {
+  background-color: #477154;
+  color: white;
+}
+
+/* 검색바 */
+.top-right1 {
+  gap: 1px;
+}
+
+#search-input {
+  width: 300px;
+  height: 40px;
+  border: none;
+  border-radius: 4px;
+}
+
+#search-input-submit {
+  width: 80px;
+  height: 40px;
+  margin: 0 10px;
+  background-color: white;
+  box-shadow: 0 5px 5px -1px #7b7a7a;
+  padding: 5px;
+  border: none;
+  border-radius: 4px;
+}
+
+/* 근태버튼 */
+/* 출근 */
+#gowork-btn {
+  width: 200px;
+  height: 100px;
+
+  background-color: white;
+  border: 4px solid #a6a6a6;
+  box-shadow: 0 5px 5px -1px #a6a6a6;
+  border-radius: 8px;
+
+  font-size: 50px;
+  font-weight: bolder;
+  color: #0073ff;
+}
+
+#gowork-btn:hover {
+  background-color: #0073ff;
+  color: white;
+}
+
+/* 퇴근 */
+#gohome-btn {
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border: 4px solid #a6a6a6;
+  box-shadow: 0 5px 5px -1px #a6a6a6;
+  border-radius: 8px;
+
+  font-size: 50px;
+  font-weight: bolder;
+  color: #ff0000;
+}
+
+#gohome-btn:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+/* 승인/거절버튼 */
+#no-btn {
+  width: 80px;
+  height: 40px;
+  background-color: #ff0000;
+  border: 3px solid black;
+  color: white;
+  font-weight: bolder;
+  border-radius: 4px;
+}
+
+#yes-btn {
+  width: 80px;
+  height: 40px;
+  background-color: #0073ff;
+  border: 3px solid black;
+  color: white;
+  font-weight: bolder;
+  border-radius: 4px;
+}
+
+#yes-btn:hover,
+#yes-btn:hover {
+  background-color: #477154;
+  color: white;
+}
+
+/* 날짜버튼 */
+#date-input {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  border: 3px solid #8a8a8a;
+  border-radius: 4px;
+}
+
+/*모달 완료/수정/삭제*/
+#black-btn {
+  width: 80px;
+  height: 40px;
+
+  border: none;
+  background-color: black;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+#red-btn {
+  width: 80px;
+  height: 40px;
+
+  border: none;
+  background-color: #ff0000;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+/*댓글 버튼 : 버튼태그에 img 넣기*/
+/* 댓글 show*/
+#comment-btn {
+  width: 100px;
+  height: 50px;
+
+  border: none;
+  border: 3px solid #4b4b4b;
+  background-color: white;
+  border-radius: 4px;
+
+  color: black;
+  font-weight: bolder;
+}
+#comment-btn > img {
+  width: 20px;
+  height: 15px;
+  float: left;
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+/* 댓글 write*/
+.comment-div {
+  gap: 1px;
+}
+
+#comment-input {
+  width: 500px;
+  height: 40px;
+  border: 3px solid #4b4b4b;
+  border-radius: 4px;
+}
+
+#comment-input-submit {
+  width: 80px;
+  height: 40px;
+  border: 3px solid #4b4b4b;
+  background-color: #8a8a8a;
+  color: white;
+  font-weight: bolder;
+  border-radius: 4px;
+}
