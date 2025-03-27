@@ -2,8 +2,6 @@
 <html>
 <head>
     <style>
-
-
         .waper{
             width:100%;
             padding: 50px;
@@ -13,15 +11,15 @@
             font-size: 50px;
             margin: 0;
         }
-        .top-manu{
+        #top-manu{
             display: flex;
             justify-content: space-between;
         }
-        .top-reft{
+        #top-reft{
             background-color: #D9D9D9;
             width: 70%;
         }
-        .top-reft1{
+        #top-reft1{
             background-color: white;
             display: flex;
             align-content: center;
@@ -31,7 +29,7 @@
             padding-bottom: 10px;
         }
 
-        .top-right1{
+        #top-right1{
             background-color: #D9D9D9;
             width: 30%;
             display: flex;
@@ -40,35 +38,42 @@
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
         }
-        .top-reft p {
+        #top-reft p {
             padding-left: 15px;
         }
-        .main{
+        #main{
             background-color: #D9D9D9;
             width: 100%;
             height: 90%;
             border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
-            padding: 50px;
-            padding-bottom: 100px;
+            padding: 50px 50px 100px;
         }
-        .main-in{
+        #main-in{
             background-color: white;
             width: 100%;
             height: 100%;
             border-radius: 20px;
-            display: center;
             padding: 50px;
         }
-        .main-in table th{
-            collapse: collapse;
+        @media screen and (max-width: 1800px) {
+            #main-in{
+                overflow-x: auto;
+            }
         }
-        .main-btn{
+
+        #main-btn{
             padding-top: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        #table1 {
+            text-align: center;
+            outline: none;
+            width: 100%;
+            table-layout: auto;
         }
 
     </style>
@@ -76,40 +81,115 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
-    <div class="top-manu">
-        <div class="top-reft">
-            <div class="top-reft1">
+    <div id="top-manu">
+        <div id="top-reft">
+            <div id="top-reft1">
                 <img src="../resources/menu_icons/직원 아이콘.png">
                 <p class="main_name">직원 정보</p>
             </div>
         </div>
 
-        <div class="top-right1">
+        <div id="top-right1">
             <input type="text"> <input type="submit" value="검색">
         </div>
 
     </div>
-    <div class="main">
-        <div class="main-in">
-<%--            <table class="main_tb">--%>
-                <table class="table table-hover">
+    <div id="main">
+        <div id="main-in">
+            <table class="table table-hover" id="table1">
+                <colgroup>
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                    <col style="width: 20%;">
+                </colgroup>
                 <thead>
-                <th class="col-2">직급</th>
-                <th class="col-4">아이디</th>
-                <th class="col-2">이름</th>
-                <th class="col-2">전화번호</th>
-                <th class="col-2">재직</th>
+                <tr>
+                    <th class="col-2">직급</th>
+                    <th class="col-2">아이디</th>
+                    <th class="col-4">이름</th>
+                    <th class="col-2">전화번호</th>
+                    <th class="col-2">재직</th>
+                </tr>
                 </thead>
                 <tbody >
-                <td class="col-2">알바</td>
-                <td class="col-2">abc</td>
-                <td class="col-2">니들이 게맛을알아</td>
-                <td class="col-2">010-1111-2222</td>
-                <td class="col-2">Y</td>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+                <tr>
+                    <td>알바</td>
+                    <td>abc</td>
+                    <td>니들이 게맛을알아</td>
+                    <td>010-1111-2222</td>
+                    <td>Y</td>
+                </tr>
+
+
                 </tbody>
             </table>
         </div>
-        <div class="main-btn">
+        <div id="main-btn">
             <button><</button>
             <button>1</button>
             <button>2</button>
