@@ -177,51 +177,38 @@
   <div id="outer">
     <nav>
       <div id="pos">
-        <a><img src="/resources/menubar_icons/포스 연동 버튼.png"></a>
+        <%--  지점사이드바 기준 id="pos"에 height 5%부여해서 여기도 남겨야 본사/지점간의 ui차이가 없어짐  --%>
       </div>
       <div id="logo">
         <a href="dashboard"><img src="/resources/menubar_icons/로고.png"></a>
       </div>
       <div id="mypage">
         <div>
-          OO지점 사장님
+          본사
         </div>
         <div>
-<%--          <button>개인정보수정</button>--%>
 <%--          <button>로그아웃</button>--%>
-          <img src="/resources/menubar_icons/개인정보수정.png">
+<%--          <img src="/resources/menubar_icons/개인정보수정.png">--%>
           <img src="/resources/menubar_icons/로그아웃.png">
         </div>
       </div>
       <div id="nav-menu">
         <div class="menu-bar" id="menu-1">
-          <a>공지사항</a>
+          <a>발주관리</a>
         </div>
         <div class="menu-bar" id="menu-2">
+          <a>공지사항</a>
+        </div>
+        <div class="menu-bar" id="menu-3">
+          <a>공지사항</a>
+        </div>
+        <div class="menu-bar" id="menu-4">
           <div>
             직원관리
             <div>
               <ul>
                 <li><a><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
                 <li><a><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="menu-bar" id="menu-3">
-          <div>
-            재고관리
-            <div>
-              <ul>
-                <li><a href="https://naver.com"><img src="/resources/menubar_icons/대시보드 아이콘.png"> 대시보드</a></li>
-                <li><a><img src="/resources/menubar_icons/발주 아이콘.png"> 발주</a></li>
-                <li><a><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
-                <li><a><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
-                <li><a><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
-                <li><a><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
-                <li><a><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
-                <%--              <li><a>폐기 상품</a></li>--%>
-                <li><a><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
               </ul>
             </div>
           </div>
