@@ -58,17 +58,36 @@
             width: 100%;
             height: 100%;
             border-radius: 20px;
-            display: center;
             padding: 50px;
         }
         .main-in table th{
             collapse: collapse;
         }
-        .main-btn{
-            padding-top: 30px;
+        #main-pageing{
+            padding-top: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        #main-pageing img{
+            width: 70px;
+            padding: 10px;
+        }
+        #main-pageing img:nth-of-type(2) {
+            transform: rotate(180deg);
+        }
+
+        #main-pageing button{
+            border: #B4B4B4 solid 3px;
+            background: white;
+            color: #B4B4B4;
+            font-weight: bold;
+            margin: 5px;
+        }
+        #main-pageing button:hover{
+            border: #3C3C3C solid 3px;
+            color: #3C3C3C;
+            font-weight: bold;
         }
 
     </style>
@@ -109,14 +128,19 @@
                 </tbody>
             </table>
         </div>
-        <div class="main-btn">
-            <button><</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>5</button>
-            <button>></button>
+        <div id="main-pageing">
+            <img src="/resources/common/공통_페이징바화살표.png">
+            <button type="button" class="btn btn-outline-secondary">1</button>
+            <button type="button" class="btn btn-outline-secondary">2</button>
+            <button type="button" class="btn btn-outline-secondary">3</button>
+            <button type="button" class="btn btn-outline-secondary">4</button>
+            <button type="button" class="btn btn-outline-secondary">5</button>
+            <button type="button" class="btn btn-outline-secondary">6</button>
+            <button type="button" class="btn btn-outline-secondary">7</button>
+            <button type="button" class="btn btn-outline-secondary">8</button>
+            <button type="button" class="btn btn-outline-secondary">9</button>
+            <button type="button" class="btn btn-outline-secondary">10</button>
+            <img src="/resources/common/공통_페이징바화살표.png">
         </div>
     </div>
 
