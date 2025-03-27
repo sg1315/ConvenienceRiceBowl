@@ -15,7 +15,7 @@ public class HomeController {
     //성진
     @RequestMapping("/head_order")
     public String home2() {
-        return "head_office/ordering";
+        return "spot/ordering";
     }
     //성진
 }
