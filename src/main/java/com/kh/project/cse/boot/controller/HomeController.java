@@ -25,4 +25,11 @@ public class HomeController {
         return "head_office/order";
     }
     //성진
+
+    //승기
+    @RequestMapping("/dashboard")
+    public String dashboard() {
+        return "spot/dashboard";
+    }
+    //승기
 }
