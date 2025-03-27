@@ -118,7 +118,7 @@
         <div id="top-reft">
             <div id="top-reft1">
                 <img src="../resources/menu_icons/직원 아이콘.png">
-                <p class="main_name">여긴 발주 할 거임</p>
+                <p class="main_name">직원 정보</p>
             </div>
         </div>
 
