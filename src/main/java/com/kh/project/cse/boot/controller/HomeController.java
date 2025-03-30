@@ -30,4 +30,18 @@ public class HomeController {
     @RequestMapping("/head_announcement")
     public String head_announcement() { return "head_office/announcement";}
     //성진
+
+    //성진 본사-상품관리
+    @RequestMapping("/head_product")
+    public String head_product() { return "head_office/product";}
+    //
+
+    //성진 본사-상품관리
+    @RequestMapping("/head_store")
+    public String head_store() { return "head_office/store";}
+    //
+    //성진 본사-상품관리
+    @RequestMapping("/head_member")
+    public String head_member() { return "head_office/member";}
+    //
 }

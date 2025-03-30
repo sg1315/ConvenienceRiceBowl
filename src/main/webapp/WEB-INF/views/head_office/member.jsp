@@ -17,9 +17,6 @@
       font-weight: bold;
       padding: 10px;
     }
-    #form-top-btn{
-      padding-bottom: 10px;
-    }
     #top-manu{
       border-top: 3px solid black;
       height: 8%;
@@ -90,10 +87,7 @@
 <div id="form">
   <div id="form-top">
     <div id="form_name">
-      공지 사항
-    </div>
-    <div id="form-top-btn">
-      <button>글쓰기</button>
+      인사관리
     </div>
   </div>
 
@@ -101,8 +95,9 @@
     <div id="top_serch">
       <form>
         <select>
-          <option>제목</option>
-          <option>아이디</option>
+          <option>지점명</option>
+          <option>직급</option>
+          <option>직원이름</option>
         </select>
         <input type="text" >
         <input type="submit" value="검색">
@@ -112,39 +107,53 @@
   <div id ="table-manu">
     <table id="table1">
       <colgroup>
-        <col style="width: 5%;">
-        <col style="width: 35%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
+        <col style="width: 10%;">
         <col style="width: 10%;">
         <col style="width: 10%;">
       </colgroup>
       <thead>
-        <tr>
-          <th>번호</th>
-          <th>제목</th>
-          <th>아이디</th>
-          <th>날짜</th>
-
-        </tr>
+      <tr>
+        <th>지점번호</th>
+        <th>지점명</th>
+        <th>직급</th>
+        <th>직원번호</th>
+        <th>직원이름</th>
+        <th>전화번호</th>
+        <th>재직</th>
+      </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>집에가고싶어요</td>
-          <td>강남점</td>
-          <td>240</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>안돼 못가</td>
-          <td>강남점</td>
-          <td>240</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>넌 남아서 해야지 어딜 도망갈려고</td>
-          <td>강남점</td>
-          <td>240</td>
-        </tr>
+      <tr>
+        <td>1</td>
+        <td>강남점</td>
+        <td>지점장</td>
+        <td>1</td>
+        <td>아무개</td>
+        <td>010-9999-8888</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>강남점</td>
+        <td>알바생</td>
+        <td>2</td>
+        <td>이알바</td>
+        <td>010-7777-8888</td>
+        <td>Y</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>강남점</td>
+        <td>매니저</td>
+        <td>3</td>
+        <td>이퇴사</td>
+        <td>010-7777-6666</td>
+        <td>N</td>
+      </tr>
       </tbody>
     </table>
   </div>

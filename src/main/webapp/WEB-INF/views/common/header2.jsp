@@ -200,15 +200,15 @@
           <a href="head_announcement">공지사항</a>
         </div>
         <div class="menu-bar" id="menu-3">
-          <a>상품관리</a>
+          <a href="head_product">상품관리</a>
         </div>
         <div class="menu-bar" id="menu-4">
           <div>
             직원관리
             <div>
               <ul>
-                <li><a><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
-                <li><a><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
+                <li><a href="head_store"><img src="/resources/menubar_icons/직원정보 아이콘.png"> 지점관리</a></li>
+                <li><a href="head_member"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 인사관리</a></li>
               </ul>
             </div>
           </div>
