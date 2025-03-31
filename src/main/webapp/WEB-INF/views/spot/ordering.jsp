@@ -109,6 +109,68 @@
             width: 10px;
             height: 10px;
         }
+        .modal-content {
+            height: 80vh;
+        }
+        .modal-header, .modal-footer{
+            background-color:D9D9D9;
+        }
+        .modal-body input, .modal-body select{
+            border:1px solid gray;
+            border-radius : 8px;
+            width:80%;
+            height:8%;
+            text-align:center;
+            margin-bottom:16px;
+        }
+        #select-modal-rank{
+            margin-bottom:6px;
+            margin-right: 20%;
+        }
+        #select-modal-status{
+            width: 24%;
+            border-radius: 8px;
+        }
+        #modal-div{
+            display:flex;
+            height:8%;
+            flex-direction:row-reverse;
+            justify-content:space-between;
+            margin-bottom:6px;
+            align-items: flex-end;
+        }
+        #select-modal-rank{
+            width:20%;
+            height:100%;
+        }
+        #modal-body-div{
+            padding-left:18%;
+            padding-top:4%;
+        }
+        #footer-btn{
+            width:66%;
+            margin-right:16%;
+            background-color: #8A8A8A;
+            border:none;
+            font-weight:bold;
+            font-size:20;
+            border-radius:10px;
+        }
+        #header-title{
+            margin-left:22%;
+        }
+        #header-title h1{
+            font-weight:bold;
+            font-color:white;
+        }
+        .modal-dialog {
+            position: absolute;
+            top:5%;
+            left: 20%;
+            transform: translateX(20%);
+        }
+
+
     </style>
 </head>
 <body>
@@ -249,27 +311,52 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">직원 정보 수정</h1>
+                    <div id="header-title">
+                        <h1 class="modal-title fs-5">직원 정보 수정</h1>
+                    </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
                         <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
                     </button>
                 </div>
                 <div class="modal-body">
                     <!--모달 내용-->
-                    <span id="modal-rank"></span>
-                        <select id="select-rank">
-                            <option value="직급">직급</option>
-                            <option value="알바">알바</option>
-                            <option value="매니저">매니저</option>
-                            <option value="지점장">지점장</option>
-                        </select>
-                    <p><strong>아이디:</strong> <span id="modal-id"></span></p>
-                    <p><strong>이름:</strong> <span id="modal-name"></span></p>
-                    <p><strong>전화번호:</strong> <span id="modal-phone"></span></p>
-                    <p><strong>재직:</strong> <span id="modal-status"></span></p>
+                    <div id="modal-body-div">
+                        <div id="modal-div">
+                            <select id="select-modal-rank">
+                                <option value="직급">직급</option>
+                                <option value="알바">알바</option>
+                                <option value="매니저">매니저</option>
+                                <option value="지점장">지점장</option>
+                            </select>
+                            <p>
+                                <strong>이름</strong> <br>
+                        </div>
+                                <input type="text" id="modal-name">
+                            </p>
+
+                            <p>
+                                <strong>휴대폰</strong><br>
+                                <input type="text" id="modal-phone">
+                            </p>
+                            <p>
+                                <strong>주민번호</strong><br>
+                                <input type="text" id="modal-identify" value="여기에 주민등록번호 가져와서 넣어야함">
+                            </p>
+                            <p>
+                                <strong>아이디</strong><br>
+                                <input type="text" id="modal-id">
+                            </p>
+                            <p>
+                                <strong>재직상황</strong><br>
+                                <select id="select-modal-status">
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                </select>
+                            </p>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">수정하기</button>
+                    <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
                 </div>
             </div>
         </div>
@@ -289,11 +376,11 @@
                     const phone = this.children[3].textContent;
                     const status = this.children[4].textContent;
 
-                    document.getElementById("modal-rank").textContent = rank;
-                    document.getElementById("modal-id").textContent = id;
-                    document.getElementById("modal-name").textContent = name;
-                    document.getElementById("modal-phone").textContent = phone;
-                    document.getElementById("modal-status").textContent = status;
+                    document.getElementById("modal-id").value = id;
+                    document.getElementById("modal-name").value = name;
+                    document.getElementById("modal-phone").value = phone;
+                    document.getElementById("select-modal-status").value = status;
+                    document.getElementById("select-modal-rank").value = rank;
 
                     const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
                     modal.show();
