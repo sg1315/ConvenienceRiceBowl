@@ -177,7 +177,7 @@
   <div id="outer">
     <nav>
       <div id="pos">
-        <a><img src="/resources/menubar_icons/포스 연동 버튼.png"></a>
+        <a href="pos_go"><img src="/resources/menubar_icons/포스 연동 버튼.png"></a>
       </div>
       <div id="logo">
         <a href="dashboard"><img src="/resources/menubar_icons/로고.png"></a>

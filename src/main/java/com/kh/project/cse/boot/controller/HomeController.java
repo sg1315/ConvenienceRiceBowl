@@ -44,4 +44,8 @@ public class HomeController {
     @RequestMapping("/head_member")
     public String head_member() { return "head_office/member";}
     //
+
+    //인혜
+
+
 }
