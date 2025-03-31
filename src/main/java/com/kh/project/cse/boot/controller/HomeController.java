@@ -12,12 +12,12 @@ public class HomeController {
         return "index";
     }
 
-    //성진
-    @RequestMapping("/head_order")
-    public String home2() {
+    //택봉-발주
+    @RequestMapping("/spot_order")
+    public String spot_order() {
         return "spot/ordering";
     }
-    //성진
+    //택봉
 
     //성진 본사-발주 관리
     @RequestMapping("/head_order1")
@@ -51,4 +51,11 @@ public class HomeController {
         return "spot/dashboard";
     }
     //승기
+
+    //택봉-직원관리
+    @RequestMapping("/spot_member")
+    public String spot_member() {
+        return "spot/member";
+    }
+    //택봉
 }

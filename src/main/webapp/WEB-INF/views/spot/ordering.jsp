@@ -113,7 +113,7 @@
             height: 80vh;
         }
         .modal-header, .modal-footer{
-            background-color:D9D9D9;
+            background-color: #D9D9D9;
         }
         .modal-body input, .modal-body select{
             border:1px solid gray;
@@ -153,7 +153,7 @@
             background-color: #8A8A8A;
             border:none;
             font-weight:bold;
-            font-size:20;
+            font-size:20px;
             border-radius:10px;
         }
         #header-title{
