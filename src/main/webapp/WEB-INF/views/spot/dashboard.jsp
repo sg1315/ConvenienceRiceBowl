@@ -64,6 +64,7 @@
             font-size: 20px;
             font-weight: bold;
         }
+
         #dash-product-top{
             width: 100%;
             height: 24%;
@@ -101,7 +102,27 @@
         .product-content{
             width: 100%;
             height: 70%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 5px;
         }
+        .best3{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
+        }
+        #best-1-text{
+            font-weight: bold;
+            font-size: 14px;
+        }
+        #worst-1-text{
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+
         #dash-inout-graph{
             width: 100%;
             height: 35%;
@@ -138,6 +159,7 @@
 
             padding: 5px;
         }
+
         #dash-right-top{
             width: 100%;
             height: 50%;
@@ -162,15 +184,40 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            padding-bottom: 10px;
             border-bottom: #3C3C3C solid 2px;
         }
         #alarm-text{
             width: 100%;
             height: 70%;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
+            align-items: center;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        #dash-announcement{
+            width: 100%;
+            height: 60%;
+            padding: 10px;
+        }
+        #announcement-title{
+            width: 100%;
+            height: 30%;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            border-bottom: #3C3C3C solid 2px;
+
+        }
+        #announcement-text{
+            width: 100%;
+            height: 70%;
+            padding-top: 10px;
+            font-size: 14px;
         }
 
         #dash-dispose{
@@ -179,11 +226,119 @@
 
             margin: 5px;
             margin-top: 10px;
-            padding: 5px;
+            padding: 10px;
 
             border: #CCCACA solid 2px;
             border-radius: 4px;
             background: #477154;
+            color: white;
+        }
+        #dispose-title{
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            padding: 2px;
+            border-bottom: white solid 2px;
+        }
+        #dispose-count{
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        #dispose-quantity{
+            width: 100%;
+            height: 80%;
+            text-align: center;
+            padding: 10px;
+        }
+        #dispose-quantity div:nth-child(1){
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        #dispose-quantity div:nth-child(2){
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #FFC000;
+            font-weight: bold;
+            font-size: 36px;
+            -webkit-text-stroke: 1px black;
+
+            font-family: "Open Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+        }
+
+        #dispose-amount{
+            width: 100%;
+            height: 80%;
+            text-align: center;
+            padding: 10px;
+        }
+        #dispose-amount div:nth-child(1){
+            width: 100%;
+            height: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-weight: bold;
+        }
+        #dispose-amount div:nth-child(2){
+            width: 100%;
+            height: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #FFC000;
+            font-weight: bold;
+            font-size: 36px;
+            -webkit-text-stroke: 1px black;
+
+            font-family: "Open Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+        }
+
+
+        #dispose-content{
+            width: 100%;
+            height: 50%;
+            display: block;
+            overflow: auto;
+        }
+        #dispose-content table{
+            height: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            border: white solid 2px;
+        }
+        #dispose-content table th{
+            position: sticky;
+            top: 0px;
+            z-index: 1;
+            background: #477154;
+            color: white;
+        }
+        #dispose-content table tbody{
+            overflow-y: auto;
+        }
+        #dispose-content table td{
+            background: white;
         }
     </style>
 
@@ -208,7 +363,33 @@
                             <p>BEST TOP 3</p>
                         </div>
                         <div class="product-content" id="best-content">
-
+                            <div class="best3">
+                                <div id="best-1-img">
+                                    <img src="/resources/common/대시보드_Trophy.png">
+                                </div>
+                                <div id="best-1-text">
+                                    <p>아몬드 빼빼로</p>
+                                    <p>100개</p>
+                                </div>
+                            </div>
+                            <div class="best3">
+                                <div>
+                                    <img src="/resources/common/대시보드_Medal%20Second%20Place.png">
+                                </div>
+                                <div>
+                                    <p>oo커피</p>
+                                    <p>70개</p>
+                                </div>
+                            </div>
+                            <div class="best3">
+                                <div>
+                                    <img src="/resources/common/대시보드_Medal%20Third%20Place.png">
+                                </div>
+                                <div>
+                                    <p>ooo과자</p>
+                                    <p>50개</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="product-box" id="product-top-worst">
@@ -216,7 +397,33 @@
                             <p>WORST TOP 3</p>
                         </div>
                         <div class="product-content" id="worst-content">
-
+                            <div class="best3">
+                                <div id="worst-1-img">
+                                    <img src="/resources/common/대시보드_Thumbs%20Down.png">
+                                </div>
+                                <div id="worst-1-text">
+                                    <p>ooo음료</p>
+                                    <p>1개</p>
+                                </div>
+                            </div>
+                            <div class="best3">
+                                <div>
+                                    <img src="/resources/common/대시보드_Low%20Price.png">
+                                </div>
+                                <div>
+                                    <p>oo커피</p>
+                                    <p>5개</p>
+                                </div>
+                            </div>
+                            <div class="best3">
+                                <div>
+                                    <img src="/resources/common/대시보드_Low%20Price.png">
+                                </div>
+                                <div>
+                                    <p>ooo과자</p>
+                                    <p>10개</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -301,20 +508,88 @@
                         </div>
                         <div id="alarm-text">
                             <div>
-                                <p>부족한 재고가 있습니다.</p>
-                                <p>확인부탁드립니다.</p>
+                                <p>부족한 재고가 있습니다. 확인부탁드립니다.</p>
                             </div>
                             <div>
-                                <button>재고관리이동 -></button>
+                                <a><img src="/resources/common/재고관리이동_아이콘.png"></a>
                             </div>
                         </div>
                     </div>
                     <div id="dash-announcement">
-
+                        <div id="announcement-title">
+                            <p>공지사항</p>
+                            <a><img src="/resources/common/대시보드_Plus%20Math.png"></a>
+                        </div>
+                        <div id="announcement-text">
+                            가맹점주님들에게 알립니다. oo상품이 oo월부터........
+                        </div>
                     </div>
                 </div>
                 <div id="dash-dispose">
-
+                    <div id="dispose-title">
+                        <div>
+                            <p style="font-size: 18px; font-weight: bold">금일 폐기상품</p>
+                        </div>
+                        <div>
+                            <p style="font-size: 12px">2025년 03월    31일</p>
+                        </div>
+                    </div>
+                    <div id="dispose-count">
+                        <div id="dispose-quantity">
+                            <div>
+                                <p>금일 폐기수량</p>
+                            </div>
+                            <div>
+                                <p>35</p>
+                            </div>
+                        </div>
+                        <div id="dispose-amount">
+                            <div>
+                                <p>금일 폐기금액</p>
+                            </div>
+                            <div>
+                                <p>20,000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="dispose-content">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>상품명</th>
+                                <th>수량</th>
+                                <th>총금액</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>AA</td>
+                                <td>1ea</td>
+                                <td>5000</td>
+                            </tr>
+                            <tr>
+                                <td>BB</td>
+                                <td>3ea</td>
+                                <td>6000</td>
+                            </tr>
+                            <tr>
+                                <td>CC</td>
+                                <td>4ea</td>
+                                <td>4000</td>
+                            </tr>
+                            <tr>
+                                <td>DD</td>
+                                <td>2ea</td>
+                                <td>3000</td>
+                            </tr>
+                            <tr>
+                                <td>EE</td>
+                                <td>1ea</td>
+                                <td>1000</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -382,6 +657,11 @@
                     max: 1000,
                     ticks: {
                         stepSize: 200
+                    },
+                },
+                x: {
+                    grid: {
+                        display: false
                     }
                 }
             }
