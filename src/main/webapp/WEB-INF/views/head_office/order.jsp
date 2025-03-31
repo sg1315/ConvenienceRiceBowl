@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" href="../resources/css/btn.css">
     <style>
         #form{
             width: 100%;
@@ -116,18 +117,18 @@
         </div>
         <div id="top-manu">
             <div id="top_btn">
-                <button>저번달</button>
-                <button>최근</button>
+                <button class="gray-btn-border">저번달</button>
+                <button class="gray-btn-border">최근</button>
             </div>
             <div id="marge">
             </div>
             <div id="top_serch">
                 <form>
-                    <input type="date">
+                    <input class="date-input" type="date">
                     ~
-                    <input type="date">
-                    <input type="number" >
-                    <input type="submit" value="검색">
+                    <input class="date-input" type="date">
+                    <input class="search-input" type="number" >
+                    <input class="search-input-submit" type="submit" value="검색">
                 </form>
             </div>
         </div>

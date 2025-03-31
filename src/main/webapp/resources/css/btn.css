@@ -1,16 +1,55 @@
-.btn {
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid black;
+/*hover*/
+.search-input-submit-gray:hover,
+.search-input-submit:hover,
+.gray-btn-border:hover,
+.gray-btn:hover,
+.yes-btn:hover,
+.no-btn:hover,
+.no-btn-border:hover,
+.gray-btn-border:hover,
+.gray-btn:hover,
+.gray-long-btn:hover,
+.deep-gray-btn:hover,
+.white-btn:hover,
+.white-btn-border:hover,
+.comment-input-submit:hover {
+  background-color: #477154;
+  color: white;
 }
 
-/* gray 검색bar  -> 메뉴: 발주관리*/
-.gray-search {
+.black-btn:hover,
+.black-big-btn:hover,
+.red-btn:hover {
+  background-color: #477154;
+}
+
+.gowork-btn:hover {
+  background-color: #0073ff;
+  color: white;
+}
+
+.gohome-btn:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+.green-btn {
+  background-color: white;
+  color: #477154;
+}
+
+.white-btn-round:hover {
+  background-color: #477154;
+  border: 1px solid white;
+  color: white;
+}
+
+/* 본사 검색bar*/
+.search-div-gray {
   gap: 1px;
 }
 
-#search-input-gray {
+.search-input-gray {
   width: 300px;
   height: 40px;
   background-color: white;
@@ -20,7 +59,7 @@
   font-weight: bolder;
 }
 
-#search-input-submit-gray {
+.search-input-submit-gray {
   width: 80px;
   height: 40px;
   border: 3px solid #4b4b4b;
@@ -30,104 +69,163 @@
   border-radius: 4px;
 }
 
-/*gray버튼 테두리 없음*/
-#gray-btn {
-  width: 80px;
-  height: 50px;
-
-  border: none;
-  background-color: #8a8a8a;
-  border-radius: 4px;
-
-  color: white;
-  font-weight: bolder;
-}
-
-/*gray버튼 테두리 있음 -> 메뉴 : 발주관리,*/
-#gray-btn-border {
-  width: 80px;
-  height: 50px;
-
-  border: none;
-  border: 3px solid #4b4b4b;
-  background-color: #8a8a8a;
-  border-radius: 4px;
-
-  color: white;
-  font-weight: bolder;
-}
-
-#gray-btn-border:hover,
-#gray-btn {
-  background-color: #477154;
-  color: white;
-}
-
-/* 검색바 */
-.top-right1 {
+/* erp 검색바 */
+.search-div {
   gap: 1px;
 }
 
-#search-input {
+.search-input {
   width: 300px;
   height: 40px;
   border: none;
   border-radius: 4px;
 }
 
-#search-input-submit {
+.search-input-submit {
   width: 80px;
   height: 40px;
   margin: 0 10px;
   background-color: white;
-  box-shadow: 0 5px 5px -1px #7b7a7a;
+  box-shadow: 0 5px 0px -1px #7b7a7a;
   padding: 5px;
   border: none;
   border-radius: 4px;
 }
 
-/* 근태버튼 */
-/* 출근 */
-#gowork-btn {
-  width: 200px;
-  height: 100px;
-
+.selectbox-border {
+  width: 100px;
+  height: 40px;
+  border: 3px solid #8a8a8a;
   background-color: white;
-  border: 4px solid #a6a6a6;
-  box-shadow: 0 5px 5px -1px #a6a6a6;
-  border-radius: 8px;
-
-  font-size: 50px;
-  font-weight: bolder;
-  color: #0073ff;
+  color: black;
+  border-radius: 4px;
 }
 
-#gowork-btn:hover {
-  background-color: #0073ff;
-  color: white;
-}
-
-/* 퇴근 */
-#gohome-btn {
-  width: 200px;
-  height: 100px;
+.selectbox {
+  width: 100px;
+  height: 40px;
+  border: none;
   background-color: white;
-  border: 4px solid #a6a6a6;
-  box-shadow: 0 5px 5px -1px #a6a6a6;
-  border-radius: 8px;
-
-  font-size: 50px;
-  font-weight: bolder;
-  color: #ff0000;
+  color: black;
+  border-radius: 4px;
 }
 
-#gohome-btn:hover {
-  background-color: #ff0000;
+/* ------- 여기서 부터는 버튼 css ------*/
+
+/*gray버튼 테두리 없음*/
+.gray-btn {
+  width: 80px;
+  height: 50px;
+
+  border: none;
+  background-color: #8a8a8a;
+  border-radius: 4px;
+
   color: white;
+  font-weight: bolder;
+}
+
+/*gray버튼 테두리 있음 -> ex) 저번달/최근(본사-발주관리메뉴)*/
+.gray-btn-border {
+  width: 80px;
+  height: 50px;
+
+  border: none;
+  border: 3px solid #4b4b4b;
+  background-color: #8a8a8a;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+/*gray버튼, 모달수정 버튼 -> ex) 개인정보수정*/
+.gray-long-btn {
+  width: 200px;
+  height: 40px;
+
+  border: none;
+  background-color: #8a8a8a;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+.deep-gray-btn {
+  width: 80px;
+  height: 80px;
+
+  border: 1px solid black;
+  background-color: #4b4b4b;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+/*white버튼 테두리 있음 -> ex)이미지찾기(상품관리)*/
+.white-btn-border {
+  width: 120px;
+  height: 50px;
+
+  border: none;
+  border: 3px solid #8a8a8a;
+  background-color: white;
+  border-radius: 4px;
+
+  color: black;
+  font-weight: bolder;
+}
+
+/*white버튼 테두리없음 -> ex)지난달/최근 */
+.white-btn {
+  width: 80px;
+  height: 50px;
+
+  border: none;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 5px 0 -1px #a6a6a6;
+
+  color: black;
+  font-weight: bolder;
+}
+
+.white-btn-round {
+
+  width: 150px;
+  height: 50px;
+  
+  background-color: white;
+  border: none;
+  border-radius: 20px;
+  color: #477154;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* ::after 위치 조정을 위해 필요 */
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 텍스트를 왼쪽 정렬 */
+  padding-left: 30px; /* 왼쪽 여백 추가 */
+
+}
+
+.white-btn-round::after {
+  content: '';
+  background-image: url(../menubar_icons/포스연동버튼아이콘.svg);
+  background-repeat: no-repeat;
+  background-size: 20px 20px; /* 이미지 크기 조정 */
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 20px; /* 버튼 오른쪽 끝에서 떨어진 거리 조정 */
 }
 
 /* 승인/거절버튼 */
-#no-btn {
+.no-btn {
   width: 80px;
   height: 40px;
   background-color: #ff0000;
@@ -137,7 +235,7 @@
   border-radius: 4px;
 }
 
-#yes-btn {
+.yes-btn {
   width: 80px;
   height: 40px;
   background-color: #0073ff;
@@ -147,23 +245,8 @@
   border-radius: 4px;
 }
 
-#yes-btn:hover,
-#yes-btn:hover {
-  background-color: #477154;
-  color: white;
-}
-
-/* 날짜버튼 */
-#date-input {
-  width: 200px;
-  height: 40px;
-  background-color: white;
-  border: 3px solid #8a8a8a;
-  border-radius: 4px;
-}
-
-/*모달 완료/수정/삭제*/
-#black-btn {
+/*모달 완료/수정/삭제 버튼*/
+.black-btn {
   width: 80px;
   height: 40px;
 
@@ -174,7 +257,19 @@
   color: white;
   font-weight: bolder;
 }
-#red-btn {
+
+.black-big-btn {
+  width: 100px;
+  height: 50px;
+
+  border: none;
+  background-color: black;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+.red-btn {
   width: 80px;
   height: 40px;
 
@@ -186,41 +281,65 @@
   font-weight: bolder;
 }
 
+/* 날짜 input */
+/*날짜 테두리 있음*/
+.date-input-border {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  border: 3px solid #8a8a8a;
+  border-radius: 4px;
+}
+/*날짜 테두리 없음*/
+.date-input {
+  width: 200px;
+  height: 40px;
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+}
+
 /*댓글 버튼 : 버튼태그에 img 넣기*/
-/* 댓글 show*/
-#comment-btn {
+/* 댓글버튼-show*/
+.comment-btn {
   width: 100px;
   height: 50px;
 
-  border: none;
   border: 3px solid #4b4b4b;
   background-color: white;
   border-radius: 4px;
 
   color: black;
   font-weight: bolder;
+
+  position: relative;
 }
-#comment-btn > img {
+.comment-btn::after {
+  content: "";
+  background-image: url(../common/위화살표.png);
+  background-repeat: no-repeat;
+  background-size: 14px 8px; /* 이미지 크기 조정 */
+  background-position: center;
   width: 20px;
-  height: 15px;
-  float: left;
-  padding-top: 5px;
-  padding-left: 5px;
+  height: 25px;
+  position: absolute;
+  left: 8px; /* 버튼 왼쪽? 끝에서 떨어진 거리 조정 */
+ 
 }
 
-/* 댓글 write*/
+/* 댓글 input-write*/
 .comment-div {
   gap: 1px;
 }
 
-#comment-input {
+.comment-input {
   width: 500px;
   height: 40px;
   border: 3px solid #4b4b4b;
   border-radius: 4px;
 }
 
-#comment-input-submit {
+.comment-input-submit {
   width: 80px;
   height: 40px;
   border: 3px solid #4b4b4b;
@@ -228,4 +347,56 @@
   color: white;
   font-weight: bolder;
   border-radius: 4px;
+}
+
+/* 근태버튼 */
+/* 출근 */
+.gowork-btn {
+  width: 200px;
+  height: 100px;
+
+  background-color: white;
+  border: 4px solid #a6a6a6;
+  box-shadow: 0 5px 0 -1px #a6a6a6;
+  border-radius: 8px;
+
+  font-size: 50px;
+  font-weight: bolder;
+  color: 0.0073ff;
+}
+
+/* 퇴근 */
+.gohome-btn {
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  border: 4px solid #a6a6a6;
+  box-shadow: 0 5px 0 -1px #a6a6a6;
+  border-radius: 8px;
+
+  font-size: 50px;
+  font-weight: bolder;
+  color: #ff0000;
+}
+
+/* 대시보드 */
+/* 재고관리이동 */
+.green-btn {
+  width: 150px;
+  height: 50px;
+
+  border: none;
+  background-color: #477154;
+  border-radius: 4px;
+
+  color: white;
+  font-weight: bolder;
+}
+
+.green-btn > img {
+  width: 20px;
+  height: 15px;
+  float: right;
+  padding-top: 10px;
+  padding-right: 5px;
 }
