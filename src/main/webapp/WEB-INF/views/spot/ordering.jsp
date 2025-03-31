@@ -109,8 +109,8 @@
         </div>
 
         <div id="top-right1">
-          <input id="search" type="text" />
-          <input id="search-text"type="submit" value="검색" />
+          <input class="search-input" type="text" placeholder="아이디 or 이름 "/>
+          <input class="search-input-submit" type="submit" value="검색" />
         </div>
       </div>
       <div id="main">
