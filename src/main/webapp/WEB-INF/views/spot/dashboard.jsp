@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>DashBoard</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
 
         #wrap{
@@ -104,16 +104,31 @@
         }
         #dash-inout-graph{
             width: 100%;
-            height: 40%;
+            height: 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-right: 40px;
+            padding-left: 40px;
         }
+
+
         #dash-inout-table{
             width: 100%;
-            height: 30%;
+            height: 35%;
             padding: 30px;
         }
         #dash-inout-table table{
             width: 100%;
-
+            height: 100%;
+            font-size: 14px;
+        }
+        #dash-inout-table table th{
+            border-top: solid;
+            border-bottom: solid;
+        }
+        #dash-inout-table table tr:nth-child(3){
+            background: #FFC000;
         }
 
 
@@ -133,6 +148,31 @@
             border: #CCCACA solid 2px;
             border-radius: 4px;
         }
+
+        #dash-alarm{
+            width: 100%;
+            height: 40%;
+            background: #f6e6b5;
+            padding: 10px;
+        }
+        #alarm-title{
+            width: 100%;
+            height: 30%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            border-bottom: #3C3C3C solid 2px;
+        }
+        #alarm-text{
+            width: 100%;
+            height: 70%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            font-weight: bold;
+        }
+
         #dash-dispose{
             width: 100%;
             height: 50%;
@@ -181,7 +221,7 @@
                     </div>
                 </div>
                 <div id="dash-inout-graph">
-                    그래프 어떻게 그리냐
+                    <canvas id="barChart"></canvas>
                 </div>
                 <div id="dash-inout-table">
                     <table class="table table-bordered">
@@ -255,7 +295,19 @@
             <div id="dash-right">
                 <div id="dash-right-top">
                     <div id="dash-alarm">
-
+                        <div id="alarm-title">
+                            <p>재고부족 알림</p>
+                            <img src="/resources/common/대시보드_알림창.png">
+                        </div>
+                        <div id="alarm-text">
+                            <div>
+                                <p>부족한 재고가 있습니다.</p>
+                                <p>확인부탁드립니다.</p>
+                            </div>
+                            <div>
+                                <button>재고관리이동 -></button>
+                            </div>
+                        </div>
                     </div>
                     <div id="dash-announcement">
 
@@ -269,7 +321,73 @@
     </div>
 </div>
 
+<script>
+    const labels = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+    const incomingData = [200, 400, 400, 200, 200, 400, 400, 200, 200, 200, 400, 200];
+    const salesData = [600, 600, 600, 600, 600, 800, 600, 800, 600, 600, 800, 800];
+    const ctx = document.getElementById('barChart').getContext('2d');
 
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: "입고",
+                    data: incomingData,
+                    backgroundColor: "#CCCACA",
+                    borderColor: "#CCCACA",
+                    borderWidth: 1
+                },
+                {
+                    label: "출고",
+                    data: salesData,
+                    backgroundColor: "#FFC000",
+                    borderColor: "#FFC000",
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: '월별 입출고 현황',
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'Arial',
+                    },
+                    color: '#333',
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    },
+                    align: 'start',
+                },
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        pointStyle: 'rect'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 1000,
+                    ticks: {
+                        stepSize: 200
+                    }
+                }
+            }
+        }
+    });
+</script>
 
 
 
