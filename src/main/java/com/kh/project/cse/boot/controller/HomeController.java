@@ -45,16 +45,14 @@ public class HomeController {
     public String head_member() { return "head_office/member";}
     //
 
-<<<<<<< HEAD
+
     //승기
     @RequestMapping("/dashboard")
     public String dashboard() {
         return "spot/dashboard";
     }
     //승기
-=======
-    //인혜
 
 
->>>>>>> feature/add
+
 }
