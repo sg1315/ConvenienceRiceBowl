@@ -19,11 +19,11 @@
             display: flex;
             justify-content: space-between;
         }
-        #top-reft{
+        #top-left{
             background-color: #D9D9D9;
             width: 70%;
         }
-        #top-reft1{
+        #top-left1{
             background-color: white;
             display: flex;
             align-content: center;
@@ -42,7 +42,7 @@
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
         }
-        #top-reft p {
+        #top-left p {
             padding-left: 15px;
         }
         #main{
@@ -61,11 +61,7 @@
             border-radius: 20px;
             padding: 50px;
         }
-        @media screen and (max-width: 1800px) {
-            #main-in{
-                overflow-x: auto;
-            }
-        }
+
         #main-pageing{
             padding-top: 10px;
             display: flex;
@@ -78,6 +74,7 @@
             width: 100%;
             table-layout: auto;
         }
+
         #main-pageing img{
             width: 70px;
             padding: 10px;
@@ -170,27 +167,22 @@
             transform: translateX(20%);
         }
 
-
     </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
     <div id="top-manu">
-        <div id="top-reft">
-            <div id="top-reft1">
+        <div id="top-left">
+            <div id="top-left1">
                 <img src="../resources/menu_icons/직원 아이콘.png">
-                <p class="main_name">여긴 발주 할 거임</p>
+                <p class="main_name">직원 정보</p>
             </div>
         </div>
 
         <div id="top-right1">
-            <<<<<<< HEAD
-            <input type="text"> <input type="submit" value="검색">
-            =======
             <input class="search-input" type="text" placeholder="아이디 or 이름 "/>
             <input class="search-input-submit" type="submit" value="검색" />
-            >>>>>>> feature/make_button
         </div>
 
     </div>
@@ -213,6 +205,7 @@
                     <th class="col-2">재직</th>
                 </tr>
                 </thead>
+
                 <tbody >
                 <tr>
                     <td>알바</td>

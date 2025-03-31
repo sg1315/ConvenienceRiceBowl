@@ -19,11 +19,12 @@
             display: flex;
             justify-content: space-between;
         }
-        #top-reft{
+        #top-left{
             background-color: #D9D9D9;
-            width: 70%;
+            width: 30%;
+
         }
-        #top-reft1{
+        #top-left1{
             background-color: white;
             display: flex;
             align-content: center;
@@ -35,24 +36,40 @@
 
         #top-right1{
             background-color: #D9D9D9;
-            width: 30%;
+            width: 70%;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
+            padding-right: 3%;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        #top-reft p {
+        #top-right1 div:first-child {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-right: auto;
+            margin-left: 2%;
+        }
+        #top_right2_in{
+            display: flex;
+            justify-content: flex-end;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        #top-left p {
             padding-left: 15px;
         }
         #main{
             background-color: #D9D9D9;
             width: 100%;
             height: 90%;
-            border-top-left-radius: 20px;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             padding: 50px 50px 100px;
+            border-top-left-radius: 20px;
         }
         #main-in{
             background-color: white;
@@ -61,11 +78,7 @@
             border-radius: 20px;
             padding: 50px;
         }
-        @media screen and (max-width: 1800px) {
-            #main-in{
-                overflow-x: auto;
-            }
-        }
+
         #main-pageing{
             padding-top: 10px;
             display: flex;
@@ -169,7 +182,12 @@
             left: 20%;
             transform: translateX(20%);
         }
-
+        #table1 td, #table1 th{
+            border-right:1px solid gray;
+        }
+        #table1 td:nth-of-type(5),#table1 th:nth-of-type(5){
+            border-right:none;
+        }
 
     </style>
 </head>
@@ -177,20 +195,36 @@
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
     <div id="top-manu">
-        <div id="top-reft">
-            <div id="top-reft1">
-                <img src="../resources/menu_icons/직원 아이콘.png">
-                <p class="main_name">여긴 발주 할 거임</p>
+        <div id="top-left">
+            <div id="top-left1">
+                <img src="../resources/menu_icons/발주 아이콘.png">
+                <p class="main_name">발주</p>
             </div>
         </div>
 
         <div id="top-right1">
-<<<<<<< HEAD
-            <input type="text"> <input type="submit" value="검색">
-=======
-          <input class="search-input" type="text" placeholder="아이디 or 이름 "/>
-          <input class="search-input-submit" type="submit" value="검색" />
->>>>>>> feature/make_button
+            <div>
+                발주<br>요청
+            </div>
+            <div>
+                <button>저번 달</button>
+                <button>최근</button>
+                <input type="date"> ~ <input type="date">
+                <div id="top_right2">
+                <div id="top_right2_in">
+                    <select>
+                        <option>상태</option>
+                        <option>발주대기</option>
+                        <option>발주요청</option>
+                        <option>발주승인</option>
+                        <option>발주거절</option>
+                    </select>
+                    <input type="text" placeholder="발주번호">
+                    <input class="search-input-submit" type="submit" value="검색">
+                </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -200,89 +234,87 @@
                 <colgroup>
                     <col style="width: 20%;">
                     <col style="width: 20%;">
-                    <col style="width: 20%;">
+                    <col style="width: 10%;">
                     <col style="width: 20%;">
                     <col style="width: 20%;">
                 </colgroup>
                 <thead>
                 <tr>
-                    <th class="col-2">직급</th>
-                    <th class="col-2">아이디</th>
-                    <th class="col-4">이름</th>
-                    <th class="col-2">전화번호</th>
-                    <th class="col-2">재직</th>
+                    <th class="col-2">발주일자</th>
+                    <th class="col-2">발주번호</th>
+                    <th class="col-1">수량</th>
+                    <th class="col-5">금액</th>
+                    <th class="col-2">상태</th>
                 </tr>
                 </thead>
                 <tbody >
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
+                </tr><tr>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
+                </tr><tr>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
+                    <td>2025-03-31</td>
+                    <td>123456</td>
+                    <td>100</td>
+                    <td>1,000,000</td>
+                    <td>발주완료</td>
                 </tr>
                 </tbody>
             </table>
