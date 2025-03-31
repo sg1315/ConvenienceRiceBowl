@@ -8,10 +8,9 @@
     <title>enrollForm</title>
     <style>
         .enrollForm {
-            width: 700px;
+            min-width: 700px;
             display: grid;
-            grid-template-rows: 2fr auto 2fr;
-            gap: 30px;
+            grid-template-rows: 2fr auto 1fr;
             background-color: white;
             border-radius: 10px;
             margin: 0 auto;
@@ -29,7 +28,7 @@
         #enrollTitle{
             align-items: center ;
             font-size: 20pt;
-            border-radius: 10px 10px 0 0;
+            border-radius: 8px 8px 0 0;
         }
         .enrollForm p{
             width: max-content;
@@ -50,14 +49,16 @@
         .enrollInput{
             width: 100%;
             display: grid;
-            grid-template-rows: 1fr 1fr 1fr 1fr;
-            gap: 20px;
+            grid-template-rows: 26px 1fr 1fr 1fr 1fr 26px;
+            gap: 10px;
         }
         .enrollInput>div{
+            min-height: 30px;
+            max-height: 40px;
             display: grid;
-            grid-template-columns: 14% 1fr 10% 1fr;
-            gap: 16px;
-            margin: 0 10px;
+            grid-template-columns: 12% 1fr 4% 8% 1fr;
+            gap: 10px;
+            margin: 0 20px;
         }
         .flexInput-1{
             display: grid;
@@ -75,14 +76,14 @@
             display: grid;
             grid-template-columns: 1fr min-content 1fr min-content 1fr;
         }
-        #enrollButton{border-radius: 0 0 10px 10px;}
+        #enrollButton{border-radius: 0 0 8px 8px;}
         #enrollButton > button{
             color: white;
             background-color: #8A8A8A;
             border: none;
             font-size: 14pt;
             margin: 8px;
-            padding: 0 10px;
+            padding: 10px;
         }
         /**/
         .flexInput-2 > select {
@@ -101,6 +102,7 @@
         <div class="enrollForm">
             <div class="enrollForm-1" id="enrollTitle">회원가입</div>
             <div class="enrollInput">
+                <div></div>
                 <div>
                     <div class="flexInput-2">
                         <select required>
@@ -115,6 +117,7 @@
                     </div>
                     <div></div>
                     <div></div>
+                    <div></div>
                 </div>
                 <div>
                     <div><p>아이디</p></div>
@@ -122,30 +125,39 @@
                         <input type="text">
                         <button>중복확인</button>
                     </div>
-                    <div><p>&nbsp;이름</p></div>
+                    <div></div>
+                    <div><p>이름</p></div>
                     <div class="flexInput-2"><input type="text"></div>
                 </div>
                 <div>
                     <div><p>비밀번호</p></div>
-                    <div class="flexInput-2"><input type="text"></div>
-                    <div><p>&nbsp;주민번호</p></div>
+                    <div class="flexInput-2"><input type="password"></div>
+                    <div></div>
+                    <div><p>주민번호</p></div>
                     <div  id="ssnInput">
                         <input type="text"><p>-</p><input type="text">
                     </div>
                 </div>
                 <div>
                     <div><p>비밀번호 확인</p></div>
-                    <div class="flexInput-2"><input type="text"></div>
-                    <div><p>&nbsp;핸드폰</p></div>
+                    <div class="flexInput-2"><input type="password"></div>
+                    <div></div>
+                    <div><p>핸드폰</p></div>
                     <div id="phoneInput">
                         <input type="text"><p>-</p><input type="text"><p>-</p><input type="text">
                     </div>
                 </div>
+                <div></div>
             </div>
             <div class="enrollForm-1" id="enrollButton">
                 <button>회원가입</button>
-                <button>취소</button>
+                <button type="reset" onclick="closeEnrollModal()">취소</button>
             </div>
+            <script>
+                function closeEnrollModal() {
+                    document.getElementById("modalBackground").style.display = "none";
+                }
+            </script>
         </div>
     </form>
 </body>
