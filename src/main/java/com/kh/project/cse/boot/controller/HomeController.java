@@ -44,4 +44,11 @@ public class HomeController {
     @RequestMapping("/head_member")
     public String head_member() { return "head_office/member";}
     //
+
+    //승기
+    @RequestMapping("/dashboard")
+    public String dashboard() {
+        return "spot/dashboard";
+    }
+    //승기
 }

@@ -13,7 +13,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <hr>
 
         <pre>
-  전부 클래스 선택자만들어 놓았습니다. 
+  전부 클래스 선택자만들어 놓았습니다.
   색상과 기능으로 클래스이름 지었으니 참고하시고 보시면 좋을 것 같아요!
   위치는 각자 잡아주세요!!
         </pre>
@@ -38,13 +38,13 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                         <div class="search-div-gray" style="display: inline-block;">
                             <input class="search-input-gray" type="text" />
                             <input class="search-input-submit-gray" type="submit" />
-                        </div>  
+                        </div>
                     </li>
                 </ul>
             </li>
             <hr>
 
-            <li> 
+            <li>
                 <p>(2)erp 검색바</p>
                 <ul>
                     <li> div : .search-div </li>
@@ -61,7 +61,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                         <div class="search-div" style="display: inline-block;">
                             <input class="search-input" type="text" />
                             <input class="search-input-submit" type="submit" />
-                        </div> 
+                        </div>
                     </li>
                 </ul>
             </li>
@@ -74,16 +74,16 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <p>gray버튼들 </p>
                 <ul>
                     <li>(근태관리-근태수정)
-                         테두리없는 회색: .gray-btn  
+                         테두리없는 회색: .gray-btn
                     </li>
                     <li>(본사-발주 "저번달/최근")
-                        테두리있는 회색: .gray-btn-border 
+                        테두리있는 회색: .gray-btn-border
                     </li>
-    
+
                     <li>(erp 개인정보수정)
                         테두리없고 김 : .gray-long-btn
                     </li>
-    
+
                     <li>
                         (발주-발주완료) 진한회색 정사각 : .deep-gray-btn
                     </li>
@@ -102,10 +102,10 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <ul>
             <p>white버튼들 </p>
             <li>(상품관리-이미지 찾기)
-                테두리 있는 흰색 : .white-btn-border 
+                테두리 있는 흰색 : .white-btn-border
             </li>
             <li>(발주- "저번달/최근")
-                테두리 없는 흰색: .white-btn 
+                테두리 없는 흰색: .white-btn
             </li>
             <li>(발주- "저번달/최근")
                 테두리 없는 흰색: .white-btn-round
@@ -170,5 +170,6 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     </div>
     <a href="/head_order">본사 발주관리</a>
     <a href="/head_order1">이것이 진짜 본사 발주다 이걸 눌러야한다</a>
+    <a href="/dashboard">대시보드</a>
   </body>
 </html>
