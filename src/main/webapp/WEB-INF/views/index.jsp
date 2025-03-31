@@ -168,8 +168,9 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             </li>
         </ul>
     </div>
-    <a href="/head_order">본사 발주관리</a>
+    <a href="/spot_order">지점 발주관리</a>
     <a href="/head_order1">이것이 진짜 본사 발주다 이걸 눌러야한다</a>
     <a href="/dashboard">대시보드</a>
+    <a href="/spot_member">지점 맴버관리</a>
   </body>
 </html>
