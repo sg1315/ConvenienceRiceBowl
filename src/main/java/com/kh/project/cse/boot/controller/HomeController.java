@@ -45,10 +45,17 @@ public class HomeController {
     public String head_member() { return "head_office/member";}
     //
 
-    //승기
+    //승기 지점-대시보드
     @RequestMapping("/dashboard")
     public String dashboard() {
         return "spot/dashboard";
+    }
+    //승기
+
+    //승기 지점-상품목록
+    @RequestMapping("/spotProduct")
+    public String spotProduct() {
+        return "spot/product";
     }
     //승기
 
@@ -58,4 +65,6 @@ public class HomeController {
         return "spot/member";
     }
     //택봉
+
+
 }
