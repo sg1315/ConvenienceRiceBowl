@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
 
 
@@ -21,7 +21,7 @@
         }
         #top-left{
             background-color: #D9D9D9;
-            width: 70%;
+            width: 55%;
         }
         #top-left1{
             background-color: white;
@@ -35,7 +35,7 @@
 
         #top-right1{
             background-color: #D9D9D9;
-            width: 30%;
+            width: 45%;
             display: flex;
             justify-content: center;
             align-items: center;

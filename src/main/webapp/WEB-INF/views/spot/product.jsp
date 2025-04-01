@@ -63,6 +63,10 @@
       padding: 10px;
     }
 
+    #table1 td img{
+      width: 20px;
+    }
+
     #top-reft p {
       padding-left: 15px;
     }
@@ -213,8 +217,8 @@
         <div class="selectbox" id="category-select">
           <select>
             <option>카테고리</option>
-            <option>카테고리2</option>
-            <option>카테고리3</option>
+            <option>스낵</option>
+            <option>음료</option>
           </select>
         </div>
         <div id="search-box">
@@ -336,6 +340,7 @@
     </div>
   </div>
   <script>
+    <!-- 모달 funcion -->
     document.addEventListener("DOMContentLoaded", function () {
 
       const rows = document.querySelectorAll("#table1 tbody tr");
@@ -361,6 +366,8 @@
         });
       });
     });
+
+    <!-- 검색 function -->
 
   </script>
   <!--end point-->
