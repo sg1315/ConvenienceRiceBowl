@@ -173,5 +173,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <a href="/dashboard">대시보드</a>
     <a href="/spot_member">지점 맴버관리</a>
     <a href="/spotProduct">지점 상품목록</a>
+    <a href="/loginForm">로그인</a>
+
   </body>
 </html>

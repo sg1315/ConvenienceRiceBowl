@@ -220,7 +220,7 @@
                 <li><a><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
                 <li><a><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
                 <li><a><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
-                <li><a><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
+                <li><a href="inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
                 <li><a><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
                 <%--              <li><a>폐기 상품</a></li>--%>
                 <li><a><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
