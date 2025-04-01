@@ -58,6 +58,7 @@
   border-radius: 4px;
   color: black;
   font-weight: bolder;
+  padding: 10px;
 }
 
 .search-input-submit-gray {
@@ -80,6 +81,7 @@
   height: 40px;
   border: none;
   border-radius: 4px;
+  padding: 10px;
 }
 
 .search-input-submit {
@@ -100,6 +102,7 @@
   background-color: white;
   color: black;
   border-radius: 4px;
+  padding: 10px;
 }
 
 .selectbox {
@@ -112,6 +115,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px;
 }
 
 /* ------- 여기서 부터는 버튼 css ------*/
@@ -297,6 +301,7 @@
   background-color: white;
   border: 3px solid #8a8a8a;
   border-radius: 4px;
+  padding: 10px;
 }
 /*날짜 테두리 없음*/
 .date-input {
@@ -305,6 +310,7 @@
   background-color: white;
   border: none;
   border-radius: 4px;
+  padding: 10px;
 }
 
 

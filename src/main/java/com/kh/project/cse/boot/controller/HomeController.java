@@ -67,22 +67,28 @@ public class HomeController {
     //택봉
 
     //인혜
-    @RequestMapping("/attendance")
+    @RequestMapping("/spot-attendance")
     public String attendance() {
         return "spot/attendance";
     }
 
 
     //인혜
-    @RequestMapping("/inventory")
+    @RequestMapping("/spot-inventory")
     public String inventory() {
         return "spot/inventory";
     }
 
-    @RequestMapping("/spot_notice")
+    @RequestMapping("/spot-notice")
     public String announcement() {
         return "spot/notice";
     }
+    @RequestMapping("/spot-sales")
+    public String sales() {
+        return "spot/sales";
+    }
+
+
 
 
     //유하

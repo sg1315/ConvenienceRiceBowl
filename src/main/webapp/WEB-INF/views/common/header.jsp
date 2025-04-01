@@ -197,7 +197,7 @@
       </div>
       <div id="nav-menu">
         <div class="menu-bar" id="menu-1">
-          <a href="spot_notice">공지사항</a>
+          <a href="spot-notice">공지사항</a>
         </div>
         <div class="menu-bar" id="menu-2">
           <div>
@@ -205,7 +205,7 @@
             <div>
               <ul>
                 <li><a><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
-                <li><a href="attendance"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
+                <li><a href="spot-attendance"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
               </ul>
             </div>
           </div>
@@ -220,8 +220,8 @@
                 <li><a><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
                 <li><a><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
                 <li><a><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
-                <li><a href="inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
-                <li><a><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
+                <li><a href="spot-inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
+                <li><a href="spot-sales"><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
                 <%--              <li><a>폐기 상품</a></li>--%>
                 <li><a><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
               </ul>
