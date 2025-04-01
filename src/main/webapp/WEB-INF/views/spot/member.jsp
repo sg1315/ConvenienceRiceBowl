@@ -308,7 +308,7 @@
                         <h1 class="modal-title fs-5">직원 정보 수정</h1>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                        <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
+                        <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="x_img">
                     </button>
                 </div>
                 <div class="modal-body">
