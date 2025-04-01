@@ -307,12 +307,13 @@
   border-radius: 4px;
 }
 
-/*댓글 버튼 : 버튼태그에 img 넣기*/
+
 /* 댓글버튼-show*/
 .comment-btn {
   width: 100px;
-  height: 50px;
+  height: 40px;
 
+  padding-left: 20px;
   border: 3px solid #4b4b4b;
   background-color: white;
   border-radius: 4px;
@@ -321,6 +322,7 @@
   font-weight: bolder;
 
   position: relative;
+  
 }
 .comment-btn::after {
   content: "";
@@ -341,13 +343,13 @@
 }
 
 .comment-input {
-  width: 500px;
+  width: 400px;
   height: 40px;
   border: 3px solid #4b4b4b;
   border-radius: 4px;
 }
 
-.comment-input-submit {
+.comment-button-submit {
   width: 80px;
   height: 40px;
   border: 3px solid #4b4b4b;

@@ -156,14 +156,14 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
             <li>댓글버튼(댓글보이기) img : .comment-btn > img </li>
             <li>댓글(작성하기) div : .comment-div</li>
             <li>댓글(작성하기) input : .comment-input</li>
-            <li>댓글(작성하기) input[type=submit] : comment-input-submit </li>
+            <li>댓글(작성하기) input[type=submit] : comment-button-submit </li>
             <br>
             <li>예시
                 <br>
                 <button class="comment-btn">댓글</button>
                 <div clsaa="comment-div">
                     <input class="comment-input" type="text">
-                    <input class="comment-input-submit" type="submit"></input>
+                    <input class="comment-button-submit" type="submit"></input>
                 </div>
             </li>
         </ul>

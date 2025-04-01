@@ -79,6 +79,11 @@ public class HomeController {
         return "spot/inventory";
     }
 
+    @RequestMapping("/spot_notice")
+    public String announcement() {
+        return "spot/notice";
+    }
+
 
     //유하
     @RequestMapping("/loginForm")
