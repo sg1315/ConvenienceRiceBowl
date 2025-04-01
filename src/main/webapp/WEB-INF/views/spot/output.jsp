@@ -18,14 +18,24 @@
     #top-manu{
       display: flex;
       justify-content: space-between;
-    }
-    #top-reft{
+      /*background-color: white;*/
       background-color: #D9D9D9;
-      width: 30%;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 50%;
     }
-    #top-reft1{
+    #top-left{
+      /*background-color: #D9D9D9;*/
+      width: 20%;
+      background: white;
+      border-bottom-right-radius: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #top-left1{
       background-color: white;
       display: flex;
+
       align-content: center;
       align-items: center;
       width: 100%;
@@ -35,46 +45,81 @@
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 70%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      width: 80%;
+
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
+      padding: 20px;
+    }
+    #top-right1-top{
+      width: 80%;
+      height: 50%;
+      padding: 10px;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+    }
+    #top-right1-bottom{
+      width: 80%;
+      height: 50%;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      padding: 10px;
+    }
+    #search-content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     #status-check, #category-select{
       border-radius: 10px;
     }
     #status-check{
-      width: 80px;
+      /*width: 80px;*/
     }
-
+    #category-select{
+      /*width: 10%;*/
+    }
     #search-box{
-      width: 70%;
+      /*width: 50%;*/
       display: flex;
       justify-content: center;
     }
     #search-box input:nth-child(1){
       width: 60%;
       padding: 10px;
+      border-radius: 10px;
+    }
+
+    .search-input{
+      border-radius: 10px;
+    }
+    .search-input-submit{
+      border-radius: 10px;
+      width: 100px;
+    }
+    .date-input{
+      border-radius: 10px;
     }
 
     #table1 td img{
       width: 20px;
     }
 
-    #top-reft p {
+    #top-left p {
       padding-left: 15px;
     }
     #main{
       background-color: #D9D9D9;
       width: 100%;
-      height: 90%;
+      height: 80%;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
       padding: 50px 50px 100px;
+
     }
     #main-in{
       background-color: white;
@@ -180,33 +225,46 @@
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
   <div id="top-manu">
-    <div id="top-reft">
-      <div id="top-reft1">
+    <div id="top-left">
+      <div id="top-left1">
         <img src="../resources/menu_icons/출고 아이콘.png">
         <p class="main_name">출고</p>
       </div>
     </div>
 
     <div id="top-right1">
-        <div class="selectbox" id="status-check">
-          <select>
-            <option>상태</option>
-            <option>판매</option>
-            <option>폐기</option>
-          </select>
-        </div>
-        <div class="selectbox" id="category-select">
-          <select>
-            <option>카테고리</option>
-            <option>스낵</option>
-            <option>음료</option>
-          </select>
+      <div id="top-right1-top">
+        <input type="button"  class="search-input-submit" value="저번 달">
+        <input type="button"  class="search-input-submit" value="최근">
+        <input type="date" class="date-input">
+        <input type="date" class="date-input">
+      </div>
+      <div id="top-right1-bottom">
+        <div id="search-content">
+          <div class="selectbox" id="status-check">
+            <select>
+              <option>상태</option>
+              <option>판매</option>
+              <option>폐기</option>
+            </select>
+          </div>
+          <div class="selectbox" id="category-select">
+            <select>
+              <option>카테고리</option>
+              <option>스낵</option>
+              <option>음료</option>
+            </select>
+          </div>
+          <div id="search-text">
+            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
+          </div>
         </div>
         <div id="search-box">
-          <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-          <input class="search-input-submit" type="submit" value="검색" />
+          <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
         </div>
       </div>
+
+    </div>
 
     </div>
     <div id="main">
@@ -247,8 +305,8 @@
             <td>1219047</td>
             <td>스낵</td>
             <td>달콤 프란찌(초코)</td>
-            <td>80</td>
-            <td>64,000</td>
+            <td>50</td>
+            <td>40,000</td>
             <td>판매</td>
           </tr>
 
