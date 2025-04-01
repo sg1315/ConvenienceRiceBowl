@@ -360,8 +360,8 @@
 /* 출근 */
 .gowork-btn {
 
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 70px;
 
   background-color: white;
   border: 4px solid #a6a6a6;
@@ -369,7 +369,7 @@
   border-radius: 8px;
 
  
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bolder;
   color: #0073ff;
 }
@@ -377,14 +377,14 @@
 /* 퇴근 */
 .gohome-btn {
 
-  width: 200px;
-  height: 100px;
+  width: 150px;
+  height: 70px;
   background-color: white;
   border: 4px solid #a6a6a6;
   box-shadow: 0 5px 0 -1px #a6a6a6;
   border-radius: 8px;
 
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bolder;
   color: #ff0000;
 }

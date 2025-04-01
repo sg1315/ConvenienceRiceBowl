@@ -9,52 +9,58 @@ contentType="text/html;charset=UTF-8" language="java" %>
         padding: 50px;
         font-family: 'Open Sans', sans-serif;
       }
-
-      #top-manu {
-        display: flex;
-        justify-content: space-between;
-      }
-      #attendance-head {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        font-size: 60px;
-        font-weight: bold;
-
-        padding: 10px;
-      }
-      #attendance-head img {
-        width: 70px;
-        height: 70px;
-        margin-right: 20px;
-      }
-      .main_name {
-        font-weight: bolder;
-        font-size: 50px;
-        margin: 0;
-      }
-
-      #main {
-        background-color: #d9d9d9;
-        width: 100%;
-        height: 90%;
-        border-radius: 4px;
-        padding: 50px 50px 100px;
-      }
-      #main-in {
-        background-color: white;
-        width: 100%;
-        height: 100%;
-        border-radius: 20px;
-        padding: 50px;
-      }
-      @media screen and (max-width: 1800px) {
-        #main-in {
-          overflow-x: auto;
+      .main_name{
+            font-weight: bolder;
+            font-size: 50px;
+            margin: 0;
         }
-      }
+        #top-manu{
+            display: flex;
+            justify-content: space-between;
+        }
+        #top-left{
+            width: 70%;
+        }
+        #top-left1{
+            background-color: white;
+            display: flex;
+            align-content: center;
+            align-items: center;
+            width: 100%;
+            border-bottom-right-radius: 20px;
+            padding-bottom: 10px;
+        }
+
+        #top-right1{
+            width: 30%;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            padding-bottom: 10px;
+
+        }
+        #top-left p {
+            padding-left: 15px;
+        }
+        #main{
+            background-color: #D9D9D9;
+            width: 100%;
+            height: 90%;
+            border-top-right-radius: 20px;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            padding: 50px 50px 100px;
+        }
+        #main-in{
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+
       #main-pageing {
         padding-top: 10px;
         display: flex;
@@ -87,128 +93,130 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: #3c3c3c;
         font-weight: bold;
       }
-      #btn-close-modal {
-        width: 20px;
-        height: 20px;
+      #x_img{
+            width: 10px;
+            height: 10px;
+    }
+    #btn-close-modal{
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    .modal-content {
+        height: 80vh;
+    }
+
+    .modal-header, .modal-footer{
+        background-color: #D9D9D9;
+
+    }
+    #footer{
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      #x_img {
-        width: 10px;
-        height: 10px;
-      }
-      /* 화면기준 */
-      #staticBackdrop {
-        width: 350px;
-        height: 700px;
-        overflow: hidden;
-        position: fixed;
-        left: 70%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .search-input-gray {
-        font-weight: normal;
-        margin: 5px 0;
-      }
+        gap: 2px;
+    }
 
-      .modal-body {
-        display: inline-block;
-        margin: auto;
-      }
-      .modal-body-main > p {
-        width: 280px;
-      }
-      .search-input-gray {
-        width: inherit;
-      }
-      .modal-header,
-      .modal-footer {
-        background-color: #d9d9d9;
-      }
+    .modal-body input{
+        border:1px solid gray;
+        border-radius : 8px;
+        width:80%;
+        height:8%;
+        text-align:center;
+        margin-bottom:16px;
+    }
 
-      .modal-footer > div {
-        display: flex;
-        gap: 5px;
-        justify-content: center;
-        margin: auto;
-      }
 
-      table th:nth-child(6),
-      table td:nth-child(6) {
-        padding-right: 0px;
-      }
+    #modal-body-div{
+        padding-left:18%;
+        padding-top:4%;
+    }
 
-      table th:nth-child(8),
-      table td:nth-child(8) {
-        padding-left: 0px;
-      }
+    #header-title{
+        margin-left:22%;
+    }
+    #header-title h1{
+        font-weight:bold;
+        font-color:white;
+    }
+    .modal-dialog {
+        position: absolute;
+        top:5%;
+        left: 20%;
+        transform: translateX(20%);
+    }
 
-      input[type='text'], .gowork-btn:active, .gowork-btn:focus,.gohome-btn:active, .gohome-btn:focus{
+    input[type='text'], .gowork-btn:active, .gowork-btn:focus,.gohome-btn:active, .gohome-btn:focus{
        outline: none;
       }
-    .modal-body-main input {
-        padding-left: 5px;
-    }
     </style>
   </head>
   <body>
     <jsp:include page="../common/header.jsp" />
     <div class="waper">
-      <div id="top-manu">
-        <div id="attendance-head">
-          <img src="/resources/menu_icons/근태관리 아이콘.png" />
-          <p>근태관리</p>
+        <div id="top-manu">
+            <div id="top-left">
+                <div id="top-left1">
+                    <img src="../resources/menu_icons/근태관리 아이콘.png">
+                    <p class="main_name">근태 관리</p>
+                </div>
+            </div>
+
+            <div id="top-right1">
+                <button class="gowork-btn" onclick="changebtn(this)">출근</button>
+                <button
+                class="gohome-btn"
+                onclick="changebtn(this)"
+                style="display: none"> 퇴근</button>
+            </div>
+
         </div>
-        <button class="gowork-btn" onclick="changebtn(this)">출근</button>
-        <button
-          class="gohome-btn"
-          onclick="changebtn(this)"
-          style="display: none"
-        >
-          퇴근
-        </button>
-      </div>
-      <div id="main">
-        <div id="main-in">
-          <table class="table table-hover" id="table1">
-            <colgroup>
-              <col style="width: 10%" />
-              <col style="width: 10%" />
-              <col style="width: 10%" />
-              <col style="width: 16%" />
-              <col style="width: 10%" />
-              <col style="width: 20%" />
-              <col style="width: 4%" />
-              <col style="width: 20%" />
-            </colgroup>
-            <thead>
-              <tr>
-                <th>직급</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>전화번호</th>
-                <th>재직</th>
-                <th>출근시간&nbsp;</th>
-                <th>~</th>
-                <th>&nbsp;퇴근시간</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>알바</td>
-                <td>abc</td>
-                <td>이인혜</td>
-                <td>010-1111-2222</td>
-                <td>Y</td>
-                <td>2025-03-03 10:00:00</td>
-                <td>~</td>
-                <td>2025-03-03 18:00:00</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+
+        <div id="main">
+            <div id="main-in">
+                <table class="table table-hover" id="table1">
+                    <colgroup>
+                        <col style="width: 10%" />
+                        <col style="width: 10%" />
+                        <col style="width: 10%" />
+                        <col style="width: 16%" />
+                        <col style="width: 10%" />
+                        <col style="width: 20%" />
+                        <col style="width: 4%" />
+                        <col style="width: 20%" />
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>직급</th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>전화번호</th>
+                        <th>재직</th>
+                        <th>출근시간&nbsp;</th>
+                        <th>~</th>
+                        <th>&nbsp;퇴근시간</th>
+                    </tr>
+                    </thead>
+
+                    <tbody >
+                    <tr>
+                        <td>알바</td>
+                        <td>abc</td>
+                        <td>이인혜</td>
+                        <td>010-1111-2222</td>
+                        <td>Y</td>
+                        <td>2025-03-03 10:00:00</td>
+                        <td>~</td>
+                        <td>2025-03-03 18:00:00</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
         <div id="main-pageing">
           <img src="/resources/common/공통_페이징바화살표.png" />
           <button type="button" class="btn btn-outline-secondary">1</button>
@@ -232,94 +240,77 @@ contentType="text/html;charset=UTF-8" language="java" %>
         crossorigin="anonymous"
       ></script>
 
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <div id="header-title">
-                <h1 class="modal-title fs-4">근태 수정</h1>
-              </div>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                id="btn-close-modal"
-              >
-                <img
-                  src="<c:url value='/resources/common/공통_Icon.png'/>"
-                  id="x_img"
-                />
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="modal-body-main">
-                <!--모달 내용-->
-                <p>
-                  <strong>직급</strong> <br />
-                  <input type="text" id="modal-rank" class="search-input-gray" readonly />
-                </p>
-                <p>
-                  <strong>아이디</strong><br />
-                  <input
-                    type="text"
-                    id="modal-id"
-                    class="search-input-gray"
-                    readonly
-                  />
-                </p>
-                <p>
-                  <strong>이름</strong> <br />
-                  <input
-                    type="text"
-                    id="modal-name"
-                    class="search-input-gray"
-                    readonly
-                  />
-                </p>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"                   tabindex="-1"aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div id="header-title">
+                            <h1 class="modal-title fs-5">직원 정보 수정</h1>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                            <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="x_img">
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--모달 내용-->
+                        <div id="modal-body-div">
+                            <div id="modal-div">
+                                <p>
+                                    <strong>직급</strong> <br />
+                                    <input type="text" id="modal-rank" class="search-input-gray" readonly />
+                                </p>
+                                <p>
+                                    <strong>아이디</strong><br />
+                                    <input
+                                    type="text"
+                                    id="modal-id"
+                                    class="search-input-gray"
+                                    readonly
+                                    />
+                                </p>
+                                <p>
+                                    <strong>이름</strong> <br />
+                                    <input
+                                    type="text"
+                                    id="modal-name"
+                                    class="search-input-gray"
+                                    readonly
+                                    />
+                                </p>
 
-                <p>
-                  <strong>출근시간</strong><br />
-                  <input
-                    type="datetime-local"
-                    id="modal-working_time"
-                    class="search-input-gray"
-                  />
-                </p>
-                <p>
-                  <strong>퇴근시간</strong><br />
-                  <input
-                    type="datetime-local"
-                    id="modal-workout_time"
-                    class="search-input-gray"
-                  />
-                </p>
-              </div>
+                                <p>
+                                    <strong>출근시간</strong><br />
+                                    <input
+                                    type="datetime-local"
+                                    id="modal-working_time"
+                                    class="search-input-gray"
+                                    />
+                                </p>
+                                <p>
+                                    <strong>퇴근시간</strong><br />
+                                    <input
+                                    type="datetime-local"
+                                    id="modal-workout_time"
+                                    class="search-input-gray"
+                                    />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" id="footer">
+                        <button type="button" class="gray-btn" id="footer-btn">
+                            수정
+                        </button>
+                        <button type="button" class="gray-btn" id="footer-btn">
+                            삭제
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            <div class="modal-footer">
-              <div>
-                <button type="button" class="gray-btn" id="footer-btn">
-                  수정
-                </button>
-                <button type="button" class="gray-btn" id="footer-btn">
-                  삭제
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <script>
+
+
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
           const rows = document.querySelectorAll('#table1 tbody tr');
 
