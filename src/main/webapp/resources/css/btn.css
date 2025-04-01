@@ -352,6 +352,7 @@
 /* 근태버튼 */
 /* 출근 */
 .gowork-btn {
+
   width: 200px;
   height: 100px;
 
@@ -360,13 +361,15 @@
   box-shadow: 0 5px 0 -1px #a6a6a6;
   border-radius: 8px;
 
+ 
   font-size: 50px;
   font-weight: bolder;
-  color: 0.0073ff;
+  color: #0073ff;
 }
 
 /* 퇴근 */
 .gohome-btn {
+
   width: 200px;
   height: 100px;
   background-color: white;

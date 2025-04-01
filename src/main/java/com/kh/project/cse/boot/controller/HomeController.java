@@ -53,6 +53,9 @@ public class HomeController {
     }
     //승기
 
-
+    @RequestMapping("/attendance")
+    public String attendance() {
+        return "spot/attendance";
+    }
 
 }

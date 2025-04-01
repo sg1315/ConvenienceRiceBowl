@@ -19,10 +19,7 @@
             display: flex;
             justify-content: space-between;
         }
-        #top-reft{
-            background-color: #D9D9D9;
-            width: 70%;
-        }
+ 
         #top-reft1{
             background-color: white;
             display: flex;
@@ -33,16 +30,7 @@
             padding-bottom: 10px;
         }
 
-        #top-right1{
-            background-color: #D9D9D9;
-            width: 30%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-        }
-        #top-reft p {
+        #top-reft1 p {
             padding-left: 15px;
         }
         #main{
@@ -115,16 +103,13 @@
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
     <div id="top-manu">
-        <div id="top-reft">
+    
             <div id="top-reft1">
                 <img src="../resources/menu_icons/직원 아이콘.png">
                 <p class="main_name">직원 정보</p>
             </div>
-        </div>
+    </div>
 
-        <div id="top-right1">
-            <input type="text"> <input type="submit" value="검색">
-        </div>
 
     </div>
     <div id="main">
@@ -246,7 +231,7 @@
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">직원 정보 수정</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                        <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
+                        <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="x_img">
                     </button>
                 </div>
                 <div class="modal-body">

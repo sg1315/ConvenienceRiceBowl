@@ -15,11 +15,12 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
       box-sizing: border-box;
     }
     *{
-
+      
       margin: 0px;
       padding: 0px;
     }
     .outer{
+      font-family: "Open Sans", sans-serif;
       width: 1024px;
       height: 768px;
       border: 1px solid black;

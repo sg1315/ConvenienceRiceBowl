@@ -205,7 +205,7 @@
             <div>
               <ul>
                 <li><a><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
-                <li><a><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
+                <li><a href="attendance"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
               </ul>
             </div>
           </div>
