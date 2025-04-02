@@ -42,9 +42,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         border-top-right-radius: 20px;
       }
 
-    .gray-btn-border{
-        margin-right: 50px;
-    }
       
       #top-left p {
         padding-left: 15px;
@@ -205,15 +202,16 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       
 
-      #comment-btn {
+      #comment-btn-div {
         border-bottom: 3px solid #b4b4b4;
         border-top: 3px solid #b4b4b4;
-        /* 퍼센트수정 5->8 */
         height: 8%;
-        /* 위치조정 */
         display: flex;
         align-items: center;
         background-color: #d9d9d9;
+      }
+      .comment-btn{
+        margin-left: 10px;
       }
       .comment-div{
         margin-top: 5px;
@@ -296,16 +294,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </div>
         </div>
 
-        <div id="top-right1">
-          <button
-            id="announcement-add"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            class="gray-btn-border"
-          >
-            글쓰기
-          </button>
-        </div>
+        <div id="top-right1"></div>
       </div>
       <div id="main">
         <div id="main-in">
@@ -445,10 +434,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <div class="modal-body" id="detail-modal-body">
               <div id="detail-modal-body-top">
                 <p id="detail-modal-body-top-title">3월28일 업데이트</p>
-                <div>
-                  <button class="black-btn">수정</button>
-                  <button class="red-btn">삭제</button>
-                </div>
               </div>
               <div>
                 <p id="detail-modal-body-top-content">
@@ -470,7 +455,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 </p>
               </div>
             </div>
-            <div id="comment-btn">
+            <div id="comment-btn-div">
               <button class="comment-btn">댓글</button>
             </div>
             <div id="comment">
