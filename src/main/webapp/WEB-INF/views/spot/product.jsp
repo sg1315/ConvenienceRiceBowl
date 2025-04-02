@@ -138,7 +138,10 @@
 
     /* 모달창 시작 */
     .modal-content {
-      height: 500px;
+      height: 90vh;
+    }
+    .modal-header, .modal-footer{
+      background-color: #D9D9D9;
     }
     .modal-header {
       border: none !important;
@@ -253,26 +256,11 @@
     #product-detail-modify-table p {
       padding-left: 10px;
     }
-    #product-detail-modify-table input {
-      padding-left: 10px;
-      border: none;
-      outline: none;
-      box-shadow: none;
-    }
-
-    #product-detail-modify-table td{
-      position: relative;
-      padding: 5px;
-    }
-
-    #product-detail-modify-table td::after{
-      content: '';
+    .modal-dialog {
       position: absolute;
-      top: 20%;
-      left: 0;
-      width: 2px;
-      height: 60%;
-      background-color: black;
+      top:5%;
+      left: 20%;
+      transform: translateX(20%);
     }
 
     #product-detail-modify-table td:first-child::after{
@@ -382,14 +370,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade"
-       id="staticBackdrop"
-       data-bs-backdrop="static"
-       data-bs-keyboard="false"
-       tabindex="-1"
-       aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <div id="header-title">

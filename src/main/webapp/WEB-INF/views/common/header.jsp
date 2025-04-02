@@ -172,7 +172,88 @@
         position: relative;
         left: 20px
       }
-      
+      /* myinfo */
+      #myinfo,#logout{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #477154;
+        border: none;
+      }
+      #myinfo img,#logout img{
+        width: 100%;
+        height: 70%;
+      }
+
+      /* modal */
+      #modal-dialog {
+        display: flex;
+        height: 94vh;
+        width: 100%;
+        flex-direction: row;
+      }
+      #modal-header,modal-footer{
+        background-color: #D9D9D9;
+      }
+      #modal-body{
+        height: 75%;
+        flex-grow: 1;
+      }
+      body #modal-dialog {
+        max-width: 24%;
+        height: 90vh;
+      }
+      #modal-dialog {
+        position: absolute;
+        transform: translateX(20%);
+        left: 60%;
+      }
+      #header-title{
+        margin-left:20%;
+      }
+      #header-title h1{
+        font-size: 40px;
+        font-weight: bold;
+      }
+      #form1 {
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        gap: 10px;
+      }
+
+      #form1 strong {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      #form1 input {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+      }
+
+      #form1 input[readonly] {
+        background-color: #f8f8f8;
+        color: #777;
+        border: 1px solid #ddd;
+      }
+
+      .footer-btn {
+        width: 100%;
+        padding: 10px;
+        color: #8A8A8A;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
     </style>
   </head>
   <body>
@@ -191,8 +272,10 @@
         <div>
 <%--          <button>개인정보수정</button>--%>
 <%--          <button>로그아웃</button>--%>
-          <img src="/resources/menubar_icons/개인정보수정.png">
-          <img src="/resources/menubar_icons/로그아웃.png">
+          <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
+            <img src="/resources/menubar_icons/개인정보수정.png">
+          </button>
+          <button id="logout"><img src="/resources/menubar_icons/로그아웃.png"></button>
         </div>
       </div>
       <div id="nav-menu">
@@ -231,6 +314,61 @@
       </div>
     </nav>
 
+    <!--start point-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticHeader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" id="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header" id="modal-header">
+            <div id="header-title">
+              <h1 class="modal-title fs-5">개인 정보 수정</h1>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+              <img src="/resources/common/공통_Icon.png" id="x_img">
+            </button>
+          </div>
+          <div class="modal-body" id="modal-body">
+            <div>
+              <form action="#">
+                <div id="form1">
+                  <strong>이름</strong>
+                  <input type="text" placeholder="이름가져오기" readonly>
+                  <strong>휴대폰</strong>
+                  <input type="text" placeholder="휴대폰가져오기 : 010-0000-0000">
+                  <strong>주민번호</strong>
+                  <input type="text" placeholder="주민번호가져오기 : 121212-1******" readonly>
+                  <strong>아이디</strong>
+                  <input type="text" placeholder="아이디가져오기" readonly>
+                  <strong>비밀번호</strong>
+                  <input type="text" placeholder="비밀번호 가져오기 : *******">
+                  <strong>비밀번호 확인</strong>
+                  <input type="text" placeholder="비밀번호 확인란 : *******">
+                </div>
+
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer" id="modal-footer">
+            <button type="button" class="footer-btn">수정</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const modal = new bootstrap.Modal(document.getElementById("staticHeader"));
+        document.getElementById("myinfo").addEventListener("click", function (event) {
+                event.stopPropagation();
+                modal.show();
+            });
+        document.getElementById("btn-close-modal").addEventListener("click", function () {
+          modal.hide();
+        });
+      });
+    </script>
+    <!--end point-->
   </div>
   </body>
 </html>
