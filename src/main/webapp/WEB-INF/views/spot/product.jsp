@@ -136,7 +136,7 @@
       height: 10px;
     }
     .modal-content {
-      height: 80vh;
+      height: 500px;
     }
     .modal-header, .modal-footer{
       background-color: #D9D9D9;
@@ -149,30 +149,14 @@
       text-align:center;
       margin-bottom:16px;
     }
-    #select-modal-rank{
-      margin-bottom:6px;
-      margin-right: 20%;
-    }
-    #select-modal-status{
-      width: 24%;
-      border-radius: 8px;
-    }
-    #modal-div{
-      display:flex;
-      height:8%;
-      flex-direction:row-reverse;
-      justify-content:space-between;
-      margin-bottom:6px;
-      align-items: flex-end;
-    }
-    #select-modal-rank{
-      width:20%;
-      height:100%;
-    }
+
+
     #modal-body-div{
       padding-left:18%;
       padding-top:4%;
     }
+
+
     #footer-btn{
       width:66%;
       margin-right:16%;
@@ -297,8 +281,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade"
+       id="staticBackdrop"
+       data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1"
+       aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <div id="header-title">
