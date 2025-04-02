@@ -176,5 +176,6 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <a href="/loginForm">로그인</a>
     <a href="/spot_expiration">유통기한 관리</a>
     <a href="/spotOutput">지점 출고</a>
+    <a href="/spotSalesYear">지점 매출 연단위</a>
   </body>
 </html>

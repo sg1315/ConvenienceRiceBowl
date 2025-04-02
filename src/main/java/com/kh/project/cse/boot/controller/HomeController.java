@@ -59,9 +59,17 @@ public class HomeController {
     }
     //승기
 
+    //승기 지점-출고
     @RequestMapping("/spotOutput")
     public String spotOutput() {
         return "spot/output";
+    }
+    //승기
+
+    //승기 지점-매출 연단위
+    @RequestMapping("/spotSalesYear")
+    public String index() {
+        return "spot/salesYear";
     }
 
     //택봉-직원관리
