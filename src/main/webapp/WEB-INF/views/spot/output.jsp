@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/btn.css">
+  <link rel="stylesheet" href="/resources/css/btn.css">
   <style>
 
 
@@ -17,91 +17,68 @@
     }
     #top-manu{
       display: flex;
-      justify-content: space-between;
-      /*background-color: white;*/
-      background-color: #D9D9D9;
-      border-top-right-radius: 20px;
-      border-top-left-radius: 50%;
-    }
-    #top-left{
+      /*justify-content: space-between;*/
+      /*!*background-color: white;*!*/
       /*background-color: #D9D9D9;*/
-      width: 20%;
-      background: white;
-      border-bottom-right-radius: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-top-right-radius: 20px;
+    }
+
+    #top-left{
+      background-color: #D9D9D9;
+      width: 40%;
     }
     #top-left1{
       background-color: white;
       display: flex;
-
       align-content: center;
       align-items: center;
+      height: 100%;
       width: 100%;
       border-bottom-right-radius: 20px;
       padding-bottom: 10px;
+      padding-left: 10px;
+    }
+    .search-input-submit{
+      margin: 0px;
     }
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 80%;
-
+      width: 60%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
-      padding: 20px;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-top: 10px;
+    }
+    #top-right1-left{
+      width: 80%;
+
     }
     #top-right1-top{
-      width: 80%;
       height: 50%;
-      padding: 10px;
       display: flex;
-      justify-content: left;
+      justify-content: space-between;
       align-items: center;
     }
     #top-right1-bottom{
-      width: 80%;
+      padding-top: 10px;
       height: 50%;
       display: flex;
-      justify-content: left;
       align-items: center;
-      padding: 10px;
+      gap: 5%;
     }
-    #search-content{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    #search-text{
+      width: 66.8%;
     }
-
-    #status-check, #category-select{
-      border-radius: 10px;
+    #search-text input{
+      width: 100%;
     }
-    #status-check{
-      /*width: 80px;*/
-    }
-    #category-select{
-      /*width: 10%;*/
-    }
-    #search-box{
-      /*width: 50%;*/
-      display: flex;
-      justify-content: center;
-    }
-    #search-box input:nth-child(1){
-      width: 60%;
-      padding: 10px;
-      border-radius: 10px;
-    }
-
-    .search-input{
-      border-radius: 10px;
-    }
-    .search-input-submit{
-      border-radius: 10px;
-      width: 100px;
-    }
-    .date-input{
-      border-radius: 10px;
+    #margi {
+      height: 60%;
     }
 
     #table1 td img{
@@ -233,14 +210,15 @@
     </div>
 
     <div id="top-right1">
-      <div id="top-right1-top">
-        <input type="button"  class="search-input-submit" value="저번 달">
-        <input type="button"  class="search-input-submit" value="최근">
-        <input type="date" class="date-input">
-        <input type="date" class="date-input">
-      </div>
-      <div id="top-right1-bottom">
-        <div id="search-content">
+      <div id="top-right1-left">
+        <div id="top-right1-top">
+          <input type="button"  class="search-input-submit" value="저번 달">
+          <input type="button"  class="search-input-submit" value="최근">
+          <input type="date" class="date-input">
+          ~
+          <input type="date" class="date-input">
+        </div>
+        <div id="top-right1-bottom">
           <div class="selectbox" id="status-check">
             <select>
               <option>상태</option>
@@ -259,58 +237,59 @@
             <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
           </div>
         </div>
-        <div id="search-box">
-          <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
-        </div>
       </div>
 
+      <div id="search-box">
+        <div id="margi"></div>
+        <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
+      </div>
     </div>
 
-    </div>
-    <div id="main">
-      <div id="main-in">
-        <table class="table table-hover" id="table1">
-          <thead>
-          <tr>
-            <th class="col-1">출고날짜</th>
-            <th class="col-1">상품번호</th>
-            <th class="col-1">카테고리</th>
-            <th class="col-2">상품명</th>
-            <th class="col-1">수량</th>
-            <th class="col-1">금액</th>
-            <th class="col-1">상태</th>
-          </tr>
-          </thead>
-          <tbody >
-          <tr>
-            <td>25/12/10</td>
-            <td>1219045</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(딸기)</td>
-            <td>2</td>
-            <td>0</td>
-            <td>폐기</td>
-          </tr>
-          <tr>
-            <td>25/12/10</td>
-            <td>1219046</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(메론)</td>
-            <td>80</td>
-            <td>64,000</td>
-            <td>판매</td>
-          </tr>
-          <tr>
-            <td>25/12/10</td>
-            <td>1219047</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(초코)</td>
-            <td>50</td>
-            <td>40,000</td>
-            <td>판매</td>
-          </tr>
+  </div>
+  <div id="main">
+    <div id="main-in">
+      <table class="table table-hover" id="table1">
+        <thead>
+        <tr>
+          <th class="col-1">출고날짜</th>
+          <th class="col-1">상품번호</th>
+          <th class="col-1">카테고리</th>
+          <th class="col-2">상품명</th>
+          <th class="col-1">수량</th>
+          <th class="col-1">금액</th>
+          <th class="col-1">상태</th>
+        </tr>
+        </thead>
+        <tbody >
+        <tr>
+          <td>25/12/10</td>
+          <td>1219045</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(딸기)</td>
+          <td>2</td>
+          <td>0</td>
+          <td>폐기</td>
+        </tr>
+        <tr>
+          <td>25/12/10</td>
+          <td>1219046</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(메론)</td>
+          <td>80</td>
+          <td>64,000</td>
+          <td>판매</td>
+        </tr>
+        <tr>
+          <td>25/12/10</td>
+          <td>1219047</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(초코)</td>
+          <td>50</td>
+          <td>40,000</td>
+          <td>판매</td>
+        </tr>
 
-          </tbody>
+        </tbody>
       </table>
     </div>
     <div id="main-pageing">
