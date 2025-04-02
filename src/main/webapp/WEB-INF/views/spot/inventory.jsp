@@ -20,7 +20,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
       #top-reft {
         background-color: #d9d9d9;
-        width: 40%;
+        width: 50%;
       }
       #top-reft1 {
         background-color: white;
@@ -34,7 +34,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #top-right1 {
         background-color: #d9d9d9;
-        width: 60%;
+        width: 50%;
         display: flex;
         justify-content: right;
         align-items: center;
