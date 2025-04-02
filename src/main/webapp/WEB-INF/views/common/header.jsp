@@ -69,6 +69,9 @@
         min-width: 1440px;
         min-height: 810px;
 
+        /*min-width: 1920px;*/
+        /*min-height: 1080px;*/
+
         max-width: 1920px;
         max-height: 1080px;
         display: flex;
@@ -340,15 +343,15 @@
             재고관리
             <div>
               <ul>
-                <li><a href="https://naver.com"><img src="/resources/menubar_icons/대시보드 아이콘.png"> 대시보드</a></li>
-                <li><a><img src="/resources/menubar_icons/발주 아이콘.png"> 발주</a></li>
-                <li><a><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
-                <li><a><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
-                <li><a><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
-                <li><a href="spot-inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
-                <li><a href="spot-sales"><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
+                <li><a href="spot_dashboard"><img src="/resources/menubar_icons/대시보드 아이콘.png"> 대시보드</a></li>
+                <li><a href="spot_order"><img src="/resources/menubar_icons/발주 아이콘.png"> 발주</a></li>
+                <li><a href=""><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
+                <li><a href="spot_output"><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
+                <li><a href="spot_expiration"><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
+                <li><a href="spot_inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
+                <li><a href="spot_sales"><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
                 <%--              <li><a>폐기 상품</a></li>--%>
-                <li><a><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
+                <li><a href="spot_product"><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
               </ul>
             </div>
           </div>

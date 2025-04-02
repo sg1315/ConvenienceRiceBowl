@@ -2,6 +2,7 @@
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>지점 재고</title>
     <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       .waper {
@@ -18,11 +19,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
         display: flex;
         justify-content: space-between;
       }
-      #top-reft {
+      #top-left {
         background-color: #d9d9d9;
         width: 50%;
       }
-      #top-reft1 {
+      #top-left1 {
         background-color: white;
         display: flex;
         align-content: center;
@@ -86,7 +87,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: red;
       }
 
-      #top-reft p {
+      #top-left p {
         padding-left: 15px;
       }
       #main {
@@ -236,8 +237,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <jsp:include page="../common/header.jsp" />
     <div class="waper">
       <div id="top-manu">
-        <div id="top-reft">
-          <div id="top-reft1">
+        <div id="top-left">
+          <div id="top-left1">
             <img src="../resources/menu_icons/직원 아이콘.png" />
             <p class="main_name">재고</p>
           </div>
