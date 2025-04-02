@@ -58,12 +58,4 @@ public class HomeController {
         return "spot/member";
     }
     //택봉
-    @RequestMapping("/receiving")
-    public String receiving() {
-        return "receiving/receivingDetailsForm";
-    }
-    @RequestMapping("/login")
-    public String login() {
-        return "login/loginForm";
-    }
 }

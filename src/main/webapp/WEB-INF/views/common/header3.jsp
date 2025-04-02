@@ -121,7 +121,7 @@
 
             body {
                 color: #333;
-
+            
                 display: grid;
                 grid-template-columns: 20% 80%;
             }
@@ -129,9 +129,7 @@
             nav {
                 width: 100%;
                 height: 100%;
-
                 background-color: #477154;
-                /*border: red solid 1px;*/
                 color: white;
             }
 
@@ -147,7 +145,7 @@
                 text-decoration: none;
             }
 
-            .outer * {
+            .outer *{
                 width: 100%;
                 display: grid;
                 font-size: 1em;
@@ -242,8 +240,8 @@
         const screenWidth = window.innerWidth;
         const screenHeight = window.innerHeight;
         const bo = document.body;
-        bo.style.minWidth = screenWidth + 'px';
-        bo.style.minHeight = screenHeight + 'px';
+        bo.style.width = screenWidth + 'px';
+        bo.style.height = screenHeight + 'px';
         bo.style.fontSize = screenWidth * 0.0126 + 'px';
     </script>
 
