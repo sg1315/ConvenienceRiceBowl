@@ -194,7 +194,7 @@
         width: 100%;
         flex-direction: row;
       }
-      #modal-header,modal-footer{
+      #modal-header,#modal-footer{
         background-color: #D9D9D9;
       }
       #modal-body{
@@ -217,32 +217,7 @@
         font-size: 40px;
         font-weight: bold;
       }
-      #form1 {
-        display: flex;
-        flex-direction: column;
-        padding: 20px;
-        gap: 10px;
-      }
 
-      #form1 strong {
-        font-size: 14px;
-        margin-bottom: 5px;
-      }
-
-      #form1 input {
-        padding: 8px 12px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        text-align: center;
-      }
-
-      #form1 input[readonly] {
-        background-color: #f8f8f8;
-        color: #777;
-        border: 1px solid #ddd;
-      }
 
       .footer-btn {
         width: 100%;
@@ -318,21 +293,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Modal -->
-    <div class="modal fade" id="staticHeader" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-      <div class="modal-dialog" id="modal-dialog">
+    <div class="modal fade" id="editInfo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog" id="editInfo_modal-dialog">
         <div class="modal-content">
-          <div class="modal-header" id="modal-header">
-            <div id="header-title">
-              <h1 class="modal-title fs-5">개인 정보 수정</h1>
+          <div class="modal-header" id="editInfo_modal-header">
+            <div id="editInfo_header-title">
+              <div id="editInfo_header-name">
+                <p class="modal-title fs-5">개인 정보 수정</p>
+              </div>
+              <div id="header-close-btn">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                  <img src="/resources/common/공통_Icon.png" id="editInfo_x_img">
+                </button>
+              </div>
             </div>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-              <img src="/resources/common/공통_Icon.png" id="x_img">
-            </button>
           </div>
-          <div class="modal-body" id="modal-body">
+          <div class="modal-body" id="editInfo_modal-body">
             <div>
-              <form action="#">
-                <div id="form1">
+                <div id="editInfo_modal-content">
                   <strong>이름</strong>
                   <input type="text" placeholder="이름가져오기" readonly>
                   <strong>휴대폰</strong>
@@ -346,11 +324,9 @@
                   <strong>비밀번호 확인</strong>
                   <input type="text" placeholder="비밀번호 확인란 : *******">
                 </div>
-
-              </form>
             </div>
           </div>
-          <div class="modal-footer" id="modal-footer">
+          <div class="modal-footer" id="editInfo_modal-footer">
             <button type="button" class="footer-btn">수정</button>
           </div>
         </div>
@@ -358,7 +334,7 @@
     </div>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const modal = new bootstrap.Modal(document.getElementById("staticHeader"));
+        const modal = new bootstrap.Modal(document.getElementById("editInfo"));
         document.getElementById("myinfo").addEventListener("click", function (event) {
                 event.stopPropagation();
                 modal.show();
@@ -368,6 +344,138 @@
         });
       });
     </script>
+    <style>
+      /* myinfo */
+      #myinfo,#logout{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #477154;
+        border: none;
+      }
+      #myinfo img,#logout img{
+        width: 100%;
+        height: 70%;
+      }
+
+      /* modal */
+      #editInfo_modal-dialog {
+        display: flex;
+        height: 90vh;
+        width: 100%;
+        flex-direction: row;
+        max-width: 24%;
+      }
+      #editInfo_modal-header,#editInfo_modal-footer{
+        background-color: #D9D9D9;
+      }
+      #editInfo_modal-dialog {
+        position: absolute;
+        transform: translateX(20%);
+        left: 60%;
+      }
+      /* modal-header */
+      #editInfo_header-title{
+        display: flex;
+        width: 100%;
+        margin: auto;
+      }
+      #editInfo_header-name{
+        width: 90%;
+      }
+      #header-close-btn{
+        width: 10%;
+      }
+      #editInfo_header-name p{
+        display: flex;
+        width: 100%;
+        font-size: 30px;
+        font-weight: bold;
+        align-items: center;
+        justify-content: center;
+      }
+      #editInfo_x_img{
+        width: 15px;
+        height: 17px;
+      }
+      #editInfo_modal-header{
+        padding-left: 10%;
+        height: 12%;
+      }
+      /* //modal-header */
+
+      /* modal-body */
+      #editInfo_modal-body{
+
+        width: 100%;
+        height: 60%;
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+      #editInfo_modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
+      }
+
+      #editInfo_modal-content strong {
+        font-size: 14px;
+        margin-bottom: 5px;
+        margin-top: 10px;
+      }
+
+      #editInfo_modal-content input {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+      }
+
+      #editInfo_modal-content input[readonly] {
+        background-color: #f8f8f8;
+        color: #777;
+        border: 1px solid #ddd;
+      }
+      /* //modal-body */
+
+      #editInfo_modal-footer{
+        display: flex;
+        height: 12%;
+        padding-left: 10%;
+        padding-right: 10%;
+        align-items: center;
+        justify-content: center;
+      }
+      .footer-btn {
+        width: 100%;
+        height: 100%;
+        color: #8A8A8A;
+        font-size: 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 0;
+      }
+      #btn-close-modal{
+        border : none;
+        background: none;
+      }
+
+      /* test */
+      /* modal */
+
+
+
+
+      /* //test */
+
+    </style>
     <!--end point-->
   </div>
   </body>
