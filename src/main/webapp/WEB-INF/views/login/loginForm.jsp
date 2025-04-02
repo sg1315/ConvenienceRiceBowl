@@ -15,6 +15,13 @@
                 font-weight: 600;
             }
 
+            html{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+
             body {
                 max-width: 100%;
                 background-color: #477154;
@@ -48,7 +55,6 @@
 
             .login>div {
                 width: 100%;
-                display: flex;
                 display: grid;
                 flex-direction: column;
                 grid-template-rows: 76% 24%;
