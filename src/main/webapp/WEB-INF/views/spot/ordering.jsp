@@ -284,7 +284,7 @@
 
         <div id="top-right1">
             <div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
                     발주<br>요청
                 </button>
             </div>
@@ -421,7 +421,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Button Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="staticOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" id="modal-content">
                 <div id="modal_left_wrap">

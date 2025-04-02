@@ -136,7 +136,7 @@
       height: 10px;
     }
     .modal-content {
-      height: 80vh;
+      height: 90vh;
     }
     .modal-header, .modal-footer{
       background-color: #D9D9D9;
