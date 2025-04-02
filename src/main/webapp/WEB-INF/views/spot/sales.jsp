@@ -38,18 +38,35 @@ contentType="text/html;charset=UTF-8" language="java" %>
         background-color: #d9d9d9;
         width: 70%;
         display: flex;
-        gap: 15px;
-        /* justify-content: space-around; */
-        justify-content: center;
+
+        justify-content: right;
+
         align-items: center;
         align-content: center;
 
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+        gap: 20px;
       }
 
-      
+      .search-input-submit {
+        margin-right: 0px;
+      }
 
+      #searchdate {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-right: 50px;
+      }
+      #searchdate span {
+        color: white;
+        margin: 0 10px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+      /* main */
       #main-title {
         display: flex;
         align-items: end;
@@ -77,12 +94,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         padding: 50px;
       }
 
-      #main-pageing {
-        padding-top: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
       #table1 {
         text-align: center;
         outline: none;
@@ -90,6 +101,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
         table-layout: auto;
       }
 
+      #main-pageing {
+        padding-top: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
       #main-pageing img {
         width: 70px;
         padding: 10px;
@@ -111,33 +128,29 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-weight: bold;
       }
 
-      /*
-        -----------------------
-        모달창
-         */
-
+      /*모달창*/
       .modal-content {
         height: 90%;
       }
 
-      #modal-header{
+      #modal-header {
         background-color: #d9d9d9;
         border-top-right-radius: 4px;
         border-top-left-radius: 4px;
       }
 
-      #header-title{
+      #header-title {
         margin: 25px 20px 0px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
-      
-      #header-title p{
+
+      #header-title p {
         font-size: 30px;
         font-weight: bold;
       }
-      #header-title button{
+      #header-title button {
         border: none;
         background: none;
       }
@@ -145,54 +158,48 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 15px;
         height: 20px;
       }
-      
-      #header-searchbar{
+
+      #header-searchbar {
         display: flex;
         margin: 15px 20px;
         gap: 10px;
       }
 
-
-
-
       #modal-body {
         height: 80%;
         padding: 20px 30px 10px 30px;
       }
-     #modal-body-table{
+      #modal-body-table {
         width: 100%;
         text-align: center;
         border-collapse: separate;
-        
-       
+      }
 
-     }
-     #modal-body-table th {
+      #modal-body-table th {
         border-bottom: 3px solid #b4b4b4;
         padding-bottom: 7px;
       }
+
       #modal-body-table td {
-       padding: 5px;
+        padding: 5px;
       }
 
-      #body-total{
+      #body-total {
         display: flex;
         justify-content: space-between;
         background-color: #d9d9d9;
         padding: 0 10px;
-        
+
         border-top: 2px solid white;
         border-bottom: 2px solid white;
-       
+
         font-size: 20px;
         font-weight: bold;
       }
       #body-total-outline {
-     
         border-top: 3px solid #d9d9d9;
         border-bottom: 3px solid #d9d9d9;
-        margin: 0px 30px 10px 30px ;
-
+        margin: 0px 30px 10px 30px;
       }
 
       #modal-footer {
@@ -204,8 +211,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         align-items: center;
         margin-top: 5px;
       }
-
-
 
       #modal-pageing {
         margin: 0;
@@ -251,11 +256,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
         <div id="top-right1">
           <button class="search-input-submit">년도별</button>
           <div id="searchdate">
-            <input type="date" class="date-input" />
+            <input type="month" class="date-input" />
             <span>~</span>
-            <input type="date" class="date-input" />
+            <input type="month" class="date-input" />
+            <button class="search-input-submit">검색</button>
           </div>
-          <button class="search-input-submit">검색</button>
         </div>
       </div>
       <div id="main">
@@ -283,21 +288,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
             <tbody>
               <tr>
-                <td>2025-03-01-</td>
+                <td>2025-03-01</td>
                 <td>160,000</td>
                 <td>320,000</td>
                 <td>50</td>
                 <td>160,000</td>
               </tr>
               <tr>
-                <td>2025-03-01-</td>
+                <td>2025-03-01</td>
                 <td>160,000</td>
                 <td>320,000</td>
                 <td>50</td>
                 <td>160,000</td>
               </tr>
               <tr>
-                <td>2025-03-01-</td>
+                <td>2025-03-01</td>
                 <td>160,000</td>
                 <td>320,000</td>
                 <td>50</td>
@@ -342,45 +347,42 @@ contentType="text/html;charset=UTF-8" language="java" %>
       >
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
-            
             <div id="modal-header">
-                <div id="header-title">
-                  <p>일자별 매출집계 내역</p>
-                  <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                id="btn-close-modal">
-                    <img
-                      src="/resources/common/공통_Icon.png"
-                      id="detail-x_img"
-                    />
-                  </button>
+              <div id="header-title">
+                <p>일자별 매출집계 내역</p>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                  id="btn-close-modal"
+                >
+                  <img
+                    src="/resources/common/공통_Icon.png"
+                    id="detail-x_img"
+                  />
+                </button>
+              </div>
+              <div id="header-searchbar">
+                <select class="selectbox" placeholder="상태">
+                  <option>판매</option>
+                  <option>폐기</option>
+                </select>
+                <select class="selectbox" placeholder="카테고리">
+                  <option>카테고리</option>
+                  <option>스낵</option>
+                  <option>음료</option>
+                </select>
+                <div class="search-div">
+                  <input
+                    type="text"
+                    class="search-input"
+                    placeholder="상품명 or 상품번호"
+                  />
+                  <input type="submit" class="search-input-submit" />
                 </div>
-                <div id="header-searchbar">
-                  <select class="selectbox" placeholder="상태">
-                    <option>판매</option>
-                    <option>폐기</option>
-                  </select>
-                  <select class="selectbox" placeholder="카테고리">
-                    <option>카테고리</option>
-                    <option>스낵</option>
-                    <option>음료</option>
-                  </select>
-                  <div class="search-div">
-                    <input
-                      type="text"
-                      class="search-input"
-                      placeholder="상품명 or 상품번호"
-                    />
-                    <input type="submit" class="search-input-submit" />
-                  </div>
-                </div>
-              
+              </div>
             </div>
-            
-            
 
             <div id="modal-body">
               <table id="modal-body-table">
@@ -426,7 +428,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   </tr>
                 </tbody>
               </table>
-              
             </div>
 
             <div id="body-total-outline">
@@ -434,10 +435,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 <p>2025년 03월 01일</p>
                 <p></p>
                 <p>총 매출 금액 : 100,000원</p>
+              </div>
             </div>
-            </div>
-
-
 
             <div class="modal-footer" id="modal-footer">
               <div id="modal-pageing">
@@ -491,25 +490,23 @@ contentType="text/html;charset=UTF-8" language="java" %>
           });
         });
 
-        document
-          .querySelectorAll('#modal-body button')
-          .forEach((button) => {
-            if (button.textContent === '수정') {
-              button.addEventListener('click', function () {
-                // 기존 모달을 숨기기
-                var myDetailModal = bootstrap.Modal.getInstance(
-                  document.getElementById('detail-staticBackdrop')
-                );
-                myDetailModal.hide(); // 기존 모달 숨기기
+        document.querySelectorAll('#modal-body button').forEach((button) => {
+          if (button.textContent === '수정') {
+            button.addEventListener('click', function () {
+              // 기존 모달을 숨기기
+              var myDetailModal = bootstrap.Modal.getInstance(
+                document.getElementById('detail-staticBackdrop')
+              );
+              myDetailModal.hide(); // 기존 모달 숨기기
 
-                // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
-                var newModal = new bootstrap.Modal(
-                  document.getElementById('modify-staticBackdrop')
-                );
-                newModal.show(); // 새로운 모달 열기
-              });
-            }
-          });
+              // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
+              var newModal = new bootstrap.Modal(
+                document.getElementById('modify-staticBackdrop')
+              );
+              newModal.show(); // 새로운 모달 열기
+            });
+          }
+        });
       </script>
       <!--end point-->
     </div>

@@ -7,6 +7,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       .waper {
         width: 100%;
         padding: 50px;
+        font-family: 'Open Sans', sans-serif;
       }
       .main_name {
         font-weight: bolder;
@@ -19,7 +20,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
       #top-reft {
         background-color: #d9d9d9;
-        width: 30%;
+        width: 40%;
       }
       #top-reft1 {
         background-color: white;
@@ -33,12 +34,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #top-right1 {
         background-color: #d9d9d9;
-        width: 70%;
+        width: 60%;
         display: flex;
-        justify-content: space-around;
+        justify-content: right;
         align-items: center;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+        gap: 10px;
       }
 
       #right-check {
@@ -59,20 +61,23 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: black;
       }
 
-      /* #category-select{
-      border-radius: 10px;
-    } */
+      .search-input-submit {
+        margin-right: 0px;
+      }
+
       #search-box {
-        width: 70%;
         display: flex;
         justify-content: center;
+        padding-right: 50px;
       }
 
-      #search-box input:nth-child(1) {
-        width: 80%;
-        padding: 10px;
-      }
 
+      #table1 {
+        outline: none;
+        width: 100%;
+        table-layout: auto;
+        text-align: center;
+      }
       #table1 td img {
         width: 20px;
       }
@@ -100,22 +105,22 @@ contentType="text/html;charset=UTF-8" language="java" %>
         border-radius: 20px;
         padding: 50px;
       }
+
+
+
       @media screen and (max-width: 1800px) {
         #main-in {
           overflow-x: auto;
         }
       }
+
+
+
       #main-pageing {
         padding-top: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
-      }
-      #table1 {
-        text-align: center;
-        outline: none;
-        width: 100%;
-        table-layout: auto;
       }
       #main-pageing img {
         width: 70px;
@@ -138,17 +143,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-weight: bold;
       }
 
-      #btn-close-modal {
-        width: 20px;
-        height: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #x_img {
-        width: 10px;
-        height: 10px;
-      }
+      
 
       #footer-btn {
         width: 66%;
@@ -166,12 +161,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-weight: bold;
         font-color: white;
       }
-      .modal-dialog {
-        position: absolute;
-        top: 5%;
-        left: 20%;
-        transform: translateX(20%);
-      }
 
       /* 모달창 시작 */
       .modal-content {
@@ -188,14 +177,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
         justify-content: space-between;
         border: none !important;
       }
-      #x_img {
-        width: 15px;
+      #btn-close-modify-modal {
+        width: 20px;
         height: 20px;
-      }
-      #btn-close-modal {
         border: none;
-        background: none;
+        background-color:#d9d9d9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
+      #x_img {
+        width: 10px;
+        height: 10px;
+      }
+
+
       #product-img {
         background-color: #d9d9d9;
         width: 48%;
@@ -203,112 +199,36 @@ contentType="text/html;charset=UTF-8" language="java" %>
         justify-content: center;
         align-items: center;
       }
-      #product-detail-box {
+      #product-box {
         background-color: #d9d9d9;
         width: 48%;
         display: flex;
         align-items: center;
         justify-content: center;
       }
-      #product-detail {
+      #product-outer {
         background-color: white;
         width: 100%;
         height: 90%;
-      }
-      #product-detail-puts {
-        height: 90%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        text-align: center;
       }
 
-      #product-detail-ok {
-        display: flex;
-        justify-content: right;
-        margin-right: 28px;
-      }
-      #product-detail-table {
+      #product-table {
+        
+        height: 300px;
         border-collapse: separate;
-        border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
+        margin: 0px 15px;
       }
-      #product-detail-table tr td {
+
+      #product-table tr th,
+      #product-table tr td {
         font-size: 20px;
-        font-weight: bold;
+        padding: 10px;
       }
 
-      /*
-        수정하기 모달창
-         */
-      #modify-x_img {
-        width: 15px;
-        height: 20px;
-      }
-      #btn-close-modify-modal {
-        border: none;
-        background: none;
-      }
-      #product-modify-img {
-        background-color: #d9d9d9;
-        width: 48%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #product-detail-modify-box {
-        background-color: #d9d9d9;
-        width: 48%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #product-detail-modify {
-        background-color: white;
-        width: 100%;
-        height: 90%;
-      }
-      #product-detail-modify-puts {
-        height: 90%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      #product-detail-modify-table tr td input {
-        border: 2px solid #d9d9d9;
-        border-radius: 5px;
-      }
-
-      #product-detail-modify-table {
-        border-collapse: separate;
-        border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
-      }
-      #product-detail-modify-table tr td {
-        font-size: 20px;
-        font-weight: bold;
-      }
-
-      #product-detail-modify-table p {
+      #product-table p {
         padding-left: 10px;
       }
-
-      #product-detail-modify-table td{
-            position: relative;
-            padding: 5px;
-        }
-
-        #product-detail-modify-table td::after{
-            content: '';
-            position: absolute;
-            top: 20%;
-            left: 0;
-            width: 2px;
-            height: 60%;
-            background-color: black;
-        }
-
-        #product-detail-modify-table td:first-child::after{
-            content: none;
-        }
-
 
     </style>
   </head>
@@ -425,7 +345,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <p>상품 추가</p>
+              <p>상품 정보</p>
               <button
                 type="button"
                 class="btn-close"
@@ -433,48 +353,38 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 aria-label="Close"
                 id="btn-close-modify-modal"
               >
-                <img src="/resources/common/공통_Icon.png" id="modify-x_img" />
+                <img src="/resources/common/공통_Icon.png" id="modify-x_img" class="btn-close-modal"/>
               </button>
             </div>
-            <div class="modal-body">
-              <div id="product-modify-img">이미지사진</div>
-              <div id="product-detail-modify-box">
-                <div id="product-detail-modify">
-                  <div id="product-detail-modify-puts">
-                    <table id="product-detail-modify-table">
-                      <tr>
-                        <td>상품번호</td>
-                        <td>
-                          <p>p12334</p>
-                        </td>
-                      </tr>
 
-                      <tr>
-                        <td>카테고리</td>
-                        <td>
-                          <p>스낵</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>상품명</td>
-                        <td>
-                          <p>달콤 프란찌(딸기)</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>입고가</td>
-                        <td>
-                          <p>800</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>판매가</td>
-                        <td>
-                          <p>2000</p>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
+            <div class="modal-body">
+              <div id="product-img">이미지사진 <img src="" alt="">
+              </div>
+              <div id="product-box">
+                <div id="product-outer">
+                  <table id="product-table">
+                    <tr>
+                      <th>상품번호</th>
+                      <td>p12334</td>
+                    </tr>
+
+                    <tr>
+                      <th>카테고리</th>
+                      <td>스낵</td>
+                    </tr>
+                    <tr>
+                      <th>상품명</th>
+                      <td>달콤 프란찌(딸기)</td>
+                    </tr>
+                    <tr>
+                      <th>입고가</th>
+                      <td>800</td>
+                    </tr>
+                    <tr>
+                      <th>판매가</th>
+                      <td>2000</td>
+                    </tr>
+                  </table>
                 </div>
               </div>
             </div>
