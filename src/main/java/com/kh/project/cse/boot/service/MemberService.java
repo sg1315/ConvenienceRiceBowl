@@ -4,4 +4,8 @@ import com.kh.project.cse.boot.domain.vo.Member;
 
 public interface MemberService {
     int insertMember(Member member);
+
+    Member loginMember(String memberId);
+
+    int idCheck(String checkId);
 }

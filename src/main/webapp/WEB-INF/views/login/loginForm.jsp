@@ -123,7 +123,7 @@
         <form action="">
             <div id="modalBackground">
                 <div id="enrollModal">
-                    <jsp:include page="loginEnrollForm.jsp" />
+                    <jsp:include page="loginEnrollForm(수정본).jsp" />
                 </div>
             </div>
             <div class="box">

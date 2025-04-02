@@ -13,4 +13,14 @@ public class MemberServiceImpl implements MemberService {
     public int insertMember(Member member) {
         return memberMapper.insertMember(member);
     }
+
+    @Override
+    public Member loginMember(String memberId) {
+        return memberMapper.loginMember(memberId);
+    }
+
+    @Override
+    public int idCheck(String checkId) {
+        return memberMapper.idCheck(checkId);
+    }
 }
