@@ -18,14 +18,24 @@
     #top-manu{
       display: flex;
       justify-content: space-between;
-    }
-    #top-reft{
+      /*background-color: white;*/
       background-color: #D9D9D9;
-      width: 50%;
+      border-top-right-radius: 20px;
+      border-top-left-radius: 50%;
     }
-    #top-reft1{
+    #top-left{
+      /*background-color: #D9D9D9;*/
+      width: 20%;
+      background: white;
+      border-bottom-right-radius: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #top-left1{
       background-color: white;
       display: flex;
+
       align-content: center;
       align-items: center;
       width: 100%;
@@ -35,49 +45,81 @@
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 50%;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      width: 80%;
+
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
+      padding: 20px;
+    }
+    #top-right1-top{
+      width: 80%;
+      height: 50%;
+      padding: 10px;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+    }
+    #top-right1-bottom{
+      width: 80%;
+      height: 50%;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      padding: 10px;
+    }
+    #search-content{
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    #right-check{
-      display: flex;
-      padding: 5px;
-      width: 15%;
-      justify-content: center;
-      font-weight: bold;
-    }
-    #category-select{
+    #status-check, #category-select{
       border-radius: 10px;
     }
+    #status-check{
+      /*width: 80px;*/
+    }
+    #category-select{
+      /*width: 10%;*/
+    }
     #search-box{
-      width: 70%;
+      /*width: 50%;*/
       display: flex;
       justify-content: center;
     }
     #search-box input:nth-child(1){
-      width: 80%;
+      width: 60%;
       padding: 10px;
+      border-radius: 10px;
+    }
+
+    .search-input{
+      border-radius: 10px;
+    }
+    .search-input-submit{
+      border-radius: 10px;
+      width: 100px;
+    }
+    .date-input{
+      border-radius: 10px;
     }
 
     #table1 td img{
       width: 20px;
     }
 
-    #top-reft p {
+    #top-left p {
       padding-left: 15px;
     }
     #main{
       background-color: #D9D9D9;
       width: 100%;
-      height: 90%;
+      height: 80%;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
       padding: 50px 50px 100px;
+
     }
     #main-in{
       background-color: white;
@@ -135,151 +177,46 @@
       width: 10px;
       height: 10px;
     }
-
-    /* 모달창 시작 */
     .modal-content {
-      height: 500px;
+      height: 80vh;
     }
-    .modal-header {
-      border: none !important;
-      background-color: #d9d9d9;
-      font-size: 40px;
-      font-weight: bold;
+    .modal-header, .modal-footer{
+      background-color: #D9D9D9;
     }
-    .modal-body {
-      display: flex;
-      justify-content: space-between;
-      border: none !important;
+    .modal-body input, .modal-body select{
+      border:1px solid gray;
+      border-radius : 8px;
+      width:80%;
+      height:8%;
+      text-align:center;
+      margin-bottom:16px;
     }
-    #x_img {
-      width: 15px;
-      height: 20px;
+    #modal-body-div{
+      padding-left:18%;
+      padding-top:4%;
     }
-    #btn-close-modal {
-      border: none;
-      background: none;
+    #footer-btn{
+      width:66%;
+      margin-right:16%;
+      background-color: #8A8A8A;
+      border:none;
+      font-weight:bold;
+      font-size:20px;
+      border-radius:10px;
     }
-    #product-img {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    #header-title{
+      margin-left:22%;
     }
-    #product-detail-box {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    #header-title h1{
+      font-weight:bold;
+      font-color:white;
     }
-    #product-detail {
-      background-color: white;
-      width: 100%;
-      height: 90%;
-    }
-    #product-detail-puts {
-      height: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #product-detail-ok {
-      display: flex;
-      justify-content: right;
-      margin-right: 28px;
-    }
-    #product-detail-table {
-      border-collapse: separate;
-      border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
-    }
-    #product-detail-table tr td {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    /*
-      수정하기 모달창
-       */
-    #modify-x_img {
-      width: 15px;
-      height: 20px;
-    }
-    #btn-close-modify-modal {
-      border: none;
-      background: none;
-    }
-    #product-modify-img {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #product-detail-modify-box {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #product-detail-modify {
-      background-color: white;
-      width: 100%;
-      height: 90%;
-    }
-    #product-detail-modify-puts {
-      height: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #product-detail-modify-table tr td input {
-      /*border: 2px solid #d9d9d9;*/
-      border-radius: 5px;
-    }
-
-    #product-detail-modify-table {
-      border-collapse: separate;
-      /*border-spacing: 10px 30px; !* 상하 간격을 10px로 설정 *!*/
-      border-spacing: 10px 20px;
-    }
-    #product-detail-modify-table tr td {
-      font-size: 20px;
-      font-weight: bold;
-    }
-
-    #product-detail-modify-table p {
-      padding-left: 10px;
-    }
-    #product-detail-modify-table input {
-      padding-left: 10px;
-      border: none;
-      outline: none;
-      box-shadow: none;
-    }
-
-    #product-detail-modify-table td{
-      position: relative;
-      padding: 5px;
-    }
-
-    #product-detail-modify-table td::after{
-      content: '';
+    .modal-dialog {
       position: absolute;
-      top: 20%;
-      left: 0;
-      width: 2px;
-      height: 60%;
-      background-color: black;
+      top:5%;
+      left: 20%;
+      transform: translateX(20%);
     }
-
-    #product-detail-modify-table td:first-child::after{
-      content: none;
-    }
-
-
 
 
   </style>
@@ -288,29 +225,46 @@
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
   <div id="top-manu">
-    <div id="top-reft">
-      <div id="top-reft1">
-        <img src="../resources/menu_icons/직원 아이콘.png">
-        <p class="main_name">상품정보</p>
+    <div id="top-left">
+      <div id="top-left1">
+        <img src="../resources/menu_icons/출고 아이콘.png">
+        <p class="main_name">출고</p>
       </div>
     </div>
 
     <div id="top-right1">
-        <div id="right-check">
-          <input type="checkbox"><p>입고불가</p>
-        </div>
-        <div class="selectbox" id="category-select">
-          <select>
-            <option>카테고리</option>
-            <option>스낵</option>
-            <option>음료</option>
-          </select>
+      <div id="top-right1-top">
+        <input type="button"  class="search-input-submit" value="저번 달">
+        <input type="button"  class="search-input-submit" value="최근">
+        <input type="date" class="date-input">
+        <input type="date" class="date-input">
+      </div>
+      <div id="top-right1-bottom">
+        <div id="search-content">
+          <div class="selectbox" id="status-check">
+            <select>
+              <option>상태</option>
+              <option>판매</option>
+              <option>폐기</option>
+            </select>
+          </div>
+          <div class="selectbox" id="category-select">
+            <select>
+              <option>카테고리</option>
+              <option>스낵</option>
+              <option>음료</option>
+            </select>
+          </div>
+          <div id="search-text">
+            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
+          </div>
         </div>
         <div id="search-box">
-          <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-          <input class="search-input-submit" type="submit" value="검색" />
+          <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
         </div>
       </div>
+
+    </div>
 
     </div>
     <div id="main">
@@ -318,47 +272,44 @@
         <table class="table table-hover" id="table1">
           <thead>
           <tr>
+            <th class="col-1">출고날짜</th>
             <th class="col-1">상품번호</th>
             <th class="col-1">카테고리</th>
             <th class="col-2">상품명</th>
-            <th class="col-1">입고가</th>
-            <th class="col-1">판매가</th>
-            <th class="col-1">입고불가</th>
+            <th class="col-1">수량</th>
+            <th class="col-1">금액</th>
+            <th class="col-1">상태</th>
           </tr>
           </thead>
           <tbody >
           <tr>
+            <td>25/12/10</td>
             <td>1219045</td>
             <td>스낵</td>
             <td>달콤 프란찌(딸기)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td><img src="/resources/common/상품목록_Cancel.png"></td>
+            <td>2</td>
+            <td>0</td>
+            <td>폐기</td>
           </tr>
           <tr>
+            <td>25/12/10</td>
             <td>1219046</td>
             <td>스낵</td>
             <td>달콤 프란찌(메론)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td></td>
+            <td>80</td>
+            <td>64,000</td>
+            <td>판매</td>
           </tr>
           <tr>
+            <td>25/12/10</td>
             <td>1219047</td>
             <td>스낵</td>
             <td>달콤 프란찌(초코)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td><img src="/resources/common/상품목록_Cancel.png"></td>
+            <td>50</td>
+            <td>40,000</td>
+            <td>판매</td>
           </tr>
-          <tr>
-            <td>1219048</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(사과)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td></td>
-          </tr>
+
           </tbody>
       </table>
     </div>
@@ -382,14 +333,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade"
-       id="staticBackdrop"
-       data-bs-backdrop="static"
-       data-bs-keyboard="false"
-       tabindex="-1"
-       aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <div id="header-title">
@@ -401,46 +346,31 @@
         </div>
         <div class="modal-body">
           <!--모달 내용-->
-          <div id="product-modify-img">이미지사진</div>
-          <div id="product-detail-modify-box">
-            <div id="product-detail-modify">
-              <div id="product-detail-modify-puts">
-                <table id="product-detail-modify-table">
-                  <tr>
-                    <td>상품번호</td>
-                    <td>
-                      <input type="text" id="modal-productCode" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>카테고리</td>
-                    <td>
-                      <input type="text" id="modal-productCategory" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>상품명</td>
-                    <td>
-                      <input type="text" id="modal-productName" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>입고가</td>
-                    <td>
-                      <input type="text" id="modal-productInputPrice" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>판매가</td>
-                    <td>
-                      <input type="text" id="modal-productSalePrice" readonly>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
+          <div id="modal-body-div">
+            <p>
+              <strong>상품번호</strong>
+              <input type="text" id="modal-productCode" readonly>
+            </p>
+            <p>
+              <strong>카테고리</strong>
+              <input type="text" id="modal-productCategory" readonly>
+            </p>
+            <p>
+              <strong>상품명</strong>
+              <input type="text" id="modal-productName" readonly>
+            </p>
+            <p>
+              <strong>입고가</strong>
+              <input type="text" id="modal-productInputPrice" readonly>
+            </p>
+            <p>
+              <strong>판매가</strong>
+              <input type="text" id="modal-productSalePrice" readonly>
+            </p>
           </div>
-
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
         </div>
       </div>
     </div>

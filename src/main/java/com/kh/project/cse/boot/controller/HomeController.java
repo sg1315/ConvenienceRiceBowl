@@ -59,6 +59,11 @@ public class HomeController {
     }
     //승기
 
+    @RequestMapping("/spotOutput")
+    public String spotOutput() {
+        return "spot/output";
+    }
+
     //택봉-직원관리
     @RequestMapping("/spot_member")
     public String spot_member() {
