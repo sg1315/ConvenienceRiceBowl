@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-<link rel="stylesheet" href="/resources/css/btn.css">
+  <link rel="stylesheet" href="/resources/css/btn.css">
   <style>
 
 
@@ -138,10 +138,7 @@
 
     /* 모달창 시작 */
     .modal-content {
-      height: 90vh;
-    }
-    .modal-header, .modal-footer{
-      background-color: #D9D9D9;
+      height: 500px;
     }
     .modal-header {
       border: none !important;
@@ -256,11 +253,26 @@
     #product-detail-modify-table p {
       padding-left: 10px;
     }
-    #modal-dialog {
+    #product-detail-modify-table input {
+      padding-left: 10px;
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+
+    #product-detail-modify-table td{
+      position: relative;
+      padding: 5px;
+    }
+
+    #product-detail-modify-table td::after{
+      content: '';
       position: absolute;
-      top:5%;
-      left: 20%;
-      transform: translateX(20%);
+      top: 20%;
+      left: 0;
+      width: 2px;
+      height: 60%;
+      background-color: black;
     }
 
     #product-detail-modify-table td:first-child::after{
@@ -284,70 +296,70 @@
     </div>
 
     <div id="top-right1">
-        <div id="right-check">
-          <input type="checkbox"><p>입고불가</p>
-        </div>
-        <div class="selectbox" id="category-select">
-          <select>
-            <option>카테고리</option>
-            <option>스낵</option>
-            <option>음료</option>
-          </select>
-        </div>
-        <div id="search-box">
-          <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-          <input class="search-input-submit" type="submit" value="검색" />
-        </div>
+      <div id="right-check">
+        <input type="checkbox"><p>입고불가</p>
       </div>
-
+      <div class="selectbox" id="category-select">
+        <select>
+          <option>카테고리</option>
+          <option>스낵</option>
+          <option>음료</option>
+        </select>
+      </div>
+      <div id="search-box">
+        <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
+        <input class="search-input-submit" type="submit" value="검색" />
+      </div>
     </div>
-    <div id="main">
-      <div id="main-in">
-        <table class="table table-hover" id="table1">
-          <thead>
-          <tr>
-            <th class="col-1">상품번호</th>
-            <th class="col-1">카테고리</th>
-            <th class="col-2">상품명</th>
-            <th class="col-1">입고가</th>
-            <th class="col-1">판매가</th>
-            <th class="col-1">입고불가</th>
-          </tr>
-          </thead>
-          <tbody >
-          <tr>
-            <td>1219045</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(딸기)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td><img src="/resources/common/상품목록_Cancel.png"></td>
-          </tr>
-          <tr>
-            <td>1219046</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(메론)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>1219047</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(초코)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td><img src="/resources/common/상품목록_Cancel.png"></td>
-          </tr>
-          <tr>
-            <td>1219048</td>
-            <td>스낵</td>
-            <td>달콤 프란찌(사과)</td>
-            <td>3200</td>
-            <td>6400</td>
-            <td></td>
-          </tr>
-          </tbody>
+
+  </div>
+  <div id="main">
+    <div id="main-in">
+      <table class="table table-hover" id="table1">
+        <thead>
+        <tr>
+          <th class="col-1">상품번호</th>
+          <th class="col-1">카테고리</th>
+          <th class="col-2">상품명</th>
+          <th class="col-1">입고가</th>
+          <th class="col-1">판매가</th>
+          <th class="col-1">입고불가</th>
+        </tr>
+        </thead>
+        <tbody >
+        <tr>
+          <td>1219045</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(딸기)</td>
+          <td>3200</td>
+          <td>6400</td>
+          <td><img src="/resources/common/상품목록_Cancel.png"></td>
+        </tr>
+        <tr>
+          <td>1219046</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(메론)</td>
+          <td>3200</td>
+          <td>6400</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>1219047</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(초코)</td>
+          <td>3200</td>
+          <td>6400</td>
+          <td><img src="/resources/common/상품목록_Cancel.png"></td>
+        </tr>
+        <tr>
+          <td>1219048</td>
+          <td>스낵</td>
+          <td>달콤 프란찌(사과)</td>
+          <td>3200</td>
+          <td>6400</td>
+          <td></td>
+        </tr>
+        </tbody>
       </table>
     </div>
     <div id="main-pageing">
@@ -370,8 +382,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade" id="product_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog" id="modal-dialog">
+  <div class="modal fade"
+       id="staticBackdrop"
+       data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1"
+       aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <div id="header-title">
@@ -449,7 +467,7 @@
           document.getElementById("modal-productInputPrice").value = input;
           document.getElementById("modal-productSalePrice").value = sale;
 
-          const modal = new bootstrap.Modal(document.getElementById("product_modal"));
+          const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
           modal.show();
         });
       });
