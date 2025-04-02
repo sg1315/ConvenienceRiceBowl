@@ -164,7 +164,10 @@
         display: flex;
 
         font-size: 22px;
-
+      }
+      .menu-bar a{
+        text-decoration: none;
+        color: white;
       }
       .menu-bar li{
         font-size: 20px;
