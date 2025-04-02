@@ -96,5 +96,6 @@ public class HomeController {
     public String loginForm() {
         return "login/loginForm";
     }
+    
 
 }
