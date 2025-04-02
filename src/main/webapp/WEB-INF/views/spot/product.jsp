@@ -21,7 +21,7 @@
     }
     #top-reft{
       background-color: #D9D9D9;
-      width: 30%;
+      width: 50%;
     }
     #top-reft1{
       background-color: white;
@@ -35,7 +35,7 @@
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 70%;
+      width: 50%;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -236,7 +236,7 @@
       align-items: center;
     }
     #product-detail-modify-table tr td input {
-      border: 2px solid #d9d9d9;
+      /*border: 2px solid #d9d9d9;*/
       border-radius: 5px;
     }
 
@@ -255,10 +255,9 @@
     }
     #product-detail-modify-table input {
       padding-left: 10px;
-    }
-    #modal-productCode{
       border: none;
       outline: none;
+      box-shadow: none;
     }
 
     #product-detail-modify-table td{
