@@ -383,6 +383,77 @@
           </div>
         </div>
       </div>
+
+      <div class="modal fade" id="staticBackdrop-modify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p>상품 추가</p>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modify-modal">
+                <img src="/resources/common/공통_Icon.png" id="modify-x_img">
+              </button>
+            </div>
+            <div class="modal-body">
+              <div id="product-modify-img">
+                이미지사진
+              </div>
+              <div id="product-detail-modify-box">
+                <div id="product-detail-modify">
+                  <div id="product-detail-modify-puts">
+                    <table id="product-detail-modify-table">
+                      <tr>
+                        <td>
+                          상품번호
+                        </td>
+                        <td>
+                          <input type="number">
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>
+                          카테고리
+                        </td>
+                        <td>
+                          <input type="text">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          상품명
+                        </td>
+                        <td>
+                          <input type="text">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          입고가
+                        </td>
+                        <td>
+                          <input type="number">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          판매가
+                        </td>
+                        <td>
+                          <input type="number">
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div id="product-detail-modify-btn">
+                    <button>수정완료</button>
+                    <button>삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <script>
         // 테이블의 모든 행에 클릭 이벤트 추가
         document.querySelectorAll('#table1 tbody tr').forEach((row) => {
