@@ -8,6 +8,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 100%;
         padding: 50px;
         font-family: 'Open Sans', sans-serif;
+        box-sizing: border-box;
       }
       .main_name {
         font-weight: bolder;
@@ -21,7 +22,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
       #top-left {
         background-color: #d9d9d9;
-        width: 50%;
+        width: 30%;
       }
       #top-left1 {
         background-color: white;
@@ -36,7 +37,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #top-right1 {
         background-color: #d9d9d9;
-        width: 50%;
+        width: 70%;
         display: flex;
 
         justify-content: right;
@@ -144,14 +145,25 @@ contentType="text/html;charset=UTF-8" language="java" %>
         margin: 25px 20px 0px 20px;
         display: flex;
         justify-content: space-between;
-        align-items: center;
       }
 
-      #mo-header-title p {
+      #header-title p {
         font-size: 30px;
         font-weight: bold;
       }
-      #mo-header-title button {
+
+      #header-title-name {
+        display: flex;
+      }
+      #header-title-name p {
+        padding: 0px 10px;
+        font-weight: bold;
+      }
+      #header-title-name p:nth-child(2) {
+        padding: none;
+      }
+
+      #btn-close-modal {
         border: none;
         background: none;
       }
@@ -160,10 +172,36 @@ contentType="text/html;charset=UTF-8" language="java" %>
         height: 20px;
       }
 
+      #header-content {
+        width: 100%;
+        display: flex;
+      }
+
       #header-searchbar {
         display: flex;
-        margin: 15px 20px;
+        justify-content: space-between;
+        align-items: center;
+        margin: 20px 25px;
+      }
+
+      #selectbox-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         gap: 10px;
+      }
+
+      .header-info {
+        display: flex;
+        gap: 10px;
+      }
+      #header-info-title p:nth-child(1) {
+        font-size: 14px;
+        font-weight: bold;
+      }
+      #header-info-title p:nth-child(2) {
+        font-size: 20px;
+        font-weight: bold;
       }
 
       #modal-body {
@@ -183,6 +221,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #modal-body-table td {
         padding: 5px;
+      }
+      #modal-body-table input {
+        width: 50px;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
       }
 
       #body-total {
@@ -270,6 +313,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <p>03월 ~ 04월</p>
           </div>
           <table class="table table-hover" id="table1">
+            <colgroup>
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+              <col style="width: 20%" />
+            </colgroup>
             <thead>
               <tr>
                 <th class="col-2">날짜</th>
@@ -343,7 +393,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <div class="modal-content">
             <div id="modal-header">
               <div id="mo-header-title">
-                <p>일자별 매출집계 내역</p>
+                <div id="header-title-name">
+                  <p>입고번호</p>
+                  <p>|</p>
+                  <p>입고대기</p>
+                </div>
                 <button
                   type="button"
                   class="btn-close"
@@ -357,27 +411,30 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   />
                 </button>
               </div>
+
               <div id="header-searchbar">
-                <select class="selectbox" placeholder="상태">
-                  <option>판매</option>
-                  <option>폐기</option>
-                </select>
-                <select class="selectbox" placeholder="카테고리">
-                  <option>카테고리</option>
-                  <option>스낵</option>
-                  <option>음료</option>
-                </select>
-                <div class="search-div">
-                  <input
-                    type="text"
-                    class="search-input"
-                    placeholder="상품명 or 상품번호"
-                  />
-                  <input
-                    type="submit"
-                    class="search-input-submit"
-                    value="검색"
-                  />
+                <div id="selectbox-div">
+                  <select class="selectbox" placeholder="카테고리">
+                    <option>카테고리</option>
+                    <option>스낵</option>
+                    <option>음료</option>
+                  </select>
+                  <div class="search-div">
+                    <input
+                      type="text"
+                      class="search-input"
+                      placeholder="상품명 or 상품번호"
+                    />
+                    <input type="submit" class="search-input-submit" value="검색" />
+                  </div>
+                </div>
+
+                <div class="header-info">
+                  <div id="header-info-title">
+                    <p>종류(총수량): 3(340)</p>
+                    <p>총 1,902,000</p>
+                  </div>
+                  <button class="black-big-btn">입고완료</button>
                 </div>
               </div>
             </div>
@@ -386,54 +443,47 @@ contentType="text/html;charset=UTF-8" language="java" %>
               <table id="modal-body-table">
                 <thead>
                   <tr>
-                    <th class="col-2">날짜</th>
                     <th class="col-2">상품번호</th>
-                    <th class="col-1">카테고리</th>
+                    <th class="col-2">카테고리</th>
                     <th class="col-3">상품명</th>
-                    <th class="col-1">수량</th>
-                    <th class="col-1">판매가</th>
-                    <th class="col-2">판매/폐기</th>
+                    <th class="col-1">발주수량</th>
+                    <th class="col-1">입고수량</th>
+                    <th class="col-1">금액</th>
+                    <th class="col-2">입고수량오류</th>
                   </tr>
                 </thead>
 
                 <tbody>
                   <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
+                    <td>922351</td>
                     <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
+                    <td>달콤프란찌</td>
+                    <td>80</td>
+                    <td><input type="number" value="70" /></td>
                     <td>64,000</td>
-                    <td>판매</td>
+                    <td><input type="checkbox" checked /></td>
                   </tr>
                   <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
+                    <td>922351</td>
                     <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
-                    <td>0</td>
-                    <td>폐기</td>
-                  </tr>
-                  <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
-                    <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
+                    <td>달콤프란찌</td>
+                    <td>80</td>
+                    <td>80</td>
                     <td>64,000</td>
-                    <td>판매</td>
+                    <td><input type="checkbox"  /></td>
+                  </tr>
+
+                  <tr>
+                    <td>922351</td>
+                    <td>스낵</td>
+                    <td>달콤프란찌</td>
+                    <td>80</td>
+                    <td>80</td>
+                    <td>64,000</td>
+                    <td><input type="checkbox" /></td>
                   </tr>
                 </tbody>
               </table>
-            </div>
-
-            <div id="body-total-outline">
-              <div id="body-total">
-                <p>2025년 03월 01일</p>
-                <p></p>
-                <p>총 매출 금액 : 100,000원</p>
-              </div>
             </div>
 
             <div class="modal-footer" id="modal-footer">

@@ -109,4 +109,10 @@ public class HomeController {
     }
     //성진
 
+
+
+    @RequestMapping("/inputmodal")
+    public String inputmodal() {
+        return "spot/inputmodal";
+    }
 }
