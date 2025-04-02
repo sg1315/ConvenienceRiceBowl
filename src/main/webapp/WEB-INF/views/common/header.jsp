@@ -172,6 +172,7 @@
         position: relative;
         left: 20px
       }
+
       /* myinfo */
       #myinfo,#logout{
         width: 100%;
@@ -186,48 +187,111 @@
         width: 100%;
         height: 70%;
       }
-
       /* modal */
-      #modal-dialog {
+      #editInfo_modal-dialog {
         display: flex;
-        height: 94vh;
+        height: 90vh;
         width: 100%;
         flex-direction: row;
+        max-width: 24%;
       }
-      #modal-header,#modal-footer{
+      #editInfo_modal-header,#editInfo_modal-footer{
         background-color: #D9D9D9;
       }
-      #modal-body{
-        height: 75%;
-        flex-grow: 1;
-      }
-      body #modal-dialog {
-        max-width: 24%;
-        height: 90vh;
-      }
-      #modal-dialog {
+      #editInfo_modal-dialog {
         position: absolute;
         transform: translateX(20%);
         left: 60%;
       }
-      #header-title{
-        margin-left:20%;
+      /* modal-header */
+      #editInfo_header-title{
+        display: flex;
+        width: 100%;
+        margin: auto;
       }
-      #header-title h1{
-        font-size: 40px;
+      #editInfo_header-name{
+        width: 90%;
+      }
+      #header-close-btn{
+        width: 10%;
+      }
+      #editInfo_header-name p{
+        display: flex;
+        width: 100%;
+        font-size: 30px;
         font-weight: bold;
+        align-items: center;
+        justify-content: center;
+      }
+      #editInfo_x_img{
+        width: 15px;
+        height: 17px;
+      }
+      #editInfo_modal-header{
+        padding-left: 10%;
+        height: 12%;
+      }
+      /* //modal-header */
+
+      /* modal-body */
+      #editInfo_modal-body{
+
+        width: 100%;
+        height: 60%;
+        padding-left: 10%;
+        padding-right: 10%;
+      }
+      #editInfo_modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        width: 100%;
       }
 
+      #editInfo_modal-content strong {
+        font-size: 14px;
+        margin-bottom: 5px;
+        margin-top: 10px;
+      }
 
+      #editInfo_modal-content input {
+        padding: 8px 12px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+        text-align: center;
+      }
+
+      #editInfo_modal-content input[readonly] {
+        background-color: #f8f8f8;
+        color: #777;
+        border: 1px solid #ddd;
+      }
+      /* //modal-body */
+
+      #editInfo_modal-footer{
+        display: flex;
+        height: 12%;
+        padding-left: 10%;
+        padding-right: 10%;
+        align-items: center;
+        justify-content: center;
+      }
       .footer-btn {
         width: 100%;
-        padding: 10px;
+        height: 100%;
         color: #8A8A8A;
         font-size: 20px;
         font-weight: bold;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-top: 0;
+      }
+      #btn-close-modal{
+        border : none;
+        background: none;
       }
     </style>
   </head>
@@ -344,138 +408,6 @@
         });
       });
     </script>
-    <style>
-      /* myinfo */
-      #myinfo,#logout{
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #477154;
-        border: none;
-      }
-      #myinfo img,#logout img{
-        width: 100%;
-        height: 70%;
-      }
-
-      /* modal */
-      #editInfo_modal-dialog {
-        display: flex;
-        height: 90vh;
-        width: 100%;
-        flex-direction: row;
-        max-width: 24%;
-      }
-      #editInfo_modal-header,#editInfo_modal-footer{
-        background-color: #D9D9D9;
-      }
-      #editInfo_modal-dialog {
-        position: absolute;
-        transform: translateX(20%);
-        left: 60%;
-      }
-      /* modal-header */
-      #editInfo_header-title{
-        display: flex;
-        width: 100%;
-        margin: auto;
-      }
-      #editInfo_header-name{
-        width: 90%;
-      }
-      #header-close-btn{
-        width: 10%;
-      }
-      #editInfo_header-name p{
-        display: flex;
-        width: 100%;
-        font-size: 30px;
-        font-weight: bold;
-        align-items: center;
-        justify-content: center;
-      }
-      #editInfo_x_img{
-        width: 15px;
-        height: 17px;
-      }
-      #editInfo_modal-header{
-        padding-left: 10%;
-        height: 12%;
-      }
-      /* //modal-header */
-
-      /* modal-body */
-      #editInfo_modal-body{
-
-        width: 100%;
-        height: 60%;
-        padding-left: 10%;
-        padding-right: 10%;
-      }
-      #editInfo_modal-content {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        width: 100%;
-      }
-
-      #editInfo_modal-content strong {
-        font-size: 14px;
-        margin-bottom: 5px;
-        margin-top: 10px;
-      }
-
-      #editInfo_modal-content input {
-        padding: 8px 12px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-        text-align: center;
-      }
-
-      #editInfo_modal-content input[readonly] {
-        background-color: #f8f8f8;
-        color: #777;
-        border: 1px solid #ddd;
-      }
-      /* //modal-body */
-
-      #editInfo_modal-footer{
-        display: flex;
-        height: 12%;
-        padding-left: 10%;
-        padding-right: 10%;
-        align-items: center;
-        justify-content: center;
-      }
-      .footer-btn {
-        width: 100%;
-        height: 100%;
-        color: #8A8A8A;
-        font-size: 20px;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 0;
-      }
-      #btn-close-modal{
-        border : none;
-        background: none;
-      }
-
-      /* test */
-      /* modal */
-
-
-
-
-      /* //test */
-
-    </style>
     <!--end point-->
   </div>
   </body>
