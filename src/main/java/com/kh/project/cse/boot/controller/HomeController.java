@@ -97,4 +97,11 @@ public class HomeController {
         return "login/loginForm";
     }
 
+    //성진-유통기한관리
+    @RequestMapping("/spot_expiration")
+    public String spot_expiration() {
+        return "spot/expiration";
+    }
+    //성진
+
 }

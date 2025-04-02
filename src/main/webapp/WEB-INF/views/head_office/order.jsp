@@ -25,10 +25,16 @@
             width: 30%;
         }
         #top_serch{
-            width: 35%;
+            width: 50%;
+        }
+        #top_serch_form{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
         }
         #marge{
-            width: 35%;
+            width: 30%;
         }
         #table-manu{
             height: 75%;
@@ -181,12 +187,12 @@
             <div id="marge">
             </div>
             <div id="top_serch">
-                <form>
+                <form id="top_serch_form">
                     <input class="date-input" type="date">
                     ~
                     <input class="date-input" type="date">
                     <input class="search-input" type="number" >
-                    <input class="search-input-submit" type="submit" value="검색">
+                    <input class="search-input-submit-gray" type="submit" value="검색">
                 </form>
             </div>
         </div>
