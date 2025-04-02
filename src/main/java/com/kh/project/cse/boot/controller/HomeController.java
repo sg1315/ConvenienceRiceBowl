@@ -124,4 +124,9 @@ public class HomeController {
     public String inputmodal() {
         return "spot/inputmodal";
     }
+
+    @RequestMapping("/receiving")
+    public String receiving() {
+        return "receiving/receivingDetailsForm";
+    }
 }
