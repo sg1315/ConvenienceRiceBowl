@@ -249,13 +249,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
       <div id="top-manu">
         <div id="top-left">
           <div id="top-left1">
-            <img src="../resources/menu_icons/직원 아이콘.png" />
+            <img src="../resources/menu_icons/매출집계 아이콘.png" />
             <p class="main_name">매출집계</p>
           </div>
         </div>
 
         <div id="top-right1">
-          <button class="search-input-submit">년도별</button>
+          <a href="/spotSalesYear"
+            ><button class="search-input-submit">년도별</button></a
+          >
           <div id="searchdate">
             <input type="month" class="date-input" />
             <span>~</span>
