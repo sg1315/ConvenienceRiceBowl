@@ -242,7 +242,8 @@
 
     #product-detail-modify-table {
       border-collapse: separate;
-      border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
+      /*border-spacing: 10px 30px; !* 상하 간격을 10px로 설정 *!*/
+      border-spacing: 10px 20px;
     }
     #product-detail-modify-table tr td {
       font-size: 20px;
@@ -251,6 +252,13 @@
 
     #product-detail-modify-table p {
       padding-left: 10px;
+    }
+    #product-detail-modify-table input {
+      padding-left: 10px;
+    }
+    #modal-productCode{
+      border: none;
+      outline: none;
     }
 
     #product-detail-modify-table td{
@@ -394,31 +402,46 @@
         </div>
         <div class="modal-body">
           <!--모달 내용-->
-          <div id="modal-body-div">
-            <p>
-              <strong>상품번호</strong>
-              <input type="text" id="modal-productCode" readonly>
-            </p>
-            <p>
-              <strong>카테고리</strong>
-              <input type="text" id="modal-productCategory" readonly>
-            </p>
-            <p>
-              <strong>상품명</strong>
-              <input type="text" id="modal-productName" readonly>
-            </p>
-            <p>
-              <strong>입고가</strong>
-              <input type="text" id="modal-productInputPrice" readonly>
-            </p>
-            <p>
-              <strong>판매가</strong>
-              <input type="text" id="modal-productSalePrice" readonly>
-            </p>
+          <div id="product-modify-img">이미지사진</div>
+          <div id="product-detail-modify-box">
+            <div id="product-detail-modify">
+              <div id="product-detail-modify-puts">
+                <table id="product-detail-modify-table">
+                  <tr>
+                    <td>상품번호</td>
+                    <td>
+                      <input type="text" id="modal-productCode" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>카테고리</td>
+                    <td>
+                      <input type="text" id="modal-productCategory" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>상품명</td>
+                    <td>
+                      <input type="text" id="modal-productName" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>입고가</td>
+                    <td>
+                      <input type="text" id="modal-productInputPrice" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>판매가</td>
+                    <td>
+                      <input type="text" id="modal-productSalePrice" readonly>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
+
         </div>
       </div>
     </div>
