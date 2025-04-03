@@ -70,7 +70,7 @@
         /*min-height: 810px;*/
 
         min-width: 1920px;
-        min-height: 1080px;
+        min-height: 980px;
 
         max-width: 1920px;
         /*max-height: 1080px;*/
