@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.project.cse.boot.mappers.ProductMapper">
+    <resultMap id="headProductResult" type="Product">
+    <result column="PRODUCT_NO" property="prodcuctNo"/>
+    <result column="CATEGORY_NO" property="categoryNo"/>
+    <result column="PRODUCT_NAME" property="productName"/>
+    <result column="INPUT_PRICE" property="inputPrice"/>
+    <result column="SALE_PRICE" property="salePrice"/>
+    <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
+    <result column="AVAILABILITY" property="availavility"/>
+    </resultMap>
+
+</mapper>

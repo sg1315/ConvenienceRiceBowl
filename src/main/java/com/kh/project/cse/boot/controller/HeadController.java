@@ -2,22 +2,19 @@ package com.kh.project.cse.boot.controller;
 
 
 import com.kh.project.cse.boot.domain.vo.Product;
-import jakarta.servlet.http.HttpSession;
+import com.kh.project.cse.boot.service.HeadService;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
 public class HeadController {
 
-    //private final HeadProductService headProductService;
+    private final HeadService headService;
 
     //성진 본사-로그인
     @RequestMapping("/head_member")
@@ -38,26 +35,7 @@ public class HeadController {
     //성진 본사-상품관리
     @RequestMapping("/head_product")
     public String head_product() { return "head_office/headProduct";}
-    //
 
-    @PostMapping("/search_product")
-    public String searchProduct(@RequestParam String condition, @RequestParam String keyword, Model model) {
-
-        System.out.println(condition);
-        System.out.println(keyword);
-
-//       HashMap<String,String> map = new HashMap<>();
-//       map.put("keyword",keyword);
-//       map.put("condition",condition);
-//        System.out.println("keyword : "+map.get(0));
-//        System.out.println("condition : "+map.get(1));
-//
-//       ArrayList<Product> list = headProductService.serchProduct(map);
-//
-//       model.addAttribute("list",list);
-//        System.out.println(list);
-
-        return "head_office/headProduct";}
 
 
     //성진 본사-상품관리

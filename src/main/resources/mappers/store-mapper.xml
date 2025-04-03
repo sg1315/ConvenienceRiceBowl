@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.project.cse.boot.mappers.StoreMapper">
+
+    <resultMap id="storeResult" type="Store">
+        <result column="STORE_NO" property="storeNo"/>
+        <result column="STORE_NAME" property="storeName"/>
+        <result column="STORE_DATE" property="storeDate"/>
+        <result column="STORE_STATUS" property="storeStatus"/>
+    </resultMap>
+</mapper>
