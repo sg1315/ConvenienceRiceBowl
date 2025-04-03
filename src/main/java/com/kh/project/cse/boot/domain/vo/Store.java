@@ -10,8 +10,9 @@ import java.sql.Date;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Store {
-    private int storeNumber;
     private int storeNo;
-    private Date storeStatus;
+    private int storeName;
+    private Date storeDate;
+    private int storeStatus;
 
 }

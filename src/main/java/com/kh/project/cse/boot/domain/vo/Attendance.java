@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Attendance {
-    private int attendance;
+    private int attendanceNo;
     private int memberNo;
     private int workingTime;
     private int workoutTime;

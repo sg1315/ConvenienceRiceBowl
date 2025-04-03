@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.project.cse.boot.mappers.AttendanceMapper">
+        <resultMap id="attendanceResult" type="Attendance">
+            <result column="ATTENDANCE_NO" property="attendanceNo"/>
+            <result column="MEMBER_NO" property="memberNo"/>
+            <result column="WORKIN_TIME" property="workingTime"/>
+            <result column="WORKOUT_TIME" property="workoutTime"/>
+        </resultMap>
+</mapper>

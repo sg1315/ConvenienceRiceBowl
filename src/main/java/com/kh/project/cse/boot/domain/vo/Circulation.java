@@ -12,10 +12,11 @@ import java.sql.Date;
 @EqualsAndHashCode
 public class Circulation {
     private int circulateionNo;
-    private int storeNumber;
+    private int storeNo;
+    private int productNo;
     private int inputPrice;
     private int salePrice;
     private int circulateionAmount;
     private Date circulateionDate;
-    private int number;
+    private int status;
 }

@@ -27,7 +27,6 @@ public class HeadController {
         return "head_office/headMember";
     }
     //
-
     //본사 주문
     @RequestMapping("/head_order")
     public String home3() {
@@ -66,8 +65,7 @@ public class HeadController {
 //       model.addAttribute("list",list);
 //        System.out.println(list);
 
-        return "head_office/headProduct";
-    }
+        return "head_office/headProduct";}
 
     //성진 본사-지점관리
     @RequestMapping("/head_store")
