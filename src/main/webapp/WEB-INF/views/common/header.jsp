@@ -215,17 +215,22 @@
         display: flex;
         width: 100%;
         margin: auto;
+        justify-content: center;
+        align-items: flex-start;
       }
       #editInfo_header-name{
-        width: 90%;
+        display: flex;
+        width: 100%;
       }
-      #header-close-btn{
-        width: 10%;
+      #btn-close-modal{
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
       }
       #editInfo_header-name p{
         display: flex;
         width: 100%;
-        font-size: 30px;
+        font-size: 40px;
         font-weight: bold;
         align-items: center;
         justify-content: center;
@@ -256,19 +261,25 @@
       }
 
       #editInfo_modal-content strong {
-        font-size: 14px;
+        font-size: 18px;
         margin-bottom: 5px;
         margin-top: 10px;
       }
 
       #editInfo_modal-content input {
         padding: 8px 12px;
-        font-size: 14px;
+        font-size: 18px;
         border: 1px solid #ccc;
         border-radius: 5px;
         outline: none;
         text-align: center;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        margin-bottom: 10px;
       }
+
+
 
       #editInfo_modal-content input[readonly] {
         background-color: #f8f8f8;
@@ -279,26 +290,28 @@
 
       #editInfo_modal-footer{
         display: flex;
-        height: 12%;
+        height: 8%;
         padding-left: 10%;
         padding-right: 10%;
         align-items: center;
         justify-content: center;
       }
-      .footer-btn {
+
+      .gray-long-btn {
         width: 100%;
         height: 100%;
-        color: #8A8A8A;
-        font-size: 20px;
-        font-weight: bold;
+        font-size: 30px;
         border: none;
-        border-radius: 5px;
+        border-radius: 10px;
         cursor: pointer;
         margin-top: 0;
       }
       #btn-close-modal{
         border : none;
         background: none;
+      }
+      .modal-content{
+        height: 80vh;
       }
     </style>
   </head>
@@ -398,7 +411,7 @@
             </div>
           </div>
           <div class="modal-footer" id="editInfo_modal-footer">
-            <button type="button" class="footer-btn">수정</button>
+            <button type="button" class="gray-long-btn">수정</button>
           </div>
         </div>
       </div>
