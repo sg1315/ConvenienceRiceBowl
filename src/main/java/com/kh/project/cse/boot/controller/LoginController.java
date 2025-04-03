@@ -41,9 +41,11 @@ public class LoginController {
     }
     @PostMapping("/insert.me")
     public ModelAndView insertMember(Member member, ModelAndView mv, HttpSession session) {
+        System.out.println("멤버:"+member);
         String pwd = bCryptPasswordEncoder.encode(member.getMemberPwd());
         // 비번 암호화
         member.setMemberPwd(pwd);
+
         int result = memberService.insertMember(member);
 
         //메세지 구현해야됨!
