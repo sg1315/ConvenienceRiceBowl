@@ -88,6 +88,12 @@
             table-layout: auto;
             font-size: 24px;
         }
+        #table1 td{
+            padding: 10px;
+        }
+        #table1 th{
+            padding: 14px;
+        }
 
         #main-pageing img{
             width: 70px;
@@ -109,78 +115,181 @@
             color: #3C3C3C;
             font-weight: bold;
         }
-        #btn-close-modal{
-            width: 20px;
-            height: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #x_img{
-            width: 10px;
-            height: 10px;
-        }
-        .modal-content {
-            height: 90vh;
-        }
-        .modal-header, .modal-footer{
-            background-color: #D9D9D9;
-        }
-        .modal-body input, .modal-body select{
-            border:1px solid gray;
-            border-radius : 8px;
-            width:80%;
-            height:8%;
-            text-align:center;
-            margin-bottom:16px;
-        }
-        #select-modal-rank{
-            margin-bottom:6px;
-            margin-right: 20%;
-        }
-        #select-modal-status{
-            width: 24%;
-            border-radius: 8px;
-        }
-        #modal-div{
-            display:flex;
-            height:8%;
-            flex-direction:row-reverse;
-            justify-content:space-between;
-            margin-bottom:6px;
-            align-items: flex-end;
-        }
-        #select-modal-rank{
-            width:20%;
-            height:100%;
-        }
-        #modal-body-div{
-            padding-left:18%;
-            padding-top:4%;
-        }
-        #footer-btn{
-            width:66%;
-            margin-right:16%;
-            background-color: #8A8A8A;
-            border:none;
-            font-weight:bold;
-            font-size:20px;
-            border-radius:10px;
-        }
-        #header-title{
-            margin-left:22%;
-        }
-        #header-title h1{
-            font-weight:bold;
-            font-color:white;
-        }
         .modal-dialog {
             position: absolute;
             top:5%;
             left: 20%;
             transform: translateX(20%);
         }
+             /* modal */
+         #editMember_modal-dialog {
+             display: flex;
+             height: 90vh;
+             width: 100%;
+             flex-direction: row;
+             max-width: 24%;
+         }
 
+        #editMember_modal-header,#editMember_modal-footer{
+            background-color: #D9D9D9;
+        }
+
+        #editMember_modal-dialog {
+            position: absolute;
+            transform: translateX(20%);
+            left: 60%;
+        }
+
+        /* modal-header */
+        #editMember_header-title{
+            display: flex;
+            width: 100%;
+            margin: auto;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #editMember_header-name{
+            display: flex;
+            width: 100%;
+        }
+
+        #btn-close-modal{
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        #editMember_header-name p{
+            display: flex;
+            width: 100%;
+            font-size: 40px;
+            font-weight: bold;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #editMember_x_img{
+            width: 15px;
+            height: 17px;
+        }
+
+        #editMember_modal-header{
+            padding-left: 10%;
+            height: 12%;
+        }
+        /* //modal-header */
+
+        /* modal-body */
+        #editMember_modal-body{
+            display: flex;
+            width: 100%;
+            height: 60%;
+            padding-left: 10%;
+            padding-right: 10%;
+            flex-direction: column;
+        }
+
+        #editMember_modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+        }
+
+        #editMember_modal-content strong {
+            font-size: 18px;
+            margin-bottom: 5px;
+            margin-top: 10px;
+        }
+
+        #editMember_modal-content input {
+            padding: 8px 12px;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            text-align: center;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            margin-bottom: 10px;
+        }
+
+        #editMember_modal-content input[readonly] {
+            background-color: #f8f8f8;
+            color: #777;
+            border: 1px solid #ddd;
+        }
+
+        #editMember_select_wrap {
+            display: flex;
+            height: 40px;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        #editMember_select {
+            display: flex;
+            width: 60%;
+            height: 100%;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        #editMember_select-modal-rank, #editMember_select-modal-status {
+            display: flex;
+            height: 100%;
+            width: 40%;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #editMember_select_warp{
+            display: flex;
+            width: 100%;
+            height: 40px;
+        }
+
+        /* //modal-body */
+        /* modal-footer */
+        #editMember_modal-footer{
+            display: flex;
+            height: 8%;
+            padding-left: 10%;
+            padding-right: 10%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #editMember_edit_btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gray-long-btn {
+            width: 100%;
+            height: 100%;
+            font-size: 30px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 0;
+        }
+
+        #btn-close-modal{
+            border : none;
+            background: none;
+        }
+
+        .modal-content{
+            height: 80vh;
+        }
+        /* //modal-footer */
+        /* //modal */
     </style>
 </head>
 <body>
@@ -202,7 +311,7 @@
     </div>
     <div id="main">
         <div id="main-in">
-            <table class="table table-hover" id="table1">
+            <table class="table table-hover table-sm" id="table1">
                 <colgroup>
                     <col style="width: 20%;">
                     <col style="width: 20%;">
@@ -214,9 +323,9 @@
                 <tr>
                     <th class="col-2">직급</th>
                     <th class="col-2">아이디</th>
-                    <th class="col-4">이름</th>
-                    <th class="col-2">전화번호</th>
-                    <th class="col-2">재직</th>
+                    <th class="col-2">이름</th>
+                    <th class="col-4">전화번호</th>
+                    <th class="col-1">재직</th>
                 </tr>
                 </thead>
 
@@ -314,60 +423,60 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="edit_member" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog" id="editMember_modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <div id="header-title">
-                        <h1 class="modal-title fs-5">직원 정보 수정</h1>
+                <div class="modal-header" id="editMember_modal-header">
+                    <div id="editMember_header-title">
+                        <div id="editMember_header-name">
+                            <p class="modal-title fs-5">직원정보 수정</p>
+                        </div>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                        <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="x_img">
+                        <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="editMember_x_img">
                     </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" id="editMember_modal-body">
                     <!--모달 내용-->
-                    <div id="modal-body-div">
-                        <div id="modal-div">
-                            <select id="select-modal-rank">
-                                <option value="직급">직급</option>
-                                <option value="알바">알바</option>
-                                <option value="매니저">매니저</option>
-                                <option value="지점장">지점장</option>
-                            </select>
-                            <p>
-                                <strong>이름</strong> <br>
+                    <div>
+                        <div id="editMember_modal-content">
+                            <div id="editMember_select_wrap">
+                                <div id="editMember_select">
+                                <select id="editMember_select-modal-rank">
+                                    <option value="직급">직급</option>
+                                    <option value="알바">알바</option>
+                                    <option value="매니저">매니저</option>
+                                    <option value="지점장">지점장</option>
+                                </select>
+                                </div>
+                                <strong>이름</strong>
+                            </div>
+                            <input type="text" id="member_name" placeholder="이름가져오기" readonly="">
+                            <strong>휴대폰</strong>
+                            <input type="text" id="member_phone" placeholder="010-0000-0000" readonly="">
+                            <strong>주민번호</strong>
+                            <input type="text" id="member_identify" placeholder="주민번호가져오기 : 121212-1******" readonly="">
+                            <strong>아이디</strong>
+                            <input type="text" id="member_id" placeholder="아이디가져오기" readonly="">
+                            <strong>재직상황</strong>
+                            <div id="editMember_select_warp">
+                                <select id="editMember_select-modal-status">
+                                    <option value="Y">Y</option>
+                                    <option value="N">N</option>
+                                </select>
+                            </div>
                         </div>
-                        <input type="text" id="modal-name">
-                        </p>
-
-                        <p>
-                            <strong>휴대폰</strong><br>
-                            <input type="text" id="modal-phone">
-                        </p>
-                        <p>
-                            <strong>주민번호</strong><br>
-                            <input type="text" id="modal-identify" value="여기에 주민등록번호 가져와서 넣어야함">
-                        </p>
-                        <p>
-                            <strong>아이디</strong><br>
-                            <input type="text" id="modal-id">
-                        </p>
-                        <p>
-                            <strong>재직상황</strong><br>
-                            <select id="select-modal-status">
-                                <option value="Y">Y</option>
-                                <option value="N">N</option>
-                            </select>
-                        </p>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
+                <div class="modal-footer" id="editMember_modal-footer">
+                    <button type="button" class="gray-long-btn" id="editMember_edit_btn">수정</button>
                 </div>
             </div>
+
         </div>
     </div>
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -383,20 +492,21 @@
                     const phone = this.children[3].textContent;
                     const status = this.children[4].textContent;
 
-                    document.getElementById("modal-id").value = id;
-                    document.getElementById("modal-name").value = name;
-                    document.getElementById("modal-phone").value = phone;
-                    document.getElementById("select-modal-status").value = status;
-                    document.getElementById("select-modal-rank").value = rank;
+                    document.getElementById("editMember_select-modal-rank").value = rank;
+                    document.getElementById("member_name").value = name;
+                    document.getElementById("member_phone").value = phone;
 
-                    const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
+                    document.getElementById("member_id").value = id;
+                    document.getElementById("editMember_select-modal-status").value = status;
+
+                    const modal = new bootstrap.Modal(document.getElementById("edit_member"));
                     modal.show();
                 });
             });
         });
-
     </script>
     <!--end point-->
+
 </div>
 </body>
 </html>
