@@ -167,10 +167,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
             <div id="top-right1">
                 <button class="gowork-btn" onclick="changebtn(this)">출근</button>
-                <button
-                class="gohome-btn"
-                onclick="changebtn(this)"
-                style="display: none"> 퇴근</button>
+                <button class="gohome-btn" onclick="changebtn(this)" style="display: none"> 퇴근</button>
             </div>
 
         </div>
@@ -341,6 +338,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
         });
 
         function changebtn(this_btn) {
+
+            const position = ${};
+            const id = ${};
+            const name = ${};
+            const 재직 = ${};
 
             if (this_btn.classList.contains('gowork-btn')) {
               this_btn.innerText = '퇴근';
