@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Category {
-    private int categoryNO;
+    private int categoryNo;
     private String categoryName;
     private String expirationDate;
 }

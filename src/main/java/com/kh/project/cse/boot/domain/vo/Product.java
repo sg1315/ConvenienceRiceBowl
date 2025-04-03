@@ -9,8 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Product {
-
-
     private int prodcuctNo;
     private  int categoryNo;
     private String productName;

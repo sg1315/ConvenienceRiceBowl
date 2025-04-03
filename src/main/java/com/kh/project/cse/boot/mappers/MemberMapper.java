@@ -1,4 +1,4 @@
-package com.kh.project.cse.boot.mapper;
+package com.kh.project.cse.boot.mappers;
 
 import com.kh.project.cse.boot.domain.vo.Member;
 import org.apache.ibatis.annotations.Mapper;

@@ -92,10 +92,10 @@
         font-size: 40px;
         font-weight: bold;
       }
-      .modal-body {
+      #insert-product-form{
         display: flex;
         justify-content: space-between;
-        border: none !important;
+        border: none;
       }
       #x_img {
         width: 15px;
@@ -158,6 +158,11 @@
       #btn-close-modify-modal {
         border: none;
         background: none;
+      }
+      #modal-modify-body{
+        display: flex;
+        justify-content: space-between;
+        border: none !important;
       }
       #product-modify-img {
         background-color: #d9d9d9;
@@ -333,52 +338,47 @@
                 <img src="/resources/common/공통_Icon.png" id="x_img" />
               </button>
             </div>
-            <div class="modal-body">
-              <div id="product-img">
-                <button>이미지 찾기</button>
-              </div>
-              <div id="product-detail-box">
-                <div id="product-detail">
-                  <div id="product-detail-puts">
-                    <table id="product-detail-table">
-                      <tr>
-                        <td>상품번호</td>
-                        <td>
-                          <input type="number" />
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>카테고리</td>
-                        <td>
-                          <input type="text" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>상품명</td>
-                        <td>
-                          <input type="text" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>입고가</td>
-                        <td>
-                          <input type="number" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>판매가</td>
-                        <td>
-                          <input type="number" />
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div id="product-detail-ok">
-                    <button>완료</button>
+            <div class="modal-body" id="modal-body">
+              <form action="insertProduct.he" id="insert-product-form" method="post">
+                <div id="product-img">
+                  <input type="file" value="이미지 찾기">
+                </div>
+                <div id="product-detail-box">
+                  <div id="product-detail">
+                      <div id="product-detail-puts">
+                        <table id="product-detail-table">
+                          <tr>
+                            <td>카테고리</td>
+                            <td>
+                              <input type="number" id="categoryNo" name="categoryNo">
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>상품명</td>
+                            <td>
+                              <input type="text" id="productName" name="productName"/>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>입고가</td>
+                            <td>
+                              <input type="number" id="inputPrice" name="inputPrice"/>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>판매가</td>
+                            <td>
+                              <input type="number" id="salePrice" name="salePrice"/>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                      <div id="product-detail-ok">
+                        <button type="submit">완료</button>
+                      </div>
                   </div>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
@@ -393,7 +393,7 @@
                 <img src="/resources/common/공통_Icon.png" id="modify-x_img">
               </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modal-modify-body">
               <div id="product-modify-img">
                 이미지사진
               </div>
