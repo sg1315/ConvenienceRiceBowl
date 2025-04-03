@@ -64,11 +64,15 @@
         color: #333;
         width: 100%;
         height: 100%;
-        min-width: 1440px;
-        min-height: 810px;
+        /*min-width: 1440px;*/
+        /*min-height: 810px;*/
+
+        min-width: 1920px;
+        min-height: 1080px;
 
         max-width: 1920px;
-        max-height: 1080px;
+        /*max-height: 1080px;*/
+        max-height: 980px;
         display: flex;
         border: purple solid 5px;
       }
@@ -198,7 +202,7 @@
       </div>
       <div id="nav-menu">
         <div class="menu-bar" id="menu-1">
-          <a href="head_order1">발주관리</a>
+          <a href="head_order">발주관리</a>
         </div>
         <div class="menu-bar" id="menu-2">
           <a href="head_announcement">공지사항</a>

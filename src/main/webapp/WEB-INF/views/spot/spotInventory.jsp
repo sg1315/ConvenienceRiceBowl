@@ -2,6 +2,7 @@
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>지점 재고</title>
     <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       .waper {
@@ -18,11 +19,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
         display: flex;
         justify-content: space-between;
       }
-      #top-reft {
-        background-color: #d9d9d9;
-        width: 50%;
+      #top-left{
+        background-color: #D9D9D9;
+        width: 45%;
       }
-      #top-reft1 {
+      #top-left1{
         background-color: white;
         display: flex;
         align-content: center;
@@ -33,11 +34,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
 
       #top-right1 {
-        background-color: #d9d9d9;
-        width: 50%;
+        background-color: #D9D9D9;
+        width: 55%;
         display: flex;
-        justify-content: right;
+        justify-content: space-around;
         align-items: center;
+        padding-right: 40px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
         gap: 10px;
@@ -50,9 +52,18 @@ contentType="text/html;charset=UTF-8" language="java" %>
         justify-content: center;
         font-weight: bold;
       }
-      /* 추가 */
+
       #right-check p {
         padding-left: 5px;
+      }
+      #search-box{
+        width: 70%;
+        display: flex;
+        justify-content: center;
+      }
+      #search-box input:nth-child(1){
+        width: 80%;
+        padding: 10px;
       }
       .selectbox select {
         color: #8a8a8a;
@@ -60,17 +71,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
       .selectbox option {
         color: black;
       }
-
-      .search-input-submit {
-        margin-right: 0px;
-      }
-
-      #search-box {
-        display: flex;
-        justify-content: center;
-        padding-right: 50px;
-      }
-
 
       #table1 {
         outline: none;
@@ -86,7 +86,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: red;
       }
 
-      #top-reft p {
+      #top-left p {
         padding-left: 15px;
       }
       #main {
@@ -236,9 +236,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
     <jsp:include page="../common/header.jsp" />
     <div class="waper">
       <div id="top-manu">
-        <div id="top-reft">
-          <div id="top-reft1">
-            <img src="../resources/menu_icons/직원 아이콘.png" />
+        <div id="top-left">
+          <div id="top-left1">
+            <img src="../resources/menu_icons/재고 아이콘.png" />
             <p class="main_name">재고</p>
           </div>
         </div>

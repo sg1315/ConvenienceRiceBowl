@@ -2,6 +2,7 @@
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>지점 월매출</title>
     <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       .waper {
@@ -255,9 +256,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
 
         <div id="top-right1">
-          <a href="/spotSalesYear"
-            ><button class="search-input-submit">년도별</button></a
-          >
+          <a href="/spot_salesYear"><button class="search-input-submit">년도별</button></a>
           <div id="searchdate">
             <input type="month" class="date-input" />
             <span>~</span>

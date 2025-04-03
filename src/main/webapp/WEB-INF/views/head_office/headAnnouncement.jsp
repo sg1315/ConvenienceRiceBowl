@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title>본사 공지사항</title>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
         #form {
             width: 100%;
@@ -33,11 +35,28 @@
             align-items: center;
         }
 
+        #announcement-add{
+            background: #d9d9d9;
+            color: black;
+        }
+
         #top_serch {
             display: flex;
             justify-content: right;
             padding-right: 61px;
             width: 35%;
+        }
+        .search-input-gray{
+            width: 100px;
+            font-size: 16px;
+            padding: 0;
+            text-align: center;
+        }
+
+        #search-filed{
+            width: 300px;
+            text-align: left;
+            padding-left: 10px;
         }
 
         #table-manu {
@@ -193,6 +212,13 @@
             border-top: 3px solid #B4B4B4;
             height: 5%;
             background-color: #D9D9D9;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+        }
+        #comment-btn button{
+            width: 7%;
+            height: 90%;
         }
 
         #comment {
@@ -205,6 +231,17 @@
 
         #comment-detail {
             width: 50%;
+        }
+
+        #comment-detail-input{
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 10px;
+        }
+
+        #comment-detail-input > button{
+            height: 100%;
         }
 
         #comment-detail input {
@@ -321,19 +358,19 @@
             공지 사항
         </div>
         <div id="form-top-btn">
-            <button id="announcement-add" data-bs-toggle="modal" data-bs-target="#staticBackdrop">글쓰기</button>
+            <button class="gray-btn-border" id="announcement-add" data-bs-toggle="modal" data-bs-target="#staticBackdrop">글쓰기</button>
         </div>
     </div>
 
     <div id="top-manu">
         <div id="top_serch">
             <form>
-                <select>
+                <select class="search-input-gray">
                     <option>제목</option>
                     <option>아이디</option>
                 </select>
-                <input type="text">
-                <input type="submit" value="검색">
+                <input class="search-input-gray" id="search-filed" type="text">
+                <input class="search-input-submit-gray" type="submit" value="검색">
             </form>
         </div>
     </div>
@@ -445,8 +482,8 @@
                     <div id="detail-modal-body-top">
                         <p>3월28일 업데이트</p>
                         <div>
-                            <button>수정</button>
-                            <button>삭제</button>
+                            <button class="black-btn">수정</button>
+                            <button class="red-btn">삭제</button>
                         </div>
                     </div>
                     <div>
@@ -454,13 +491,13 @@
                     </div>
                 </div>
                 <div id="comment-btn">
-                    <button>∧댓글</button>
+                    <button class="white-btn-border">∧댓글</button>
                 </div>
                 <div id="comment">
                     <div id="comment-detail">
-                        <div>
-                            <input type="text">
-                            <button>작성</button>
+                        <div id="comment-detail-input">
+                            <input class="search-input" type="text">
+                            <button class=gray-btn-border>작성</button>
                         </div>
                         <div id="comment-table-box">
                             <table id="comment-table">
