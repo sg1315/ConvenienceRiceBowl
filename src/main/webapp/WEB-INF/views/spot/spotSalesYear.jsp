@@ -2,6 +2,7 @@
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>지점 연매출</title>
     <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       .waper {
@@ -21,7 +22,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
       #top-left {
         background-color: #d9d9d9;
-        width: 60%;
+        width: 65%;
       }
       #top-left1 {
         background-color: white;
@@ -35,11 +36,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #top-right1 {
         background-color: #d9d9d9;
-        width: 40%;
+        width: 35%;
         display: flex;
-        gap: 15px;
-        /* justify-content: space-around; */
-        justify-content: center;
+        gap: 10px;
+        padding-right: 40px;
+        padding-left: 50px;
+         justify-content: space-between;
+        /*justify-content: center;*/
         align-items: center;
         align-content: center;
 
@@ -47,6 +50,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
         border-top-right-radius: 20px;
       }
 
+      #yearPicker{
+        text-align: center;
+        font-weight: bold;
+      }
       
 
       #main-title {
@@ -81,6 +88,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
         outline: none;
         width: 100%;
         height: 90%;
+        font-weight: bold;
+
       }
       #table1 thead{
         background: #477154;
@@ -90,9 +99,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #table1 tbody{
         background: white;
       }
-      th, td{
+      #table1 tbody tr td{
+        vertical-align: middle;
         text-align: center;
-      }
+       }
       #table1 tbody tr td:nth-child(1){
         background: #d9d9d9;
       }
@@ -120,9 +130,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
 
         <div id="top-right1">
-          <a href="/spot-sales"><button class="search-input-submit">월별</button></a>
+          <a href="/spot_sales"><button class="search-input-submit">월별</button></a>
           <div id="searchdate">
-            <input type="date" class="date-input" id="yearPicker">
+            <select class="date-input" id="yearPicker">
+
+            </select>
+
           </div>
           <button class="search-input-submit">검색</button>
         </div>
@@ -222,16 +235,41 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </div>
     </div>
 
-      <script>
-        // 테이블의 모든 행에 클릭 이벤트 추가
-        document.querySelectorAll('#table1 tbody tr').forEach((row) => {
-          row.addEventListener('click', function () {
-            // myModal.show(); // 모달 열기
-            //클릭시 해당 월로 월 매출집계로 가는 기능 추가해야함
-          });
+    <script>
+      // 테이블의 모든 행에 클릭 이벤트 추가
+      document.querySelectorAll('#table1 tbody tr').forEach((row) => {
+        row.addEventListener('click', function () {
+          // myModal.show(); // 모달 열기
+          //클릭시 해당 월로 월 매출집계로 가는 기능 추가해야함
         });
+      });
 
-      </script>
+    </script>
+    <script>
+      //셀렉스박스 날짜 불러오기
+      function populateYearSelect() {
+        const yearSelect = document.getElementById("yearPicker");
+        const currentYear = new Date().getFullYear();
+        const startYear = 1980;
+
+        // 기존 옵션 초기화
+        yearSelect.innerHTML = "";
+
+        // 옵션 추가
+        for (let year = currentYear; year >= startYear; year--) {
+          let option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          yearSelect.appendChild(option);
+        }
+
+        // 기본값을 현재 연도로 설정
+        yearSelect.value = currentYear;
+      }
+
+      // 페이지 로드 시 실행
+      document.addEventListener("DOMContentLoaded", populateYearSelect);
+    </script>
     </div>
   </body>
 </html>

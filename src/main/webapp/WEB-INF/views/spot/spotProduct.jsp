@@ -2,13 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+  <title>상품정보</title>
   <link rel="stylesheet" href="/resources/css/btn.css">
   <style>
-
-
     .waper{
       width:100%;
       padding: 50px;
+      font-family: 'Open Sans', sans-serif;
     }
     .main_name{
       font-weight: bolder;
@@ -19,11 +19,11 @@
       display: flex;
       justify-content: space-between;
     }
-    #top-reft{
+    #top-left{
       background-color: #D9D9D9;
-      width: 50%;
+      width: 45%;
     }
-    #top-reft1{
+    #top-left1{
       background-color: white;
       display: flex;
       align-content: center;
@@ -35,12 +35,14 @@
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 50%;
+      width: 55%;
       display: flex;
       justify-content: space-around;
       align-items: center;
+      padding-right: 40px;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
+      gap: 10px;
     }
 
     #right-check{
@@ -50,8 +52,8 @@
       justify-content: center;
       font-weight: bold;
     }
-    #category-select{
-      border-radius: 10px;
+    #right-check p {
+      padding-left: 5px;
     }
     #search-box{
       width: 70%;
@@ -62,12 +64,18 @@
       width: 80%;
       padding: 10px;
     }
+    .selectbox select {
+      color: #8a8a8a;
+    }
+    .selectbox option {
+      color: black;
+    }
 
     #table1 td img{
       width: 20px;
     }
 
-    #top-reft p {
+    #top-l p {
       padding-left: 15px;
     }
     #main{
@@ -288,9 +296,9 @@
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
   <div id="top-manu">
-    <div id="top-reft">
-      <div id="top-reft1">
-        <img src="../resources/menu_icons/직원 아이콘.png">
+    <div id="top-left">
+      <div id="top-left1">
+        <img src="../resources/menu_icons/상품목록 아이콘.png">
         <p class="main_name">상품정보</p>
       </div>
     </div>
@@ -307,7 +315,7 @@
         </select>
       </div>
       <div id="search-box">
-        <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
+        <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
         <input class="search-input-submit" type="submit" value="검색" />
       </div>
     </div>

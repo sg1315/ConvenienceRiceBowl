@@ -66,14 +66,15 @@
         color: #333;
         width: 100%;
         height: 100%;
-        min-width: 1440px;
-        min-height: 810px;
+        /*min-width: 1440px;*/
+        /*min-height: 810px;*/
 
-        /*min-width: 1920px;*/
-        /*min-height: 1080px;*/
+        min-width: 1920px;
+        min-height: 1080px;
 
         max-width: 1920px;
-        max-height: 1080px;
+        /*max-height: 1080px;*/
+        max-height: 980px;
         display: flex;
         border: purple solid 5px;
       }
@@ -332,8 +333,8 @@
             직원관리
             <div>
               <ul>
-                <li><a><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
-                <li><a href="spot-attendance"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
+                <li><a href="spot_member"><img src="/resources/menubar_icons/직원정보 아이콘.png"> 직원정보</a></li>
+                <li><a href="spot_attendance"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 근태관리</a></li>
               </ul>
             </div>
           </div>

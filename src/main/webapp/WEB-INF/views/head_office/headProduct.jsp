@@ -1,6 +1,9 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>본사 상품관리</title>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
       #form {
         width: 100%;
@@ -28,11 +31,30 @@
         align-items: center;
       }
 
+      #productadd{
+        width: 100%;
+
+        background: #d9d9d9;
+        color: black;
+      }
+
       #top_serch {
         display: flex;
         justify-content: right;
         padding-right: 61px;
         width: 35%;
+      }
+      .search-input-gray{
+        width: 100px;
+        font-size: 16px;
+        padding: 0;
+        text-align: center;
+      }
+
+      #search-filed{
+        width: 300px;
+        text-align: left;
+        padding-left: 10px;
       }
 
       #table-manu {
@@ -125,7 +147,7 @@
         height: 90%;
       }
       #product-detail-puts {
-        height: 90%;
+        height: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -146,6 +168,13 @@
       #product-detail-table tr td {
         font-size: 20px;
         font-weight: bold;
+      }
+      #product-add-select{
+        width: 100%;
+        height: 30px;
+        font-weight: normal;
+        border: 2px solid #d9d9d9;
+        border-radius: 5px;
       }
 
       /*
@@ -179,15 +208,25 @@
         height: 90%;
       }
       #product-detail-modify-puts {
-        height: 90%;
+        height: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
       }
+      #product-detail-modify-table tr td{
+        text-align: center;
+      }
+
       #product-detail-modify-table tr td input {
         border: 2px solid #d9d9d9;
         border-radius: 5px;
       }
+
+      #product-detail-modify-table tr td input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+
       #product-detail-modify-btn {
         display: flex;
         justify-content: right;
@@ -198,7 +237,7 @@
       }
       #product-detail-modify-table {
         border-collapse: separate;
-        border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
+        border-spacing: 10px 20px; /* 상하 간격을 10px로 설정 */
       }
       #product-detail-modify-table tr td {
         font-size: 20px;
@@ -213,6 +252,7 @@
         <div id="form_name">상품 관리</div>
         <div id="form-top-btn">
           <button
+            class="gray-btn-border"
             id="productadd"
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
@@ -225,13 +265,13 @@
       <div id="top-manu">
         <div id="top_serch">
           <form>
-            <select>
+            <select class="search-input-gray">
               <option>상품번호</option>
               <option>카테고리</option>
               <option>상품명</option>
             </select>
-            <input type="text" />
-            <input type="submit" value="검색" />
+            <input  class="search-input-gray" id="search-filed" type="text" />
+            <input class="search-input-submit-gray" type="submit" value="검색" />
           </form>
         </div>
       </div>
@@ -310,6 +350,7 @@
       ></script>
 
       <!-- Modal -->
+      <%--   상품 추가   --%>
       <div
         class="modal fade"
         id="staticBackdrop"
@@ -342,16 +383,13 @@
                   <div id="product-detail-puts">
                     <table id="product-detail-table">
                       <tr>
-                        <td>상품번호</td>
-                        <td>
-                          <input type="number" />
-                        </td>
-                      </tr>
-
-                      <tr>
                         <td>카테고리</td>
                         <td>
-                          <input type="text" />
+                          <select class="search-input-gray" id="product-add-select">
+                            <option>스낵</option>
+                            <option>음료</option>
+                            <option>기타</option>
+                          </select>
                         </td>
                       </tr>
                       <tr>
@@ -375,7 +413,7 @@
                     </table>
                   </div>
                   <div id="product-detail-ok">
-                    <button>완료</button>
+                    <button class="black-btn">완료</button>
                   </div>
                 </div>
               </div>
@@ -384,11 +422,12 @@
         </div>
       </div>
 
+      <%--   상품 상세보기 및 수정/삭제   --%>
       <div class="modal fade" id="staticBackdrop-modify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <p>상품 추가</p>
+              <p>상품 정보 수정</p>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modify-modal">
                 <img src="/resources/common/공통_Icon.png" id="modify-x_img">
               </button>
@@ -403,19 +442,14 @@
                     <table id="product-detail-modify-table">
                       <tr>
                         <td>
-                          상품번호
-                        </td>
-                        <td>
-                          <input type="number">
-                        </td>
-                      </tr>
-
-                      <tr>
-                        <td>
                           카테고리
                         </td>
                         <td>
-                          <input type="text">
+                          <select class="search-input-gray" id="product-add-select">
+                            <option>스낵</option>
+                            <option>음료</option>
+                            <option>기타</option>
+                          </select>
                         </td>
                       </tr>
                       <tr>
@@ -442,11 +476,19 @@
                           <input type="number">
                         </td>
                       </tr>
+                      <tr>
+                        <td>
+                          입고불가
+                        </td>
+                        <td>
+                          <input type="checkbox">
+                        </td>
+                      </tr>
                     </table>
                   </div>
                   <div id="product-detail-modify-btn">
-                    <button>수정완료</button>
-                    <button>삭제</button>
+                    <button class="black-btn">수정완료</button>
+                    <button class="red-btn">삭제</button>
                   </div>
                 </div>
               </div>

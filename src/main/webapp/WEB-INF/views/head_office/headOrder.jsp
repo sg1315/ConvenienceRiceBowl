@@ -1,8 +1,10 @@
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" href="../resources/css/btn.css">
+    <title>본사 발주관리</title>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
         #form{
             width: 100%;
@@ -24,10 +26,11 @@
             padding-left: 10px;
             width: 30%;
         }
-        #top_serch{
+        #top_search{
             width: 50%;
+            padding-right: 10px;
         }
-        #top_serch_form{
+        #top_search_form{
             display: flex;
             justify-content: center;
             align-items: center;
@@ -84,15 +87,15 @@
             font-weight: bold;
         }
         #btn-close-modal{
-            width: 20px;
-            height: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: none;
+            background: #d9d9d9;
         }
         #x_img{
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
         }
 
 
@@ -109,7 +112,7 @@
             display: flex;
         }
         #modal-header2-low{
-            width: 28%;
+            width: 35%;
             padding-left: 40px;
             display: flex;
             align-items: center;
@@ -186,8 +189,8 @@
             </div>
             <div id="marge">
             </div>
-            <div id="top_serch">
-                <form id="top_serch_form">
+            <div id="top_search">
+                <form id="top_search_form">
                     <input class="date-input" type="date">
                     ~
                     <input class="date-input" type="date">
@@ -263,15 +266,15 @@
                 <div id="modal-head">
                     <div class="modal-header">
                         <p class="modal-title fs-5" id="staticBackdropLabel">25-12-08 | 1234 | 강남점</p>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                            <img src="/resources/common/공통_Icon.png" id="x_img">
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                            <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
                         </button>
                     </div>
                     <div id="modal-header2">
                         <div id="modal-header2-low">
                             <p>발주 요청 품목</p>
-                            <button id="modal-header2-btn">발주 승인</button>
-                            <button id="modal-header2-btn2">거절</button>
+                            <button class="yes-btn" id="modal-header2-btn" style="width: 100px">발주 승인</button>
+                            <button class="no-btn" id="modal-header2-btn2">거절</button>
                         </div>
                         <div id="modal-header2-low2">
                             <div>
