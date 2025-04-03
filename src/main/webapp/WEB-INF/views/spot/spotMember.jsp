@@ -18,10 +18,11 @@
         #top-manu{
             display: flex;
             justify-content: space-between;
+            padding-left: 50px;
         }
         #top-left{
             background-color: #D9D9D9;
-            width: 55%;
+            width: 60%;
         }
         #top-left1{
             background-color: white;
@@ -35,15 +36,27 @@
 
         #top-right1{
             background-color: #D9D9D9;
-            width: 45%;
             display: flex;
-            justify-content: center;
+            flex:1;
+            justify-content: flex-end;
             align-items: center;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
+            padding-left: 50px;
+            padding-right: 50px;
         }
         #top-left p {
             padding-left: 15px;
+        }
+        #top-right1 input[type=text]{
+            display: flex;
+            flex: 1;
+            font-size: 24px;
+
+        }
+        #top-right1 input[type=submit]{
+            margin: 0 0 0 20px;
+            font-size: 24px;
         }
         #main{
             background-color: #D9D9D9;
@@ -73,6 +86,7 @@
             outline: none;
             width: 100%;
             table-layout: auto;
+            font-size: 24px;
         }
 
         #main-pageing img{
