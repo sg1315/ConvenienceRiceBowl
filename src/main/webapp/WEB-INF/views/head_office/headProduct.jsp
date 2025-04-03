@@ -224,13 +224,13 @@
 
       <div id="top-manu">
         <div id="top_serch">
-          <form>
-            <select>
-              <option>상품번호</option>
-              <option>카테고리</option>
-              <option>상품명</option>
+          <form id= "searchForm" method="post" action="search_product" >
+            <select name="condition">
+              <option value="productNo">상품번호</option>
+              <option value="category">카테고리</option>
+              <option value="productName">상품명</option>
             </select>
-            <input type="text" />
+            <input type="text" name="keyword"/>
             <input type="submit" value="검색" />
           </form>
         </div>
