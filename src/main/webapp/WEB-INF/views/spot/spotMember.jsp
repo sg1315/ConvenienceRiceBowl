@@ -2,10 +2,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title>지점 직원관리</title>
     <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
-
-
         .waper{
             width:100%;
             padding: 50px;

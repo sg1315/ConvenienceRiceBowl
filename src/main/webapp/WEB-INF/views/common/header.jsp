@@ -70,11 +70,11 @@
         /*min-height: 810px;*/
 
         min-width: 1920px;
-        min-height: 980px;
+        min-height: 953px;
 
         max-width: 1920px;
         /*max-height: 1080px;*/
-        max-height: 980px;
+        max-height: 953px;
         display: flex;
         border: purple solid 5px;
       }
@@ -318,7 +318,7 @@
         <a href="pos_go"><button class="white-btn-round 연동" id="btn-pos">POS</button></a>
       </div>
       <div id="logo">
-        <a href="dashboard"><img src="/resources/menubar_icons/로고.png"></a>
+        <a href="spot_dashboard"><img src="/resources/menubar_icons/로고.png"></a>
       </div>
       <div id="mypage">
         <div>
