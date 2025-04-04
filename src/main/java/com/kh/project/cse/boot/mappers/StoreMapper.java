@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface StoreMapper {
     int insertStore(@Param("storeName") String storeName);
+
+    int checkStore(@Param("checkStore") String checkStore);
 }

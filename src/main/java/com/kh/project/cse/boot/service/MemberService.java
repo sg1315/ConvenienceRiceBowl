@@ -6,9 +6,11 @@ import org.apache.ibatis.annotations.Param;
 public interface MemberService {
     int insertMember(Member member);
 
-    Member loginMember(@Param("memberId") String memberId);
+    Member loginMember(String memberId);
 
-    int idCheck(@Param("checkId") String checkId);
+    int idCheck(String checkId);
 
-    int insertStore(@Param("storeName") String storeName);
+    int insertStore(String storeName);
+
+    int checkStoreName(String checkStore);
 }
