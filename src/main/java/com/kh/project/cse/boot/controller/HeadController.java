@@ -1,6 +1,7 @@
 package com.kh.project.cse.boot.controller;
 
 
+import com.kh.project.cse.boot.domain.vo.Category;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
@@ -41,41 +42,37 @@ public class HeadController {
     }
     //성진
 
-    //성진 본사-상품관리
-    @RequestMapping("/head_product")
-    public String head_product() {
-        return "head_office/headProduct";
-    }
-    //
 
-    @PostMapping("/search_product")
-    public String searchProduct(@RequestParam String condition, @RequestParam String keyword, Model model) {
-
-        System.out.println(condition);
-        System.out.println(keyword);
-
-//       HashMap<String,String> map = new HashMap<>();
-//       map.put("keyword",keyword);
-//       map.put("condition",condition);
-//        System.out.println("keyword : "+map.get(0));
-//        System.out.println("condition : "+map.get(1));
-//
-//       ArrayList<Product> list = headProductService.serchProduct(map);
-//
-//       model.addAttribute("list",list);
-//        System.out.println(list);
-
-        return "head_office/headProduct";}
 
     //성진 본사-지점관리
     @RequestMapping("/head_store")
     public String head_store() { return "head_office/headStore";}
     //
 
+    @RequestMapping("/head_product")
+    public String head_product(Model model) {
+
+        ArrayList<Product> list = headService.selectAllProduct();
+        model.addAttribute("list",list);
+
+        return "head_office/headProduct";
+    }
+
     //상품추가
     @PostMapping("/insertProduct.he")
     public String insertProduct(Product product, HttpSession session) {
+
         int result = headService.insertProduct(product);
         return "head_office/headProduct";
     }
+
+    @PostMapping("/searchProduct")
+    public String searchProduct(@RequestParam String condition, @RequestParam String keyword, Model model) {
+        ArrayList<Product> list = headService.searchProduct(condition, keyword);
+        model.addAttribute("list",list);
+
+        return "head_office/headProduct";
+    }
+
+
 }

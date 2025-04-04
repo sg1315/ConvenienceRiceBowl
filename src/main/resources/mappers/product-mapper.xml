@@ -4,16 +4,36 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.ProductMapper">
     <resultMap id="headProductResult" type="Product">
-    <result column="PRODUCT_NO" property="prodcuctNo"/>
+    <result column="PRODUCT_NO" property="productNo"/>
     <result column="CATEGORY_NO" property="categoryNo"/>
     <result column="PRODUCT_NAME" property="productName"/>
     <result column="INPUT_PRICE" property="inputPrice"/>
     <result column="SALE_PRICE" property="salePrice"/>
     <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
     <result column="AVAILABILITY" property="availavility"/>
+    <result column="CATEGORY_NAME" property="categoryName"/>
+    </resultMap>
+    <resultMap id="categoryResult" type="Category">
+        <result column="CATEGORY_NO" property="categoryNo"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="EXPIRATION_DATE" property="expirationDate"/>
     </resultMap>
 
-<insert id="insertProduct">
+    <select id="selectAllProduct" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT,
+        AVAILABILITY
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+
+    </select>
+
+    <insert id="insertProduct">
         INSERT INTO PRODUCT(
         PRODUCT_NO,
         CATEGORY_NO,
@@ -28,4 +48,37 @@
         #{salePrice}
         )
     </insert>
+
+
+    <select id="searchProduct" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NAME,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'productNo'">
+                PRODUCT_NO
+            </when>
+            <when test="condition == 'productName'">
+                PRODUCT_NAME
+            </when>
+            <otherwise>
+                CATEGORY_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+    </select>
+
+    <select id="selectAllCategories" resultMap="categoryResult">
+        SELECT
+        CATEGORY_NO,
+        CATEGORY_NAME,
+        EXPIRATION_DATE
+        FROM CATEGORY
+    </select>
 </mapper>

@@ -98,7 +98,7 @@
 </head>
 
 <body>
-    <form action="/insert.me" method="post" >
+    <form action="/insert.me" method="post">
         <div class="enrollForm">
             <div class="enrollForm-1" id="enrollTitle">회원가입</div>
             <div class="enrollInput">
