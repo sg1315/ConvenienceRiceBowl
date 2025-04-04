@@ -152,6 +152,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
     input[type='text'], .gowork-btn:active, .gowork-btn:focus,.gohome-btn:active, .gohome-btn:focus{
        outline: none;
       }
+    #modal-div p input[readonly]{
+        background-color: #f8f8f8;
+        color: #777;
+        border: 1px solid #ddd;
+    }
     </style>
   </head>
   <body>
@@ -339,10 +344,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
         function changebtn(this_btn) {
 
-            const position = ${};
-            const id = ${};
-            const name = ${};
-            const 재직 = ${};
+
 
             if (this_btn.classList.contains('gowork-btn')) {
               this_btn.innerText = '퇴근';

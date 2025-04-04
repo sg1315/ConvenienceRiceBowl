@@ -359,7 +359,7 @@
               <ul>
                 <li><a href="spot_dashboard"><img src="/resources/menubar_icons/대시보드 아이콘.png"> 대시보드</a></li>
                 <li><a href="spot_order"><img src="/resources/menubar_icons/발주 아이콘.png"> 발주</a></li>
-                <li><a href=""><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
+                <li><a href="spot_input"><img src="/resources/menubar_icons/입고 아이콘.png"> 입고</a></li>
                 <li><a href="spot_output"><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
                 <li><a href="spot_expiration"><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
                 <li><a href="spot_inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
