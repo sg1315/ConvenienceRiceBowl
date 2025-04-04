@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.Store;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,14 +26,15 @@ public class LoginController {
     @PostMapping("/login.me")
     public ModelAndView login(Member member, ModelAndView mv, HttpSession session) {
         Member loginMember = memberService.loginMember(member.getMemberId());
+        System.out.println(loginMember);
 
         if(loginMember == null){
             mv.addObject("errorMsg", "아이디를 찾을 수 없습니다.");
             mv.setViewName("login/loginForm");
-        } else if (!bCryptPasswordEncoder.matches(member.getMemberPwd(),loginMember.getMemberPwd())) {
-            // 평문/암호문
-            mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
-            mv.setViewName("login/loginForm");
+//        } else if (!bCryptPasswordEncoder.matches(member.getMemberPwd(),loginMember.getMemberPwd())) {
+//            // 평문/암호문
+//            mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
+//            mv.setViewName("login/loginForm");
         } else{
             session.setAttribute("loginUser", loginMember);
             mv.setViewName("spot/Dashboard");
@@ -45,6 +47,8 @@ public class LoginController {
         String pwd = bCryptPasswordEncoder.encode(member.getMemberPwd());
         // 비번 암호화
         member.setMemberPwd(pwd);
+
+        System.out.println("ㅁㅇㅁㅇㅁㄴㅇㄴㅁㅇㄴㅇ"+member);
 
         int result = memberService.insertMember(member);
 

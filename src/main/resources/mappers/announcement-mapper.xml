@@ -13,4 +13,18 @@
         <result column="ANNOUNCEMENT_DATE" property="announcementDate"/>
         <result column="ANNOUNCEMENT_STATUS" property="announcementStatus"/>
     </resultMap>
+
+    <insert id="insertAnnouncement">
+        INSERT INTO ANNOUNCEMENT(
+        ANNOUNCEMENT_NO,
+        ANNOUNCEMENT_TITLE,
+        ANNOUNCEMENT_DETAIL,
+        memberNo
+        ) VALUES (
+        SEQ_ATNO.NEXTVAL,
+        #{announcementTitle},
+        #{announcementDetail},
+        1
+        )
+    </insert>
 </mapper>
