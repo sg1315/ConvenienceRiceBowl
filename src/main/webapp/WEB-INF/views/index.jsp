@@ -18,5 +18,6 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <a href="/spot_salesYear">지점 매출 연단위</a>
     <a href="/inputmodal">입고 모달 test</a>
     <a href="/receiving">입고 목록 test</a>
+    <a href="/spot_input">진짜 입고</a>
   </body>
 </html>

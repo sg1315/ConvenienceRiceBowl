@@ -307,7 +307,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </table>
         </div>
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <a href="#"><img src="/resources/common/공통_페이징바화살표.png"></a>
           <button type="button" class="btn btn-outline-secondary">1</button>
           <button type="button" class="btn btn-outline-secondary">2</button>
           <button type="button" class="btn btn-outline-secondary">3</button>
@@ -318,7 +318,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           <button type="button" class="btn btn-outline-secondary">8</button>
           <button type="button" class="btn btn-outline-secondary">9</button>
           <button type="button" class="btn btn-outline-secondary">10</button>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <a href="#"><img src="/resources/common/공통_페이징바화살표.png" style="transform: scaleX(-1);"></a>
         </div>
       </div>
 

@@ -1,9 +1,16 @@
 package com.kh.project.cse.boot.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class SpotController {
+
+    private final ResourceTransactionManager resourceTransactionManager;
+
+    public SpotController(ResourceTransactionManager resourceTransactionManager) {
+        this.resourceTransactionManager = resourceTransactionManager;
+    }
 
     //대시보드
     @RequestMapping("/spot_dashboard")
@@ -82,5 +89,7 @@ public class SpotController {
         return "spot/spotOrder";
     }
 
+    @RequestMapping("/spot_input")
+    public String spot_input() { return "spot/spotInput"; }
 
 }

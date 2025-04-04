@@ -287,7 +287,7 @@
                 </button>
             </div>
             <div>
-                <button>저번 달</button>
+                <button class="white">저번 달</button>
                 <button>최근</button>
                 <input type="date"> ~ <input type="date">
                 <div id="top_right2">
