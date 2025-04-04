@@ -147,57 +147,143 @@
       font-weight: bold;
     }
 
-    #btn-close-modal{
-      width: 20px;
-      height: 20px;
+    /*모달창*/
+    #input-modal-content{
+      height: 90vh;
+    }
+    #modal-header {
+      background-color: #d9d9d9;
+      border-top-right-radius: 4px;
+      border-top-left-radius: 4px;
+    }
+
+    #mo-header-title {
+      width: inherit;
+      margin: 25px 20px 0px 20px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #header-title p {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    #header-title-name {
+      display: flex;
+    }
+    #header-title-name p {
+      padding: 0 10px;
+      font-weight: bold;
+    }
+    #header-title-name p:nth-child(2) {
+      padding: 0;
+    }
+
+    #btn-close-modal {
+      border: none;
+      background: none;
+    }
+
+    #header-searchbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px 25px;
+    }
+
+    #selectbox-div {
       display: flex;
       justify-content: center;
       align-items: center;
+      gap: 10px;
     }
-    #x_img{
-      width: 10px;
-      height: 10px;
+    .selectbox{
+      width: 110px;
     }
-    .modal-content {
-      height: 80vh;
+
+    .header-info {
+      display: flex;
+      gap: 10px;
     }
-    .modal-header, .modal-footer{
-      background-color: #D9D9D9;
+    #header-info-title p:nth-child(1) {
+      font-size: 16px;
+      font-weight: bold;
     }
-    .modal-body input, .modal-body select{
-      border:1px solid gray;
-      border-radius : 8px;
-      width:80%;
-      height:8%;
-      text-align:center;
-      margin-bottom:16px;
+    #header-info-title p:nth-child(2) {
+      font-size: 20px;
+      font-weight: bold;
     }
-    #modal-body-div{
-      padding-left:18%;
-      padding-top:4%;
+    .black-big-btn{
+      font-size: 18px;
     }
-    #footer-btn{
-      width:66%;
-      margin-right:16%;
-      background-color: #8A8A8A;
-      border:none;
-      font-weight:bold;
-      font-size:20px;
-      border-radius:10px;
+
+    #modal-body {
+      height: 80%;
+      padding: 20px 30px 10px 30px;
     }
-    #header-title{
-      margin-left:22%;
+    #modal-body-table {
+      width: 100%;
+      text-align: center;
+      border-collapse: separate;
+      font-size: 20px;
     }
-    #header-title h1{
-      font-weight:bold;
-      font-color:white;
+
+    #modal-body-table th {
+      border-bottom: 3px solid #b4b4b4;
+      padding-bottom: 7px;
     }
-    .modal-dialog {
-      position: absolute;
-      top:5%;
-      left: 20%;
-      transform: translateX(20%);
+
+    #modal-body-table td {
+      padding: 5px;
+      vertical-align: middle;
+      text-align: center;
     }
+    #modal-body-table input {
+      width: 50px;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+    }
+
+    #modal-footer {
+      background-color: #d9d9d9;
+      border-top: 3px solid #b4b4b4;
+      height: 10%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    #modal-pageing {
+      margin: 0;
+    }
+
+    #modal-pageing img {
+      width: 50px;
+    }
+
+    #modal-pageing img:nth-of-type(2) {
+      transform: rotate(180deg);
+    }
+
+    #modal-pageing button {
+      width: 50px;
+      height: 50px;
+      border: #b4b4b4 solid 3px;
+      background: white;
+      color: #b4b4b4;
+      font-weight: bold;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #modal-pageing button:hover {
+      border: #3c3c3c solid 3px;
+      color: #3c3c3c;
+      font-weight: bold;
+    }
+    /* /modal */
 
 
   </style>
@@ -251,7 +337,7 @@
           <th class="col-1">상태</th>
         </tr>
         </thead>
-        <tbody >
+        <tbody>
         <tr>
           <td>25/12/10</td>
           <td>1219045</td>
@@ -297,78 +383,161 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div id="header-title">
-            <h1 class="modal-title fs-5">상품정보</h1>
+  <!-- detail-Modal -->
+  <div class="modal fade" id="input_list_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content" id="input-modal-content">
+        <div id="modal-header">
+          <div id="mo-header-title">
+            <div id="header-title-name">
+              <p>입고번호</p>
+              <p>|</p>
+              <p>입고대기</p>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+              <img src="/resources/common/공통_Icon.png" id="detail-x_img"/>
+            </button>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-            <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
-          </button>
-        </div>
-        <div class="modal-body">
-          <!--모달 내용-->
-          <div id="modal-body-div">
-            <p>
-              <strong>상품번호</strong>
-              <input type="text" id="modal-productCode" readonly>
-            </p>
-            <p>
-              <strong>카테고리</strong>
-              <input type="text" id="modal-productCategory" readonly>
-            </p>
-            <p>
-              <strong>상품명</strong>
-              <input type="text" id="modal-productName" readonly>
-            </p>
-            <p>
-              <strong>입고가</strong>
-              <input type="text" id="modal-productInputPrice" readonly>
-            </p>
-            <p>
-              <strong>판매가</strong>
-              <input type="text" id="modal-productSalePrice" readonly>
-            </p>
+
+          <div id="header-searchbar">
+            <div id="selectbox-div">
+              <select class="selectbox" placeholder="카테고리">
+                <option>카테고리</option>
+                <option>스낵</option>
+                <option>음료</option>
+              </select>
+              <div class="search-div">
+                <input type="text" class="search-input" placeholder="상품명 or 상품번호"/>
+                <input type="submit" class="search-input-submit" value="검색" />
+              </div>
+            </div>
+
+            <div class="header-info">
+              <div id="header-info-title">
+                <p>종류(총수량): 3(340)</p>
+                <p>총 1,902,000</p>
+              </div>
+              <button class="black-big-btn">입고완료</button>
+            </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
+
+        <div id="modal-body">
+          <table id="modal-body-table" class="table table-hover table-sm">
+            <thead>
+            <tr>
+              <th class="col-1">상품번호</th>
+              <th class="col-1">카테고리</th>
+              <th class="col-3">상품명</th>
+              <th class="col-1">발주수량</th>
+              <th class="col-1">입고수량</th>
+              <th class="col-1">금액</th>
+              <th class="col-2">입고수량오류</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+              <td>922351</td>
+              <td>스낵</td>
+              <td>달콤프란찌</td>
+              <td>80</td>
+              <td><input type="number" value="70" /></td>
+              <td>64,000</td>
+              <td><input type="checkbox" checked /></td>
+            </tr>
+            <tr>
+              <td>922351</td>
+              <td>스낵</td>
+              <td>달콤프란찌</td>
+              <td>80</td>
+              <td>80</td>
+              <td>64,000</td>
+              <td><input type="checkbox"  /></td>
+            </tr>
+
+            <tr>
+              <td>922351</td>
+              <td>스낵</td>
+              <td>달콤프란찌</td>
+              <td>80</td>
+              <td>80</td>
+              <td>64,000</td>
+              <td><input type="checkbox" /></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="modal-footer" id="modal-footer">
+          <div id="modal-pageing">
+            <img src="/resources/common/공통_페이징바화살표.png" />
+            <button type="button" class="btn btn-outline-secondary">
+              1
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              2
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              3
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              4
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              5
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              6
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              7
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              8
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              9
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+              10
+            </button>
+            <img src="/resources/common/공통_페이징바화살표.png" />
+          </div>
         </div>
       </div>
     </div>
   </div>
+
   <script>
-    <!-- 모달 funcion -->
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const rows = document.querySelectorAll("#table1 tbody tr");
-
-      rows.forEach(row => {
-        row.classList.add("table-row");
-
-        row.addEventListener("click", function () {
-          const code = this.children[0].textContent;
-          const category = this.children[1].textContent;
-          const name = this.children[2].textContent;
-          const input = this.children[3].textContent;
-          const sale = this.children[4].textContent;
-
-          document.getElementById("modal-productCode").value = code;
-          document.getElementById("modal-productCategory").value = category;
-          document.getElementById("modal-productName").value = name;
-          document.getElementById("modal-productInputPrice").value = input;
-          document.getElementById("modal-productSalePrice").value = sale;
-
-          const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
-          modal.show();
-        });
+    // 테이블의 모든 행에 클릭 이벤트 추가
+    document.querySelectorAll('#table1 tbody tr').forEach((row) => {
+      row.addEventListener('click', function () {
+        // 모달을 띄우기 위한 코드
+        var myModal = new bootstrap.Modal(
+                document.getElementById('input_list_modal')
+        );
+        myModal.show(); // 모달 열기
       });
     });
 
-    <!-- 검색 function -->
+    document.querySelectorAll('#modal-body button').forEach((button) => {
+      if (button.textContent === '수정') {
+        button.addEventListener('click', function () {
+          // 기존 모달을 숨기기
+          var myDetailModal = bootstrap.Modal.getInstance(
+                  document.getElementById('input_list_modal')
+          );
+          myDetailModal.hide(); // 기존 모달 숨기기
 
+          // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
+          var newModal = new bootstrap.Modal(
+                  document.getElementById('input_list_modal')
+          );
+          newModal.show(); // 새로운 모달 열기
+        });
+      }
+    });
   </script>
   <!--end point-->
 </div>
