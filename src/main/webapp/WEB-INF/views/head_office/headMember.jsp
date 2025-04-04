@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -335,7 +335,8 @@
       // 테이블의 모든 행에 클릭 이벤트 추가
       document.querySelectorAll('#table1 tbody tr').forEach(row => {
         row.addEventListener('click', function() {
-          // 모달을 띄우기 위한 코드
+
+            // 모달을 띄우기 위한 코드
           var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
           myModal.show(); // 모달 열기
         });

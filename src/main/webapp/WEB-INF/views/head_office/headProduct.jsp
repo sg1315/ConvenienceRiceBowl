@@ -1,9 +1,57 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
   <head>
+    <!-- JavaScript -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"
+    />
+    <!-- Default theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"
+    />
+    <!-- Semantic UI theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"
+    />
+    <!-- Bootstrap theme -->
+    <link
+      rel="stylesheet"
+      href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"
+    />
+
+    <!-- Open Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <title>본사 상품관리</title>
-    <link rel="stylesheet" href="/resources/css/btn.css">
+    <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       #form {
         width: 100%;
@@ -271,12 +319,23 @@
 
       <div id="top-manu">
         <div id="top_serch">
-          <form id= "searchForm" method="post" action="search_product" >
+          <form id="searchForm" method="post" action="searchProduct">
             <select class="search-input-gray" name="condition">
               <option value="productNo">상품번호</option>
               <option value="category">카테고리</option>
               <option value="productName">상품명</option>
             </select>
+            <input
+              class="search-input-gray"
+              id="search-filed"
+              type="text"
+              name="keyword"
+            />
+            <input
+              class="search-input-submit-gray"
+              type="submit"
+              value="검색"
+            />
             <input class="search-input-gray" id="search-filed" type="text" name="keyword"/>
             <input class="search-input-submit-gray" type="submit" value="검색" />
           </form>
@@ -298,37 +357,20 @@
               <th>상품명</th>
               <th>입고가</th>
               <th>판매가</th>
+              <th hidden></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>18982</td>
-              <td>스낵</td>
-              <td>생생칩</td>
-              <td>1500</td>
-              <td>3000</td>
-            </tr>
-            <tr>
-              <td>1800</td>
-              <td>스낵</td>
-              <td>태양칩</td>
-              <td>900</td>
-              <td>1800</td>
-            </tr>
-            <tr>
-              <td>17083</td>
-              <td>김밥</td>
-              <td>치킨삼각김밥</td>
-              <td>500</td>
-              <td>1500</td>
-            </tr>
-            <tr>
-              <td>18983</td>
-              <td>스낵</td>
-              <td>사르르초코칩</td>
-              <td>1200</td>
-              <td>2700</td>
-            </tr>
+            <c:forEach var="p" items="${list}">
+              <tr>
+                <td>${p.productNo}</td>
+                <td>${p.categoryName}</td>
+                <td>${p.productName}</td>
+                <td>${p.inputPrice}</td>
+                <td>${p.salePrice}</td>
+                <td hidden>${p.availavility}</td>
+              </tr>
+            </c:forEach>
           </tbody>
         </table>
       </div>
@@ -357,7 +399,7 @@
       ></script>
 
       <!-- Modal -->
-      <%--   상품 추가   --%>
+      <%-- 상품 추가 --%>
       <div
         class="modal fade"
         id="staticBackdrop"
@@ -382,47 +424,68 @@
               </button>
             </div>
             <div class="modal-body" id="modal-body">
-              <form action="insertProduct.he" id="insert-product-form" method="post">
+              <form
+                action="insertProduct.he"
+                id="insert-product-form"
+                method="post"
+              >
                 <div id="product-img">
-                  <input type="file" value="이미지 찾기">
+                  <input type="file" value="이미지 찾기" />
                 </div>
                 <div id="product-detail-box">
                   <div id="product-detail">
-                      <div id="product-detail-puts">
-                        <table id="product-detail-table">
-                          <tr>
-                            <td>카테고리</td>
-                            <td>
-                                <select class="search-input-gray" id="product-add-select">
+                    <div id="product-detail-puts">
+                      <table id="product-detail-table">
+                        <tr>
+                          <td>카테고리</td>
+                          <td>
+                            <select
+                              class="search-input-gray"
+                              id="product-add-select11"
+                            >
+                              <!--
                                     <option>스낵</option>
                                     <option>음료</option>
                                     <option>기타</option>
-                                </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>상품명</td>
-                            <td>
-                              <input type="text" id="productName" name="productName"/>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>입고가</td>
-                            <td>
-                              <input type="number" id="inputPrice" name="inputPrice"/>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>판매가</td>
-                            <td>
-                              <input type="number" id="salePrice" name="salePrice"/>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                      <div id="product-detail-ok">
-                        <button class="black-btn" type="submit">완료</button>
-                      </div>
+                                    -->
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>상품명</td>
+                          <td>
+                            <input
+                              type="text"
+                              id="productName"
+                              name="productName"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>입고가</td>
+                          <td>
+                            <input
+                              type="number"
+                              id="inputPrice"
+                              name="inputPrice"
+                            />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>판매가</td>
+                          <td>
+                            <input
+                              type="number"
+                              id="salePrice"
+                              name="salePrice"
+                            />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="product-detail-ok">
+                      <button class="black-btn" type="submit">완료</button>
+                    </div>
                   </div>
                 </div>
               </form>
@@ -431,66 +494,73 @@
         </div>
       </div>
 
-      <%--   상품 상세보기 및 수정/삭제   --%>
-      <div class="modal fade" id="staticBackdrop-modify" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <%-- 상품 상세보기 및 수정/삭제 --%>
+      <div
+        class="modal fade"
+        id="staticBackdrop-modify"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog modal-lg modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <p>상품 정보 수정</p>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modify-modal">
-                <img src="/resources/common/공통_Icon.png" id="modify-x_img">
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+                id="btn-close-modify-modal"
+              >
+                <img src="/resources/common/공통_Icon.png" id="modify-x_img" />
               </button>
             </div>
             <div class="modal-body" id="modal-modify-body">
-              <div id="product-modify-img">
-                이미지사진
-              </div>
+              <div id="product-modify-img">이미지사진</div>
               <div id="product-detail-modify-box">
                 <div id="product-detail-modify">
                   <div id="product-detail-modify-puts">
                     <table id="product-detail-modify-table">
                       <tr>
+                        <td>수정중모달</td>
                         <td>
-                          카테고리
-                        </td>
-                        <td>
-                          <select class="search-input-gray" id="product-add-select">
+                          <select
+                            class="search-input-gray"
+                            id="product-add-select"
+                          >
+                            <!--
                             <option>스낵</option>
                             <option>음료</option>
                             <option>기타</option>
+                            -->
                           </select>
                         </td>
                       </tr>
                       <tr>
+                        <td>상품명</td>
                         <td>
-                          상품명
-                        </td>
-                        <td>
-                          <input type="text">
+                          <input type="text" id="modal-productName" />
                         </td>
                       </tr>
                       <tr>
+                        <td>입고가</td>
                         <td>
-                          입고가
-                        </td>
-                        <td>
-                          <input type="number">
+                          <input type="number" id="modal-inputPrice" />
                         </td>
                       </tr>
                       <tr>
+                        <td>판매가</td>
                         <td>
-                          판매가
-                        </td>
-                        <td>
-                          <input type="number">
+                          <input type="number" id="modal-salePrice" />
                         </td>
                       </tr>
                       <tr>
+                        <td>입고불가</td>
                         <td>
-                          입고불가
-                        </td>
-                        <td>
-                          <input type="checkbox">
+                          <input type="checkbox" id="modal-availavility" />
                         </td>
                       </tr>
                     </table>
@@ -506,14 +576,76 @@
         </div>
       </div>
       <script>
-        // 테이블의 모든 행에 클릭 이벤트 추가
-        document.querySelectorAll('#table1 tbody tr').forEach((row) => {
-          row.addEventListener('click', function () {
-            // 모달을 띄우기 위한 코드
-            var myModal = new bootstrap.Modal(
-              document.getElementById('staticBackdrop-modify')
-            );
-            myModal.show(); // 모달 열기
+        document.addEventListener('DOMContentLoaded', function () {
+          const rows = document.querySelectorAll('#table1 tbody tr');
+          rows.forEach((row) => {
+            row.classList.add('table-row');
+
+            row.addEventListener('click', function () {
+              const productNo = this.children[0].textContent;
+              const categoryName = this.children[1].textContent;
+              const productName = this.children[2].textContent;
+              const inputPrice = this.children[3].textContent;
+              const salePrice = this.children[4].textContent;
+              const availavility = this.children[5].textContent;
+
+              //document.getElementById("modal-productNo").value = productNo;
+              let sel = document.getElementById('product-add-select').options;
+              for (var i = 0; i < sel.length; i++) {
+                if (sel[i].value == 'categoryName') {
+                  sel[i].selected = true;
+                }
+              }
+              document.getElementById('modal-productName').value = productName;
+              document.getElementById('modal-inputPrice').value = inputPrice;
+              document.getElementById('modal-salePrice').value = salePrice;
+              if (availavility == 'Y') {
+                document.getElementById('modal-availavility').checked = true;
+              }
+
+              const modal = new bootstrap.Modal(
+                document.getElementById('staticBackdrop-modify')
+              );
+              modal.show();
+            });
+          });
+        });
+        $(document).ready(function () {
+          $.ajax({
+            url: '/api/category/drawCategory',
+            method: 'get',
+            success: function (data) {
+              console.log('받은 데이터:', data); // 데이터 확인하기
+
+              if (typeof data === 'string') {
+                data = JSON.parse(data); // 문자열이면 JSON 객체로 변환
+              }
+
+              var selectElement = document.getElementById('product-add-select');
+              selectElement.innerHTML = '<option value="">카테고리</option>';
+
+              var selectElement = document.getElementById('product-add-select');
+              selectElement.innerHTML = '<option value="">카테고리</option>';
+
+
+              const test = document.getElementById('product-add-select');
+
+              data.forEach(function (category) {
+                const option = document.createElement('option');
+                option.value = category.categoryNo;
+                option.textContent = category.categoryName;
+                selectElement.appendChild(option);
+
+                console.log(option);
+                console.log(test);
+              });
+              test.innerHTML = option;
+
+              console.log('통신성공');
+            },
+            error: function () {
+              console.log('통신실패');
+            },
           });
         });
       </script>

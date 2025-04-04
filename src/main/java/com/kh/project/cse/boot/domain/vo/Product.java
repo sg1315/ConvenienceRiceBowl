@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Product {
-    private int prodcuctNo;
+    private int productNo;
     private  int categoryNo;
     private String productName;
     private int inputPrice;
@@ -20,7 +20,7 @@ public class Product {
 
     //입고가능여부
     private String availavility;
-
+    private String categoryName;
 
 
 }
