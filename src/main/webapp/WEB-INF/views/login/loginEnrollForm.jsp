@@ -109,8 +109,8 @@
                         </select>
                     </div>
                     <div class="flexInput-1">
-                        <input type="text" name="storeName">
-                        <button>확인</button>
+                        <input type="text" id="storeName" name="storeName">
+                        <button onclick="checkStoreName()">확인</button>
                     </div>
                     <div></div>
                     <div></div>
@@ -154,6 +154,20 @@
                 function closeEnrollModal() {
                     document.getElementById("modalBackground").style.display = "none";
                 }
+                function checkStoreName() {
+                    const checkStore = document.getElementById("storeName").value;
+
+                    $.ajax({
+                        url: "/api/store/name",
+                        data: checkStore,
+                        success: function (res){
+                            drawIdCheckText(res);
+                        }, error: function (){
+                            console.log("아이디 중복체크 ajax 실패");
+                        }
+                    })
+                }
+
             </script>
         </div>
 </body>
