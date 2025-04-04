@@ -15,5 +15,6 @@ public class APIStoreController {
     @GetMapping("/name")
     public String checkMemberId(String checkStore){
         int result = memberService.checkStoreName(checkStore);
+        return null;
     }
 }
