@@ -167,7 +167,7 @@
             left: 0;
             width: 2px;
             height: 60%;
-            background-color: black;
+            /*background-color: black;*/
         }
 
         #table1 td:first-child::after, #table1 th:first-child::after, #modal-table td:first-child::after, #modal-table th:first-child::after{

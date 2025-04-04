@@ -2,6 +2,7 @@
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
+    <title>지점 공지사항</title>
     <link rel="stylesheet" href="/resources/css/btn.css" />
     <style>
       .waper {

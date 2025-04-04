@@ -142,12 +142,27 @@
     }
 
     #member-detail-table{
+      width: 100%;
       font-size: 15px;
       font-weight: bold;
       border-collapse: separate;
       border-spacing: 5px 10px;
     }
-
+    #member-detail-table tr{
+      width: 100%;
+    }
+    #member-detail-table tr td:nth-child(1){
+      width: 25%;
+      padding-right: 10px;
+    }
+    #member-detail-table tr td:nth-child(2){
+      width: 60%;
+      padding-left: 10px;
+      border-left: black solid 2px;
+    }
+    #member-detail-table tr td > input{
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -260,52 +275,54 @@
             </div>
           </div>
           <div class="modal-body">
-                  <table id="member-detail-table">
-                    <tr>
-                      <td>
-                        재직상황
-                      </td>
-                      <td>
-                        <select>
-                          <option>Y</option>
-                          <option style="color: red">N</option>
-                        </select>
-                      </td>
-                    </tr>
+            <form>
+              <table id="member-detail-table">
+                <tr>
+                  <td>
+                    재직상황
+                  </td>
+                  <td>
+                    <select>
+                      <option>Y</option>
+                      <option>N</option>
+                    </select>
+                  </td>
+                </tr>
 
-                    <tr>
-                      <td>
-                        직급
-                      </td>
-                      <td style="border-left: black solid 2px; padding-left: 5px">
-                        <input type="text" readonly>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        지점명
-                      </td>
-                      <td>
-                        <input type="text" readonly>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        이름
-                      </td>
-                      <td>
-                        <input type="text" readonly>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        휴대폰
-                      </td>
-                      <td>
-                        <input type="number" readonly>
-                      </td>
-                    </tr>
-                  </table>
+                <tr>
+                  <td>
+                    직급
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    지점명
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    이름
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    휴대폰
+                  </td>
+                  <td>
+                    <input type="number" placeholder="010-1111-2222" readonly>
+                  </td>
+                </tr>
+              </table>
+            </form>
           </div>
           <div class="modal-footer">
             <input class="black-btn" type="submit" value="수정완료">
