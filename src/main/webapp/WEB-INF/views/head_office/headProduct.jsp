@@ -277,7 +277,7 @@
               <option value="category">카테고리</option>
               <option value="productName">상품명</option>
             </select>
-            <input  class="search-input-gray" id="search-filed" type="text" name="keyword"/>
+            <input class="search-input-gray" id="search-filed" type="text" name="keyword"/>
             <input class="search-input-submit-gray" type="submit" value="검색" />
           </form>
         </div>

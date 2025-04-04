@@ -51,6 +51,11 @@
       width: 15%;
       justify-content: center;
       font-weight: bold;
+      align-items: center;
+    }
+    #right-check > input[type="checkbox"]{
+      width: 15px;
+      height: 15px;
     }
     #right-check p {
       padding-left: 5px;
@@ -139,9 +144,9 @@
       justify-content: center;
       align-items: center;
     }
-    #x_img{
-      width: 10px;
-      height: 10px;
+    #x_img {
+      width: 15px;
+      height: 20px;
     }
 
     /* 모달창 시작 */
@@ -158,10 +163,6 @@
       display: flex;
       justify-content: space-between;
       border: none !important;
-    }
-    #x_img {
-      width: 15px;
-      height: 20px;
     }
     #btn-close-modal {
       border: none;
@@ -254,8 +255,10 @@
       border-spacing: 10px 20px;
     }
     #product-detail-modify-table tr td {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
+    }
+    #product-detail-modify-table td{
     }
 
     #product-detail-modify-table p {
@@ -305,7 +308,8 @@
 
     <div id="top-right1">
       <div id="right-check">
-        <input type="checkbox"><p>입고불가</p>
+        <input type="checkbox">
+        <p>입고불가</p>
       </div>
       <div class="selectbox" id="category-select">
         <select>

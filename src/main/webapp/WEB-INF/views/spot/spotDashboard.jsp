@@ -1,11 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<jsp:useBean id="now" class="java.util.Date" scope="page" />
 <html>
 <head>
-    <title>DashBoard</title>
+    <title>대시보드</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
-
         #wrap{
             width: 100%;
             height: 100%;
@@ -13,7 +16,6 @@
             display: flex;
             justify-content: center;
             align-content: center;
-            border: fuchsia solid 2px;
         }
         #wrap-inner{
             width: 100%;
@@ -197,6 +199,21 @@
             font-size: 14px;
             font-weight: bold;
         }
+        #move_inven{
+            width: 100%;
+            height: 40px;
+            border: none;
+            background-color: #477154;
+            border-radius: 4px;
+            font-size: 12px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #move_inven img{
+
+        }
 
         #dash-announcement{
             width: 100%;
@@ -340,6 +357,7 @@
         #dispose-content table td{
             background: white;
         }
+
     </style>
 
 </head>
@@ -511,7 +529,7 @@
                                 <p>부족한 재고가 있습니다. 확인부탁드립니다.</p>
                             </div>
                             <div>
-                                <a><img src="/resources/common/재고관리이동_아이콘.png"></a>
+                                <a><button id="move_inven">재고관리이동<img src="/resources/common/화살표_아이콘.png"></button></a>
                             </div>
                         </div>
                     </div>
@@ -531,7 +549,9 @@
                             <p style="font-size: 18px; font-weight: bold">금일 폐기상품</p>
                         </div>
                         <div>
-                            <p style="font-size: 12px">2025년 03월    31일</p>
+                            <p style="font-size: 12px">
+                                <fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일" />
+                            </p>
                         </div>
                     </div>
                     <div id="dispose-count">

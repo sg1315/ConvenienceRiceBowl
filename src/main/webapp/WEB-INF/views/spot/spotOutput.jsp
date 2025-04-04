@@ -90,7 +90,7 @@
     #main{
       background-color: #D9D9D9;
       width: 100%;
-      height: 80%;
+      height: 90%;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
@@ -153,45 +153,143 @@
       width: 10px;
       height: 10px;
     }
+
+    /*모달창 시작*/
     .modal-content {
-      height: 80vh;
+      height: 500px;
     }
     .modal-header, .modal-footer{
       background-color: #D9D9D9;
     }
-    .modal-body input, .modal-body select{
-      border:1px solid gray;
-      border-radius : 8px;
-      width:80%;
-      height:8%;
-      text-align:center;
-      margin-bottom:16px;
+    .modal-body {
+      display: flex;
+      justify-content: space-between;
+      border: none !important;
     }
-    #modal-body-div{
-      padding-left:18%;
-      padding-top:4%;
+    #btn-close-modal {
+      border: none;
+      background: none;
     }
-    #footer-btn{
-      width:66%;
-      margin-right:16%;
-      background-color: #8A8A8A;
-      border:none;
-      font-weight:bold;
-      font-size:20px;
-      border-radius:10px;
+    #product-img {
+      background-color: #d9d9d9;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    #header-title{
-      margin-left:22%;
+    #product-detail-box {
+      background-color: #d9d9d9;
+      width: 48%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    #header-title h1{
-      font-weight:bold;
-      font-color:white;
+    #product-detail {
+      background-color: white;
+      width: 100%;
+      height: 90%;
     }
-    .modal-dialog {
+    #product-detail-puts {
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #product-detail-ok {
+      display: flex;
+      justify-content: right;
+      margin-right: 28px;
+    }
+    #product-detail-table {
+      border-collapse: separate;
+      border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
+    }
+    #product-detail-table tr td {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    /*
+      수정하기 모달창
+       */
+    #modify-x_img {
+      width: 15px;
+      height: 20px;
+    }
+    #btn-close-modify-modal {
+      border: none;
+      background: none;
+    }
+    #product-modify-img {
+      background-color: #d9d9d9;
+      width: 48%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #product-detail-modify-box {
+      background-color: #d9d9d9;
+      width: 48%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #product-detail-modify {
+      background-color: white;
+      width: 100%;
+      height: 90%;
+    }
+    #product-detail-modify-puts {
+      height: 90%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #product-detail-modify-table tr td input {
+      /*border: 2px solid #d9d9d9;*/
+      border-radius: 5px;
+    }
+
+    #product-detail-modify-table {
+      border-collapse: separate;
+      /*border-spacing: 10px 30px; !* 상하 간격을 10px로 설정 *!*/
+      border-spacing: 10px 20px;
+    }
+    #product-detail-modify-table tr td {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    #product-detail-modify-table td{
+    }
+
+    #product-detail-modify-table p {
+      padding-left: 10px;
+    }
+    #product-detail-modify-table input {
+      padding-left: 10px;
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+
+    #product-detail-modify-table td{
+      position: relative;
+      padding: 5px;
+    }
+
+    #product-detail-modify-table td::after{
+      content: '';
       position: absolute;
-      top:5%;
-      left: 20%;
-      transform: translateX(20%);
+      top: 20%;
+      left: 0;
+      width: 2px;
+      height: 60%;
+      background-color: black;
+    }
+
+    #product-detail-modify-table td:first-child::after{
+      content: none;
     }
 
 
@@ -311,8 +409,14 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
   <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
+  <div class="modal fade"
+       id="staticBackdrop"
+       data-bs-backdrop="static"
+       data-bs-keyboard="false"
+       tabindex="-1"
+       aria-labelledby="staticBackdropLabel"
+       aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <div id="header-title">
@@ -324,31 +428,46 @@
         </div>
         <div class="modal-body">
           <!--모달 내용-->
-          <div id="modal-body-div">
-            <p>
-              <strong>상품번호</strong>
-              <input type="text" id="modal-productCode" readonly>
-            </p>
-            <p>
-              <strong>카테고리</strong>
-              <input type="text" id="modal-productCategory" readonly>
-            </p>
-            <p>
-              <strong>상품명</strong>
-              <input type="text" id="modal-productName" readonly>
-            </p>
-            <p>
-              <strong>입고가</strong>
-              <input type="text" id="modal-productInputPrice" readonly>
-            </p>
-            <p>
-              <strong>판매가</strong>
-              <input type="text" id="modal-productSalePrice" readonly>
-            </p>
+          <div id="product-modify-img">이미지사진</div>
+          <div id="product-detail-modify-box">
+            <div id="product-detail-modify">
+              <div id="product-detail-modify-puts">
+                <table id="product-detail-modify-table">
+                  <tr>
+                    <td>상품번호</td>
+                    <td>
+                      <input type="text" id="modal-productCode" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>카테고리</td>
+                    <td>
+                      <input type="text" id="modal-productCategory" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>상품명</td>
+                    <td>
+                      <input type="text" id="modal-productName" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>입고가</td>
+                    <td>
+                      <input type="text" id="modal-productInputPrice" readonly>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>판매가</td>
+                    <td>
+                      <input type="text" id="modal-productSalePrice" readonly>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="footer-btn">수정</button>
+
         </div>
       </div>
     </div>
@@ -363,11 +482,12 @@
         row.classList.add("table-row");
 
         row.addEventListener("click", function () {
-          const code = this.children[0].textContent;
-          const category = this.children[1].textContent;
-          const name = this.children[2].textContent;
+          const code = this.children[1].textContent;
+          const category = this.children[2].textContent;
+          const name = this.children[3].textContent;
           const input = this.children[3].textContent;
-          const sale = this.children[4].textContent;
+          const sale = this.children[3].textContent;
+          // input(입고가)과 sale(판매가)는 상품번호를 통해 정보를 가져올 것.
 
           document.getElementById("modal-productCode").value = code;
           document.getElementById("modal-productCategory").value = category;

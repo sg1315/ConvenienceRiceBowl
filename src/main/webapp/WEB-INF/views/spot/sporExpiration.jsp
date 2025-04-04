@@ -37,11 +37,24 @@
             background-color: #D9D9D9;
             width: 40%;
             display: flex;
-            justify-content: center;
+            justify-content: right;
             align-items: center;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
             gap: 10px;
+        }
+        #seach-form{
+            width: 100%;
+            display: flex;
+            justify-content: right;
+        }
+        #right-check p {
+            padding-left: 5px;
+        }
+        #search-box{
+            width: 70%;
+            display: flex;
+            justify-content: center;
         }
         #top-left p {
             padding-left: 15px;
@@ -74,6 +87,15 @@
             outline: none;
             width: 100%;
             table-layout: auto;
+        }
+        #table1 tbody tr td:nth-child(7) button{
+            border: #959595 solid 2px;
+            background: #f5f5f5;
+
+        }
+        #table1 tbody tr td:nth-child(7){
+            color: red;
+            font-weight: bold;
         }
 
         #main-pageing img{
@@ -111,19 +133,25 @@
         </div>
 
         <div id="top-right1">
-            <select>
-                <option>상품번호</option>
-                <option>카테고리</option>
-                <option>상품명</option>
-            </select>
-            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-            <input class="search-input-submit" type="submit" value="검색" />
+            <form id="seach-form">
+                <div class="selectbox" id="option-select">
+                    <select>
+                        <option>상품번호</option>
+                        <option>카테고리</option>
+                        <option>상품명</option>
+                    </select>
+                </div>
+                <div id="search-box">
+                    <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
+                    <input class="search-input-submit" type="submit" value="검색" />
+                </div>
+            </form>
         </div>
 
     </div>
     <div id="main">
         <div id="main-in">
-            <table class="table table-hover" id="table1">
+            <table class="table table-hover table-sm" id="table1">
                 <colgroup>
                     <col style="width: 10%;">
                     <col style="width: 10%;">
@@ -171,7 +199,43 @@
                         <td>2025-03-20</td>
                         <td>10</td>
                         <td>64,000</td>
-                        <td>임박 D-1</td>
+                        <td>임박<br>D-1</td>
+                    </tr>
+                    <tr>
+                        <td>123</td>
+                        <td>스낵</td>
+                        <td>초코송이</td>
+                        <td>2025-03-20</td>
+                        <td>10</td>
+                        <td>64,000</td>
+                        <td>임박<br>D-1</td>
+                    </tr>
+                    <tr>
+                        <td>123</td>
+                        <td>스낵</td>
+                        <td>초코송이</td>
+                        <td>2025-03-20</td>
+                        <td>10</td>
+                        <td>64,000</td>
+                        <td>임박<br>D-1</td>
+                    </tr>
+                    <tr>
+                        <td>123</td>
+                        <td>스낵</td>
+                        <td>표 찌그러져있는거 걱정 안하셔도 됩니다.</td>
+                        <td>2025-03-20</td>
+                        <td>10</td>
+                        <td>64,000</td>
+                        <td>임박<br>D-1</td>
+                    </tr>
+                    <tr>
+                        <td>123</td>
+                        <td>스낵</td>
+                        <td>수치 정해둔거 있어서 일괄적용할겁니다.</td>
+                        <td>2025-03-20</td>
+                        <td>10</td>
+                        <td>64,000</td>
+                        <td>임박<br>D-1</td>
                     </tr>
                 </tbody>
             </table>

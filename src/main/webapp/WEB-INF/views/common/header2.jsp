@@ -68,7 +68,7 @@
         /*min-height: 810px;*/
 
         min-width: 1920px;
-        min-height: 1080px;
+        min-height: 980px;
 
         max-width: 1920px;
         /*max-height: 1080px;*/
@@ -215,8 +215,8 @@
             직원관리
             <div>
               <ul>
-                <li><a href="head_store"><img src="/resources/menubar_icons/직원정보 아이콘.png"> 지점관리</a></li>
-                <li><a href="head_member"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 인사관리</a></li>
+                <li><a href="head_store"><img src="/resources/menubar_icons/근태관리 아이콘.png"> 지점관리</a></li>
+                <li><a href="head_member"><img src="/resources/menubar_icons/직원정보 아이콘.png"> 인사관리</a></li>
               </ul>
             </div>
           </div>

@@ -70,11 +70,11 @@
         /*min-height: 810px;*/
 
         min-width: 1920px;
-        min-height: 1080px;
+        min-height: 953px;
 
         max-width: 1920px;
         /*max-height: 1080px;*/
-        max-height: 980px;
+        max-height: 953px;
         display: flex;
         border: purple solid 5px;
       }
@@ -120,9 +120,18 @@
         height: 5%;
         /*border: blue solid 1px;*/
         display: flex;
+        padding-top: 20px;
         padding-left: 10px;
         align-items: center
       }
+      #pos > a{
+        width: 60%;
+        text-decoration: none;
+      }
+      #btn-pos{
+        width: 100%;
+      }
+
       #logo{
         margin-left: 20px;
         width: 100%;
@@ -319,10 +328,10 @@
   <div id="outer">
     <nav>
       <div id="pos">
-        <a href="pos_go"><img src="/resources/menubar_icons/포스 연동 버튼.png"></a>
+        <a href="pos_go"><button class="white-btn-round 연동" id="btn-pos">POS</button></a>
       </div>
       <div id="logo">
-        <a href="dashboard"><img src="/resources/menubar_icons/로고.png"></a>
+        <a href="spot_dashboard"><img src="/resources/menubar_icons/로고.png"></a>
       </div>
       <div id="mypage">
         <div>

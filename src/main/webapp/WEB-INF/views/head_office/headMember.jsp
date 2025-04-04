@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+  <title>본사 인사관리</title>
+  <link rel="stylesheet" href="/resources/css/btn.css">
   <style>
     #form{
       width: 100%;
@@ -31,6 +33,18 @@
       justify-content: right;
       padding-right: 61px;
       width: 35%;
+    }
+    .search-input-gray{
+      width: 100px;
+      font-size: 16px;
+      padding: 0;
+      text-align: center;
+    }
+
+    #search-filed{
+      width: 300px;
+      text-align: left;
+      padding-left: 10px;
     }
 
     #table-manu{
@@ -128,12 +142,27 @@
     }
 
     #member-detail-table{
+      width: 100%;
       font-size: 15px;
       font-weight: bold;
       border-collapse: separate;
       border-spacing: 5px 10px;
     }
-
+    #member-detail-table tr{
+      width: 100%;
+    }
+    #member-detail-table tr td:nth-child(1){
+      width: 25%;
+      padding-right: 10px;
+    }
+    #member-detail-table tr td:nth-child(2){
+      width: 60%;
+      padding-left: 10px;
+      border-left: black solid 2px;
+    }
+    #member-detail-table tr td > input{
+      width: 100%;
+    }
   </style>
 </head>
 <body>
@@ -148,13 +177,13 @@
     <div id="top-manu">
       <div id="top_serch">
         <form>
-          <select>
+          <select class="search-input-gray" name="condition">
             <option>지점명</option>
             <option>직급</option>
             <option>직원이름</option>
           </select>
-          <input type="text" >
-          <input type="submit" value="검색">
+          <input class="search-input-gray" id="search-filed" type="text">
+          <input class="search-input-submit-gray" type="submit" value="검색">
         </form>
       </div>
     </div>
@@ -246,53 +275,57 @@
             </div>
           </div>
           <div class="modal-body">
-                  <table id="member-detail-table">
-                    <tr>
-                      <td>
-                        재직상황
-                      </td>
-                      <td>
-                        <input type="text">
-                      </td>
-                    </tr>
+            <form>
+              <table id="member-detail-table">
+                <tr>
+                  <td>
+                    재직상황
+                  </td>
+                  <td>
+                    <select>
+                      <option>Y</option>
+                      <option>N</option>
+                    </select>
+                  </td>
+                </tr>
 
-                    <tr>
-                      <td>
-                        알바
-                      </td>
-                      <td>
-                        <input type="text">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        지점명
-                      </td>
-                      <td>
-                        <input type="text">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        이름
-                      </td>
-                      <td>
-                        <input type="text">
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        휴대폰
-                      </td>
-                      <td>
-                        <input type="number">
-                      </td>
-                    </tr>
-                  </table>
+                <tr>
+                  <td>
+                    직급
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    지점명
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    이름
+                  </td>
+                  <td>
+                    <input type="text" readonly>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    휴대폰
+                  </td>
+                  <td>
+                    <input type="number" placeholder="010-1111-2222" readonly>
+                  </td>
+                </tr>
+              </table>
+            </form>
           </div>
           <div class="modal-footer">
-            <button>수정</button>
-            <button>수정완료</button>
+            <input class="black-btn" type="submit" value="수정완료">
           </div>
         </div>
       </div>

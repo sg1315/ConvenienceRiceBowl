@@ -2,6 +2,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <title>본사 지점관리</title>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
         #form{
             width: 100%;
@@ -34,6 +36,18 @@
             justify-content: right;
             padding-right: 61px;
             width: 35%;
+        }
+        .search-input-gray{
+            width: 100px;
+            font-size: 16px;
+            padding: 0;
+            text-align: center;
+        }
+
+        #search-filed{
+            width: 300px;
+            text-align: left;
+            padding-left: 10px;
         }
 
         #table-manu{
@@ -110,6 +124,7 @@
 
 
         #btn-close-modal{
+            border: none;
             background: none;
         }
 
@@ -152,11 +167,15 @@
             left: 0;
             width: 2px;
             height: 60%;
-            background-color: black;
+            /*background-color: black;*/
         }
 
         #table1 td:first-child::after, #table1 th:first-child::after, #modal-table td:first-child::after, #modal-table th:first-child::after{
             content: none;
+        }
+        #tr td input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
         }
 
         #modal-pageing{
@@ -190,6 +209,11 @@
             width: 10%;
             display: flex;
             justify-content: space-around;
+            gap: 5px;
+        }
+        #modal-table tbody tr td input[type="checkbox"]{
+            width: 20px;
+            height: 20px;
         }
 
     </style>
@@ -202,20 +226,20 @@
             지점 관리
         </div>
         <div id="form-top-btn">
-            <button id="insertstore" data-bs-toggle="modal" data-bs-target="#staticBackdrop">승인목록</button>
+            <button class="black-btn" id="insertstore" data-bs-toggle="modal" data-bs-target="#staticBackdrop">승인목록</button>
         </div>
     </div>
 
     <div id="top-manu">
         <div id="top_serch">
             <form>
-                <select>
+                <select class="search-input-gray">
                     <option>지점번호</option>
                     <option>지점명</option>
                     <option>지점장</option>
                 </select>
-                <input type="text" >
-                <input type="submit" value="검색">
+                <input class="search-input-gray" id="search-filed" type="text" >
+                <input class="search-input-submit-gray" type="submit" value="검색">
             </form>
         </div>
     </div>
@@ -336,8 +360,8 @@
                         <img src="/resources/common/공통_페이징바화살표.png">
                     </div>
                     <div id="mobal-footer-btn">
-                        <button>승인</button>
-                        <button>거절</button>
+                        <button class="yes-btn">승인</button>
+                        <button class="no-btn">거절</button>
                     </div>
                 </div>
             </div>

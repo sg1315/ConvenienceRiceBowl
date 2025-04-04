@@ -51,6 +51,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 15%;
         justify-content: center;
         font-weight: bold;
+        align-items: center;
+      }
+      #right-check > input[type="checkbox"]{
+        width: 15px;
+        height: 15px;
       }
 
       #right-check p {
@@ -245,7 +250,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
         <div id="top-right1">
           <div id="right-check">
-            <input type="checkbox" />
+            <input type="checkbox"/>
             <p>재고부족</p>
           </div>
           <div class="selectbox" id="category-select">
@@ -256,11 +261,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             </select>
           </div>
           <div id="search-box">
-            <input
-              class="search-input"
-              type="text"
-              placeholder="상품명 or 상품번호"
-            />
+            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
             <input class="search-input-submit" type="submit" value="검색" />
           </div>
         </div>

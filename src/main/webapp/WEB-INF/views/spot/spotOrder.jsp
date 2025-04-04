@@ -4,12 +4,14 @@
 <html>
 <head>
     <title>지점 발주</title>
+    <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
         .waper{
             width:100%;
+            height: 100%;
             padding: 50px;
         }
-        .main_name{
+        .main-name{
             font-weight: bolder;
             font-size: 50px;
             margin: 0;
@@ -17,10 +19,11 @@
         #top-manu{
             display: flex;
             justify-content: space-between;
+            height: 15%;
         }
         #top-left{
             background-color: #D9D9D9;
-            width: 30%;
+            width: 40%;
 
         }
         #top-left1{
@@ -31,32 +34,46 @@
             width: 100%;
             border-bottom-right-radius: 20px;
             padding-bottom: 10px;
+            height: 100%;
         }
 
         #top-right1{
             background-color: #D9D9D9;
-            width: 70%;
+            width: 60%;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
             padding-right: 3%;
             flex-wrap: wrap;
             gap: 10px;
+            padding-top: 20px;
         }
-        #top-right1 div:first-child {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin-right: auto;
-            margin-left: 2%;
-        }
-        #top_right2_in{
+        #order-request{
+            width: 15%;
+            height: 100%;
             display: flex;
-            justify-content: flex-end;
-            gap: 20px;
-            margin-top: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        #btn-order-request{
+            width: 70%;
+            height: 80%;
+            border: black solid 4px;
+            border-radius: 10px;
+        }
+        #order-search{
+            width: 75%;
+            height: 100%;
+        }
+        #order-search-top{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 10px;
         }
         #top-left p {
             padding-left: 15px;
@@ -158,37 +175,71 @@
             left: 24%;
         }
 
-        #header-title,#header-title2{
+        #header-title2{
             display:flex;
             width:100%;
             justify-content:space-between;
-
+        }
+        #header-title{
+            width: 100%;
+            height: 50%;
         }
         #header-title h1, #header-title2 h1{
             font-weight:bold;
-            font-color:white;
-            font-size:40px;
+            font-size:32px;
         }
 
-        #modal_left_wrap{
-            padding:10px;
-            width: 40%;
-        }
-        #modal_right_wrap{
+        #modal-right-wrap{
             padding:10px;
             width: 60%;
         }
 
-        #modal_header_left,#modal_header_right{
+        #modal-header-right{
             display:flex;
             flex-wrap:wrap;
             height:16%;
         }
-        #modal-pageing-left,#modal-pageing-right,#modal-pageing{
+        #modal-header-left{
+            display: block;
+            width: 100%;
+            height: 16%;
+        }
+        #modal-left-wrap{
+            padding:10px;
+            width: 40%;
+        }
+        #modal-right-wrap{
+            padding:10px;
+            width: 60%;
+        }
+
+        #modal-pageing-left,#modal-pageing-right{
             background-color: #D9D9D9;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
             height:9%;
+        }
+        #header-content{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            align-items: center;
+        }
+        #search-box{
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+        #category-select{
+            width: 30%;
+        }
+        #search-content{
+            width: 70%;
+            display: flex;
+            justify-content: center;
+        }
+        #product-search{
+            width: 70%;
         }
         #header-content2{
             display: flex;
@@ -203,9 +254,10 @@
         #header-content2-right p{
             width:100%;
             text-align:right;
+            font-weight: bold;
         }
 
-        #modal_header{
+        #modal-header{
             display: flex;
             flex-wrap: wrap;
             padding: 10px;
@@ -213,57 +265,70 @@
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
         }
-        #modal_header p,#modal_header h1{
+        #modal-header p,#modal-header h1{
             font-weight: bold;
         }
-        #modal_header1,#modal_header3{
+        #modal-header1,#modal-header3{
             width: 70%;
         }
-        #modal_header2,#modal_header4{
+        #modal-header3 form{
+            display: flex;
+            gap: 10px;
+        }
+        #modal-header3 form > select{
+            width: 120px;
+        }
+        #modal-header2,#modal-header4{
             width: 30%;
             text-align: right;
         }
-        #modal_header3{
+        #modal-header2{
+            display: flex;
+            justify-content: right;
+        }
+        #modal-header3{
             display: flex;
             align-items: center;
         }
-        #btn-close-modal_table img{
+        #btn-close-modal-table img{
             width: 14px;
             height: 14px;
+        }
+        #modal-order-detail-footer{
+            width: 100%;
+            display: flex;
+        }
+        #modal-space, #order-cancel{
+            display: flex;
+            width: 14%;
+            justify-content: center;
+            align-items: center;
+            background-color: #D9D9D9;
+        }
+        #modal-space{
+            border-bottom-left-radius: 10px;
+        }
+        #order-cancel{
+            border-bottom-right-radius: 10px;
         }
         #modal-pageing{
             display: flex;
             justify-content:center;
+            width: 72%;
+
+            background-color: #D9D9D9;
+            height:9%;
         }
         #order-table{
             text-align: center;
         }
-        #modal-pageing{
-            display: flex;
-            justify-content:center;
-            align-items: center;
-        }
-        #modal-pageing button{
-            height:100%;
-         }
-        #modal-pageing{
-            display: flex;
-        }
         #modal-page-inner{
+            width: 100%;
             display: flex;
-            width: 82%;
             justify-content: center;
             align-items: center;
         }
-        #order_cancel,#modal-space{
-            display: flex;
-            width: 14%;
-            justify-content: flex-end;
-            align-items: center;
-        }
-        #order_cancel{
-            padding-right: 20px;
-        }
+
         /* /modal */
 
 
@@ -276,33 +341,39 @@
         <div id="top-left">
             <div id="top-left1">
                 <img src="../resources/menu_icons/발주 아이콘.png">
-                <p class="main_name">발주</p>
+                <p class="main-name">발주</p>
             </div>
         </div>
 
         <div id="top-right1">
-            <div>
-                <button type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
+            <div id="order-request">
+                <button class="gray-btn-border" id="btn-order-request" type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
                     발주<br>요청
                 </button>
             </div>
-            <div>
-                <button class="white">저번 달</button>
-                <button>최근</button>
-                <input type="date"> ~ <input type="date">
-                <div id="top_right2">
-                <div id="top_right2_in">
-                    <select>
-                        <option>상태</option>
-                        <option>발주대기</option>
-                        <option>발주요청</option>
-                        <option>발주승인</option>
-                        <option>발주거절</option>
-                    </select>
-                    <input type="text" placeholder="발주번호">
-                    <input class="search-input-submit" type="submit" value="검색">
-                </div>
-                </div>
+            <div id="order-search">
+                <form>
+                    <div id="order-search-top">
+                        <button class="search-input-submit">저번 달</button>
+                        <button class="search-input-submit">최근</button>
+                        <input class="date-input" type="date"> ~ <input class="date-input" type="date">
+                    </div>
+                    <div id="order-search-bottom">
+                        <div class="selectbox" id="status-select">
+                            <select>
+                                <option>상태</option>
+                                <option>발주대기</option>
+                                <option>발주요청</option>
+                                <option>발주승인</option>
+                                <option>발주거절</option>
+                            </select>
+                        </div>
+                        <div>
+                            <input class="search-input" type="text" placeholder="발주번호">
+                            <input class="search-input-submit" type="submit" value="검색">
+                        </div>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -419,18 +490,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <!-- Button Modal -->
+    <!-- 발주 요청 버튼 클릭시 출력되는 modal -->
     <div class="modal fade" id="staticOrder" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" id="modal-content">
-                <div id="modal_left_wrap">
-                    <div class="modal-header" id="modal_header_left">
+                <div id="modal-left-wrap">
+                    <div class="modal-header" id="modal-header-left">
                         <div id="header-title">
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <input type="text" placeholder="카테고리">
-                            <input type="text" placeholder="상품명 or 상품번호">
-                            <button>검색</button>
+                            <form id="search-box">
+                                <div id="category-select">
+                                    <select class="selectbox">
+                                        <option>카테고리</option>
+                                        <option>스낵</option>
+                                        <option>음료</option>
+                                        <option>기타</option>
+                                    </select>
+                                </div>
+                                <div id="search-content">
+                                    <input class="search-input" type="text" placeholder="상품명 or 상품번호" id="product-search" />
+                                    <input class="search-input-submit" type="submit" value="검색" />
+                                </div>
+                            </form>
                         </div>
                     </div>
                         <div class="modal-body">
@@ -519,8 +602,8 @@
                     </div>
                 </div>
 
-                <div id="modal_right_wrap">
-                    <div class="modal-header" id="modal_header_right">
+                <div id="modal-right-wrap">
+                    <div class="modal-header" id="modal-header-right">
                         <div id="header-title2">
                             <h1 class="modal-title fs-5">발주 요청 목록</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
@@ -529,7 +612,7 @@
                         </div>
                         <div id="header-content2">
                             <div id="header-content2-left">
-                                <button>요청</button>
+                                <button class="black-btn">요청</button>
                             </div>
                             <div id="header-content2-right">
                                 <p>
@@ -655,31 +738,35 @@
     </div>
 
     <!--Table Modal-->
+    <!-- 발주 상세 보기 modal -->
     <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content" id="modal-content2">
-                <div id="modal_header">
-                    <div id="modal_header1">
+                <div id="modal-header">
+                    <div id="modal-header1">
                         <p>
                             25-04-01 | 123451 | 발주상태기술
                         </p>
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
-                    <div id="modal_header2">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal_table">
+                    <div id="modal-header2">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
                             <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
                         </button>
                     </div>
-                    <div id="modal_header3">
-                        <select>
-                            <option>카테고리</option>
-                            <option>스낵</option>
-                            <option>음료</option>
-                            <option>머였지</option>
-                        </select>
-                        <input type="text" placeholder="상품명 or 상품번호">
-                        <button>검색</button></div>
-                    <div id="modal_header4">
+                    <div id="modal-header3">
+                        <form>
+                            <select class="selectbox">
+                                <option>카테고리</option>
+                                <option>스낵</option>
+                                <option>음료</option>
+                                <option>머였지</option>
+                            </select>
+                            <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
+                            <input class="search-input-submit" type="submit" value="검색" />
+                        </form>
+                    </div>
+                    <div id="modal-header4">
                         <p>
                             종류 수(총 수량 : 3(240)
                         </p>
@@ -780,10 +867,10 @@
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div id="modal-order-detail-footer">
+                    <div id="modal-space">
+                    </div>
                     <div id="modal-pageing">
-                        <div id="modal-space">
-                        </div>
                         <div id="modal-page-inner">
                             <img src="/resources/common/공통_페이징바화살표.png">
                             <button type="button" class="btn btn-outline-secondary">1</button>
@@ -793,9 +880,9 @@
                             <button type="button" class="btn btn-outline-secondary">5</button>
                             <img src="/resources/common/공통_페이징바화살표.png">
                         </div>
-                        <div id="order_cancel">
-                            <button type="button">발주취소</button>
-                        </div>
+                    </div>
+                    <div id="order-cancel">
+                        <button class="red-btn" type="button">발주취소</button>
                     </div>
                 </div>
 
