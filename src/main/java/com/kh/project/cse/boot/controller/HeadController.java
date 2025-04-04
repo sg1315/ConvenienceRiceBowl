@@ -3,6 +3,7 @@ package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.Announcement;
 import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
@@ -37,8 +38,17 @@ public class HeadController {
     //성진
 
     //성진 본사-공지사항
-    @RequestMapping("/head_announcement")
-    public String head_announcement() {
+    //공지사항불러오기
+    @GetMapping("/head_announcement")
+    public String head_announcement(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int announcementCount = headService.selectAnnouncementCount();
+
+        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 5);
+        ArrayList<Announcement> list = headService.selectAnnouncementlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "head_office/headAnnouncement";
     }
     //성진
@@ -64,6 +74,7 @@ public class HeadController {
     public String insertProduct(Product product, HttpSession session) {
 
         int result = headService.insertProduct(product);
+
         return "head_office/headProduct";
     }
 
@@ -87,5 +98,6 @@ public class HeadController {
         return "head_office/headAnnouncement";
     }
     //
+
 
 }
