@@ -144,7 +144,7 @@
                     <div></div>
                     <div><p>핸드폰</p></div>
                     <div id="phoneInput">
-                        <input type="text"><p>-</p><input type="text"><p>-</p><input type="text">
+                        <input type="text">
                     </div>
                 </div>
                 <div></div>

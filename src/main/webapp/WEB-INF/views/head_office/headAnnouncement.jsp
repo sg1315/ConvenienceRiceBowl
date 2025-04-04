@@ -174,9 +174,12 @@
             height: 5%;
             background-color: #D9D9D9;
         }
+        #insert-modal-form{
+            height: 100%;
+        }
 
         .modal-body {
-            height: 40%;
+            height: 92%;
         }
 
         #detail-x_img {
@@ -446,19 +449,20 @@
                         <img src="/resources/common/공통_Icon.png" id="x_img">
                     </button>
                 </div>
-                <div class="modal-body">
-                    <!--모달 내용-->
-                    <div id="modal-body-top">
-                        <input type="text" placeholder="제목을 입력하세요">
-                        <p>2025.04.01</p>
+                <form action="insertAnnouncement.he" id="insert-modal-form" method="post">
+                    <div class="modal-body">
+                        <!--모달 내용-->
+                        <div id="modal-body-top">
+                            <input type="text" placeholder="제목을 입력하세요">
+                            <p>2025.04.01</p>
+                        </div>
+                        <textarea id="textbox" placeholder="내용을 입력하세요(1000자 이하)"></textarea>
                     </div>
-                    <textarea id="textbox" placeholder="내용을 입력하세요(1000자 이하)">
+                    <div class="modal-footer">
+                        <button type="submit" class="black-btn">완료</button>
+                    </div>
+                </form>
 
-            </textarea>
-                </div>
-                <div class="modal-footer">
-                    <button>완료</button>
-                </div>
             </div>
         </div>
     </div>

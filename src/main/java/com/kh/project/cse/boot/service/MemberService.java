@@ -1,6 +1,7 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.Store;
 
 public interface MemberService {
     int insertMember(Member member);
@@ -8,4 +9,5 @@ public interface MemberService {
     Member loginMember(String memberId);
 
     int idCheck(String checkId);
+
 }

@@ -1,7 +1,15 @@
 package com.kh.project.cse.boot.domain.vo;
 
+import lombok.*;
+
 import java.sql.Date;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Announcement {
     private int announcementNo;
     private String announcementTitle;

@@ -1,6 +1,7 @@
 package com.kh.project.cse.boot.controller;
 
 
+import com.kh.project.cse.boot.domain.vo.Announcement;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
@@ -78,4 +79,16 @@ public class HeadController {
         int result = headService.insertProduct(product);
         return "head_office/headProduct";
     }
+    //
+
+    //공지사항추가
+    @PostMapping("/insertAnnouncement.he")
+    public String insertAnnouncement(Announcement announcement, HttpSession session) {
+
+        int result = headService.insertAnnouncement(announcement);
+
+        return "head_office/headAnnouncement";
+    }
+    //
+
 }

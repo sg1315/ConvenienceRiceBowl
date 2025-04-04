@@ -11,7 +11,7 @@ import java.sql.Date;
 @EqualsAndHashCode
 public class Store {
     private int storeNo;
-    private int storeName;
+    private String storeName;
     private Date storeDate;
     private int storeStatus;
 

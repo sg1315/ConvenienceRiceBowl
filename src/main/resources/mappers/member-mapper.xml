@@ -24,18 +24,16 @@
             PHONE_NUMBER,
             RESIDENT_NUMBER,
             MEMBER_ID,
-            MEMBER_PWD,
-            MEMBER_STATUS
+            MEMBER_PWD
         ) VALUES (
         SEQ_MNO.NEXTVAL,
         SEQ_ST.NEXTVAL,
         #{position},
         #{memberName},
         #{phone},
-        #{MemberSsn},
+        #{residentNo},
         #{memberId},
-        #{memberPwd},
-        #{status},
+        #{memberPwd}
         )
     </insert>
     <select id="idCheck" resultType="_int">
