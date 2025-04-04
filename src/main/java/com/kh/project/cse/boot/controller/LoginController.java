@@ -37,7 +37,7 @@ public class LoginController {
             mv.setViewName("login/loginForm");
         } else{
             session.setAttribute("loginUser", loginMember);
-            mv.setViewName("spot/Dashboard");
+            mv.setViewName("spot/spotDashboard");
         }
         return mv;
     }

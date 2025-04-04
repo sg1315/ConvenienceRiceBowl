@@ -12,18 +12,38 @@
         <result column="MEMBER_NO" property="memberNo"/>
         <result column="ANNOUNCEMENT_DATE" property="announcementDate"/>
         <result column="ANNOUNCEMENT_STATUS" property="announcementStatus"/>
+        <result column="STORE_NAME" property="storeName"/>
     </resultMap>
-
+    <select id="selectAnnouncementCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM ANNOUNCEMENT
+        WHERE ANNOUNCEMENT_STATUS = 1
+    </select>
+    <select id="selectAnnouncementlist" resultMap="anoucementResult">
+        SELECT ANNOUNCEMENT_NO,
+        ANNOUNCEMENT_TITLE,
+        ANNOUNCEMENT_DETAIL,
+        STORE_NAME,
+        TO_CHAR(ANNOUNCEMENT_DATE, 'YYYY-MM-DD') AS ANNOUNCEMENT_DATE,
+        ANNOUNCEMENT_STATUS
+        FROM ANNOUNCEMENT A
+        LEFT JOIN MEMBER M ON (A.MEMBER_NO = M.MEMBER_NO)
+        LEFT JOIN STORE S ON (M.STORE_NO = S.STORE_NO)
+        WHERE ANNOUNCEMENT_STATUS = 1
+        ORDER BY ANNOUNCEMENT_NO DESC
+    </select>
     <insert id="insertAnnouncement">
         INSERT INTO ANNOUNCEMENT(
         ANNOUNCEMENT_NO,
         ANNOUNCEMENT_TITLE,
         ANNOUNCEMENT_DETAIL,
-        memberNo
+        MEMBER_NO,
+        ANNOUNCEMENT_STATUS
         ) VALUES (
         SEQ_ATNO.NEXTVAL,
         #{announcementTitle},
         #{announcementDetail},
+        10005,
         1
         )
     </insert>

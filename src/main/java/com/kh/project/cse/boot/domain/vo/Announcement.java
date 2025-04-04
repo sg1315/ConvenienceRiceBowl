@@ -18,4 +18,6 @@ public class Announcement {
     private Date announcementDate;
     private int announcementStatus;
 
+    private String storeName;
+
 }
