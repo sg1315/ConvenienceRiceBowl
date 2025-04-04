@@ -9,7 +9,7 @@
         <result column="POSITION" property="position"/>
         <result column="MEMBER_NAME" property="memberName"/>
         <result column="PHONE_NUMBER" property="phone"/>
-        <result column="RESIDENT_NUMBER" property="memberSsn"/>
+        <result column="RESIDENT_NUMBER" property="residentNo"/>
         <result column="MEMBER_ID" property="memberId"/>
         <result column="MEMBER_PWD" property="memberPwd"/>
         <result column="MEMBER_STATUS" property="status"/>
@@ -28,14 +28,14 @@
             MEMBER_STATUS
         ) VALUES (
         SEQ_MNO.NEXTVAL,
-        SEQ_ST.NEXTVAL,
+        SEQ_ST.CURRVAL,
         #{position},
         #{memberName},
         #{phone},
-        #{MemberSsn},
+        #{residentNo},
         #{memberId},
         #{memberPwd},
-        #{status},
+        'Y'
         )
     </insert>
     <select id="idCheck" resultType="_int">

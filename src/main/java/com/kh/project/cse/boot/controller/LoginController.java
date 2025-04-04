@@ -45,8 +45,42 @@ public class LoginController {
         String pwd = bCryptPasswordEncoder.encode(member.getMemberPwd());
         // 비번 암호화
         member.setMemberPwd(pwd);
+        
+        //주민번호 '-'넣기
+        String ssn = member.getResidentNo();
+        String residentNo = ssn.substring(0, 6) + "-" + ssn.substring(6);
+        member.setResidentNo(residentNo);
+        //휴대폰 '-' 넣기
+        String pNo = member.getPhone();
+        if (pNo != null && pNo.length() == 11) {
+            String formatted = pNo.substring(0, 3) + "-" +
+                    pNo.substring(3, 7) + "-" +
+                    pNo.substring(7);
+            member.setPhone(formatted);
+        } else if(pNo.length() == 10){
+            String formatted = pNo.substring(0, 3) + "-" +
+                    pNo.substring(3, 6) + "-" +
+                    pNo.substring(6);
+        } else{
+            mv.addObject("errorMsg","폰번호를 올바르게 입력해주세요.");
+            mv.setViewName("login/loginForm");
+        }
 
-        int result = memberService.insertMember(member);
+        
+        String position = member.getPosition();
+        String storeName = member.getStoreName();
+
+        int result = 0;
+
+        if( position.equals("2")){
+            result = memberService.insertStore(storeName);
+            if(result > 0){
+                result = memberService.insertMember(member);
+            } else {
+                mv.addObject("errorMsg","지점 생성 오류가 발생하였습니다.");
+                mv.setViewName("login/loginForm");
+            }
+        }
 
         //메세지 구현해야됨!
         if(result > 0){

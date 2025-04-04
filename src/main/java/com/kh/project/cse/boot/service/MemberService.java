@@ -8,4 +8,6 @@ public interface MemberService {
     Member loginMember(String memberId);
 
     int idCheck(String checkId);
+
+    int insertStore(String storeName);
 }

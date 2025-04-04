@@ -70,11 +70,9 @@
         }
         #ssnInput{
             display: grid;
-            grid-template-columns: auto min-content auto ;
         }
         #phoneInput{
             display: grid;
-            grid-template-columns: 1fr min-content 1fr min-content 1fr;
         }
         #enrollButton{border-radius: 0 0 8px 8px;}
         #enrollButton > button{
@@ -98,21 +96,20 @@
 </head>
 
 <body>
-    <form action="#">
         <div class="enrollForm">
             <div class="enrollForm-1" id="enrollTitle">회원가입</div>
             <div class="enrollInput">
                 <div></div>
                 <div>
                     <div class="flexInput-2">
-                        <select required>
+                        <select name="position" required>
                             <option value="" selected disabled hidden>직급</option>
-                            <option value="지점장">지점장</option>
-                            <option value="알바">알바</option>
+                            <option value="2">지점장</option>
+                            <option value="4">알바</option>
                         </select>
                     </div>
                     <div class="flexInput-1">
-                        <input type="text">
+                        <input type="text" name="storeName">
                         <button>확인</button>
                     </div>
                     <div></div>
@@ -122,20 +119,20 @@
                 <div>
                     <div><p>아이디</p></div>
                     <div class="flexInput-1">
-                        <input type="text">
+                        <input type="text" name="memberId">
                         <button>중복확인</button>
                     </div>
                     <div></div>
                     <div><p>이름</p></div>
-                    <div class="flexInput-2"><input type="text"></div>
+                    <div class="flexInput-2"><input type="text" name="memberName"></div>
                 </div>
                 <div>
                     <div><p>비밀번호</p></div>
-                    <div class="flexInput-2"><input type="password"></div>
+                    <div class="flexInput-2"><input type="password" name="memberPwd"></div>
                     <div></div>
                     <div><p>주민번호</p></div>
-                    <div  id="ssnInput">
-                        <input type="text"><p>-</p><input type="text">
+                    <div id="ssnInput">
+                        <input type="text" name="residentNo">
                     </div>
                 </div>
                 <div>
@@ -144,7 +141,7 @@
                     <div></div>
                     <div><p>핸드폰</p></div>
                     <div id="phoneInput">
-                        <input type="text"><p>-</p><input type="text"><p>-</p><input type="text">
+                        <input type="text" name="phone">
                     </div>
                 </div>
                 <div></div>
@@ -159,7 +156,6 @@
                 }
             </script>
         </div>
-    </form>
 </body>
 
 </html>
