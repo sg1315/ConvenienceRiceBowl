@@ -1,4 +1,4 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -413,6 +413,14 @@
                 <td>강남점</td>
                 <td>240</td>
             </tr>
+            <c:forEach var="A" items="${list}">
+                <tr onclick = "location.href = 'detail.bo?bno=${A.announcementNo}'">
+                    <td>${A.announcementNo}</td>
+                    <td>${A.announcementDetail}</td>
+                    <td>${A.storeName}</td>
+                    <td>${A.announcementDate}</td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
@@ -453,10 +461,10 @@
                     <div class="modal-body">
                         <!--모달 내용-->
                         <div id="modal-body-top">
-                            <input type="text" placeholder="제목을 입력하세요">
+                            <input type="text" placeholder="제목을 입력하세요" name="announcementTitle">
                             <p>2025.04.01</p>
                         </div>
-                        <textarea id="textbox" placeholder="내용을 입력하세요(1000자 이하)"></textarea>
+                        <textarea id="textbox" name="announcementDetail" placeholder="내용을 입력하세요(1000자 이하)"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="black-btn">완료</button>
