@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.MemberMapper">
     <resultMap id="memberResult" type="Member">
         <result column="MEMBER_NO" property="memberNo"/>
@@ -17,15 +17,15 @@
     </resultMap>
     <insert id="insertMember">
         INSERT INTO MEMBER(
-            MEMBER_NO,
-            STORE_NO,
-            POSITION,
-            MEMBER_NAME,
-            PHONE_NUMBER,
-            RESIDENT_NUMBER,
-            MEMBER_ID,
-            MEMBER_PWD,
-            MEMBER_STATUS
+        MEMBER_NO,
+        STORE_NO,
+        POSITION,
+        MEMBER_NAME,
+        PHONE_NUMBER,
+        RESIDENT_NUMBER,
+        MEMBER_ID,
+        MEMBER_PWD,
+        MEMBER_STATUS
         ) VALUES (
         SEQ_MNO.NEXTVAL,
         SEQ_ST.CURRVAL,
@@ -44,7 +44,7 @@
         WHERE USER_ID = #{checkId}
     </select>
     <select id="loginMember" parameterType="Member" resultMap="memberResult">
-    SELECT
+        SELECT
         MEMBER_NO,
         STORE_NO,
         POSITION,
@@ -54,8 +54,8 @@
         MEMBER_ID,
         MEMBER_PWD,
         MEMBER_STATUS
-    FROM MEMBER
-    WHERE USER_ID = #{memberId}
-    AND STATUS = 'Y'
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+        AND MEMBER_STATUS = 'Y'
     </select>
 </mapper>
