@@ -10,4 +10,14 @@
         <result column="STORE_DATE" property="storeDate"/>
         <result column="STORE_STATUS" property="storeStatus"/>
     </resultMap>
+
+    <insert id="insertStore">
+        INSERT INTO STORE(
+        STORE_NO,
+        STORE_NAME
+        ) VALUES (
+        SEQ_ST.NEXTVAL,
+        #{storeName}
+        )
+    </insert>
 </mapper>

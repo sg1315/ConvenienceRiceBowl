@@ -14,11 +14,12 @@ public class Member {
     private String position; //1.본사 2.지점장 3.매니저 4. 알바
     private String memberName;
     private String phone;
+
     private String residentNo;
     private String memberId;
     private String memberPwd;
     private String status; //Y: 재직, N: 퇴직
 
-    private String storeName;
+    private String storeName;//지점생성
 
 }

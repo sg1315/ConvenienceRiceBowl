@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
 import com.kh.project.cse.boot.mappers.MemberMapper;
+import com.kh.project.cse.boot.mappers.StoreMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberServiceImpl implements MemberService {
     public  final MemberMapper memberMapper;
+    public  final StoreMapper storeMapper;
+
     @Override
     public int insertMember(Member member) {
         return memberMapper.insertMember(member);
@@ -22,5 +25,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int idCheck(String checkId) {
         return memberMapper.idCheck(checkId);
+    }
+
+    @Override
+    public int insertStore(String storeName) {
+        return storeMapper.insertStore(storeName);
     }
 }

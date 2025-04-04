@@ -120,41 +120,44 @@
     </head>
 
     <body>
-        <form action="">
-            <div id="modalBackground">
-                <div id="enrollModal">
-                    <jsp:include page="loginEnrollForm(수정본).jsp" />
-                </div>
-            </div>
-            <div class="box">
-                <div class="login">
-                    <img src="../../../resources/common/로그인로고.png" alt="">
-                    <div>
-                        <div class="login-1" id="input">
-                            <p>아이디</p>
-                            <input type="text">
-                            <p>비밀번호</p>
-                            <input type="text">
-                        </div>
-                        <div class="login-1" id="button">
-                            <button type="submit" id="button-1">로그인</button>
-                            <button id="button-2" onclick="showEnrollModal()">회원가입</button>
-                        </div>
+
+    <div id="modalBackground">
+        <div id="enrollModal">
+            <form action="/insert.me" method="post">
+            <jsp:include page="loginEnrollForm.jsp" />
+            </form>
+        </div>
+    </div>
+    <form action="/login.me" method="post">
+        <div class="box">
+            <div class="login">
+                <img src="../../../resources/common/로그인로고.png" alt="">
+                <div>
+                    <div class="login-1" id="input">
+                        <p>아이디</p>
+                        <input type="text" name="memberId">
+                        <p>비밀번호</p>
+                        <input type="text" name="memberPwd">
+                    </div>
+                    <div class="login-1" id="button">
+                        <button type="submit" id="button-1">로그인</button>
+                        <button type="button" id="button-2" onclick="showEnrollModal()">회원가입</button>
                     </div>
                 </div>
             </div>
-        </form>
-        <script>
-            function showEnrollModal() {
-                document.getElementById("modalBackground").style.display = "flex";
-            }
+        </div>
+    </form>
+    <script>
+        function showEnrollModal() {
+            document.getElementById("modalBackground").style.display = "flex";
+        }
 
-            const screenWidth = window.screen.width;
-            const screenHeight = window.screen.height;
-            const box = document.querySelector('.box');
-            box.style.width = screenWidth * 0.98 + 'px';
-            box.style.height = screenHeight * 0.6 + 'px';
-        </script>
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const box = document.querySelector('.box');
+        box.style.width = screenWidth * 0.98 + 'px';
+        box.style.height = screenHeight * 0.6 + 'px';
+    </script>
 
     </body>
 
