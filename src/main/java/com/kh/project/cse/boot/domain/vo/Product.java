@@ -19,8 +19,9 @@ public class Product {
     private int shortageAmount;
 
     //입고가능여부
-    private String availavility;
+    private String availability;
     private String categoryName;
+    private int count;
 
 
 }

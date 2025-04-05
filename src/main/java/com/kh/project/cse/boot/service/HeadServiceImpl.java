@@ -28,36 +28,41 @@ public class HeadServiceImpl implements HeadService {
     }
 
 
+
+    //상품추가
     @Override
     public int insertProduct(Product product) {
+
         return productMapper.insertProduct(product);
     }
-
+    //상품검색
     @Override
     public ArrayList<Product> searchProduct(String condition, String keyword) {
         return productMapper.searchProduct(condition,keyword);
     }
-
+    //상품전체목록
     @Override
-    public ArrayList<Product> selectAllProduct() {
-        ArrayList<Product> p_list =  productMapper.selectAllProduct();
-        return productMapper.selectAllProduct();
+    public ArrayList<Product> selectAllProduct(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.selectAllProduct(rowBounds);
+    }
+    //상품페이징_목록갯수
+    @Override
+    public int ProductListCount() { return productMapper.ProductListCount();}
+    //카테고리전체목록
+    @Override
+    public List<Category> selectAllCategories() { return productMapper.selectAllCategories();}
+    //상품업데이트
+    @Override
+    public int updateProduct(Product product) {
+        return productMapper.updateProduct(product);
     }
 
-    @Override
-    public List<Category> selectAllCategories() {
-        return productMapper.selectAllCategories();
-    }
-
-    @Override
-    public int insertAnnouncement(Announcement announcement){
-        return announcementMapper.insertAnnouncement(announcement);
-    }
 
     //공지사항 총수
     @Override
     public int selectAnnouncementCount(){return announcementMapper.selectAnnouncementCount();}
-    //
 
     //공지사항 리스트
     public ArrayList<Announcement> selectAnnouncementlist(PageInfo pi){
@@ -65,5 +70,10 @@ public class HeadServiceImpl implements HeadService {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return announcementMapper.selectAnnouncementlist(rowBounds);
     }
-    //
+    @Override
+    public int insertAnnouncement(Announcement announcement){
+        return announcementMapper.insertAnnouncement(announcement);
+    }
+
+
 }

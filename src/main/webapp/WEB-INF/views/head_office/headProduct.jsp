@@ -136,7 +136,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 70px;
         padding: 10px;
       }
-      #main-pageing img:nth-of-type(2) {
+      #main-pageing img:nth-last-child(1) {
         transform: rotate(180deg);
       }
 
@@ -162,7 +162,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-size: 40px;
         font-weight: bold;
       }
-      #insert-product-form{
+      #insert-product-form, #update-product-form{
         height: 100%;
         display: flex;
         justify-content: space-between;
@@ -219,13 +219,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-size: 20px;
         font-weight: bold;
       }
-      #product-add-select{
+      #select-add-modal, #select-modify-modal{
         width: 100%;
         height: 30px;
         font-weight: normal;
         border: 2px solid #d9d9d9;
         border-radius: 5px;
       }
+
+
 
       /*
         수정하기 모달창
@@ -237,11 +239,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #btn-close-modify-modal {
         border: none;
         background: none;
-      }
-      #modal-modify-body{
-        display: flex;
-        justify-content: space-between;
-        border: none !important;
       }
       #product-modify-img {
         background-color: #d9d9d9;
@@ -300,7 +297,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
     </style>
   </head>
-  <body>
+  <body onload="drawCategoryList()">
     <jsp:include page="../common/header2.jsp" />
     <div id="form">
       <div id="form-top">
@@ -325,17 +322,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
               <option value="category">카테고리</option>
               <option value="productName">상품명</option>
             </select>
-            <input
-              class="search-input-gray"
-              id="search-filed"
-              type="text"
-              name="keyword"
-            />
-            <input
-              class="search-input-submit-gray"
-              type="submit"
-              value="검색"
-            />
             <input class="search-input-gray" id="search-filed" type="text" name="keyword"/>
             <input class="search-input-submit-gray" type="submit" value="검색" />
           </form>
@@ -368,7 +354,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 <td>${p.productName}</td>
                 <td>${p.inputPrice}</td>
                 <td>${p.salePrice}</td>
-                <td hidden>${p.availavility}</td>
+                <td hidden>${p.availability}</td>
               </tr>
             </c:forEach>
           </tbody>
@@ -377,16 +363,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
       <div id="footer">
         <div id="main-pageing">
           <img src="/resources/common/공통_페이징바화살표.png" />
-          <button type="button" class="btn btn-outline-secondary">1</button>
-          <button type="button" class="btn btn-outline-secondary">2</button>
-          <button type="button" class="btn btn-outline-secondary">3</button>
-          <button type="button" class="btn btn-outline-secondary">4</button>
-          <button type="button" class="btn btn-outline-secondary">5</button>
-          <button type="button" class="btn btn-outline-secondary">6</button>
-          <button type="button" class="btn btn-outline-secondary">7</button>
-          <button type="button" class="btn btn-outline-secondary">8</button>
-          <button type="button" class="btn btn-outline-secondary">9</button>
-          <button type="button" class="btn btn-outline-secondary">10</button>
+            <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_product?cpage=${i}'">${i}</button>
+            </c:forEach>
           <img src="/resources/common/공통_페이징바화살표.png" />
         </div>
       </div>
@@ -424,7 +403,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </button>
             </div>
             <div class="modal-body" id="modal-body">
-              <form
+              <form 
                 action="insertProduct.he"
                 id="insert-product-form"
                 method="post"
@@ -441,13 +420,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                           <td>
                             <select
                               class="search-input-gray"
-                              id="product-add-select11"
-                            >
-                              <!--
-                                    <option>스낵</option>
-                                    <option>음료</option>
-                                    <option>기타</option>
-                                    -->
+                              id="select-add-modal" name="categoryNo">
                             </select>
                           </td>
                         </tr>
@@ -519,58 +492,56 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </button>
             </div>
             <div class="modal-body" id="modal-modify-body">
-              <div id="product-modify-img">이미지사진</div>
-              <div id="product-detail-modify-box">
-                <div id="product-detail-modify">
-                  <div id="product-detail-modify-puts">
-                    <table id="product-detail-modify-table">
-                      <tr>
-                        <td>수정중모달</td>
-                        <td>
-                          <select
-                            class="search-input-gray"
-                            id="product-add-select"
-                          >
-                            <!--
-                            <option>스낵</option>
-                            <option>음료</option>
-                            <option>기타</option>
-                            -->
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>상품명</td>
-                        <td>
-                          <input type="text" id="modal-productName" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>입고가</td>
-                        <td>
-                          <input type="number" id="modal-inputPrice" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>판매가</td>
-                        <td>
-                          <input type="number" id="modal-salePrice" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>입고불가</td>
-                        <td>
-                          <input type="checkbox" id="modal-availavility" />
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div id="product-detail-modify-btn">
-                    <button class="black-btn">수정완료</button>
-                    <button class="red-btn">삭제</button>
+              <form action="updateProduct"
+              id="update-product-form"
+              method="post">
+                <div id="product-modify-img">이미지사진</div>
+                <div id="product-detail-modify-box">
+                  <div id="product-detail-modify">
+                    <div id="product-detail-modify-puts">
+                      <input type="hidden" id="modal-productNo" name="productNo"> 
+                      <table id="product-detail-modify-table">
+                        <tr>
+                          <td>카테고리</td>
+                          <td>
+                            <select class="search-input-gray" id="select-modify-modal" name="categoryNo" >  
+                            </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>상품명</td>
+                          <td>
+                            <input type="text" id="modal-productName" name="productName"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>입고가</td>
+                          <td>
+                            <input type="number" id="modal-inputPrice" name="inputPrice"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>판매가</td>
+                          <td>
+                            <input type="number" id="modal-salePrice" name="salePrice"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>입고불가</td>
+                          <td>
+                            <input type="checkbox" id="modal-availability"  name="availability" value="Y" />
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <div id="product-detail-modify-btn">
+                      <button class="black-btn" type="submit" >수정완료</button>
+                      <button class="red-btn">삭제</button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
+
             </div>
           </div>
         </div>
@@ -587,20 +558,25 @@ contentType="text/html;charset=UTF-8" language="java" %>
               const productName = this.children[2].textContent;
               const inputPrice = this.children[3].textContent;
               const salePrice = this.children[4].textContent;
-              const availavility = this.children[5].textContent;
+              const availability = this.children[5].textContent;
 
-              //document.getElementById("modal-productNo").value = productNo;
-              let sel = document.getElementById('product-add-select').options;
+              console.log(categoryName);
+
+              document.getElementById("modal-productNo").value = productNo;
+              let sel = document.getElementById('select-modify-modal').options;
               for (var i = 0; i < sel.length; i++) {
-                if (sel[i].value == 'categoryName') {
-                  sel[i].selected = true;
+                if (sel[i].label == categoryName) {
+                  console.log(sel[i].label);
+                   sel[i].selected = true;
+                   
                 }
               }
+              
               document.getElementById('modal-productName').value = productName;
               document.getElementById('modal-inputPrice').value = inputPrice;
               document.getElementById('modal-salePrice').value = salePrice;
-              if (availavility == 'Y') {
-                document.getElementById('modal-availavility').checked = true;
+              if (availability == 'Y') {
+                document.getElementById('modal-availability').checked = true;
               }
 
               const modal = new bootstrap.Modal(
@@ -610,44 +586,61 @@ contentType="text/html;charset=UTF-8" language="java" %>
             });
           });
         });
-        $(document).ready(function () {
+
+
+
+        function drawCategoryList(){
+
+          getCategory(function (list){
+            var addselect = document.getElementById('select-add-modal');
+            // addselect.setAttribute("name", "categoryNo");
+            addselect.innerHTML = '<option value="" name="" >카테고리</option>'; 
+
+              for(var category of list){
+
+                  var option = document.createElement('option');
+                  option.value = category.categoryNo;
+                  option.textContent = category.categoryName;
+                  addselect.appendChild(option);
+                  
+               
+              }
+
+              var modifyselect = document.getElementById('select-modify-modal');
+              addselect.setAttribute("name", "categoryNo");
+              modifyselect.innerHTML = '<option value="">카테고리</option>';
+              for(var category of list){
+
+                  var option = document.createElement('option');
+                  option.value = category.categoryNo;
+                  option.textContent = category.categoryName;
+                  modifyselect.appendChild(option);
+
+                }
+
+          })
+            }
+
+        function getCategory(callback){
+
           $.ajax({
             url: '/api/category/drawCategory',
             method: 'get',
-            success: function (data) {
-              console.log('받은 데이터:', data); // 데이터 확인하기
+            success: function (res) {
 
-              if (typeof data === 'string') {
-                data = JSON.parse(data); // 문자열이면 JSON 객체로 변환
+              if (typeof res === 'string') {
+                res = JSON.parse(res); // 문자열이면 JSON 객체로 변환
               }
-
-              var selectElement = document.getElementById('product-add-select');
-              selectElement.innerHTML = '<option value="">카테고리</option>';
-
-              var selectElement = document.getElementById('product-add-select');
-              selectElement.innerHTML = '<option value="">카테고리</option>';
-
-
-              const test = document.getElementById('product-add-select');
-
-              data.forEach(function (category) {
-                const option = document.createElement('option');
-                option.value = category.categoryNo;
-                option.textContent = category.categoryName;
-                selectElement.appendChild(option);
-
-                console.log(option);
-                console.log(test);
-              });
-              test.innerHTML = option;
-
               console.log('통신성공');
+              callback(res);
             },
             error: function () {
               console.log('통신실패');
             },
           });
-        });
+
+        }
+
       </script>
       <!--end point-->
     </div>

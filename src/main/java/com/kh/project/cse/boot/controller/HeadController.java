@@ -24,11 +24,7 @@ public class HeadController {
     private final HeadService headService;
     private final MemberService memberService;
 
-    //성진 본사-로그인
-    @RequestMapping("/head_member")
-    public String head_member() {
-        return "head_office/headMember";
-    }
+
     //
     //본사 주문
     @RequestMapping("/head_order")
@@ -51,43 +47,6 @@ public class HeadController {
         model.addAttribute("pi", pi);
         return "head_office/headAnnouncement";
     }
-    //성진
-
-
-
-    //성진 본사-지점관리
-    @RequestMapping("/head_store")
-    public String head_store() { return "head_office/headStore";}
-    //
-
-    @RequestMapping("/head_product")
-    public String head_product(Model model) {
-
-        ArrayList<Product> list = headService.selectAllProduct();
-        model.addAttribute("list",list);
-
-        return "head_office/headProduct";
-    }
-
-    //상품추가
-    @PostMapping("/insertProduct.he")
-    public String insertProduct(Product product, HttpSession session) {
-
-        int result = headService.insertProduct(product);
-
-        return "head_office/headProduct";
-    }
-
-    @PostMapping("/searchProduct")
-    public String searchProduct(@RequestParam String condition, @RequestParam String keyword, Model model) {
-        ArrayList<Product> list = headService.searchProduct(condition, keyword);
-        model.addAttribute("list",list);
-
-        return "head_office/headProduct";
-    }
-
-
-    //
 
     //공지사항추가
     @PostMapping("/insertAnnouncement.he")
@@ -97,7 +56,72 @@ public class HeadController {
 
         return "head_office/headAnnouncement";
     }
-    //
+
+
+
+
+
+
+
+    
+    @RequestMapping("/head_product")
+    public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
+        int listCount = headService.ProductListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Product> list = headService.selectAllProduct(pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+        return "head_office/headProduct";
+    }
+
+    //상품추가
+    @PostMapping("/insertProduct.he")
+    public String insertProduct(Product product, HttpSession session, Model model) {
+
+        System.out.println(product);
+        int result = headService.insertProduct(product);
+        int cpage = 1;
+
+        if (result >= 1){
+            return head_product(1, model);
+        }
+
+        return "head_office/headProduct";
+    }
+
+    @PostMapping("/searchProduct")
+    public String searchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
+
+        ArrayList<Product> list = headService.searchProduct(condition, keyword);
+        model.addAttribute("list",list);
+
+        return "head_office/headProduct";
+    }
+
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(Product product, HttpSession session, Model model) {
+        System.out.println(product);
+        int result = headService.updateProduct(product);
+        int cpage = 1;
+
+        if (result >= 1){
+            return head_product(1, model);
+        }
+
+        return "head_office/headProduct";
+    }
+
+    @RequestMapping("/head_store")
+    public String head_store() { return "head_office/headStore";}
+
+    @RequestMapping("/head_member")
+    public String head_member() {
+        return "head_office/headMember";
+    }
+
 
 
 }
