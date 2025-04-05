@@ -36,4 +36,16 @@ public class MemberServiceImpl implements MemberService {
     public int checkStoreName(String checkStore) {
         return storeMapper.checkStore(checkStore);
     }
+
+    @Override
+    public int updateMember(Member member) {
+        return memberMapper.updateMember(member);
+    }
+    
+    @Override
+    public Member selectMemberById(String memberId) {
+        return memberMapper.selectMemberById(memberId);
+    }
+
+
 }

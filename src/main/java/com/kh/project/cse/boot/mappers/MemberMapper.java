@@ -11,4 +11,9 @@ public interface MemberMapper {
     Member loginMember(@Param("memberId") String memberId);
 
     int idCheck(@Param("checkId") String checkId);
+
+    int updateMember(Member member);
+
+    Member selectMemberById(@Param("memberId") String memberId);
+
 }

@@ -1,3 +1,4 @@
+<%@ page import="com.kh.project.cse.boot.domain.vo.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -340,7 +341,13 @@
         <div>
 <%--          <button>개인정보수정</button>--%>
 <%--          <button>로그아웃</button>--%>
-          <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
+  <%
+    // 세션에서 로그인 유저 정보 가져오기
+    Member loginUser = (Member) session.getAttribute("loginUser");
+  %>
+
+
+  <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
             <img src="/resources/menubar_icons/개인정보수정.png">
           </button>
           <button id="logout"><img src="/resources/menubar_icons/로그아웃.png"></button>
@@ -401,27 +408,53 @@
               </div>
             </div>
           </div>
+
           <div class="modal-body" id="editInfo_modal-body">
-            <div>
-                <div id="editInfo_modal-content">
+            <div id="editInfo_modal-content">
+              <form action="updateMember" method="post">
+                <div class="form-group">
                   <strong>이름</strong>
-                  <input type="text" placeholder="이름가져오기" readonly>
-                  <strong>휴대폰</strong>
-                  <input type="text" placeholder="휴대폰가져오기 : 010-0000-0000">
-                  <strong>주민번호</strong>
-                  <input type="text" placeholder="주민번호가져오기 : 121212-1******" readonly>
-                  <strong>아이디</strong>
-                  <input type="text" placeholder="아이디가져오기" readonly>
-                  <strong>비밀번호</strong>
-                  <input type="text" placeholder="비밀번호 가져오기 : *******">
-                  <strong>비밀번호 확인</strong>
-                  <input type="text" placeholder="비밀번호 확인란 : *******">
+                  <input type="text" name="memberName" readonly value="<%= loginUser != null ? loginUser.getMemberName() : "" %>">
                 </div>
+
+                <div class="form-group">
+                  <strong>휴대폰</strong>
+                  <input type="text" name="phone" value="<%= loginUser != null ? loginUser.getPhone() : "" %>">
+                </div>
+
+                <div class="form-group">
+                  <strong>주민번호</strong>
+                  <input type="text" readonly value="<%= loginUser != null ? loginUser.getResidentNo() : "" %>">
+                </div>
+
+                <div class="form-group">
+                  <strong>아이디</strong>
+                  <input type="text" readonly value="<%= loginUser != null ? loginUser.getMemberId() : "" %>">
+                </div>
+
+                <div class="form-group">
+                  <strong>현재 비밀번호</strong>
+                  <input type="password" name="currentPwd" placeholder="*******" required>
+                </div>
+
+                <div class="form-group">
+                  <strong>비밀번호 확인</strong>
+                  <input type="password" name="newPwdCheck" placeholder="새 비밀번호 입력">
+                </div>
+
+                <input type="hidden" name="memberNo" value="<%= loginUser != null ? loginUser.getMemberNo() : "" %>">
+
+                <div class="modal-footer" id="editInfo_modal-footer">
+                  <button type="submit" class="gray-long-btn">개인정보 수정</button>
+                </div>
+              </form>
             </div>
           </div>
-          <div class="modal-footer" id="editInfo_modal-footer">
-            <button type="button" class="gray-long-btn">수정</button>
-          </div>
+
+
+
+
+
         </div>
       </div>
     </div>

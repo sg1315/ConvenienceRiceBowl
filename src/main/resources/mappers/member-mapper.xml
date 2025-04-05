@@ -58,4 +58,27 @@
         WHERE MEMBER_ID = #{memberId}
         AND MEMBER_STATUS = 'Y'
     </select>
+
+    <update id="updateMember" parameterType="member">
+        UPDATE MEMBER
+        SET
+            MEMBER_NAME = #{memberName},
+            PHONE_NUMBER = #{phone},
+            MEMBER_PWD = #{memberPwd}
+        WHERE
+            MEMBER_NO = #{memberNo}
+            AND MEMBER_STATUS = 'Y'
+    </update>
+
+    <select id="selectMemberById" parameterType="string" resultMap="memberResult">
+        SELECT
+            MEMBER_NAME,
+            PHONE_NUMBER,
+            MEMBER_PWD
+        FROM MEMBER
+        WHERE MEMBER_ID = #{memberId}
+            AND MEMBER_STATUS = 'Y'
+    </select>
+
+
 </mapper>

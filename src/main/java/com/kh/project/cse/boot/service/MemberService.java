@@ -13,4 +13,8 @@ public interface MemberService {
     int insertStore(String storeName);
 
     int checkStoreName(String checkStore);
+
+    int updateMember(Member member);
+
+    Member selectMemberById(String memberId);
 }

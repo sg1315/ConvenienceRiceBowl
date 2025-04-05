@@ -1,15 +1,13 @@
 package com.kh.project.cse.boot.controller;
 
 
-import com.kh.project.cse.boot.domain.vo.Announcement;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -120,6 +118,36 @@ public class HeadController {
     @RequestMapping("/head_member")
     public String head_member() {
         return "head_office/headMember";
+    }
+
+    //개인정보수정
+    @PostMapping("/updateMember")
+    @ResponseBody //테스트용(리턴 문자열 그대로 출력)
+    public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwdCheck") String newPwdCheck,
+                               Member member, HttpSession session, Model model) {
+
+        Member loginMember = (Member) session.getAttribute("loginUser");
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encodedPwd = passwordEncoder.encode(newPwdCheck);
+        member.setMemberPwd(encodedPwd);
+
+        if (loginMember == null) return "1";
+
+        member.setMemberPwd(member.getMemberPwd());
+        member.setMemberId(loginMember.getMemberId());
+        member.setMemberNo(loginMember.getMemberNo());
+
+        int result = memberService.updateMember(member);
+        System.out.println("result = " + result);
+
+        if (result > 0) {
+            Member updatedMember = memberService.selectMemberById(member.getMemberId());
+            session.setAttribute("loginUser", updatedMember);
+            return "업데이트 성공";
+        } else {
+            return "업데이트 실패";
+        }
     }
 
 
