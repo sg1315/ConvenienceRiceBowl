@@ -75,13 +75,22 @@
             align-items: center;
             padding-right: 10px;
         }
+        #order-search-bottom{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            gap: 10px;
+        }
+
         #top-left p {
             padding-left: 15px;
         }
         #main{
             background-color: #D9D9D9;
             width: 100%;
-            height: 90%;
+            height: 85%;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             padding: 50px 50px 100px;
@@ -127,16 +136,18 @@
             color: #3C3C3C;
             font-weight: bold;
         }
-        #btn-close-modal{
+        .btn-close{
             width: 20px;
             height: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: none;
+            background: #d9d9d9;
         }
         .x_img{
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
         }
 
         /* modal */
@@ -152,6 +163,10 @@
         .modal-body{
             height: 75%;
             flex-grow: 1;
+        }
+        #modal-body{
+            height: 75%;
+        /*  이 부분 학원가서 학원 모니터로 확인  */
         }
 
         .modal-body input, .modal-body select{
@@ -173,6 +188,7 @@
             max-width: 60%;
             position: absolute;
             left: 24%;
+            height: 100%;
         }
 
         #header-title2{
@@ -198,6 +214,9 @@
             display:flex;
             flex-wrap:wrap;
             height:16%;
+        }
+        #modal-header-right-form{
+            width: 100%;
         }
         #modal-header-left{
             display: block;
@@ -317,7 +336,7 @@
             width: 72%;
 
             background-color: #D9D9D9;
-            height:9%;
+            height:100%;
         }
         #order-table{
             text-align: center;
@@ -328,10 +347,6 @@
             justify-content: center;
             align-items: center;
         }
-
-        /* /modal */
-
-
     </style>
 </head>
 <body>
@@ -375,20 +390,11 @@
                     </div>
                 </form>
             </div>
-
         </div>
-
     </div>
     <div id="main">
         <div id="main-in">
             <table class="table table-hover" id="table1">
-                <colgroup>
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                    <col style="width: 10%;">
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                </colgroup>
                 <thead>
                 <tr>
                     <th class="col-2">발주일자</th>
@@ -399,67 +405,6 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr><tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr><tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
                 <tr>
                     <td>2025-03-31</td>
                     <td>123456</td>
@@ -516,80 +461,26 @@
                             </form>
                         </div>
                     </div>
-                        <div class="modal-body">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="col-2">상품번호</th>
-                                        <th class="col-2">카테고리</th>
-                                        <th class="col-5">상품명</th>
-                                        <th class="col-1"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>P12334</td>
-                                        <td>스낵</td>
-                                        <td>홈런볼</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr><tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr><tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="col-2">상품번호</th>
+                                <th class="col-2">카테고리</th>
+                                <th class="col-5">상품명</th>
+                                <th class="col-1"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>P12334</td>
+                                <td>스낵</td>
+                                <td>홈런볼</td>
+                                <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div id="modal-pageing-left">
                         <img src="/resources/common/공통_페이징바화살표.png">
@@ -604,25 +495,27 @@
 
                 <div id="modal-right-wrap">
                     <div class="modal-header" id="modal-header-right">
-                        <div id="header-title2">
-                            <h1 class="modal-title fs-5">발주 요청 목록</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                                <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
-                            </button>
-                        </div>
-                        <div id="header-content2">
-                            <div id="header-content2-left">
-                                <button class="black-btn">요청</button>
+                        <form id="modal-header-right-form">
+                            <div id="header-title2">
+                                <h1 class="modal-title fs-5">발주 요청 목록</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
+                                </button>
                             </div>
-                            <div id="header-content2-right">
-                                <p>
-                                    종류 수(총 수량 : 3(240)
-                                </p>
-                                <p>
-                                    총 1,000,300 원
-                                </p>
+                            <div id="header-content2">
+                                <div id="header-content2-left">
+                                    <button class="black-btn">요청</button>
+                                </div>
+                                <div id="header-content2-right">
+                                    <p>
+                                        종류 수(총 수량 : 3(240)
+                                    </p>
+                                    <p>
+                                        총 1,000,300 원
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                     <div class="modal-body">
                         <table class="table table-hover">
@@ -646,78 +539,6 @@
                                 <td>20</td>
                                 <td>30000</td>
                             </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -732,7 +553,6 @@
                         <img src="/resources/common/공통_페이징바화살표.png">
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -750,7 +570,7 @@
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
                     <div id="modal-header2">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
                         </button>
                     </div>
@@ -760,7 +580,7 @@
                                 <option>카테고리</option>
                                 <option>스낵</option>
                                 <option>음료</option>
-                                <option>머였지</option>
+                                <option>기타</option>
                             </select>
                             <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
                             <input class="search-input-submit" type="submit" value="검색" />
@@ -778,92 +598,22 @@
                 <div id="modal-body">
                     <table class="table table-hover" id="order-table">
                         <thead>
-                            <tr>
-                                <th class="col-1">상품번호</th>
-                                <th class="col-2">카테고리</th>
-                                <th class="col-5">상품명</th>
-                                <th class="col-1">수량</th>
-                                <th class="col-2">금액</th>
-                            </tr>
+                        <tr>
+                            <th class="col-1">상품번호</th>
+                            <th class="col-2">카테고리</th>
+                            <th class="col-5">상품명</th>
+                            <th class="col-1">수량</th>
+                            <th class="col-2">금액</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -885,8 +635,10 @@
                         <button class="red-btn" type="button">발주취소</button>
                     </div>
                 </div>
-
-    <!--Table Modal Script -->
+            </div>
+        </div>
+    </div>
+</div>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const rows = document.querySelectorAll("#table1 tbody tr");
@@ -898,10 +650,6 @@
                 });
             });
         });
-
-
     </script>
-    <!--end point-->
-</div>
 </body>
 </html>
