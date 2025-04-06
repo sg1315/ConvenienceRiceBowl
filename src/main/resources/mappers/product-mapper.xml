@@ -104,6 +104,18 @@
         WHERE PRODUCT_NO = #{productNo}
     </update>
 
+    <!--  지점  -->
+    <select id="orderReqeustProductList" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        ORDER BY PRODUCT_NO ASC
+    </select>
 
 
 </mapper>

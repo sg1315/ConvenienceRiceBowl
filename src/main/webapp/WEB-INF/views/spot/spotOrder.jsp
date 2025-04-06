@@ -50,6 +50,12 @@
             gap: 10px;
             padding-top: 20px;
         }
+        #top-right1 form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
         #order-request{
             width: 15%;
             height: 100%;
@@ -361,35 +367,37 @@
         </div>
 
         <div id="top-right1">
-            <div id="order-request">
-                <button class="gray-btn-border" id="btn-order-request" type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
-                    발주<br>요청
-                </button>
-            </div>
-            <div id="order-search">
-                <form>
-                    <div id="order-search-top">
-                        <button class="search-input-submit">저번 달</button>
-                        <button class="search-input-submit">최근</button>
-                        <input class="date-input" type="date"> ~ <input class="date-input" type="date">
-                    </div>
-                    <div id="order-search-bottom">
-                        <div class="selectbox" id="status-select">
-                            <select>
-                                <option>상태</option>
-                                <option>발주대기</option>
-                                <option>발주요청</option>
-                                <option>발주승인</option>
-                                <option>발주거절</option>
-                            </select>
+            <form>
+                <div id="order-request">
+                    <button class="gray-btn-border" id="btn-order-request" type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
+                        발주<br>요청
+                    </button>
+                </div>
+                <div id="order-search">
+                    <form>
+                        <div id="order-search-top">
+                            <button class="search-input-submit">저번 달</button>
+                            <button class="search-input-submit">최근</button>
+                            <input class="date-input" type="date"> ~ <input class="date-input" type="date">
                         </div>
-                        <div>
-                            <input class="search-input" type="text" placeholder="발주번호">
-                            <input class="search-input-submit" type="submit" value="검색">
+                        <div id="order-search-bottom">
+                            <div class="selectbox" id="status-select">
+                                <select>
+                                    <option>상태</option>
+                                    <option>발주대기</option>
+                                    <option>발주요청</option>
+                                    <option>발주승인</option>
+                                    <option>발주거절</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input class="search-input" type="text" placeholder="발주번호">
+                                <input class="search-input-submit" type="submit" value="검색">
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            </form>
         </div>
     </div>
     <div id="main">
@@ -461,7 +469,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="orderRequestProductList">
                         <table class="table table-hover">
                             <thead>
                             <tr>
@@ -478,6 +486,14 @@
                                 <td>홈런볼</td>
                                 <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
                             </tr>
+                            <c:forEach var="p" items="${plist}">
+                                <tr>
+                                    <td>${p.productNo}</td>
+                                    <td>${p.categoryName}</td>
+                                    <td>${p.productName}</td>
+                                    <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -639,17 +655,17 @@
         </div>
     </div>
 </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const rows = document.querySelectorAll("#table1 tbody tr");
-            rows.forEach(row => {
-                row.classList.add("table-row");
-                row.addEventListener("click", function () {
-                    const modal = new bootstrap.Modal(document.getElementById("staticBackdrop2"));
-                    modal.show();
-                });
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll("#table1 tbody tr");
+        rows.forEach(row => {
+            row.classList.add("table-row");
+            row.addEventListener("click", function () {
+                const modal = new bootstrap.Modal(document.getElementById("staticBackdrop2"));
+                modal.show();
             });
         });
-    </script>
+    });
+</script>
 </body>
 </html>

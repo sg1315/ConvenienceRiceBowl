@@ -22,4 +22,8 @@ public interface ProductMapper {
     int ProductListCount();
 
     int updateProduct(Product product);
+
+
+    //지점
+    List<Product> orderReqeustProductList();
 }
