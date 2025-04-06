@@ -121,20 +121,27 @@ public class HeadController {
     }
 
     //개인정보수정
-    @PostMapping("/updateMember")
+    @PostMapping("/updateMemberInfo")
     @ResponseBody //테스트용(리턴 문자열 그대로 출력)
-    public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwdCheck") String newPwdCheck,
+    public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
                                Member member, HttpSession session, Model model) {
 
         Member loginMember = (Member) session.getAttribute("loginUser");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPwd = passwordEncoder.encode(newPwdCheck);
-        member.setMemberPwd(encodedPwd);
+//        String encodedPwd = passwordEncoder.encode(newPwd);
+//        member.setMemberPwd(encodedPwd);
 
-        if (loginMember == null) return "1";
+        if (loginMember == null) return "로그인 정보 없음";
 
         member.setMemberPwd(member.getMemberPwd());
+
+        if (newPwd != null && !newPwd.trim().isEmpty()) {
+            member.setMemberPwd(passwordEncoder.encode(newPwd));
+        } else {
+            member.setMemberPwd(null); // 비밀번호 변경 안 함
+        }
+
         member.setMemberId(loginMember.getMemberId());
         member.setMemberNo(loginMember.getMemberNo());
 

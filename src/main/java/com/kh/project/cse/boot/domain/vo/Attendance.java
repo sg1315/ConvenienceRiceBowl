@@ -10,7 +10,7 @@ import lombok.*;
 @EqualsAndHashCode
 public class Attendance {
     private int attendanceNo;
-    private int memberNo;
-    private int workingTime;
-    private int workoutTime;
+    private String workingTime;
+    private String workoutTime;
+    private Member member;
 }

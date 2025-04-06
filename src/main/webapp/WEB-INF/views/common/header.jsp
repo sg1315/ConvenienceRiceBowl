@@ -411,7 +411,7 @@
 
           <div class="modal-body" id="editInfo_modal-body">
             <div id="editInfo_modal-content">
-              <form action="updateMember" method="post">
+              <form action="updateMemberInfo" method="post">
                 <div class="form-group">
                   <strong>이름</strong>
                   <input type="text" name="memberName" readonly value="<%= loginUser != null ? loginUser.getMemberName() : "" %>">
@@ -438,8 +438,8 @@
                 </div>
 
                 <div class="form-group">
-                  <strong>비밀번호 확인</strong>
-                  <input type="password" name="newPwdCheck" placeholder="새 비밀번호 입력">
+                  <strong>새 비밀번호</strong>
+                  <input type="password" name="newPwd" placeholder="새 비밀번호 입력">
                 </div>
 
                 <input type="hidden" name="memberNo" value="<%= loginUser != null ? loginUser.getMemberNo() : "" %>">

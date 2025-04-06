@@ -3,10 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.AttendanceMapper">
-        <resultMap id="attendanceResult" type="Attendance">
-            <result column="ATTENDANCE_NO" property="attendanceNo"/>
-            <result column="MEMBER_NO" property="memberNo"/>
-            <result column="WORKIN_TIME" property="workingTime"/>
-            <result column="WORKOUT_TIME" property="workoutTime"/>
-        </resultMap>
+    <resultMap id="attendanceMap" type="Attendance">
+        <id column="ATTENDANCE_NO" property="attendanceNo"/>
+        <result column="WORKIN_TIME" property="workingTime"/>
+        <result column="WORKOUT_TIME" property="workoutTime"/>
+
+        <association property="member" javaType="Member">
+            <id column="M_MEMBER_NO" property="memberNo"/>
+            <result column="STORE_NO" property="storeNo"/>
+            <result column="POSITION" property="position"/>
+            <result column="MEMBER_NAME" property="memberName"/>
+            <result column="PHONE_NUMBER" property="phone"/>
+            <result column="RESIDENT_NUMBER" property="residentNo"/>
+            <result column="MEMBER_ID" property="memberId"/>
+            <result column="MEMBER_PWD" property="memberPwd"/>
+            <result column="MEMBER_STATUS" property="status"/>
+        </association>
+    </resultMap>
+
+
+    <select id="selectInfoList" resultMap="attendanceMap">
+        SELECT
+        A.ATTENDANCE_NO,
+        TO_CHAR(A.WORKIN_TIME, 'YYYY-MM-DD HH24:MI:SS') AS WORKIN_TIME,
+        TO_CHAR(A.WORKOUT_TIME, 'YYYY-MM-DD HH24:MI:SS') AS WORKOUT_TIME,
+        M.MEMBER_NO AS M_MEMBER_NO,
+        M.STORE_NO,
+        M.POSITION,
+        M.MEMBER_NAME,
+        M.PHONE_NUMBER,
+        M.RESIDENT_NUMBER,
+        M.MEMBER_ID,
+        M.MEMBER_PWD,
+        M.MEMBER_STATUS
+        FROM ATTENDANCE A
+        JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
+    </select>
+
+
 </mapper>
+

@@ -329,76 +329,32 @@
                 </thead>
 
                 <tbody >
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
-                <tr>
-                    <td>알바</td>
-                    <td>abc</td>
-                    <td>니들이 게맛을알아</td>
-                    <td>010-1111-2222</td>
-                    <td>Y</td>
-                </tr>
+                <c:forEach var="member" items="${memberList}">
+                    <tr data-residentno="${member.residentNo}"><%--주민번호 같이 전달--%>
+                        <td>
+                            <c:choose>
+                                <c:when test="${member.position == '1'}">본사</c:when>
+                                <c:when test="${member.position == '2'}">지점장</c:when>
+                                <c:when test="${member.position == '3'}">매니저</c:when>
+                                <c:when test="${member.position == '4'}">알바</c:when>
+                                <c:otherwise>없음</c:otherwise>
+                            </c:choose>
+                        </td>
+                            <td>${member.memberId}</td>
+                            <td>${member.memberName}</td>
+                            <td>${member.phone}</td>
+                        <td>
+                        <c:choose>
+                            <c:when test="${member.status == 'Y'}">재직</c:when>
+                            <c:when test="${member.status == 'N'}">퇴직</c:when>
+                            <c:otherwise>없음</c:otherwise>
+                        </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
+
+
+
                 </tbody>
             </table>
         </div>
@@ -442,6 +398,7 @@
                             <div id="editMember_select_wrap">
                                 <div id="editMember_select">
                                 <select id="editMember_select-modal-rank">
+                                    <option value="본사" hidden>본사</option>
                                     <option value="직급">직급</option>
                                     <option value="알바">알바</option>
                                     <option value="매니저">매니저</option>
@@ -485,24 +442,56 @@
                 row.classList.add("table-row");
 
                 row.addEventListener("click", function () {
-                    const rank = this.children[0].textContent;
-                    const id = this.children[1].textContent;
-                    const name = this.children[2].textContent;
-                    const phone = this.children[3].textContent;
-                    const status = this.children[4].textContent;
+                    const rank = this.children[0].textContent.trim();
+                    const id = this.children[1].textContent.trim();
+                    const name = this.children[2].textContent.trim();
+                    const phone = this.children[3].textContent.trim();
+                    const status = this.children[4].textContent.trim();
+
+                    const statusValue = (status === "재직") ? "Y" : (status === "퇴직") ? "N" : "";
+
+                    const residentNo = this.dataset.residentno;
+                    document.getElementById("member_identify").value = residentNo;
 
                     document.getElementById("editMember_select-modal-rank").value = rank;
                     document.getElementById("member_name").value = name;
                     document.getElementById("member_phone").value = phone;
-
                     document.getElementById("member_id").value = id;
-                    document.getElementById("editMember_select-modal-status").value = status;
+
+                    document.getElementById("editMember_select-modal-status").value = statusValue;
 
                     const modal = new bootstrap.Modal(document.getElementById("edit_member"));
                     modal.show();
                 });
             });
         });
+
+
+        document.getElementById("editMember_edit_btn").addEventListener("click", function () {
+            const data = {
+                memberId: document.getElementById("member_id").value,
+                position: document.getElementById("editMember_select-modal-rank").value,
+                status: document.getElementById("editMember_select-modal-status").value
+            };
+            fetch("/update_member", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.text())
+                .then(result => {
+                    if (result.trim() === "성공") {
+                        alert("직원 정보가 수정되었습니다.");
+                        location.reload();
+                    } else {
+                        alert("수정 실패: " + result);
+                    }
+                });
+        });
+
+
     </script>
     <!--end point-->
 

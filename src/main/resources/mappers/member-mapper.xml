@@ -61,13 +61,24 @@
 
     <update id="updateMember" parameterType="member">
         UPDATE MEMBER
-        SET
-            MEMBER_NAME = #{memberName},
-            PHONE_NUMBER = #{phone},
-            MEMBER_PWD = #{memberPwd}
-        WHERE
-            MEMBER_NO = #{memberNo}
-            AND MEMBER_STATUS = 'Y'
+        <set>
+            <if test="memberName != null and memberName != ''">
+                MEMBER_NAME = #{memberName},
+            </if>
+            <if test="phone != null and phone != ''">
+                PHONE_NUMBER = #{phone},
+            </if>
+            <if test="memberPwd != null and memberPwd != ''">
+                MEMBER_PWD = #{memberPwd},
+            </if>
+            <if test="position != null and position != ''">
+                POSITION = #{position},
+            </if>
+            <if test="status != null and status != ''">
+                MEMBER_STATUS = #{status},
+            </if>
+        </set>
+        WHERE MEMBER_ID = #{memberId}
     </update>
 
     <select id="selectMemberById" parameterType="string" resultMap="memberResult">
@@ -79,6 +90,27 @@
         WHERE MEMBER_ID = #{memberId}
             AND MEMBER_STATUS = 'Y'
     </select>
+
+    <update id="updateMemberStatus" parameterType="member">
+        UPDATE MEMBER
+        SET
+        POSITION = #{position},
+        MEMBER_STATUS = #{status}
+        WHERE
+        MEMBER_NO = #{memberNo}
+    </update>
+
+    <select id="selectMemberList" resultMap="memberResult">
+        SELECT
+            MEMBER_ID,
+            MEMBER_NAME,
+            PHONE_NUMBER,
+            POSITION,
+            MEMBER_STATUS,
+            RESIDENT_NUMBER
+        FROM MEMBER
+    </select>
+
 
 
 </mapper>

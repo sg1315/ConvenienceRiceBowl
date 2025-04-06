@@ -4,6 +4,8 @@ import com.kh.project.cse.boot.domain.vo.Member;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface MemberMapper {
     int insertMember(Member member);
@@ -16,4 +18,7 @@ public interface MemberMapper {
 
     Member selectMemberById(@Param("memberId") String memberId);
 
+    int updateMemberStatus(Member member);
+
+    List<Member> selectMemberList();
 }

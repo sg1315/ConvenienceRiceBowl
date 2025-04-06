@@ -3,6 +3,8 @@ package com.kh.project.cse.boot.service;
 import com.kh.project.cse.boot.domain.vo.Member;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface MemberService {
     int insertMember(Member member);
 
@@ -17,4 +19,8 @@ public interface MemberService {
     int updateMember(Member member);
 
     Member selectMemberById(String memberId);
+
+    int updateMemberStatus(Member member);
+
+    List<Member> selectMemberList();
 }

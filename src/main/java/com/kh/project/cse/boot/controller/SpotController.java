@@ -1,15 +1,27 @@
 package com.kh.project.cse.boot.controller;
 
+import com.kh.project.cse.boot.domain.vo.Attendance;
+import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.service.MemberService;
+import com.kh.project.cse.boot.service.SpotService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.ResourceTransactionManager;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @Controller
 public class SpotController {
 
     private final ResourceTransactionManager resourceTransactionManager;
+    private final MemberService memberService;
+    private final SpotService spotService;
 
-    public SpotController(ResourceTransactionManager resourceTransactionManager) {
+    public SpotController(ResourceTransactionManager resourceTransactionManager, MemberService memberService, SpotService spotService) {
         this.resourceTransactionManager = resourceTransactionManager;
+        this.memberService = memberService;
+        this.spotService = spotService;
     }
 
     //대시보드
@@ -37,10 +49,10 @@ public class SpotController {
     }
 
     //멤버관리
-    @RequestMapping("/spot_member")
-    public String spot_member() {
-        return "spot/spotMember";
-    }
+//    @RequestMapping("/spot_member")
+//    public String spot_member() {
+//        return "spot/spotMember";
+//    }
 
     //근태관리
     @RequestMapping("/spot_attendance")
@@ -91,5 +103,36 @@ public class SpotController {
 
     @RequestMapping("/spot_input")
     public String spot_input() { return "spot/spotInput"; }
+
+    //지점관리
+    @PostMapping("/update_member")
+    @ResponseBody
+    public String update_member(@RequestBody Member member) {
+        int result = memberService.updateMember(member);
+
+        if (result > 0) {
+            return "성공";
+        }else {
+            return "실패";
+        }
+    }
+
+    //직원정보 조회
+    @GetMapping("/spot_member")
+    public String spotMemberInfo(Model model) {
+        List<Member> memberList = memberService.selectMemberList();
+        System.out.println(memberList);
+        model.addAttribute("memberList", memberList);
+        return "spot/spotMember";
+    }
+    @GetMapping("/spot_attendance")
+    public String spot_attendanceInfo(Model model) {
+        List<Attendance> attendanceList = spotService.selectInfoList();
+        for (Attendance att : attendanceList) {
+            System.out.println("출근기록: " + att.getAttendanceNo() + ", " + att.getMember().getMemberName());
+        }
+        model.addAttribute("attendanceList", attendanceList);
+        return "spot/spotAttendance";
+    }
 
 }
