@@ -36,8 +36,25 @@ public class LoginController {
             mv.addObject("alertMsg", "비밀번호가 일치하지 않습니다.");
             mv.setViewName("login/loginForm");
         } else{
-            session.setAttribute("loginUser", loginMember);
-            mv.setViewName("spot/spotDashboard");
+            String position = loginMember.getPosition();
+            if(position.equals("1")){
+                session.setAttribute("loginUser", loginMember);
+                mv.setViewName("head_office/head_office");
+            } else if(position.equals("2")){
+                int storeNo = loginMember.getStoreNo();
+                int result = 0;
+                result = memberService.checkStoreStatus(storeNo);
+                if(result > 0){
+                    session.setAttribute("loginUser", loginMember);
+                    mv.setViewName("spot/spotDashboard");
+                } else {
+                    mv.addObject("alertMsg", "아직 지점이 승인되지않은 상태입니다.");
+                    mv.setViewName("login/loginForm");
+                }
+            } else {
+                session.setAttribute("loginUser", loginMember);
+                mv.setViewName("spot/spotDashboard");
+            }
         }
         return mv;
     }

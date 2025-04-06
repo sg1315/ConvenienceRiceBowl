@@ -12,4 +12,6 @@ public interface MemberService {
     int insertStore(String storeName);
 
     int checkStoreName(String checkStore);
+
+    int checkStoreStatus(int storeNo);
 }

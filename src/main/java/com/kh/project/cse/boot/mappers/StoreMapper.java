@@ -8,4 +8,6 @@ public interface StoreMapper {
     int insertStore(@Param("storeName") String storeName);
 
     int checkStore(@Param("checkStore") String checkStore);
+
+    int checkStoreStatus(@Param("storeNo") int storeNo);
 }
