@@ -13,8 +13,15 @@ public class APIStoreController {
     private final MemberService memberService;
 
     @GetMapping("/name")
-    public String checkMemberId(String checkStore){
+    public String CheckStore(String checkStore){
+        System.out.println("checkStore:"+checkStore);
+
         int result = memberService.checkStoreName(checkStore);
-        return null;
+
+        if(result > 0){
+            return "NNNNN";
+        } else {
+            return "NNNNY";
+        }
     }
 }

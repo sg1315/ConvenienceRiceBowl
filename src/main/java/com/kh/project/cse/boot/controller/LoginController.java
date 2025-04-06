@@ -29,11 +29,11 @@ public class LoginController {
         System.out.println(loginMember);
 
         if(loginMember == null){
-            mv.addObject("errorMsg", "아이디를 찾을 수 없습니다.");
+            mv.addObject("alertMsg", "계정을 찾을 수 없습니다.");
             mv.setViewName("login/loginForm");
         } else if (!bCryptPasswordEncoder.matches(member.getMemberPwd(),loginMember.getMemberPwd())) {
             // 평문/암호문
-            mv.addObject("errorMsg", "비밀번호가 일치하지 않습니다.");
+            mv.addObject("alertMsg", "비밀번호가 일치하지 않습니다.");
             mv.setViewName("login/loginForm");
         } else{
             session.setAttribute("loginUser", loginMember);
@@ -63,8 +63,9 @@ public class LoginController {
             String formatted = pNo.substring(0, 3) + "-" +
                     pNo.substring(3, 6) + "-" +
                     pNo.substring(6);
+            member.setPhone(formatted);
         } else{
-            mv.addObject("errorMsg","폰번호를 올바르게 입력해주세요.");
+            mv.addObject("alertMsg","폰번호를 올바르게 입력해주세요.");
             mv.setViewName("login/loginForm");
         }
 
@@ -79,7 +80,7 @@ public class LoginController {
             if(result > 0){
                 result = memberService.insertMember(member);
             } else {
-                mv.addObject("errorMsg","지점 생성 오류가 발생하였습니다.");
+                mv.addObject("alertMsg","지점 생성 오류가 발생하였습니다.");
                 mv.setViewName("login/loginForm");
             }
         }
@@ -89,7 +90,7 @@ public class LoginController {
             mv.addObject("alertMsg","성공적으로 회원가입을 완료하였습니다.");
             mv.setViewName("login/loginForm");
         } else{
-            mv.addObject("errorMsg","회원가입 실패");
+            mv.addObject("alertMsg","회원가입 실패");
             mv.setViewName("login/loginForm");
         }
         return mv;

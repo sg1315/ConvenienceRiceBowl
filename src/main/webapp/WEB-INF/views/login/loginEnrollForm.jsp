@@ -74,6 +74,11 @@
         #phoneInput{
             display: grid;
         }
+        #checkResult{
+            display: grid;
+            justify-items: center;
+            grid-template-columns: 100%;
+        }
         #enrollButton{border-radius: 0 0 8px 8px;}
         #enrollButton > button{
             color: white;
@@ -109,8 +114,8 @@
                         </select>
                     </div>
                     <div class="flexInput-1">
-                        <input type="text" id="storeName" name="storeName">
-                        <button onclick="checkStoreName()">확인</button>
+                        <input type="text" id="storeName" name="storeName" required>
+                        <button type="button" onclick="checkStoreName()">확인</button>
                     </div>
                     <div></div>
                     <div></div>
@@ -119,35 +124,35 @@
                 <div>
                     <div><p>아이디</p></div>
                     <div class="flexInput-1">
-                        <input type="text" name="memberId">
+                        <input type="text" name="memberId" required>
                         <button>중복확인</button>
                     </div>
                     <div></div>
                     <div><p>이름</p></div>
-                    <div class="flexInput-2"><input type="text" name="memberName"></div>
+                    <div class="flexInput-2"><input type="text" name="memberName" required></div>
                 </div>
                 <div>
                     <div><p>비밀번호</p></div>
-                    <div class="flexInput-2"><input type="password" name="memberPwd"></div>
+                    <div class="flexInput-2"><input type="password" name="memberPwd" required></div>
                     <div></div>
                     <div><p>주민번호</p></div>
                     <div id="ssnInput">
-                        <input type="text" name="residentNo">
+                        <input type="text" name="residentNo" required>
                     </div>
                 </div>
                 <div>
                     <div><p>비밀번호 확인</p></div>
-                    <div class="flexInput-2"><input type="password"></div>
+                    <div class="flexInput-2"><input type="password" required></div>
                     <div></div>
                     <div><p>핸드폰</p></div>
                     <div id="phoneInput">
                         <input type="text" name="phone">
                     </div>
                 </div>
-                <div></div>
+                <div id="checkResult"></div>
             </div>
             <div class="enrollForm-1" id="enrollButton">
-                <button>회원가입</button>
+                <button type="submit">회원가입</button>
                 <button type="reset" onclick="closeEnrollModal()">취소</button>
             </div>
             <script>
@@ -155,17 +160,32 @@
                     document.getElementById("modalBackground").style.display = "none";
                 }
                 function checkStoreName() {
-                    const checkStore = document.getElementById("storeName").value;
-
+                    const storeName = document.getElementById("storeName").value;
+                    console.log("응답 결과: "+ storeName);
                     $.ajax({
                         url: "/api/store/name",
-                        data: checkStore,
+                        data: {checkStore: storeName},
                         success: function (res){
-                            drawIdCheckText(res);
+                            console.log("응답 결과: "+ res);
+                            drawCheckText(res);
                         }, error: function (){
                             console.log("아이디 중복체크 ajax 실패");
                         }
                     })
+                }
+
+                function drawCheckText(isCheck) {
+                    const submitBtn = document.querySelector("#enrollButton button[type='submit']");
+                    const checkResult = document.getElementById("checkResult");
+                    if (isCheck === "NNNNN") {
+                        checkResult.style.color = "red";
+                        checkResult.innerText = "이미 사용중인 지점명입니다.";
+                        submitBtn.disabled = true;
+                    } else {
+                        checkResult.style.color = "green";
+                        checkResult.innerText = "사용 가능한 지점명입니다.";
+                        submitBtn.disabled = false;
+                    }
                 }
 
             </script>

@@ -20,4 +20,9 @@
         #{storeName}
         )
     </insert>
+    <select id="checkStore" resultType="_int">
+        SELECT COUNT(*)
+        FROM STORE
+        WHERE STORE_NAME = #{checkStore}
+    </select>
 </mapper>
