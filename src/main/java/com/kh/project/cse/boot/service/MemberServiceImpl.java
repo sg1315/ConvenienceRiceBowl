@@ -14,7 +14,13 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int insertMember(Member member) {
-        return memberMapper.insertMember(member);
+        int StoreNo = member.getStoreNo();
+
+        if(StoreNo > 0){
+            return memberMapper.insertMembers(member);
+        }else{
+            return memberMapper.insertMember(member);
+        }
     }
 
     @Override

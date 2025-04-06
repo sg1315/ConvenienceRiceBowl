@@ -7,8 +7,11 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface MemberMapper {
     int insertMember(Member member);
+    int insertMembers(Member member);
 
     Member loginMember(@Param("memberId") String memberId);
 
     int idCheck(@Param("checkId") String checkId);
+
+
 }

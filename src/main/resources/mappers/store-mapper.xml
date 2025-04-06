@@ -32,7 +32,7 @@
         AND STORE_STATUS = 1
     </select>
     <select id="checkStore" resultType="_int">
-        SELECT COUNT(*)
+        SELECT STORE_NO
         FROM STORE
         WHERE STORE_NAME = #{checkStore}
         AND STORE_STATUS = 1

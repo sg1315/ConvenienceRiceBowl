@@ -88,7 +88,6 @@ public class LoginController {
 
         String position = member.getPosition();
         String storeName = member.getStoreName();
-
         int result = 0;
 
         if(position.equals("2")){
@@ -100,6 +99,9 @@ public class LoginController {
                 mv.setViewName("login/loginForm");
             }
         } else {
+            int storeNo = memberService.checkStore(storeName);
+            member.setStoreNo(storeNo);
+            result = memberService.insertMember(member);
 
         }
 
