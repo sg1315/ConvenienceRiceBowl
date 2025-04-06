@@ -1,7 +1,6 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,6 +14,10 @@ public interface MemberService {
     int insertStore(String storeName);
 
     int checkStoreName(String checkStore);
+
+    int checkStoreStatus(int storeNo);
+
+    int checkStore(String checkStore);
 
     int updateMember(Member member);
 

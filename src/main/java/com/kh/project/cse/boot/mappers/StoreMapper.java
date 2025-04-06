@@ -11,14 +11,17 @@ import java.util.ArrayList;
 public interface StoreMapper {
     int insertStore(@Param("storeName") String storeName);
 
-    int checkStore(@Param("checkStore") String checkStore);
+    int checkStoreName(@Param("checkStore") String checkStore);
+
+    int checkStoreStatus(@Param("storeNo") int storeNo);
+
+    int checkStore(@Param("checkStore")String checkStore);
 
     int storeListCount();
 
     ArrayList<Store> selectAllStore(RowBounds rowBounds);
 
     ArrayList<Store> searchStore(String condition, String keyword, RowBounds rowBounds);
-
 
     int updateStoreNo(String storeNumber);
 

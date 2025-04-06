@@ -24,6 +24,24 @@
         )
     </insert>
 
+    <select id="checkStoreName" resultType="_int">
+        SELECT COUNT(*)
+        FROM STORE
+        WHERE STORE_NAME = #{checkStore}
+    </select>
+    <select id="checkStoreNo" resultType="_int">
+        SELECT COUNT(*)
+        FROM STORE
+        WHERE STORE_NO = #{storeNo}
+        AND STORE_STATUS = 1
+    </select>
+    <select id="checkStore" resultType="_int">
+        SELECT STORE_NO
+        FROM STORE
+        WHERE STORE_NAME = #{checkStore}
+        AND STORE_STATUS = 1
+    </select>
+
     <select id="storeListCount" resultType="_int">
         SELECT
         COUNT(*) AS COUNT

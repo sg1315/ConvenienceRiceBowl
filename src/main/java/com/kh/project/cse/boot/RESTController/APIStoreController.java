@@ -24,9 +24,24 @@ public class APIStoreController {
     private final HeadService headService;
 
     @GetMapping("/name")
-    public String checkMemberId(String checkStore){
-        int result = memberService.checkStoreName(checkStore);
-        return null;
+    public String CheckStore(String checkStore,String position){
+        System.out.println("checkStore:"+checkStore);
+
+        if(position.equals("2")){
+            int result = memberService.checkStoreName(checkStore);
+            if(result > 0){
+                return "NNNNN";
+            } else {
+                return "NNNNY";
+            }
+        } else {
+            int result = memberService.checkStore(checkStore);
+            if(result > 0){
+                return "NNNYN";
+            } else {
+                return "NNNYY";
+            }
+        }
     }
     @GetMapping("/selectStoreStatus")
     @ResponseBody

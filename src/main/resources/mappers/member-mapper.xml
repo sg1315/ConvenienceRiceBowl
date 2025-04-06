@@ -38,6 +38,29 @@
         'Y'
         )
     </insert>
+    <insert id="insertMembers">
+        INSERT INTO MEMBER(
+        MEMBER_NO,
+        STORE_NO,
+        POSITION,
+        MEMBER_NAME,
+        PHONE_NUMBER,
+        RESIDENT_NUMBER,
+        MEMBER_ID,
+        MEMBER_PWD,
+        MEMBER_STATUS
+        ) VALUES (
+        SEQ_MNO.NEXTVAL,
+        #{storeNo},
+        #{position},
+        #{memberName},
+        #{phone},
+        #{residentNo},
+        #{memberId},
+        #{memberPwd},
+        'Y'
+        )
+    </insert>
     <select id="idCheck" resultType="_int">
         SELECT COUNT(*)
         FROM MEMBER

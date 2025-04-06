@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <!DOCTYPE html>
     <html lang="ko">
 
@@ -6,6 +7,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>loginForm</title>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <style>
             * {
                 font-family: MalgunGothic, '맑은 고딕', '돋움', Dotum, AppleGothic, Sans-serif, Arial;
@@ -120,7 +123,12 @@
     </head>
 
     <body>
-
+    <c:if test="${ not empty alertMsg}">
+        <script>
+            alert("${alertMsg}");
+        </script>
+        <c:remove var="alertMsg" scope="session"/>
+    </c:if>
     <div id="modalBackground">
         <div id="enrollModal">
             <form action="/insert.me" method="post">
@@ -137,7 +145,7 @@
                         <p>아이디</p>
                         <input type="text" name="memberId">
                         <p>비밀번호</p>
-                        <input type="text" name="memberPwd">
+                        <input type="password" name="memberPwd">
                     </div>
                     <div class="login-1" id="button">
                         <button type="submit" id="button-1">로그인</button>
