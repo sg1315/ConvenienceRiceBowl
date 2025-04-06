@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.mappers;
 
 
 import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -25,5 +26,9 @@ public interface ProductMapper {
 
 
     //지점
-    List<Product> orderReqeustProductList();
+
+    //발주요청 상품 목록
+    ArrayList<Product> orderRequestProductList(RowBounds rowBounds);
+    //발주요청 상품 검색
+    ArrayList<Product> orderRequestProductSearch(String category, String keyword, RowBounds rowBounds);
 }

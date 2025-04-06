@@ -1,5 +1,7 @@
 package com.kh.project.cse.boot.controller;
 
+import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
@@ -9,6 +11,7 @@ import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -94,11 +97,31 @@ public class SpotController {
 
     //발주
     @RequestMapping("/spot_order")
-    public String spot_order(Model model) {
-        List<Product> plist = spotService.orderReqeustProductList();
-        System.out.println(plist);
+    public String spot_order(@RequestParam(defaultValue = "1") int cpage,Model model) {
+
+        int listCount = spotService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount, cpage, 5, 10);
+
+        List<Category> clist = spotService.orderRequestCategoryList();
+        ArrayList<Product> plist = spotService.orderRequestProductList(pi);
+
+        model.addAttribute("pi", pi);
+
+        model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
         return "spot/spotOrder";
+    }
+    @GetMapping("/spot_order/productSearch")
+    @ResponseBody
+    public ArrayList<Product> productSearch(@RequestParam(defaultValue = "1") int cpage, @RequestParam("category") String category, @RequestParam("keyword") String keyword, Model model) {
+        int listCount = spotService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount, cpage, 5, 10);
+
+        ArrayList<Product> slist = spotService.orderRequestProductSearch(category, keyword, pi);
+
+        model.addAttribute("slist", slist);
+        model.addAttribute("pi", pi);
+        return slist;
     }
 
 

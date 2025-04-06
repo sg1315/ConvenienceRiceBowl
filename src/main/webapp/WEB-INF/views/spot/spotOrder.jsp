@@ -255,6 +255,10 @@
             display: flex;
             justify-content: space-around;
         }
+        #order-request-category-select{
+            width: 100%;
+            text-align: center;
+        }
         #category-select{
             width: 30%;
         }
@@ -453,17 +457,19 @@
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <form id="search-box">
+                            <form id="search-box" action="orderProductSearch" method="get">
                                 <div id="category-select">
-                                    <select class="selectbox">
-                                        <option>카테고리</option>
-                                        <option>스낵</option>
-                                        <option>음료</option>
-                                        <option>기타</option>
+                                    <select class="selectbox" id="order-request-category-select" name="category">
+                                        <option value="all">카테고리</option>
+                                        <c:forEach var="c" items="${clist}">
+                                            <option value="${c.categoryName}">
+                                                <td>${c.categoryName}</td>
+                                            </option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div id="search-content">
-                                    <input class="search-input" type="text" placeholder="상품명 or 상품번호" id="product-search" />
+                                    <input class="search-input" type="text" placeholder="상품명 or 상품번호" id="product-search" name="keyword" />
                                     <input class="search-input-submit" type="submit" value="검색" />
                                 </div>
                             </form>
@@ -480,12 +486,6 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>P12334</td>
-                                <td>스낵</td>
-                                <td>홈런볼</td>
-                                <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                            </tr>
                             <c:forEach var="p" items="${plist}">
                                 <tr>
                                     <td>${p.productNo}</td>
@@ -500,11 +500,9 @@
 
                     <div id="modal-pageing-left">
                         <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
+                        <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }">
+                            <button type="button" class="btn btn-outline-secondary page-btn" data-page="${i}">${i}</button>
+                        </c:forEach>
                         <img src="/resources/common/공통_페이징바화살표.png">
                     </div>
                 </div>
@@ -667,5 +665,8 @@
         });
     });
 </script>
+
+<!-- spotOrder.jsp -->
+<script src="/resources/js/spotOrder.js"></script>
 </body>
 </html>
