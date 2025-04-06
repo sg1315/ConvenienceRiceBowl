@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 public interface StoreMapper {
     int insertStore(@Param("storeName") String storeName);
 
-    int checkStore(@Param("checkStore") String checkStore);
+    int checkStoreName(@Param("checkStore") String checkStore);
 
     int checkStoreStatus(@Param("storeNo") int storeNo);
+
+    int checkStore(@Param("checkStore")String checkStore);
 }

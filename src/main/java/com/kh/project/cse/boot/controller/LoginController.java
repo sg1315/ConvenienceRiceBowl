@@ -86,13 +86,12 @@ public class LoginController {
             mv.setViewName("login/loginForm");
         }
 
-
         String position = member.getPosition();
         String storeName = member.getStoreName();
 
         int result = 0;
 
-        if( position.equals("2")){
+        if(position.equals("2")){
             result = memberService.insertStore(storeName);
             if(result > 0){
                 result = memberService.insertMember(member);
@@ -100,6 +99,8 @@ public class LoginController {
                 mv.addObject("alertMsg","지점 생성 오류가 발생하였습니다.");
                 mv.setViewName("login/loginForm");
             }
+        } else {
+
         }
 
         //메세지 구현해야됨!

@@ -34,11 +34,16 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int checkStoreName(String checkStore) {
-        return storeMapper.checkStore(checkStore);
+        return storeMapper.checkStoreName(checkStore);
     }
 
     @Override
     public int checkStoreStatus(int storeNo) {
         return storeMapper.checkStoreStatus(storeNo);
+    }
+
+    @Override
+    public int checkStore(String checkStore) {
+        return storeMapper.checkStore(checkStore);
     }
 }
