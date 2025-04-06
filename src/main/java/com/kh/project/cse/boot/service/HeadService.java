@@ -28,6 +28,28 @@ public interface HeadService {
     //카테고리목록
     List<Category> selectAllCategories();
     //상품수정
+    //상품전체목록수
+    int ProductListCount();
+
+
+
+
+
+
+    //공지사항추가
+    int insertAnnouncement(Announcement announcement);
+
+    //공지사항총수
+    int selectAnnouncementCount();
+
+    //공지사항불러오기
+    ArrayList<Announcement> selectAnnouncementlist(PageInfo pi);
+
+    //공지사항 세부
+    Announcement selectDetailAnnouncement(int announcementNo);
+
+
+
     int updateProduct(Product product);
 
 
@@ -41,4 +63,11 @@ public interface HeadService {
     ArrayList<Store> selectStoreStatus(PageInfo pi);
 
     int updateStoreNo(String[] storeNumbers);
+
+    //발주관리사항 총수
+    int selectcirculation();
+
+    //발주관리사항 불러오기
+    ArrayList<Circulation> selectCirculationlist(PageInfo pi);
+
 }

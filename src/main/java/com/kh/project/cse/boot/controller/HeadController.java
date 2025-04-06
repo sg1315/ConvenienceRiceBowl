@@ -26,7 +26,15 @@ public class HeadController {
     //
     //본사 발주
     @RequestMapping("/head_order")
-    public String home3() {
+    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int circulation = headService.selectcirculation();
+
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 5);
+        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "head_office/headOrder";
     }
     //성진
@@ -56,10 +64,22 @@ public class HeadController {
     }
 
 
+    @ResponseBody
+
+    @GetMapping("/getAnnouncementDetail")
+    public Announcement getAnnouncementDetail(@RequestParam("ano") int ano) {
+        Announcement a = headService.selectDetailAnnouncement(ano);
+        System.out.println("내용asdasadasdadadsad");
+        return a;
+    }
+
+
+
     //상품관리
     @RequestMapping("/head_product")
     public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
         int listCount = headService.ProductListCount();
+
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
         ArrayList<Product> list = headService.selectAllProduct(pi);
@@ -96,6 +116,7 @@ public class HeadController {
         return "head_office/headProduct";
     }
 
+
     @PostMapping("/updateProduct")
     public String updateProduct(Product product, HttpSession session, Model model) {
         System.out.println(product);
@@ -118,7 +139,7 @@ public class HeadController {
         ArrayList<Store> list = headService.selectAllStore(pi);
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
-        
+
         return "head_office/headStore";}
 
 

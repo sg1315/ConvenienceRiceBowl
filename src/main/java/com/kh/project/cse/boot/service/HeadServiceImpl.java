@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.AnnouncementMapper;
+import com.kh.project.cse.boot.mappers.CirculationMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import com.kh.project.cse.boot.mappers.StoreMapper;
 import org.apache.ibatis.session.RowBounds;
@@ -16,14 +17,17 @@ public class HeadServiceImpl implements HeadService {
 
     private final ProductMapper productMapper;
     private final AnnouncementMapper announcementMapper;
+    private final CirculationMapper circulationMapper;
+
     private final StoreMapper storeMapper;
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
         this.storeMapper = storeMapper;
+        this.circulationMapper = circulationMapper;
     }
 
 
@@ -112,5 +116,20 @@ public class HeadServiceImpl implements HeadService {
         return res;
     }
 
+    @Override
+    public Announcement selectDetailAnnouncement(int announcementNo) {
+        System.out.println(announcementMapper.selectDetailAnnouncement(announcementNo));
+        return announcementMapper.selectDetailAnnouncement(announcementNo);
+    }
+
+    @Override
+    public int selectcirculation(){return circulationMapper.selectcirculation();}
+
+    @Override
+    public ArrayList<Circulation> selectCirculationlist(PageInfo pi){
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return circulationMapper.selectCirculationlist(rowBounds);
+    }
 
 }
