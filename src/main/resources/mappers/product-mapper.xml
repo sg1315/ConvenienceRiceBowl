@@ -99,8 +99,6 @@
         INPUT_PRICE = #{inputPrice},
         SALE_PRICE = #{salePrice},
         AVAILABILITY = #{availability}
-
-
         WHERE PRODUCT_NO = #{productNo}
     </update>
 

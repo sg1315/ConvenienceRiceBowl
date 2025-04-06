@@ -9,6 +9,9 @@
         <result column="STORE_NAME" property="storeName"/>
         <result column="STORE_DATE" property="storeDate"/>
         <result column="STORE_STATUS" property="storeStatus"/>
+
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="COUNT" property="count"/>
     </resultMap>
 
     <insert id="insertStore">
@@ -20,4 +23,69 @@
         #{storeName}
         )
     </insert>
+
+    <select id="storeListCount" resultType="_int">
+        SELECT
+        COUNT(*) AS COUNT
+        FROM STORE
+    </select>
+
+    <select id="selectAllStore" resultMap="storeResult">
+        SELECT
+        STORE_NO,
+        STORE_NAME,
+        STORE_DATE,
+        STORE_STATUS,
+        MEMBER_NAME
+        FROM STORE
+        JOIN MEMBER USING (store_No)
+        ORDER BY STORE_STATUS DESC
+    </select>
+
+    <select id="searchStore" resultMap="storeResult">
+        SELECT
+        STORE_NO,
+        STORE_NAME,
+        STORE_DATE,
+        STORE_STATUS,
+        MEMBER_NAME
+        FROM STORE
+        JOIN MEMBER USING (store_No)
+        WHERE
+        <choose>
+            <when test="condition == 'storeNo'">
+                STORE_NO
+            </when>
+            <when test="condition == 'storeName'">
+                STORE_NAME
+            </when>
+            <otherwise>
+                MEMBER_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        ORDER BY STORE_NO DESC
+
+    </select>
+<select id="selectStoreStatus" resultMap="storeResult">
+    SELECT
+    STORE_NO,
+    STORE_NAME,
+    TO_CHAR(STORE_DATE,'YYYY-MM-DD') AS STORE_DATE,
+    STORE_STATUS,
+    MEMBER_NAME
+    FROM STORE
+    JOIN MEMBER USING (store_No)
+    WHERE
+    STORE_STATUS = 2
+    ORDER BY STORE_DATE DESC
+</select>
+
+    <update id="updateStoreNo">
+        UPDATE STORE
+        SET
+        STORE_STATUS = 1
+        WHERE STORE_NO = #{storeNo}
+    </update>
+
 </mapper>
