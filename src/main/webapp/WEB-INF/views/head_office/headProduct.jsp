@@ -593,11 +593,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
           getCategory(function (list){
             var addselect = document.getElementById('select-add-modal');
-            // addselect.setAttribute("name", "categoryNo");
+            addselect.setAttribute("name", "categoryNo");
             addselect.innerHTML = '<option value="" name="" >카테고리</option>'; 
-
               for(var category of list){
-
                   var option = document.createElement('option');
                   option.value = category.categoryNo;
                   option.textContent = category.categoryName;
@@ -607,7 +605,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               }
 
               var modifyselect = document.getElementById('select-modify-modal');
-              addselect.setAttribute("name", "categoryNo");
+              modifyselect.setAttribute("name", "categoryNo");
               modifyselect.innerHTML = '<option value="">카테고리</option>';
               for(var category of list){
 

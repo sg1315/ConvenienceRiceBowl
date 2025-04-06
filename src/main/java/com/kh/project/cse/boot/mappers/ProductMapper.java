@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProductMapper {
     int insertProduct(Product product);
 
-    ArrayList<Product> searchProduct(String condition, String keyword);
+    ArrayList<Product> searchProduct(String condition, String keyword, RowBounds rowBounds);
 
     ArrayList<Product> selectAllProduct(RowBounds rowBounds);
 

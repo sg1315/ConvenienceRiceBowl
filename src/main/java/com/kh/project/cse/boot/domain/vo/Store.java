@@ -14,5 +14,6 @@ public class Store {
     private String storeName;
     private Date storeDate;
     private int storeStatus;
-
+    private int count;
+    private String memberName;
 }

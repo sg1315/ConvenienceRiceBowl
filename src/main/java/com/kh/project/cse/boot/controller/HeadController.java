@@ -24,7 +24,7 @@ public class HeadController {
 
 
     //
-    //본사 주문
+    //본사 발주
     @RequestMapping("/head_order")
     public String home3() {
         return "head_office/headOrder";
@@ -56,16 +56,10 @@ public class HeadController {
     }
 
 
-
-
-
-
-
-    
+    //상품관리
     @RequestMapping("/head_product")
     public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
         int listCount = headService.ProductListCount();
-
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
         ArrayList<Product> list = headService.selectAllProduct(pi);
@@ -83,7 +77,7 @@ public class HeadController {
         int cpage = 1;
 
         if (result >= 1){
-            return head_product(1, model);
+            return head_product(cpage, model);
         }
 
         return "head_office/headProduct";
@@ -91,13 +85,16 @@ public class HeadController {
 
     @PostMapping("/searchProduct")
     public String searchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
+        int listCount = headService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
-        ArrayList<Product> list = headService.searchProduct(condition, keyword);
+        ArrayList<Product> list = headService.searchProduct(condition, keyword, pi);
+
+
         model.addAttribute("list",list);
-
+        model.addAttribute("pi", pi);
         return "head_office/headProduct";
     }
-
 
     @PostMapping("/updateProduct")
     public String updateProduct(Product product, HttpSession session, Model model) {
@@ -113,8 +110,32 @@ public class HeadController {
     }
 
     @RequestMapping("/head_store")
-    public String head_store() { return "head_office/headStore";}
+    public String head_store(@RequestParam(defaultValue = "1") int cpage,Model model) {
+        int listCount = headService.storeListCount();
 
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Store> list = headService.selectAllStore(pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+        
+        return "head_office/headStore";}
+
+
+    @PostMapping("/searchStore")
+    public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model){
+
+        int listCount = headService.storeListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Store> list = headService.searchStore(condition, keyword, pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "head_office/headStore";
+
+    }
     @RequestMapping("/head_member")
     public String head_member() {
         return "head_office/headMember";
@@ -156,6 +177,7 @@ public class HeadController {
             return "업데이트 실패";
         }
     }
+
 
 
 
