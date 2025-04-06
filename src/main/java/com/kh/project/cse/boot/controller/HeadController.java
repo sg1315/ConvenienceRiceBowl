@@ -26,7 +26,15 @@ public class HeadController {
     //
     //본사 주문
     @RequestMapping("/head_order")
-    public String home3() {
+    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int circulation = headService.selectcirculation();
+
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 5);
+        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "head_office/headOrder";
     }
     //성진
@@ -56,9 +64,14 @@ public class HeadController {
     }
 
 
+    @ResponseBody
 
-
-
+    @GetMapping("/getAnnouncementDetail")
+    public Announcement getAnnouncementDetail(@RequestParam("ano") int ano) {
+        Announcement a = headService.selectDetailAnnouncement(ano);
+        System.out.println("내용asdasadasdadadsad");
+        return a;
+    }
 
 
     

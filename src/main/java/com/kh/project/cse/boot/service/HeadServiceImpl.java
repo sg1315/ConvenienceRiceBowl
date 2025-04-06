@@ -1,10 +1,8 @@
 package com.kh.project.cse.boot.service;
 
-import com.kh.project.cse.boot.domain.vo.Announcement;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.AnnouncementMapper;
+import com.kh.project.cse.boot.mappers.CirculationMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +16,15 @@ public class HeadServiceImpl implements HeadService {
 
     private final ProductMapper productMapper;
     private final AnnouncementMapper announcementMapper;
+    private final CirculationMapper circulationMapper;
 
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, CirculationMapper circulationMapper) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
+        this.circulationMapper = circulationMapper;
     }
 
 
@@ -75,5 +75,20 @@ public class HeadServiceImpl implements HeadService {
         return announcementMapper.insertAnnouncement(announcement);
     }
 
+    @Override
+    public Announcement selectDetailAnnouncement(int announcementNo) {
+        System.out.println(announcementMapper.selectDetailAnnouncement(announcementNo));
+        return announcementMapper.selectDetailAnnouncement(announcementNo);
+    }
+
+    @Override
+    public int selectcirculation(){return circulationMapper.selectcirculation();}
+
+    @Override
+    public ArrayList<Circulation> selectCirculationlist(PageInfo pi){
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return circulationMapper.selectCirculationlist(rowBounds);
+    }
 
 }

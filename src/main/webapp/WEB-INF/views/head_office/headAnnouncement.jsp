@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -395,26 +396,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>집에가고싶어요</td>
-                <td>강남점</td>
-                <td>240</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>안돼 못가</td>
-                <td>강남점</td>
-                <td>240</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>넌 남아서 해야지 어딜 도망갈려고</td>
-                <td>강남점</td>
-                <td>240</td>
-            </tr>
             <c:forEach var="A" items="${list}">
-                <tr onclick = "location.href = 'detail.bo?bno=${A.announcementNo}'">
+                <tr data-ano="${A.announcementNo}">
                     <td>${A.announcementNo}</td>
                     <td>${A.announcementDetail}</td>
                     <td>${A.storeName}</td>
@@ -482,7 +465,7 @@
             <div class="modal-content">
                 <div class="detail-modal-header">
                     <div id="detail-modal-header">
-                        <p>2025-03-20/09:21:08</p>
+                        <p id="detail-modal-date"></p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                                 id="detail-btn-close-modal">
                             <img src="/resources/common/공통_Icon.png" id="detail-x_img">
@@ -492,14 +475,14 @@
 
                 <div class="modal-body" id="detail-modal-body">
                     <div id="detail-modal-body-top">
-                        <p>3월28일 업데이트</p>
+                        <p id="detail-modal-title"></p>
                         <div>
                             <button class="black-btn">수정</button>
                             <button class="red-btn">삭제</button>
                         </div>
                     </div>
                     <div>
-                        <p>업데이트 내용이다 다들 확인해라 안했으면 큰일난다잉</p>
+                        <p id="detail-modal-detail"></p>
                     </div>
                 </div>
                 <div id="comment-btn">
@@ -583,31 +566,42 @@
         </div>
     </div>
 
-    <script>
-
-        // 테이블의 모든 행에 클릭 이벤트 추가
-        document.querySelectorAll('#table1 tbody tr').forEach(row => {
-            row.addEventListener('click', function () {
-                // 모달을 띄우기 위한 코드
-                var myModal = new bootstrap.Modal(document.getElementById('detail-staticBackdrop'));
-                myModal.show(); // 모달 열기
-            });
-        });
-
-        document.querySelectorAll('#detail-modal-body button').forEach(button => {
-            if (button.textContent === '수정') {
-                button.addEventListener('click', function () {
-                    // 기존 모달을 숨기기
-                    var myDetailModal = bootstrap.Modal.getInstance(document.getElementById('detail-staticBackdrop'));
-                    myDetailModal.hide(); // 기존 모달 숨기기
-
-                    // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
-                    var newModal = new bootstrap.Modal(document.getElementById('modify-staticBackdrop'));
-                    newModal.show(); // 새로운 모달 열기
-                });
-            }
-        });
-    </script>
 </div>
+<script>
+    // 테이블의 모든 행에 클릭 이벤트 추가
+    document.querySelectorAll('#table1 tbody tr').forEach(row => {
+        row.addEventListener('click', function () {
+            const ano = this.getAttribute('data-ano');
+
+            fetch(`/getAnnouncementDetail?ano=`+ ano)
+                .then(response => response.json())
+                .then(data => {
+                    // 데이터를 모달에 뿌리기
+                    document.querySelector("#detail-modal-date").textContent = data.announcementDate;
+                    document.querySelector('#detail-modal-title').textContent = data.announcementTitle;
+                    document.querySelector('#detail-modal-detail').textContent = data.announcementDetail;
+
+                    // 모달 띄우기
+                    const myModal = new bootstrap.Modal(document.getElementById('detail-staticBackdrop'));
+                    myModal.show();})
+
+        });
+    });
+
+
+    document.querySelectorAll('#detail-modal-body button').forEach(button => {
+        if (button.textContent === '수정') {
+            button.addEventListener('click', function () {
+                // 기존 모달을 숨기기
+                var myDetailModal = bootstrap.Modal.getInstance(document.getElementById('detail-staticBackdrop'));
+                myDetailModal.hide(); // 기존 모달 숨기기
+
+                // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
+                var newModal = new bootstrap.Modal(document.getElementById('modify-staticBackdrop'));
+                newModal.show(); // 새로운 모달 열기
+            });
+        }
+    });
+</script>
 </body>
 </html>

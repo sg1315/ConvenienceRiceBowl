@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -201,41 +200,42 @@
         </div>
         <div id ="table-manu">
             <table id="table1">
+                <colgroup>
+                    <col style="width: 17%;">
+                    <col style="width: 17%;">
+                    <col style="width: 17%;">
+                    <col style="width: 17%;">
+                    <col style="width: 17%;">
+                    <col style="width: 17%;">
+                </colgroup>
                 <thead>
                     <tr>
-                        <th colspan="2">발주 일자</th>
-                        <th colspan="2">발주 번호</th>
-                        <th colspan="2">지점명</th>
-                        <th colspan="2">수량</th>
-                        <th colspan="2">금액</th>
-                        <th colspan="2">상태</th>
+                        <th>발주 일자</th>
+                        <th>발주 번호</th>
+                        <th>지점명</th>
+                        <th>수량</th>
+                        <th>금액</th>
+                        <th>상태</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="2">25-12-08</td>
-                        <td colspan="2">1234</td>
-                        <td colspan="2">강남점</td>
-                        <td colspan="2">240</td>
-                        <td colspan="2">1,902,000</td>
-                        <td colspan="2">발주완료</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">25-12-08</td>
-                        <td colspan="2">1234</td>
-                        <td colspan="2">강남점</td>
-                        <td colspan="2">240</td>
-                        <td colspan="2">1,902,000</td>
-                        <td colspan="2">대기</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">25-12-08</td>
-                        <td colspan="2">1234</td>
-                        <td colspan="2">강남점</td>
-                        <td colspan="2">240</td>
-                        <td colspan="2">1,902,000</td>
-                        <td colspan="2">대기</td>
-                    </tr>
+                    <c:forEach var="C" items="${list}">
+                        <tr>
+                            <td>${C.circulateionDate}</td>
+                            <td>${C.circulateionNo}</td>
+                            <td>${C.storeName}</td>
+                            <td>${C.circulateionAmount}</td>
+                            <td>${C.salePrice}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${C.status == 1}">대기</c:when>
+                                    <c:when test="${C.status == 5}">승인</c:when>
+                                    <c:when test="${C.status == 6}">거절</c:when>
+                                    <c:when test="${C.status == 7}">발주완료</c:when>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>

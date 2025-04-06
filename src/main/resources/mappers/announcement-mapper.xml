@@ -43,8 +43,18 @@
         SEQ_ATNO.NEXTVAL,
         #{announcementTitle},
         #{announcementDetail},
-        10005,
+        0,
         1
         )
     </insert>
+
+    <select id="selectDetailAnnouncement" resultMap="anoucementResult">
+        SELECT TO_CHAR(ANNOUNCEMENT_DATE, 'YYYY-MM-DD') AS ANNOUNCEMENT_DATE,
+        ANNOUNCEMENT_TITLE,
+        ANNOUNCEMENT_DETAIL
+        FROM ANNOUNCEMENT A
+        WHERE ANNOUNCEMENT_STATUS = 1
+        AND ANNOUNCEMENT_NO = #{ano}
+    </select>
+
 </mapper>

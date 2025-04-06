@@ -1,9 +1,6 @@
 package com.kh.project.cse.boot.service;
 
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.Announcement;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.domain.vo.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +32,17 @@ public interface HeadService {
     //공지사항불러오기
     ArrayList<Announcement> selectAnnouncementlist(PageInfo pi);
 
+    //공지사항 세부
+    Announcement selectDetailAnnouncement(int announcementNo);
+
+
 
     int updateProduct(Product product);
+
+    //발주관리사항 총수
+    int selectcirculation();
+
+    //발주관리사항 불러오기
+    ArrayList<Circulation> selectCirculationlist(PageInfo pi);
+
 }

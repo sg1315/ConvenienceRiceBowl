@@ -4,7 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.CirculationMapper">
     <resultMap id="circulationResult" type="Circulation">
-        <result column="CIRCULATION" property="irculateionNo"/>
+        <result column="CIRCULATION_NO" property="circulateionNo"/>
         <result column="STORE_NO" property="storeNo"/>
         <result column="PRODUCT_NO" property="productNo"/>
         <result column="INPUT_PRICE" property="inputPrice"/>
@@ -12,5 +12,30 @@
         <result column="CIRCULATION_AMOUNT" property="circulateionAmount"/>
         <result column="CIRCULATION_DATE" property="circulateionDate"/>
         <result column="STATUS" property="status"/>
+        <result column="STORE_NAME" property="storeName"/>
     </resultMap>
+
+    <select id="selectcirculation" resultType="_int">
+        SELECT COUNT(*)
+        FROM CIRCULATION
+        WHERE STATUS IN (1, 5, 6, 7)
+    </select>
+
+    <select id="selectCirculationlist" resultMap="circulationResult">
+        SELECT
+        C.CIRCULATION_DATE,
+        S.STORE_NAME,
+        SUM(C.CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+        SUM(C.SALE_PRICE) AS TOTAL_SALE_PRICE,
+        C.STATUS
+        FROM CIRCULATION C
+        LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
+        GROUP BY
+        C.CIRCULATION_DATE,
+        S.STORE_NAME,
+        C.STATUS
+        ORDER BY
+        C.CIRCULATION_DATE DESC
+    </select>
+
 </mapper>
