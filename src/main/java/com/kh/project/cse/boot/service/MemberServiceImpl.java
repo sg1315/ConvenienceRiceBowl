@@ -6,6 +6,8 @@ import com.kh.project.cse.boot.mappers.StoreMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -52,4 +54,26 @@ public class MemberServiceImpl implements MemberService {
     public int checkStore(String checkStore) {
         return storeMapper.checkStore(checkStore);
     }
+
+    @Override
+    public int updateMember(Member member) {
+        return memberMapper.updateMember(member);
+    }
+    
+    @Override
+    public Member selectMemberById(String memberId) {
+        return memberMapper.selectMemberById(memberId);
+    }
+
+    @Override
+    public int updateMemberStatus(Member member) {
+        return memberMapper.updateMemberStatus(member);
+    }
+
+    @Override
+    public List<Member> selectMemberList() {
+        return memberMapper.selectMemberList();
+    }
+
+
 }

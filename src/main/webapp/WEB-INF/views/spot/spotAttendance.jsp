@@ -205,16 +205,31 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     </thead>
 
                     <tbody >
-                    <tr>
-                        <td>알바</td>
-                        <td>abc</td>
-                        <td>이인혜</td>
-                        <td>010-1111-2222</td>
-                        <td>Y</td>
-                        <td>2025-03-03 10:00:00</td>
-                        <td>~</td>
-                        <td>2025-03-03 18:00:00</td>
-                    </tr>
+                    <c:forEach var="attendance" items="${attendanceList}">
+                        <tr data-residentno="${attendance.member.residentNo}">
+                            <td>
+                                <c:choose>
+                                    <c:when test="${attendance.member.position == '1'}">본사</c:when>
+                                    <c:when test="${attendance.member.position == '2'}">지점장</c:when>
+                                    <c:when test="${attendance.member.position == '3'}">매니저</c:when>
+                                    <c:when test="${attendance.member.position == '4'}">알바</c:when>
+                                    <c:otherwise>없음</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${attendance.member.memberId}</td>
+                            <td>${attendance.member.memberName}</td>
+                            <td>${attendance.member.phone}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${attendance.member.status == 'Y'}">재직</c:when>
+                                    <c:when test="${attendance.member.status == 'N'}">퇴직</c:when>
+                                    <c:otherwise>없음</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${attendance.workingTime}</td>
+                            <td>${attendance.workoutTime}</td>
+                        </tr>
+                    </c:forEach>
 
                     </tbody>
                 </table>
@@ -243,7 +258,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         crossorigin="anonymous"
       ></script>
 
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"                   tabindex="-1"aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -264,47 +279,29 @@ contentType="text/html;charset=UTF-8" language="java" %>
                                 </p>
                                 <p>
                                     <strong>아이디</strong><br />
-                                    <input
-                                    type="text"
-                                    id="modal-id"
-                                    class="search-input-gray"
-                                    readonly
-                                    />
+                                    <input type="text" id="modal-id" class="search-input-gray" readonly/>
                                 </p>
                                 <p>
                                     <strong>이름</strong> <br />
-                                    <input
-                                    type="text"
-                                    id="modal-name"
-                                    class="search-input-gray"
-                                    readonly
-                                    />
+                                    <input type="text" id="modal-name" class="search-input-gray" readonly/>
                                 </p>
 
                                 <p>
                                     <strong>출근시간</strong><br />
-                                    <input
-                                    type="datetime-local"
-                                    id="modal-working_time"
-                                    class="search-input-gray"
-                                    />
+                                    <input type="datetime-local" id="modal-working_time" class="search-input-gray"/>
                                 </p>
                                 <p>
                                     <strong>퇴근시간</strong><br />
-                                    <input
-                                    type="datetime-local"
-                                    id="modal-workout_time"
-                                    class="search-input-gray"
-                                    />
+                                    <input type="datetime-local" id="modal-workout_time" class="search-input-gray"/>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer" id="footer">
-                        <button type="button" class="gray-btn" id="footer-btn">
+                        <button type="button" class="gray-btn" id="footer-btn-edit">
                             수정
                         </button>
-                        <button type="button" class="gray-btn" id="footer-btn">
+                        <button type="button" class="gray-btn" id="footer-btn-delete">
                             삭제
                         </button>
                     </div>
@@ -344,18 +341,26 @@ contentType="text/html;charset=UTF-8" language="java" %>
         });
 
         function changebtn(this_btn) {
+            const now = new Date();
 
+            const kstOffset = 9 * 60 * 60 * 1000; // 9시간 → 밀리초
+            const kstTime = new Date(now.getTime() + kstOffset);
 
+            const updateTime = kstTime.toISOString().slice(0,16);
 
             if (this_btn.classList.contains('gowork-btn')) {
-              this_btn.innerText = '퇴근';
-              this_btn.classList.remove('gowork-btn');
-              this_btn.classList.add('gohome-btn');
+
+                document.getElementById("modal-working_time").value = updateTime;
+                    this_btn.innerText = '퇴근';
+                    this_btn.classList.remove('gowork-btn');
+                    this_btn.classList.add('gohome-btn');
             } else {
-              this_btn.innerText = '출근';
-              this_btn.classList.remove('gohome-btn');
-              this_btn.classList.add('gowork-btn');
+                document.getElementById("modal-workout_time").value = updateTime;
+                    this_btn.innerText = '출근';
+                    this_btn.classList.remove('gohome-btn');
+                    this_btn.classList.add('gowork-btn');
             }
+
 
           // var today = new Date();
           // var year = today.getFullYear();

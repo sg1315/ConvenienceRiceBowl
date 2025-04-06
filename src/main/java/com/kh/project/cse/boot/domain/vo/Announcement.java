@@ -20,4 +20,7 @@ public class Announcement {
 
     private String storeName;
 
+
+
+
 }

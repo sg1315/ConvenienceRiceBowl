@@ -1,15 +1,13 @@
 package com.kh.project.cse.boot.controller;
 
 
-import com.kh.project.cse.boot.domain.vo.Announcement;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,15 +22,19 @@ public class HeadController {
     private final HeadService headService;
     private final MemberService memberService;
 
-    //성진 본사-로그인
-    @RequestMapping("/head_member")
-    public String head_member() {
-        return "head_office/headMember";
-    }
+
     //
-    //본사 주문
+    //본사 발주
     @RequestMapping("/head_order")
-    public String home3() {
+    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int circulation = headService.selectcirculation();
+
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 5);
+        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "head_office/headOrder";
     }
     //성진
@@ -51,43 +53,6 @@ public class HeadController {
         model.addAttribute("pi", pi);
         return "head_office/headAnnouncement";
     }
-    //성진
-
-
-
-    //성진 본사-지점관리
-    @RequestMapping("/head_store")
-    public String head_store() { return "head_office/headStore";}
-    //
-
-    @RequestMapping("/head_product")
-    public String head_product(Model model) {
-
-        ArrayList<Product> list = headService.selectAllProduct();
-        model.addAttribute("list",list);
-
-        return "head_office/headProduct";
-    }
-
-    //상품추가
-    @PostMapping("/insertProduct.he")
-    public String insertProduct(Product product, HttpSession session) {
-
-        int result = headService.insertProduct(product);
-
-        return "head_office/headProduct";
-    }
-
-    @PostMapping("/searchProduct")
-    public String searchProduct(@RequestParam String condition, @RequestParam String keyword, Model model) {
-        ArrayList<Product> list = headService.searchProduct(condition, keyword);
-        model.addAttribute("list",list);
-
-        return "head_office/headProduct";
-    }
-
-
-    //
 
     //공지사항추가
     @PostMapping("/insertAnnouncement.he")
@@ -97,7 +62,144 @@ public class HeadController {
 
         return "head_office/headAnnouncement";
     }
-    //
+
+
+    @ResponseBody
+
+    @GetMapping("/getAnnouncementDetail")
+    public Announcement getAnnouncementDetail(@RequestParam("ano") int ano) {
+        Announcement a = headService.selectDetailAnnouncement(ano);
+        System.out.println("내용asdasadasdadadsad");
+        return a;
+    }
+
+
+
+    //상품관리
+    @RequestMapping("/head_product")
+    public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
+        int listCount = headService.ProductListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Product> list = headService.selectAllProduct(pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+        return "head_office/headProduct";
+    }
+
+    //상품추가
+    @PostMapping("/insertProduct.he")
+    public String insertProduct(Product product, HttpSession session, Model model) {
+
+        System.out.println(product);
+        int result = headService.insertProduct(product);
+        int cpage = 1;
+
+        if (result >= 1){
+            return head_product(cpage, model);
+        }
+
+        return "head_office/headProduct";
+    }
+
+    @PostMapping("/searchProduct")
+    public String searchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
+        int listCount = headService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Product> list = headService.searchProduct(condition, keyword, pi);
+
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+        return "head_office/headProduct";
+    }
+
+
+    @PostMapping("/updateProduct")
+    public String updateProduct(Product product, HttpSession session, Model model) {
+        System.out.println(product);
+        int result = headService.updateProduct(product);
+        int cpage = 1;
+
+        if (result >= 1){
+            return head_product(1, model);
+        }
+
+        return "head_office/headProduct";
+    }
+
+    @RequestMapping("/head_store")
+    public String head_store(@RequestParam(defaultValue = "1") int cpage,Model model) {
+        int listCount = headService.storeListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Store> list = headService.selectAllStore(pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "head_office/headStore";}
+
+
+    @PostMapping("/searchStore")
+    public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model){
+
+        int listCount = headService.storeListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Store> list = headService.searchStore(condition, keyword, pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "head_office/headStore";
+
+    }
+    @RequestMapping("/head_member")
+    public String head_member() {
+        return "head_office/headMember";
+    }
+
+    //개인정보수정
+    @PostMapping("/updateMemberInfo")
+    @ResponseBody //테스트용(리턴 문자열 그대로 출력)
+    public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
+                               Member member, HttpSession session, Model model) {
+
+        Member loginMember = (Member) session.getAttribute("loginUser");
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        String encodedPwd = passwordEncoder.encode(newPwd);
+//        member.setMemberPwd(encodedPwd);
+
+        if (loginMember == null) return "로그인 정보 없음";
+
+        member.setMemberPwd(member.getMemberPwd());
+
+        if (newPwd != null && !newPwd.trim().isEmpty()) {
+            member.setMemberPwd(passwordEncoder.encode(newPwd));
+        } else {
+            member.setMemberPwd(null); // 비밀번호 변경 안 함
+        }
+
+        member.setMemberId(loginMember.getMemberId());
+        member.setMemberNo(loginMember.getMemberNo());
+
+        int result = memberService.updateMember(member);
+        System.out.println("result = " + result);
+
+        if (result > 0) {
+            Member updatedMember = memberService.selectMemberById(member.getMemberId());
+            session.setAttribute("loginUser", updatedMember);
+            return "업데이트 성공";
+        } else {
+            return "업데이트 실패";
+        }
+    }
+
+
 
 
 }

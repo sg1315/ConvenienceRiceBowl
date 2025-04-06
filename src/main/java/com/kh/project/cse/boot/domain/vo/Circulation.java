@@ -19,4 +19,7 @@ public class Circulation {
     private int circulateionAmount;
     private Date circulateionDate;
     private int status;
+
+
+    private String storeName;
 }

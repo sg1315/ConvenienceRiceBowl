@@ -10,14 +10,34 @@
     <result column="INPUT_PRICE" property="inputPrice"/>
     <result column="SALE_PRICE" property="salePrice"/>
     <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
-    <result column="AVAILABILITY" property="availavility"/>
+    <result column="AVAILABILITY" property="availability"/>
+
     <result column="CATEGORY_NAME" property="categoryName"/>
+    <result column="COUNT" property="count"/>
     </resultMap>
     <resultMap id="categoryResult" type="Category">
         <result column="CATEGORY_NO" property="categoryNo"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="EXPIRATION_DATE" property="expirationDate"/>
     </resultMap>
+
+
+    <insert id="insertProduct">
+        INSERT INTO PRODUCT(
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE
+
+        ) VALUES (
+        SEQ_PRNO.NEXTVAL,
+        #{categoryNo},
+        #{productName},
+        #{inputPrice},
+        #{salePrice}
+        )
+    </insert>
 
     <select id="selectAllProduct" resultMap="headProductResult">
         SELECT
@@ -30,26 +50,9 @@
         AVAILABILITY
         FROM PRODUCT
         JOIN CATEGORY USING(CATEGORY_NO)
+        ORDER BY PRODUCT_NO DESC
 
     </select>
-
-    <insert id="insertProduct">
-        INSERT INTO PRODUCT(
-        PRODUCT_NO,
-        CATEGORY_NO,
-        PRODUCT_NAME,
-        INPUT_PRICE,
-        SALE_PRICE
-        ) VALUES (
-        SEQ_PRNO.NEXTVAL,
-        #{categoryNo},
-        #{productName},
-        #{inputPrice},
-        #{salePrice}
-        )
-    </insert>
-
-
     <select id="searchProduct" resultMap="headProductResult">
         SELECT
         PRODUCT_NO,
@@ -72,6 +75,7 @@
             </otherwise>
         </choose>
         LIKE '%${keyword}%'
+        ORDER BY PRODUCT_NO DESC
     </select>
 
     <select id="selectAllCategories" resultMap="categoryResult">
@@ -81,4 +85,23 @@
         EXPIRATION_DATE
         FROM CATEGORY
     </select>
+
+    <select id="ProductListCount" resultType="_int">
+        SELECT COUNT(*) AS COUNT
+        FROM PRODUCT
+    </select>
+
+    <update id="updateProduct" >
+        UPDATE PRODUCT
+        SET
+        CATEGORY_NO = #{categoryNo},
+        PRODUCT_NAME= #{productName},
+        INPUT_PRICE = #{inputPrice},
+        SALE_PRICE = #{salePrice},
+        AVAILABILITY = #{availability}
+        WHERE PRODUCT_NO = #{productNo}
+    </update>
+
+
+
 </mapper>
