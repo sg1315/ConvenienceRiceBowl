@@ -124,8 +124,8 @@
                 <div>
                     <div><p>아이디</p></div>
                     <div class="flexInput-1">
-                        <input type="text" name="memberId" required>
-                        <button>중복확인</button>
+                        <input type="text" id="memberId" name="memberId" required>
+                        <button type="button" onclick="checkId()">중복확인</button>
                     </div>
                     <div></div>
                     <div><p>이름</p></div>
@@ -152,40 +152,65 @@
                 <div id="checkResult"></div>
             </div>
             <div class="enrollForm-1" id="enrollButton">
-                <button type="submit">회원가입</button>
+                <button type="submit" disabled>회원가입</button>
                 <button type="reset" onclick="closeEnrollModal()">취소</button>
             </div>
             <script>
                 function closeEnrollModal() {
                     document.getElementById("modalBackground").style.display = "none";
                 }
+
+                let isUserIdOk = false;
+                let isStoreNameOk = false;
                 function checkStoreName() {
                     const storeName = document.getElementById("storeName").value;
-                    console.log("응답 결과: "+ storeName);
                     $.ajax({
                         url: "/api/store/name",
                         data: {checkStore: storeName},
-                        success: function (res){
-                            console.log("응답 결과: "+ res);
-                            drawCheckText(res);
+                        success: function (isCheck){
+                            const checkResult = document.getElementById("checkResult");
+                            if (isCheck === "NNNNN") {
+                                checkResult.style.color = "red";
+                                checkResult.innerText = "이미 사용중인 지점명입니다.";
+                                isStoreNameOk = false;
+                            } else {
+                                checkResult.style.color = "green";
+                                checkResult.innerText = "사용 가능한 지점명입니다.";
+                                isStoreNameOk = true;
+                            }
+                            toggleSubmitButton();
+                        }, error: function (){
+                            console.log("지점명 중복체크 ajax 실패");
+                        }
+                    })
+                }
+                function checkId() {
+                    const memberId = document.getElementById("memberId").value;
+                    $.ajax({
+                        url: "/api/member/id",
+                        data: {checkId: memberId},
+                        success: function (isCheck){
+                            const checkResult = document.getElementById("checkResult");
+                            if (isCheck === "NNNNN") {
+                                checkResult.style.color = "red";
+                                checkResult.innerText = "이미 사용중인 지점명입니다.";
+                                isUserIdOk = false;
+                            } else {
+                                checkResult.style.color = "green";
+                                checkResult.innerText = "사용 가능한 지점명입니다.";
+                                isUserIdOk = true;
+                            }
+                            toggleSubmitButton();
                         }, error: function (){
                             console.log("아이디 중복체크 ajax 실패");
                         }
                     })
                 }
 
-                function drawCheckText(isCheck) {
+                function toggleSubmitButton(){
                     const submitBtn = document.querySelector("#enrollButton button[type='submit']");
-                    const checkResult = document.getElementById("checkResult");
-                    if (isCheck === "NNNNN") {
-                        checkResult.style.color = "red";
-                        checkResult.innerText = "이미 사용중인 지점명입니다.";
-                        submitBtn.disabled = true;
-                    } else {
-                        checkResult.style.color = "green";
-                        checkResult.innerText = "사용 가능한 지점명입니다.";
-                        submitBtn.disabled = false;
-                    }
+                    submitBtn.disabled = !(isUserIdOk && isStoreNameOk);
+                //  둘다 ture 일때만 원래 값이 반전
                 }
 
             </script>
