@@ -39,21 +39,21 @@ public class LoginController {
             String position = loginMember.getPosition();
             if(position.equals("1")){
                 session.setAttribute("loginUser", loginMember);
-                mv.setViewName("head_office/head_office");
+                mv.setViewName("redirect:/head_office/head_office");
             } else if(position.equals("2")){
                 int storeNo = loginMember.getStoreNo();
                 int result = 0;
                 result = memberService.checkStoreStatus(storeNo);
                 if(result > 0){
                     session.setAttribute("loginUser", loginMember);
-                    mv.setViewName("spot/spotDashboard");
+                    mv.setViewName("redirect:/spot/spotDashboard");
                 } else {
                     mv.addObject("alertMsg", "아직 지점이 승인되지않은 상태입니다.");
                     mv.setViewName("login/loginForm");
                 }
             } else {
                 session.setAttribute("loginUser", loginMember);
-                mv.setViewName("spot/spotDashboard");
+                mv.setViewName("redirect:/spot/spotDashboard");
             }
         }
         return mv;
@@ -108,7 +108,7 @@ public class LoginController {
         //메세지 구현해야됨!
         if(result > 0){
             mv.addObject("alertMsg","성공적으로 회원가입을 완료하였습니다.");
-            mv.setViewName("login/loginForm");
+            mv.setViewName("redirect:/login/loginForm");
         } else{
             mv.addObject("alertMsg","회원가입 실패");
             mv.setViewName("login/loginForm");

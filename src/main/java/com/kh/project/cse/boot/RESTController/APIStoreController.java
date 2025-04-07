@@ -26,20 +26,21 @@ public class APIStoreController {
     @GetMapping("/name")
     public String CheckStore(String checkStore,String position){
         System.out.println("checkStore:"+checkStore);
-
+        int result =0;
+        int storeNo =0;
         if(position.equals("2")){
-            int result = memberService.checkStoreName(checkStore);
+            result = memberService.checkStoreName(checkStore);
             if(result > 0){
                 return "NNNNN";
             } else {
                 return "NNNNY";
             }
         } else {
-            int result = memberService.checkStore(checkStore);
-            if(result > 0){
-                return "NNNYN";
-            } else {
+            storeNo = memberService.checkStore(checkStore);
+            if(storeNo > 0){
                 return "NNNYY";
+            } else {
+                return "NNNYN";
             }
         }
     }

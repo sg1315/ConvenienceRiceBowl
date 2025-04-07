@@ -34,7 +34,7 @@
                 cursor: pointer;
             }
             button:active{
-                margin: 1%;
+                padding: 1%;
                 filter: brightness(85%);
             }
 

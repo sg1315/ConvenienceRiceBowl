@@ -54,9 +54,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int checkStore(String checkStore) {
-        return storeMapper.checkStore(checkStore);
-    }
+    public int checkStore(String checkStore) {return storeMapper.checkStore(checkStore);}
 
     @Override
     public int updateMember(Member member) {
