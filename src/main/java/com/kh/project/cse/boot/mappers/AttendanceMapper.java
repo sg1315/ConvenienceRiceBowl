@@ -11,4 +11,7 @@ public interface AttendanceMapper {
 
     @ResultMap("AttendanceMap")
     List<Attendance> selectInfoList();
+
+
+    int updateWorkTime(Attendance attendance);
 }

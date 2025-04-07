@@ -9,7 +9,12 @@ import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SpotController {
@@ -17,6 +22,7 @@ public class SpotController {
     private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
+    private Member member;
 
     public SpotController(ResourceTransactionManager resourceTransactionManager, MemberService memberService, SpotService spotService) {
         this.resourceTransactionManager = resourceTransactionManager;
@@ -138,5 +144,52 @@ public class SpotController {
 
         return "spot/spotAttendance";
     }
+
+    @PostMapping("/spot_attendance/updateAttendance")
+    @ResponseBody
+    public Map<String, Object> updateAttendanceNow(@RequestBody Map<String,Object> payload) {
+        String memberId = (String) payload.get("memberId");
+        String workingTimeStr = (String) payload.get("workingTime");
+        String workoutTimeStr = (String) payload.get("workoutTime");
+
+        System.out.println("업데이트 요청 받은 memberId: " + memberId);
+        System.out.println("workingTimeStr: " + workingTimeStr);
+        System.out.println("workoutTimeStr: " + workoutTimeStr);
+
+        Date workingTime = null;
+        Date workoutTime = null;
+        try {
+            if (workingTimeStr != null) {
+                workingTime = Date.from(LocalDateTime.parse(workingTimeStr).atZone(ZoneId.systemDefault()).toInstant());
+            }
+            if (workoutTimeStr != null) {
+                workoutTime = Date.from(LocalDateTime.parse(workoutTimeStr).atZone(ZoneId.systemDefault()).toInstant());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Member member = new Member();
+        member.setMemberId(memberId);
+
+        Attendance attendance = new Attendance();
+        attendance.setMember(member);
+        attendance.setWorkingTime(workingTime);
+        attendance.setWorkoutTime(workoutTime);
+
+        int result = spotService.updateWorkTime(attendance);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result > 0 ? "success" : "fail");
+        return response;
+    }
+
+    @PostMapping("/spot_attendance/updateTime")
+    @ResponseBody
+    public String updateTime(){
+        return "11";
+    }
+
+
 
 }

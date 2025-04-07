@@ -108,7 +108,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
         }
 
     .modal-content {
-        height: 80vh;
+        max-height: 50vh;
+        min-height: 40vh;
     }
 
     .modal-header, .modal-footer{
@@ -142,7 +143,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
     }
     #header-title h1{
         font-weight:bold;
-        font-color:white;
     }
     .modal-dialog {
         position: absolute;
@@ -159,6 +159,26 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: #777;
         border: 1px solid #ddd;
     }
+    #footer-btn-edit{
+        width: 60%;
+    }
+      .modal-info-line {
+          display: flex;
+          gap: 12px;
+          align-items: center;
+          margin-bottom: 20px;
+          height: 50px;
+          justify-content: space-between;
+          width: 80%;
+          padding: 20px;
+          font-weight: bold;
+          font-size: 16px;
+      }
+      #modal-div p>input[type='datetime-local']{
+          height: 50px;
+      }
+
+
     </style>
   </head>
   <body>
@@ -171,10 +191,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     <p class="main_name">근태 관리</p>
                 </div>
             </div>
-
             <div id="top-right1">
-                <button class="gowork-btn" onclick="changebtn(this)">출근</button>
-                <button class="gohome-btn" onclick="changebtn(this)" style="display: none"> 퇴근</button>
+                <button class="gowork-btn" onclick="changebtn(this)" data-type="출근">출근</button>
+                <button class="gohome-btn" onclick="changebtn(this)" style="display: none" data-type="퇴근"> 퇴근</button>
             </div>
 
         </div>
@@ -205,9 +224,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     </tr>
                     </thead>
 
-                    <tbody >
+                    <tbody>
                     <c:forEach var="attendance" items="${attendanceList}">
-                        <tr data-residentno="${attendance.member.residentNo}">
+                        <tr data-residentno="${attendance.member.residentNo}" data-member-id="${attendance.member.memberId}">
                             <td>
                                 <c:choose>
                                     <c:when test="${attendance.member.position == '1'}">본사</c:when>
@@ -227,13 +246,18 @@ contentType="text/html;charset=UTF-8" language="java" %>
                                     <c:otherwise>없음</c:otherwise>
                                 </c:choose>
                             </td>
-                            <td>${attendance.workingTime}</td>
-                            <td></td>
-                            <td>${attendance.workoutTime}</td>
+                            <td>
+                                <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm" />
+                                <input type="hidden" class="data-working-time" value="<fmt:formatDate value='${attendance.workingTime}' pattern='yyyy-MM-dd\'T\'HH:mm' />" />
+                            </td>
+                            </td>
+                            <td>~</td>
+                            <td>
+                                <fmt:formatDate value="${attendance.workoutTime}" pattern="yyyy-MM-dd HH:mm" />
+                                <input type="hidden" class="data-workout-time" value="<fmt:formatDate value='${attendance.workoutTime}' pattern='yyyy-MM-dd\'T\'HH:mm' />" />
+                            </td>
                         </tr>
                     </c:forEach>
-
-
                     </tbody>
                 </table>
             </div>
@@ -266,7 +290,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 <div class="modal-content">
                     <div class="modal-header">
                         <div id="header-title">
-                            <h1 class="modal-title fs-5">직원 정보 수정</h1>
+                            <h1 class="modal-title fs-5">근태 정보 수정</h1>
                         </div>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
                             <img src="<c:url value='/resources/common/공통_Icon.png'/>" id="x_img">
@@ -276,18 +300,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
                         <!--모달 내용-->
                         <div id="modal-body-div">
                             <div id="modal-div">
-                                <p>
-                                    <strong>직급</strong> <br />
-                                    <input type="text" id="modal-rank" class="search-input-gray" readonly />
+                                <p class="modal-info-line">
+                                    <span id="modal-rank"></span>&#47;
+                                    <span id="modal-id"></span>&#47;
+                                    <span id="modal-name"></span>
                                 </p>
-                                <p>
-                                    <strong>아이디</strong><br />
-                                    <input type="text" id="modal-id" class="search-input-gray" readonly/>
-                                </p>
-                                <p>
-                                    <strong>이름</strong> <br />
-                                    <input type="text" id="modal-name" class="search-input-gray" readonly/>
-                                </p>
+                                <input type="hidden" id="modal-member_id" />
 
                                 <p>
                                     <strong>출근시간</strong><br />
@@ -304,9 +322,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
                         <button type="button" class="gray-btn" id="footer-btn-edit">
                             수정
                         </button>
-                        <button type="button" class="gray-btn" id="footer-btn-delete">
-                            삭제
-                        </button>
                     </div>
                 </div>
             </div>
@@ -321,51 +336,123 @@ contentType="text/html;charset=UTF-8" language="java" %>
             row.classList.add('table-row');
 
             row.addEventListener('click', function () {
-              const rank = this.children[0].textContent;
-              const id = this.children[1].textContent;
-              const name = this.children[2].textContent;
-              const working_time = this.children[5].innerText;
-              const workout_time = this.children[7].innerText;
+                const rank = this.children[0].innerText;
+                const id = this.children[1].innerText;
+                const name = this.children[2].innerText;
+                const working_time = this.querySelector('.data-working-time').value;
+                const workout_time = this.querySelector('.data-workout-time').value;
 
-              document.getElementById('modal-rank').value = rank;
-              document.getElementById('modal-id').value = id;
-              document.getElementById('modal-name').value = name;
-              document.getElementById('modal-working_time').value =
-                working_time;
-              document.getElementById('modal-workout_time').value =
-                workout_time;
+                document.getElementById('modal-rank').innerText = rank;
+                document.getElementById('modal-id').innerText = id;
+                document.getElementById('modal-name').innerText = name;
 
-              const modal = new bootstrap.Modal(
-                document.getElementById('staticBackdrop')
-              );
-              modal.show();
+                document.getElementById('modal-working_time').value = working_time;
+                document.getElementById('modal-workout_time').value = workout_time;
+
+                document.getElementById('modal-member_id').value = this.dataset.memberId;
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById('staticBackdrop')
+                );
+                modal.show();
             });
           });
         });
 
         function changebtn(this_btn) {
             const now = new Date();
-
-            const kstOffset = 9 * 60 * 60 * 1000; // 9시간 → 밀리초
+            const kstOffset = 9 * 60 * 60 * 1000; // 9시간 오프셋
             const kstTime = new Date(now.getTime() + kstOffset);
+            const updateTime = kstTime.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
 
-            const updateTime = kstTime.toISOString().slice(0,16);
+            const type = this_btn.dataset.type; // "출근" or "퇴근"
+            const workingInput = document.getElementById("modal-working_time");
+            const workoutInput = document.getElementById("modal-workout_time");
+            const memberId = document.getElementById('modal-id').innerText.trim();
 
-            if (this_btn.classList.contains('gowork-btn')) {
+            let timeToSend = '';
+            let url = '';
 
-                document.getElementById("modal-working_time").value = updateTime;
-                    this_btn.innerText = '퇴근';
-                    this_btn.classList.remove('gowork-btn');
-                    this_btn.classList.add('gohome-btn');
+            if (type === '출근') {
+                workingInput.value = updateTime;
+                timeToSend = updateTime;
+                url = '/spot_attendance/updateTime';
+
+                this_btn.style.display = "none";
+                document.querySelector(".gohome-btn").style.display = "inline-block";
             } else {
-                document.getElementById("modal-workout_time").value = updateTime;
-                    this_btn.innerText = '출근';
-                    this_btn.classList.remove('gohome-btn');
-                    this_btn.classList.add('gowork-btn');
+                workoutInput.value = updateTime;
+                timeToSend = updateTime;
+                url = '/spot_attendance/updateTime';
+
+                this_btn.style.display = "none";
+                document.querySelector(".gowork-btn").style.display = "inline-block";
             }
-            
+
+            const data = {
+                memberId: document.getElementById("modal-member_id").value,
+                time: timeToSend
+            };
+            console.log("보내는 데이터 확인:", data);
+
+            fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("서버 오류 발생");
+                    return response.json();
+                })
+                .then(result => {
+                    console.log("서버 응답:", result);
+                    alert(type + " 시간이 저장되었습니다!");
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("시간 저장 중 오류가 발생했어요.");
+                });
         }
-      </script>
+
+        document.getElementById('footer-btn-edit').addEventListener('click', function () {
+            const memberId = document.getElementById('modal-id').innerText.trim();
+            const workingTime = document.getElementById('modal-working_time').value;
+            const workoutTime = document.getElementById('modal-workout_time').value;
+
+            if (!workingTime || !workoutTime) {
+                alert('출근시간 또는 퇴근시간이 비어 있습니다.');
+                return;
+            }
+
+            fetch('/spot_attendance/updateAttendance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    memberId,
+                    workingTime,
+                    workoutTime
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        alert('수정이 완료되었습니다.');
+                        location.reload();
+                    } else {
+                        alert('수정 실패!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('서버 오류 발생');
+                });
+        });
+
+
+
+    </script>
     </div>
   </body>
 </html>
