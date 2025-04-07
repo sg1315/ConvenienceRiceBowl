@@ -68,11 +68,11 @@
         /*min-height: 810px;*/
 
         min-width: 1920px;
-        min-height: 980px;
+        min-height: 953px;
 
         max-width: 1920px;
         /*max-height: 1080px;*/
-        max-height: 980px;
+        max-height: 953px;
         display: flex;
         border: purple solid 5px;
       }
