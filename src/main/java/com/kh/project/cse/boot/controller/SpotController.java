@@ -54,11 +54,6 @@ public class SpotController {
 //        return "spot/spotMember";
 //    }
 
-    //근태관리
-    @RequestMapping("/spot_attendance")
-    public String spot_attendance() {
-        return "spot/spotAttendance";
-    }
 
     //재고
     @RequestMapping("/spot_inventory")
@@ -119,19 +114,28 @@ public class SpotController {
 
     //직원정보 조회
     @GetMapping("/spot_member")
-    public String spotMemberInfo(Model model) {
-        List<Member> memberList = memberService.selectMemberList();
-        System.out.println(memberList);
+    public String spotMemberInfo(@RequestParam(required = false) String keyword, Model model) {
+        List<Member> memberList;
+
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            memberList = memberService.selectMemberBykeyword(keyword);
+        } else {
+            memberList = memberService.selectMemberList();
+        }
+
         model.addAttribute("memberList", memberList);
+        model.addAttribute("keyword", keyword);
+
         return "spot/spotMember";
     }
     @GetMapping("/spot_attendance")
-    public String spot_attendanceInfo(Model model) {
+    public String spotAttendanceInfo(Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
-        for (Attendance att : attendanceList) {
-            System.out.println("출근기록: " + att.getAttendanceNo() + ", " + att.getMember().getMemberName());
-        }
+
+        System.out.println("attendanceList: " + attendanceList);
+
         model.addAttribute("attendanceList", attendanceList);
+
         return "spot/spotAttendance";
     }
 

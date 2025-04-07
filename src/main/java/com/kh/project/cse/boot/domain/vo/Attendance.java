@@ -2,6 +2,8 @@ package com.kh.project.cse.boot.domain.vo;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -10,7 +12,7 @@ import lombok.*;
 @EqualsAndHashCode
 public class Attendance {
     private int attendanceNo;
-    private String workingTime;
-    private String workoutTime;
+    private Date workingTime;
+    private Date workoutTime;
     private Member member;
 }

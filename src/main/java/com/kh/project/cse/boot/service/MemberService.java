@@ -30,6 +30,8 @@ public interface MemberService {
 
     List<Member> selectMemberList();
 
+    List<Member> selectMemberBykeyword(String keyword);
+
     int memberListCount();
 
     ArrayList<Member> selectHeadMemberList(PageInfo pi);

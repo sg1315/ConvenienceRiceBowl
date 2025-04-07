@@ -25,6 +25,8 @@ public interface MemberMapper {
 
     List<Member> selectMemberList();
 
+    List<Member> selectMemberByKeyWord(@Param("keyword") String keyword);
+
     int memberListCount();
 
     ArrayList<Member> selectHeadMemberList(RowBounds rowBounds);

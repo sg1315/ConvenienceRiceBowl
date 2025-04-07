@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class SpotServiceImpl implements SpotService {
-    private AttendanceMapper attendanceMapper;
+    private final AttendanceMapper attendanceMapper;
 
     public SpotServiceImpl(AttendanceMapper attendanceMapper) {
         this.attendanceMapper = attendanceMapper;

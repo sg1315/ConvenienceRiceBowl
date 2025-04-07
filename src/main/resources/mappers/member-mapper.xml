@@ -136,6 +136,21 @@
             RESIDENT_NUMBER
         FROM MEMBER
     </select>
+    <select id="selectMemberByKeyWord" resultMap="memberResult">
+        SELECT
+        MEMBER_NO,
+        STORE_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        PHONE_NUMBER,
+        POSITION,
+        MEMBER_STATUS,
+        RESIDENT_NUMBER,
+        MEMBER_PWD
+        FROM MEMBER
+        WHERE MEMBER_ID LIKE '%' || #{keyword} || '%'
+        OR MEMBER_NAME LIKE '%' || #{keyword} || '%'
+    </select>
 
 
 <!--head_member-->
