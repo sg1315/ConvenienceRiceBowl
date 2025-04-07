@@ -48,8 +48,6 @@ public interface HeadService {
 
     int updateStoreNo(String[] storeNumbers);
 
-    ArrayList<Product> searchMember(String condition, String keyword, PageInfo pi);
-
     //발주관리사항 총수
     int selectcirculation();
 

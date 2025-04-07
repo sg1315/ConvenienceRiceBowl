@@ -31,5 +31,5 @@ public interface MemberMapper {
 
     ArrayList<Member> searchMember(String condition, String keyword, RowBounds rowBounds);
 
-    int updateHeadMember(Member member);
+
 }

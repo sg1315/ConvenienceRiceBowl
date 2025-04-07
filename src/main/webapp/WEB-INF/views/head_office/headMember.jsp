@@ -167,6 +167,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
   </head>
   <body>
     <jsp:include page="../common/header2.jsp" />
+
+    <c:if test="${not empty alertMsg}">
+      <script>
+        alert("${alertMsg}");
+      </script>
+      <c:remove var="alertMsg" scope="session"/>
+    </c:if>
     <div id="form">
       <div id="form-top">
         <div id="form_name">인사관리</div>

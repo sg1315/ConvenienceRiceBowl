@@ -144,7 +144,7 @@ public class HeadController {
 
 
     @PostMapping("/searchStore")
-    public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model){
+    public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model){
 
         int listCount = headService.storeListCount();
 
@@ -154,11 +154,19 @@ public class HeadController {
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
 
+        if(list == null){
+            session.setAttribute("alertMsg", "실패");
+            return null;
+        }
+
         return "head_office/headStore";
 
     }
+
+
+    //직원관리 - 전체목록
     @RequestMapping("/head_member")
-    public String head_member(@RequestParam(defaultValue = "1") int cpage,Model model) {
+    public String head_member(@RequestParam(defaultValue = "1") int cpage,HttpSession session, Model model) {
 
         int listCount = memberService.memberListCount();
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
@@ -167,25 +175,30 @@ public class HeadController {
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
 
+        if(list == null){
+            session.setAttribute("alertMsg", "실패");
+            return null;
+        }
+
         return "head_office/headMember";
     }
-
+    //직원관리 - 검색
     @PostMapping("/searchMember")
-    public String searchMember(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
+    public String searchMember(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model) {
         int listCount = memberService.memberListCount();
-        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
         if(condition.equals("position")){
             keyword = newKeyword(keyword);
         }
-        System.out.println("condition"+condition);
-        System.out.println("keyword"+keyword);
-
         ArrayList<Member> list = memberService.searchMember(condition,keyword,pi);
-
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
 
+        if(list == null){
+            session.setAttribute("alertMsg", "실패");
+            return null;
+        }
         return "head_office/headMember";
     }
     private String newKeyword(String positionName) {
@@ -202,17 +215,21 @@ public class HeadController {
                 return "";
         }
     }
-
+    //직원관리 - 직원수정
     @PostMapping("/updateHeadMember")
     public String updateHeadMember(Member member, HttpSession session, Model model){
         String position =  member.getPosition();
         member.setPosition(newKeyword(position));
-
-        System.out.println("멤버직급"+member.getPosition());
-
         int result = memberService.updateMemberStatus(member);
 
-        return head_member(1,model);
+        if(result > 0){
+            session.setAttribute("alertMsg", "수정 성공");
+            return head_member(1, session, model);
+        } else {
+            session.setAttribute("alertMsg", "수정 실패");
+            return null;
+        }
+
     }
 
     //개인정보수정
@@ -251,11 +268,6 @@ public class HeadController {
             return "업데이트 실패";
         }
     }
-
-
-
-
-
 
 
 }
