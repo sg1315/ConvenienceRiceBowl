@@ -1,18 +1,17 @@
 package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.Circulation;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +121,17 @@ public class SpotController {
         model.addAttribute("slist", slist);
         model.addAttribute("pi", pi);
         return slist;
+    }
+    @PostMapping("/spot_order/requestOrder")
+    public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
+        for (Circulation c : orderList) {
+            System.out.println("상품번호: " + c.getProductNo());
+            System.out.println("수량: " + c.getCirculateionAmount());
+            System.out.println("입고가: " + c.getInputPrice());
+            System.out.println("판매가: " + c.getSalePrice());
+            System.out.println("--------------------");
+        }
+        return ResponseEntity.ok("발주 요청 완료");
     }
 
 

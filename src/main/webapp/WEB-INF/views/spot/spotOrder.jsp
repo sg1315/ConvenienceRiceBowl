@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>지점 발주</title>
     <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
@@ -348,6 +350,27 @@
             background-color: #D9D9D9;
             height:100%;
         }
+        #order-product-table, #order-request-table{
+            text-align: center;
+        }
+        #order-product-table tr, #order-request-table tr{
+            border-bottom: #d9d9d9 solid 2px;
+        }
+        #order-request-table td{
+            text-align: center;
+            vertical-align: middle;
+        }
+        #order-request-table td:nth-child(5){
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #order-request-table input{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+        }
         #order-table{
             text-align: center;
         }
@@ -476,7 +499,7 @@
                         </div>
                     </div>
                     <div class="modal-body" id="orderRequestProductList">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="order-product-table">
                             <thead>
                             <tr>
                                 <th class="col-2">상품번호</th>
@@ -491,7 +514,16 @@
                                     <td>${p.productNo}</td>
                                     <td>${p.categoryName}</td>
                                     <td>${p.productName}</td>
-                                    <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
+                                    <td>
+                                        <img src="../resources/common/포스기_추가 아이콘.png"
+                                             class="add-btn"
+                                             data-productno="${p.productNo}"
+                                             data-categoryname="${p.categoryName}"
+                                             data-productname="${p.productName}"
+                                             data-inputPrice="${p.inputPrice}"
+                                             data-salePrice="${p.salePrice}"
+                                             style="cursor: pointer;">
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -509,7 +541,6 @@
 
                 <div id="modal-right-wrap">
                     <div class="modal-header" id="modal-header-right">
-                        <form id="modal-header-right-form">
                             <div id="header-title2">
                                 <h1 class="modal-title fs-5">발주 요청 목록</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -518,41 +549,33 @@
                             </div>
                             <div id="header-content2">
                                 <div id="header-content2-left">
-                                    <button class="black-btn">요청</button>
+                                    <button class="black-btn" id="btn-order-submit">요청</button>
                                 </div>
                                 <div id="header-content2-right">
-                                    <p>
-                                        종류 수(총 수량 : 3(240)
+                                    <p id="product-summary">
+                                        종류 (총 수량) : <span id="kind-count">0</span> (<span id="total-quantity">0</span>)
                                     </p>
                                     <p>
-                                        총 1,000,300 원
+                                        총 <span id="total-price">0</span> 원
                                     </p>
                                 </div>
                             </div>
-                        </form>
+
                     </div>
                     <div class="modal-body">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="order-request-table">
                             <thead>
                             <tr>
                                 <th class="col-1"></th>
                                 <th class="col-2">상품번호</th>
                                 <th class="col-2">카테고리</th>
-                                <th class="col-5">상품명</th>
-                                <th class="col-1">수량</th>
+                                <th class="col-4">상품명</th>
+                                <th class="col-2">수량</th>
                                 <th class="col-2">금액</th>
-
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P12334</td>
-                                <td>스낵</td>
-                                <td>홈런볼</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
+                                <%--             js로 목록 불러옴               --%>
                             </tbody>
                         </table>
                     </div>
@@ -668,5 +691,52 @@
 
 <!-- spotOrder.jsp -->
 <script src="/resources/js/spotOrder.js"></script>
+<script>
+    //모달 열었을때 HTML을 저장, 닫을때 그 정보를 다시 불러옴
+    let initialModalContent = null;
+
+    $('#staticOrder').on('show.bs.modal', function () {
+        initialModalContent = $('#staticOrder .modal-content').html();
+        $('#order-request-table tbody').empty();
+        addedProducts.clear();
+    });
+
+    $('#staticOrder').on('hidden.bs.modal', function () {
+        if (initialModalContent) {
+            $('#staticOrder .modal-content').html(initialModalContent);
+        }
+    });
+
+    //삭제 버튼 클릭시 제거
+    document.querySelector("#order-request-table tbody").addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-btn')) {
+            const row = e.target.closest('tr');
+            const productNo = row.dataset.productno;
+            addedProducts.delete(productNo);
+            row.remove();
+        }
+    });
+
+    //총 수량, 금액 계산
+    function updateSummary() {
+        let kindCount = 0;      // 종류 수
+        let totalQuantity = 0;  // 총 수량
+        let totalPrice = 0;     // 총 금액
+
+        $('#order-request-table tbody tr').each(function () {
+            kindCount += 1;
+            const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+            const price = parseInt($(this).data('inputprice')) || 0;
+
+            totalQuantity += quantity;
+            totalPrice += quantity * price;
+        });
+
+        // 화면에 반영
+        $('#kind-count').text(kindCount);
+        $('#total-quantity').text(totalQuantity);
+        $('#total-price').text(totalPrice.toLocaleString()); // 콤마 붙이기
+    }
+</script>
 </body>
 </html>

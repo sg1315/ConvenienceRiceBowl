@@ -111,7 +111,8 @@
         CATEGORY_Name,
         PRODUCT_NAME,
         INPUT_PRICE,
-        SALE_PRICE
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
         FROM PRODUCT
         JOIN CATEGORY USING(CATEGORY_NO)
         ORDER BY PRODUCT_NO ASC
@@ -120,7 +121,10 @@
         SELECT
         PRODUCT_NO,
         CATEGORY_NAME,
-        PRODUCT_NAME
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
         FROM PRODUCT
         JOIN CATEGORY USING(CATEGORY_NO)
         WHERE (PRODUCT_NAME LIKE '%' || #{keyword} || '%'
