@@ -1,10 +1,7 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
-import com.kh.project.cse.boot.mappers.AnnouncementMapper;
-import com.kh.project.cse.boot.mappers.CirculationMapper;
-import com.kh.project.cse.boot.mappers.ProductMapper;
-import com.kh.project.cse.boot.mappers.StoreMapper;
+import com.kh.project.cse.boot.mappers.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +15,17 @@ public class HeadServiceImpl implements HeadService {
     private final ProductMapper productMapper;
     private final AnnouncementMapper announcementMapper;
     private final CirculationMapper circulationMapper;
-
     private final StoreMapper storeMapper;
+    private final MemberMapper memberMapper;
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
         this.storeMapper = storeMapper;
         this.circulationMapper = circulationMapper;
+        this.memberMapper = memberMapper;
     }
 
 
@@ -84,11 +82,11 @@ public class HeadServiceImpl implements HeadService {
     }
 
     @Override
-    public ArrayList<Store> selectAllStore(PageInfo pi) {
+    public ArrayList<Store> selectStore(PageInfo pi) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-        return storeMapper.selectAllStore(rowBounds);
+        return storeMapper.selectStore(rowBounds);
     }
 
     @Override
@@ -108,14 +106,26 @@ public class HeadServiceImpl implements HeadService {
 
     @Override
     public int updateStoreNo(String[] storeNumbers) {
-        int res = 0;
+        int result = 0;
         for (int i = 0 ; i < storeNumbers.length; i++){
-            res += storeMapper.updateStoreNo(storeNumbers[i]);
+            result += storeMapper.updateStoreNo(storeNumbers[i]);
+        }
+        return result;
+    }
+    @Override
+    public int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers) {
+        int result1 = 0;
+        int result2 = 0;
+
+        for(int i = 0 ; i < memberNumbers.length; i++){
+            result1 += memberMapper.deleteMember(memberNumbers[i]);
+            result2 += storeMapper.deleteStore(storeNumbers[i]);
         }
 
-        return res;
-    }
+        int result = result1 * result2;
 
+        return result;
+    }
 
 
     @Override
@@ -133,5 +143,7 @@ public class HeadServiceImpl implements HeadService {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return circulationMapper.selectCirculationlist(rowBounds);
     }
+
+
 
 }

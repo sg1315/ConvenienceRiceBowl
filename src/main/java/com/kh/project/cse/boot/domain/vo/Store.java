@@ -16,4 +16,5 @@ public class Store {
     private int storeStatus;
     private int count;
     private String memberName;
+    private String memberNo;
 }

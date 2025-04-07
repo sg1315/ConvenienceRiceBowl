@@ -20,7 +20,7 @@ public interface StoreMapper {
 
     int storeListCount();
 
-    ArrayList<Store> selectAllStore(RowBounds rowBounds);
+    ArrayList<Store> selectStore(RowBounds rowBounds);
 
     ArrayList<Store> searchStore(String condition, String keyword, RowBounds rowBounds);
 
@@ -28,5 +28,5 @@ public interface StoreMapper {
 
     ArrayList<Store> selectStoreStatus(RowBounds rowBounds);
 
-    ArrayList<Product> searchMember(RowBounds rowBounds);
+    int deleteStore(String storeNumber);
 }

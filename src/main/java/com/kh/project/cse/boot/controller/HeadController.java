@@ -136,7 +136,7 @@ public class HeadController {
 
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
-        ArrayList<Store> list = headService.selectAllStore(pi);
+        ArrayList<Store> list = headService.selectStore(pi);
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
 
@@ -147,7 +147,6 @@ public class HeadController {
     public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model){
 
         int listCount = headService.storeListCount();
-
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
         ArrayList<Store> list = headService.searchStore(condition, keyword, pi);
@@ -158,7 +157,6 @@ public class HeadController {
             session.setAttribute("alertMsg", "실패");
             return null;
         }
-
         return "head_office/headStore";
 
     }

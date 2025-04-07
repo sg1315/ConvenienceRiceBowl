@@ -40,7 +40,7 @@ public interface HeadService {
     //지점전체목록수
     int storeListCount();
     //지점전체목록
-    ArrayList<Store> selectAllStore(PageInfo pi);
+    ArrayList<Store> selectStore(PageInfo pi);
 
     ArrayList<Store> searchStore(String condition, String keyword, PageInfo pi);
 
@@ -54,4 +54,5 @@ public interface HeadService {
     //발주관리사항 불러오기
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
 
+    int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers);
 }

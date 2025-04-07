@@ -373,6 +373,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     <th>지점장</th>
                     <th>요청날짜</th>
                     <th>확인</th>
+                    <th style="display: none;">test</th>
                   </tr>
                 </thead>
                 <tbody id="modal-tbody">
@@ -434,7 +435,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             const storeList = res.list;
             const pi = res.pi;
 
-
+            
       // 테이블 채우기
       for (const store of storeList) {
         
@@ -465,8 +466,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
         }else{
             storeStatustd.innerHTML = "<input type='checkbox'></input>";
         }
-       
         storeTr.appendChild(storeStatustd);
+
+        const memberNoTd = document.createElement('input');
+        memberNoTd.innerText = store.memberNo;
+        storeTr.appendChild(memberNoTd);
+        memberNoTd.type = "hidden";
+        
+
+        
       }
 
       // 동적 페이징 생성
@@ -504,10 +512,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
     var td = tr.children();
 
     var storeNumber = td.eq(0).text(); 
-    console.log(storeNumber);
-
     storeNoList += storeNumber+"/";
+
+
   });
+
   storeNoList = storeNoList.substring(0,storeNoList.length-1);
   
   $.ajax({
@@ -518,13 +527,60 @@ contentType="text/html;charset=UTF-8" language="java" %>
           },
           success: function (res) {
             console.log('모달 통신성공');
+            alert(res);
+            location.reload();
             $('#staticBackdrop').modal('hide');
           },
           error: function () {
             console.log('통신실패');
+            alert(res);
+            location.reload();
+            $('#staticBackdrop').modal('hide');
           },
         });
 }
+function checkedNo(){
+
+var memberNoList = "";
+var storeNoList = "";
+var checkbox1 = $("input[type='checkbox']:checked");
+checkbox1.each(function(i){
+
+        var tr = checkbox1.parent().parent().eq(i);
+        var td = tr.children();
+
+        var storeNumber = td.eq(0).text(); 
+        storeNoList += storeNumber+"/";
+
+        var memberNoes = td.eq(5).text(); 
+        memberNoList += memberNoes+"/";
+
+    
+    });
+    memberNoList = memberNoList.substring(0,memberNoList.length-1);
+    storeNoList = storeNoList.substring(0,storeNoList.length-1);
+
+    $.ajax({
+            url: '/api/store/deleteStoreStatus',
+            method: 'post',
+            data: {
+            memberNo : memberNoList,
+            storeNo : storeNoList
+          },
+            success: function (res) {
+            console.log('모달 통신성공');
+            alert(res);
+            location.reload();
+            $('#staticBackdrop').modal('hide');
+            },
+            error: function () {
+            console.log('통신실패');
+            alert(res);
+            location.reload();
+            $('#staticBackdrop').modal('hide');
+            },
+        });
+    }
 
 </script>
 

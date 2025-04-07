@@ -55,19 +55,36 @@ public class APIStoreController {
         result.put("list", list);
         result.put("pi", pi); // PageInfo도 같이 전달
 
+        if(list == null){
+            return null;
+        }
         return result;
     }
     @PostMapping("updateStoreStatus")
     public String updateStoreStatus(@RequestParam() String storeNo ){
-        int result;
+
+        String[] storeNumbers = storeNo.split("/");
+        int result = headService.updateStoreNo(storeNumbers);
+        if(result == storeNumbers.length){
+            return "수정성공";
+
+        }else{
+            return "수정실패";
+        }
+    }
+
+    @PostMapping("deleteStoreStatus")
+    public String deleteStoreStatus(@RequestParam() String memberNo, @RequestParam() String storeNo ){
+
+        String[] memberNumbers = memberNo.split("/");
         String[] storeNumbers = storeNo.split("/");
 
-        result = headService.updateStoreNo(storeNumbers);
-
-        if(result>0){
-           return "succes";
+        int result = headService.deleteStoreStatus(storeNumbers, memberNumbers);
+        if(result == 0) {
+            return "삭제실패";
+        }else{
+            return "삭제성공";
         }
-        return "error";
     }
 
 
