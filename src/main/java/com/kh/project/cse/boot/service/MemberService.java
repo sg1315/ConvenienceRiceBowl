@@ -26,4 +26,6 @@ public interface MemberService {
     int updateMemberStatus(Member member);
 
     List<Member> selectMemberList();
+
+    List<Member> selectMemberBykeyword(String keyword);
 }

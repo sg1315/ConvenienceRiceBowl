@@ -75,5 +75,10 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.selectMemberList();
     }
 
+    @Override
+    public List<Member> selectMemberBykeyword(String keyword) {
+        return memberMapper.selectMemberByKeyWord(keyword);
+    }
+
 
 }

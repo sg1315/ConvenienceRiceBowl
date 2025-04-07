@@ -310,7 +310,7 @@
       .gray-long-btn {
         width: 100%;
         height: 100%;
-        font-size: 30px;
+        font-size: 20px;
         border: none;
         border-radius: 10px;
         cursor: pointer;
@@ -339,8 +339,6 @@
           OO지점 사장님
         </div>
         <div>
-<%--          <button>개인정보수정</button>--%>
-<%--          <button>로그아웃</button>--%>
   <%
     // 세션에서 로그인 유저 정보 가져오기
     Member loginUser = (Member) session.getAttribute("loginUser");
@@ -412,46 +410,43 @@
           <div class="modal-body" id="editInfo_modal-body">
             <div id="editInfo_modal-content">
               <form action="updateMemberInfo" method="post">
-                <div class="form-group">
+                <div>
                   <strong>이름</strong>
                   <input type="text" name="memberName" readonly value="<%= loginUser != null ? loginUser.getMemberName() : "" %>">
                 </div>
 
-                <div class="form-group">
+                <div>
                   <strong>휴대폰</strong>
                   <input type="text" name="phone" value="<%= loginUser != null ? loginUser.getPhone() : "" %>">
                 </div>
 
-                <div class="form-group">
+                <div>
                   <strong>주민번호</strong>
                   <input type="text" readonly value="<%= loginUser != null ? loginUser.getResidentNo() : "" %>">
                 </div>
 
-                <div class="form-group">
+                <div>
                   <strong>아이디</strong>
                   <input type="text" readonly value="<%= loginUser != null ? loginUser.getMemberId() : "" %>">
                 </div>
 
-                <div class="form-group">
+                <div>
                   <strong>현재 비밀번호</strong>
                   <input type="password" name="currentPwd" placeholder="*******" required>
                 </div>
 
-                <div class="form-group">
+                <div>
                   <strong>새 비밀번호</strong>
                   <input type="password" name="newPwd" placeholder="새 비밀번호 입력">
                 </div>
 
                 <input type="hidden" name="memberNo" value="<%= loginUser != null ? loginUser.getMemberNo() : "" %>">
-
-                <div class="modal-footer" id="editInfo_modal-footer">
-                  <button type="submit" class="gray-long-btn">개인정보 수정</button>
-                </div>
               </form>
             </div>
           </div>
-
-
+          <div class="modal-footer" id="editInfo_modal-footer">
+            <button type="submit" class="gray-long-btn" id="submit_info">개인정보 수정</button>
+          </div>
 
 
 
@@ -468,6 +463,9 @@
         document.getElementById("btn-close-modal").addEventListener("click", function () {
           modal.hide();
         });
+      });
+      document.getElementById("submit_info").addEventListener("click", function () {
+        document.querySelector("#editInfo_modal-content form").submit();
       });
     </script>
     <!--end point-->

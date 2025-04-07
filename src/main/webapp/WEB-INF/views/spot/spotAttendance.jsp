@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
   <head>
       <title>지점 근태관리</title>
@@ -177,7 +178,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             </div>
 
         </div>
-
+        <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
         <div id="main">
             <div id="main-in">
                 <table class="table table-hover" id="table1">
@@ -227,9 +228,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
                                 </c:choose>
                             </td>
                             <td>${attendance.workingTime}</td>
+                            <td></td>
                             <td>${attendance.workoutTime}</td>
                         </tr>
                     </c:forEach>
+
 
                     </tbody>
                 </table>
@@ -360,17 +363,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     this_btn.classList.remove('gohome-btn');
                     this_btn.classList.add('gowork-btn');
             }
-
-
-          // var today = new Date();
-          // var year = today.getFullYear();
-          // var month =('0'+ (today.getMonth() +1)).slice(-2);
-          // var day =  ('0'+ today.getDate()).slice(-2);
-          // var hour =('0'+ today.getHours()).slice(-2);
-          // var min =('0'+ today.getMinutes() ).slice(-2);
-          // var sec =('0'+ today.getSeconds()).slice(-2);
-
-          // var dateString = year +'-'+ month +'-'+day +" "+hour+":"+min+":"+sec;
+            
         }
       </script>
     </div>

@@ -47,15 +47,28 @@
         #top-left p {
             padding-left: 15px;
         }
-        #top-right1 input[type=text]{
+        #top-right1 form {
             display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        #top-right1 input[type=text]{
             flex: 1;
             font-size: 24px;
-
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
         }
         #top-right1 input[type=submit]{
-            margin: 0 0 0 20px;
             font-size: 24px;
+            padding: 10px 20px;
+            background-color: #B4B4B4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
         }
         #main{
             background-color: #D9D9D9;
@@ -289,6 +302,8 @@
         }
         /* //modal-footer */
         /* //modal */
+
+
     </style>
 </head>
 <body>
@@ -303,8 +318,10 @@
         </div>
 
         <div id="top-right1">
-            <input class="search-input" type="text" placeholder="아이디 or 이름 "/>
-            <input class="search-input-submit" type="submit" value="검색" />
+            <form method="get" action="/spot_member" id="search-form">
+                <input type="text" class="search-input" name="keyword" id="search-keyword" value="${keyword}" placeholder="아이디 or 이름" />
+                <button type="submit" class="search-input-submit" id="search-btn">검색</button>
+            </form>
         </div>
 
     </div>
@@ -329,6 +346,7 @@
                 </thead>
 
                 <tbody >
+                <c:if test="${not empty memberList}">
                 <c:forEach var="member" items="${memberList}">
                     <tr data-residentno="${member.residentNo}"><%--주민번호 같이 전달--%>
                         <td>
@@ -352,6 +370,7 @@
                         </td>
                     </tr>
                 </c:forEach>
+                </c:if>
 
 
 
@@ -397,13 +416,13 @@
                         <div id="editMember_modal-content">
                             <div id="editMember_select_wrap">
                                 <div id="editMember_select">
-                                <select id="editMember_select-modal-rank">
-                                    <option value="본사" hidden>본사</option>
-                                    <option value="직급">직급</option>
-                                    <option value="알바">알바</option>
-                                    <option value="매니저">매니저</option>
-                                    <option value="지점장">지점장</option>
-                                </select>
+                                    <select id="editMember_select-modal-rank">
+                                        <option value="1" hidden>직급</option>
+                                        <option value="2">지점장</option>
+                                        <option value="3">매니저</option>
+                                        <option value="4">알바</option>
+                                    </select>
+
                                 </div>
                                 <strong>이름</strong>
                             </div>
@@ -448,12 +467,18 @@
                     const phone = this.children[3].textContent.trim();
                     const status = this.children[4].textContent.trim();
 
+                    const rankValue = rank === "본사" ? "1"
+                                        : rank === "지점장" ? "2"
+                                        : rank === "매니저" ? "3"
+                                        : rank === "알바" ? "4"
+                                        : "";
+                    //1.본사 2.지점장 3.매니저 4. 알바
                     const statusValue = (status === "재직") ? "Y" : (status === "퇴직") ? "N" : "";
 
                     const residentNo = this.dataset.residentno;
                     document.getElementById("member_identify").value = residentNo;
 
-                    document.getElementById("editMember_select-modal-rank").value = rank;
+                    document.getElementById("editMember_select-modal-rank").value = rankValue;
                     document.getElementById("member_name").value = name;
                     document.getElementById("member_phone").value = phone;
                     document.getElementById("member_id").value = id;
@@ -490,8 +515,18 @@
                     }
                 });
         });
-
-
+        document.getElementById("search-btn").addEventListener("click", function () {
+            const keyword = document.getElementById("search-keyword").value.trim();
+            document.getElementById("search-form").addEventListener("submit", function (ev) {
+                const keyword = document.getElementById("search-keyword").value.trim();
+                if (!keyword) {
+                    ev.preventDefault();
+                    alert("검색어를 입력하세요");
+                }
+            });
+            const encodedKeyword = encodeURIComponent(keyword);
+            window.location.href = `/spot_member?keyword=${encodedKeyword}`;
+        });
     </script>
     <!--end point-->
 
