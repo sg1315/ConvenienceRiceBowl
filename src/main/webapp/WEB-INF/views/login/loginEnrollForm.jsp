@@ -133,7 +133,7 @@
                 </div>
                 <div>
                     <div><p>비밀번호</p></div>
-                    <div class="flexInput-2"><input type="password" name="memberPwd" oninput="resetPasswordCheck()" required></div>
+                    <div class="flexInput-2"><input type="password" id="memberPwd" name="memberPwd" oninput="resetPasswordCheck()" required></div>
                     <div></div>
                     <div><p>주민번호</p></div>
                     <div id="ssnInput">
@@ -142,7 +142,7 @@
                 </div>
                 <div>
                     <div><p>비밀번호 확인</p></div>
-                    <div class="flexInput-2"><input type="password" oninput="passwordCheck()" required></div>
+                    <div class="flexInput-2"><input type="password" id="memberPwdCheck" oninput="passwordCheck()" required></div>
                     <div></div>
                     <div><p>핸드폰</p></div>
                     <div id="phoneInput">
@@ -166,36 +166,41 @@
                 function checkStoreName() {
                     const position = document.getElementById("position").value;
                     const storeName = document.getElementById("storeName").value;
-                    $.ajax({
-                        url: "/api/store/name",
-                        data: {
-                            checkStore: storeName,
-                            position: position
-                        },
-                        success: function (isCheck){
-                            const checkResult = document.getElementById("checkResult");
-                            if (isCheck === "NNNNN") {
-                                checkResult.style.color = "red";
-                                checkResult.innerText = "이미 사용중인 지점명입니다.";
-                                isStoreNameOk = false;
-                            } else if(isCheck === "NNNNY") {
-                                checkResult.style.color = "green";
-                                checkResult.innerText = "사용 가능한 지점명입니다.";
-                                isStoreNameOk = true;
-                            } else if(isCheck === "NNNYN") {
-                                checkResult.style.color = "red";
-                                checkResult.innerText = "없는 지점입니다.";
-                                isStoreNameOk = false;
-                            } else {
-                                checkResult.style.color = "green";
-                                checkResult.innerText = "존재하는 지점입니다.";
-                                isStoreNameOk = true;
+                    const checkResult = document.getElementById("checkResult");
+                    if(position === ""){
+                        checkResult.style.color = "red";
+                        checkResult.innerText = "직급을 선택해주세요.";
+                    } else {
+                        $.ajax({
+                            url: "/api/store/name",
+                            data: {
+                                checkStore: storeName,
+                                position: position
+                            },
+                            success: function (isCheck){
+                                if (isCheck === "NNNNN") {
+                                    checkResult.style.color = "red";
+                                    checkResult.innerText = "이미 사용중인 지점명입니다.";
+                                    isStoreNameOk = false;
+                                } else if(isCheck === "NNNNY") {
+                                    checkResult.style.color = "green";
+                                    checkResult.innerText = "사용 가능한 지점명입니다.";
+                                    isStoreNameOk = true;
+                                } else if(isCheck === "NNNYN") {
+                                    checkResult.style.color = "red";
+                                    checkResult.innerText = "없거나 미승인 상태인 지점입니다.";
+                                    isStoreNameOk = false;
+                                } else {
+                                    checkResult.style.color = "green";
+                                    checkResult.innerText = "존재하는 지점입니다.";
+                                    isStoreNameOk = true;
+                                }
+                                toggleSubmitButton();
+                            }, error: function (){
+                                console.log("지점명 중복체크 ajax 실패");
                             }
-                            toggleSubmitButton();
-                        }, error: function (){
-                            console.log("지점명 중복체크 ajax 실패");
-                        }
-                    })
+                        })
+                    }
                 }
                 function checkId() {
                     const memberId = document.getElementById("memberId").value;
@@ -211,11 +216,11 @@
                         success: function (isCheck){
                             if (isCheck === "NNNNN") {
                                 checkResult.style.color = "red";
-                                checkResult.innerText = "이미 사용중인 지점명입니다.";
+                                checkResult.innerText = "이미 사용중인 아이디입니다.";
                                 isUserIdOk = false;
                             } else {
                                 checkResult.style.color = "green";
-                                checkResult.innerText = "사용 가능한 지점명입니다.";
+                                checkResult.innerText = "사용 가능한 아이디입니다.";
                                 isUserIdOk = true;
                             }
                             toggleSubmitButton();
@@ -226,15 +231,14 @@
                 }
                 let eventFlag;
                 function passwordCheck(){
-                    const password = document.getElementById().value;
-                    const passwordCheck = document.getElementById().value;
+                    const password = document.getElementById("memberPwd").value;
+                    const passwordCheck = document.getElementById("memberPwdCheck").value;
                     const checkResult = document.getElementById("checkResult");
-                    isPasswordOk = false;
                     clearTimeout(eventFlag);
                     if(password === passwordCheck){
+                        isPasswordOk = true;
                         checkResult.style.color = "green";
                         checkResult.innerText = "비밀번호가 같습니다.";
-                        isPasswordOk = true;
                     } else {
                         isPasswordOk = false;
                         eventFlag = setTimeout(function (){

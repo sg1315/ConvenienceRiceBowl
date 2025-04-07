@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
+import com.kh.project.cse.boot.domain.vo.Store;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public interface MemberService {
 
     int checkStoreStatus(int storeNo);
 
-    int checkStore(String checkStore);
+    Store checkStore(Store store);
 
     int updateMember(Member member);
 
@@ -37,6 +38,5 @@ public interface MemberService {
     ArrayList<Member> selectHeadMemberList(PageInfo pi);
 
     ArrayList<Member> searchMember(String condition, String keyword, PageInfo pi);
-
 
 }

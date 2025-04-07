@@ -178,7 +178,13 @@
         position: relative;
         left: 20px
       }
-      
+
+      #logoutBtn{
+        border-style: none;
+        border-radius: 50px;
+        font-weight: 600;
+        padding: 5px 10px;
+      }
     </style>
   </head>
   <body>
@@ -195,9 +201,9 @@
           본사
         </div>
         <div>
-<%--          <button>로그아웃</button>--%>
+          <button type="button" id="logoutBtn" onclick="location.href='/logout.me'">로그아웃</button>
 <%--          <img src="/resources/menubar_icons/개인정보수정.png">--%>
-          <img src="/resources/menubar_icons/로그아웃.png">
+<%--          <img src="/resources/menubar_icons/로그아웃.png">--%>
         </div>
       </div>
       <div id="nav-menu">

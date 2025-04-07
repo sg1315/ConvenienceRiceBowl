@@ -16,7 +16,7 @@ public interface StoreMapper {
 
     int checkStoreStatus(@Param("storeNo") int storeNo);
 
-    int checkStore(@Param("checkStore")String checkStore);
+    Store checkStore(Store Store);
 
     int storeListCount();
 

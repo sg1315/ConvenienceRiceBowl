@@ -67,7 +67,7 @@
     <select id="idCheck" resultType="_int">
         SELECT COUNT(*)
         FROM MEMBER
-        WHERE USER_ID = #{checkId}
+        WHERE MEMBER_ID = #{checkId}
     </select>
     <select id="loginMember" parameterType="Member" resultMap="memberResult">
         SELECT
