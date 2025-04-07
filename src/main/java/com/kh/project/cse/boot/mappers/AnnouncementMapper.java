@@ -19,4 +19,11 @@ public interface AnnouncementMapper {
     ArrayList<Announcement> selectAnnouncementlist(RowBounds rowBounds);
 
     Announcement selectDetailAnnouncement(@Param("ano") int announcementNo);
+
+    int updateAnnouncementDetail(Announcement announcement);
+
+    ArrayList<Announcement> searchAnnouncement(String condition, String keyword,RowBounds rowBounds);
+
+    int deleteAnnouncement(@Param("ano") int announcementNo);
+
 }

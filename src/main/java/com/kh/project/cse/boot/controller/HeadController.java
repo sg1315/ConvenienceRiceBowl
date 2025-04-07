@@ -7,6 +7,7 @@ import com.kh.project.cse.boot.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,7 +32,7 @@ public class HeadController {
 
         int circulation = headService.selectcirculation();
 
-        PageInfo pi = new PageInfo(circulation, cpage, 10 , 5);
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
         ArrayList<Circulation> list = headService.selectCirculationlist(pi);
 
         model.addAttribute("list", list);
@@ -39,14 +41,22 @@ public class HeadController {
     }
     //성진
 
-    //성진 본사-공지사항
+    //공지사항추가
+    @PostMapping("/insertAnnouncement.he")
+    public String insertAnnouncement(Announcement announcement, HttpSession session) {
+
+        int result = headService.insertAnnouncement(announcement);
+
+        return "redirect:/head_announcement";
+    }
+
     //공지사항불러오기
     @GetMapping("/head_announcement")
     public String head_announcement(@RequestParam(defaultValue = "1") int cpage, Model model) {
 
         int announcementCount = headService.selectAnnouncementCount();
 
-        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 5);
+        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 12);
         ArrayList<Announcement> list = headService.selectAnnouncementlist(pi);
 
         model.addAttribute("list", list);
@@ -54,26 +64,42 @@ public class HeadController {
         return "head_office/headAnnouncement";
     }
 
-    //공지사항추가
-    @PostMapping("/insertAnnouncement.he")
-    public String insertAnnouncement(Announcement announcement, HttpSession session) {
-
-        int result = headService.insertAnnouncement(announcement);
-
-        return "head_office/headAnnouncement";
-    }
-
-
+    //공지사항세부사항
     @ResponseBody
-
     @GetMapping("/getAnnouncementDetail")
     public Announcement getAnnouncementDetail(@RequestParam("ano") int ano) {
-        Announcement a = headService.selectDetailAnnouncement(ano);
-        System.out.println("내용asdasadasdadadsad");
-        return a;
+        Announcement announcement = headService.selectDetailAnnouncement(ano);
+        return announcement;
     }
 
 
+
+    //공지사항수정
+    @PostMapping("updateAnnouncementDetail.he")
+    public String updateAnnouncementDetail(@ModelAttribute Announcement announcement, HttpSession session) {
+        int result = headService.updateAnnouncementDetail(announcement);
+        return "redirect:/head_announcement";
+    }
+    //공지사항 검색
+    @PostMapping("/searchAnnouncement")
+    public String searchAnnouncement(@RequestParam(defaultValue = "1") int cpage, @RequestParam String condition, @RequestParam String keyword, Model model) {
+        int listCount = headService.selectAnnouncementCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,12);
+
+        ArrayList<Announcement> list = headService.searchAnnouncement(condition, keyword, pi);
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+        return "head_office/headAnnouncement";
+    }
+    //공지사항 삭제
+    @PostMapping("deleteAnnouncement")
+    public String deleteAnnouncement(@RequestParam("ano") int ano, HttpSession session){
+        headService.deleteAnnouncement(ano);
+
+        return "redirect:/head_announcement";
+
+    }
 
     //상품관리
     @RequestMapping("/head_product")

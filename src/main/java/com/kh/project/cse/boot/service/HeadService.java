@@ -17,10 +17,6 @@ public interface HeadService {
     ArrayList<Product> selectAllProduct(PageInfo pi);
     //카테고리목록
     List<Category> selectAllCategories();
-    //상품수정
-
-
-
 
 
 
@@ -36,8 +32,17 @@ public interface HeadService {
     //공지사항 세부
     Announcement selectDetailAnnouncement(int announcementNo);
 
+    //공지사항수정
+    int updateAnnouncementDetail(Announcement announcement);
+
+    //공지사항검색
+    ArrayList<Announcement> searchAnnouncement(String condition, String keyword,PageInfo pi);
+
+    //공지사항 삭제
+    int deleteAnnouncement(int announcementNo);
 
 
+    //상품수정
     int updateProduct(Product product);
 
 

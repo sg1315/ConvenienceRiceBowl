@@ -43,7 +43,7 @@
         SEQ_ATNO.NEXTVAL,
         #{announcementTitle},
         #{announcementDetail},
-        0,
+        10005,
         1
         )
     </insert>
@@ -56,5 +56,39 @@
         WHERE ANNOUNCEMENT_STATUS = 1
         AND ANNOUNCEMENT_NO = #{ano}
     </select>
+    <update id="updateAnnouncementDetail">
+        UPDATE ANNOUNCEMENT
+        SET ANNOUNCEMENT_TITLE = #{announcementTitle},
+        ANNOUNCEMENT_DETAIL = #{announcementDetail}
+        WHERE ANNOUNCEMENT_NO = #{announcementNo}
+    </update>
+
+    <select id="searchAnnouncement" resultMap="anoucementResult">
+        SELECT ANNOUNCEMENT_NO,
+        ANNOUNCEMENT_TITLE,
+        ANNOUNCEMENT_DETAIL,
+        STORE_NAME,
+        TO_CHAR(ANNOUNCEMENT_DATE, 'YYYY-MM-DD') AS ANNOUNCEMENT_DATE,
+        ANNOUNCEMENT_STATUS
+        FROM ANNOUNCEMENT A
+        LEFT JOIN MEMBER M ON (A.MEMBER_NO = M.MEMBER_NO)
+        LEFT JOIN STORE S ON (M.STORE_NO = S.STORE_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'announcementTitle'">
+                ANNOUNCEMENT_TITLE
+            </when>
+            <otherwise>
+                STORE_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        ORDER BY ANNOUNCEMENT_NO DESC
+    </select>
+
+    <delete id="deleteAnnouncement">
+        DELETE FROM ANNOUNCEMENT
+        WHERE ANNOUNCEMENT_NO = #{ano}
+    </delete>
 
 </mapper>
