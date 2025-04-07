@@ -41,4 +41,6 @@ public interface HeadService {
     ArrayList<Store> selectStoreStatus(PageInfo pi);
 
     int updateStoreNo(String[] storeNumbers);
+
+    ArrayList<Product> searchMember(String condition, String keyword, PageInfo pi);
 }

@@ -21,5 +21,7 @@ public class Member {
     private String status; //Y: 재직, N: 퇴직
 
     private String storeName;//지점생성
+    private int count;//페이징전체목록수
+
 
 }

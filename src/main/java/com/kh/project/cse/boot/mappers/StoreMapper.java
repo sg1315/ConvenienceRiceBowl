@@ -1,5 +1,6 @@
 package com.kh.project.cse.boot.mappers;
 
+import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.domain.vo.Store;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,4 +24,6 @@ public interface StoreMapper {
     int updateStoreNo(String storeNumber);
 
     ArrayList<Store> selectStoreStatus(RowBounds rowBounds);
+
+    ArrayList<Product> searchMember(RowBounds rowBounds);
 }

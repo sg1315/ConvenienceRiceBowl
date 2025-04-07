@@ -137,8 +137,61 @@ public class HeadController {
 
     }
     @RequestMapping("/head_member")
-    public String head_member() {
+    public String head_member(@RequestParam(defaultValue = "1") int cpage,Model model) {
+
+        int listCount = memberService.memberListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Member> list = memberService.selectHeadMemberList(pi);
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
         return "head_office/headMember";
+    }
+
+    @PostMapping("/searchMember")
+    public String searchMember(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
+        int listCount = memberService.memberListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        if(condition.equals("position")){
+            keyword = newKeyword(keyword);
+        }
+        System.out.println("condition"+condition);
+        System.out.println("keyword"+keyword);
+
+        ArrayList<Member> list = memberService.searchMember(condition,keyword,pi);
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "head_office/headMember";
+    }
+    private String newKeyword(String positionName) {
+        switch (positionName.trim()) {
+            case "본사":
+                return "1";
+            case "지점장":
+                return "2";
+            case "매니저":
+                return "3";
+            case "알바":
+                return "4";
+            default:
+                return "";
+        }
+    }
+
+    @PostMapping("/updateHeadMember")
+    public String updateHeadMember(Member member, HttpSession session, Model model){
+        String position =  member.getPosition();
+        member.setPosition(newKeyword(position));
+
+        System.out.println("멤버직급"+member.getPosition());
+
+        int result = memberService.updateMemberStatus(member);
+
+        return head_member(1,model);
     }
 
     //개인정보수정
@@ -177,6 +230,9 @@ public class HeadController {
             return "업데이트 실패";
         }
     }
+
+
+
 
 
 

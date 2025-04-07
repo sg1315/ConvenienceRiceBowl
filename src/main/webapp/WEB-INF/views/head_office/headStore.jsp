@@ -251,7 +251,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               name="condition"
             >
               <option value="storeNo">지점번호</option>
-              <option value="storName">지점명</option>
+              <option value="storeName">지점명</option>
               <option value="memberName">지점장</option>
             </select>
             <input

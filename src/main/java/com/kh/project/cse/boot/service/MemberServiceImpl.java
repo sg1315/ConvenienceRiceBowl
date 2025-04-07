@@ -1,11 +1,14 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.mappers.MemberMapper;
 import com.kh.project.cse.boot.mappers.StoreMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -58,6 +61,27 @@ public class MemberServiceImpl implements MemberService {
     public List<Member> selectMemberList() {
         return memberMapper.selectMemberList();
     }
+
+    @Override
+    public int memberListCount() {
+        return memberMapper.memberListCount();
+    }
+
+    @Override
+    public ArrayList<Member> selectHeadMemberList(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return memberMapper.selectHeadMemberList(rowBounds);
+    }
+
+    @Override
+    public ArrayList<Member> searchMember(String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return memberMapper.searchMember(condition,keyword,rowBounds);
+    }
+
+
 
 
 }
