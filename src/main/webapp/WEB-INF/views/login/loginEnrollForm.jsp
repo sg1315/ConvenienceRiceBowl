@@ -188,7 +188,7 @@
                                     isStoreNameOk = true;
                                 } else if(isCheck === "NNNYN") {
                                     checkResult.style.color = "red";
-                                    checkResult.innerText = "없는 지점입니다.";
+                                    checkResult.innerText = "없거나 미승인 상태인 지점입니다.";
                                     isStoreNameOk = false;
                                 } else {
                                     checkResult.style.color = "green";

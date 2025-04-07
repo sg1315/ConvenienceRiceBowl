@@ -348,7 +348,7 @@
   <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
             <img src="/resources/menubar_icons/개인정보수정.png">
           </button>
-          <button id="logout"><img src="/resources/menubar_icons/로그아웃.png"></button>
+          <button id="logout"><img onclick="location.href='/logout.me'" src="/resources/menubar_icons/로그아웃.png"></button>
         </div>
       </div>
       <div id="nav-menu">

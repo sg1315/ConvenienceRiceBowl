@@ -128,6 +128,7 @@
             alert("${alertMsg}");
         </script>
         <c:remove var="alertMsg" scope="session"/>
+<%--        <c:remove var="alertMsg" scope="request"/>--%>
     </c:if>
     <div id="modalBackground">
         <div id="enrollModal">

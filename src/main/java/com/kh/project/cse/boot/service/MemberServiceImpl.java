@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
+import com.kh.project.cse.boot.domain.vo.Store;
 import com.kh.project.cse.boot.mappers.MemberMapper;
 import com.kh.project.cse.boot.mappers.StoreMapper;
 import lombok.RequiredArgsConstructor;
@@ -54,7 +55,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int checkStore(String checkStore) {return storeMapper.checkStore(checkStore);}
+    public Store checkStore(Store Store) {return storeMapper.checkStore(Store);}
 
     @Override
     public int updateMember(Member member) {

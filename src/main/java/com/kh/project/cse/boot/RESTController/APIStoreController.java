@@ -27,7 +27,6 @@ public class APIStoreController {
     public String CheckStore(String checkStore,String position){
         System.out.println("checkStore:"+checkStore);
         int result =0;
-        int storeNo =0;
         if(position.equals("2")){
             result = memberService.checkStoreName(checkStore);
             if(result > 0){
@@ -36,7 +35,14 @@ public class APIStoreController {
                 return "NNNNY";
             }
         } else {
-            storeNo = memberService.checkStore(checkStore);
+            Store store = new Store();
+            int storeNo = 0;
+            store.setStoreName(checkStore);
+            store = memberService.checkStore(store);
+            if(store != null){
+                storeNo = store.getStoreNo();
+            }
+
             if(storeNo > 0){
                 return "NNNYY";
             } else {
