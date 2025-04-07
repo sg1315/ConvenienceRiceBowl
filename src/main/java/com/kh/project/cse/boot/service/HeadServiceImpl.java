@@ -117,6 +117,13 @@ public class HeadServiceImpl implements HeadService {
     }
 
     @Override
+    public ArrayList<Product> searchMember(String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return storeMapper.searchMember(rowBounds);
+    }
+
+    @Override
     public Announcement selectDetailAnnouncement(int announcementNo) {
         System.out.println(announcementMapper.selectDetailAnnouncement(announcementNo));
         return announcementMapper.selectDetailAnnouncement(announcementNo);

@@ -560,8 +560,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
               const salePrice = this.children[4].textContent;
               const availability = this.children[5].textContent;
 
-              console.log(categoryName);
-
               document.getElementById("modal-productNo").value = productNo;
               let sel = document.getElementById('select-modify-modal').options;
               for (var i = 0; i < sel.length; i++) {

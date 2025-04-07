@@ -13,6 +13,9 @@
         <result column="MEMBER_ID" property="memberId"/>
         <result column="MEMBER_PWD" property="memberPwd"/>
         <result column="MEMBER_STATUS" property="status"/>
+        <result column="COUNT" property="count"/>
+        <result column="STORE_NAME" property="storeName"/>
+
 
     </resultMap>
     <insert id="insertMember">
@@ -135,5 +138,56 @@
     </select>
 
 
+<!--head_member-->
+<select id="memberListCount" resultType="_int">
+    SELECT COUNT(*) AS COUNT
+    FROM MEMBER
+</select>
+<select id="selectHeadMemberList" resultMap="memberResult">
+    SELECT
+        MEMBER_NO,
+        MEMBER_ID,
+        MEMBER_NAME,
+        PHONE_NUMBER,
+        POSITION,
+        MEMBER_STATUS,
+        RESIDENT_NUMBER,
+        STORE_NO,
+        STORE_NAME
+    FROM MEMBER
+    JOIN STORE USING(STORE_NO)
+</select>
+    <select id="searchMember" resultMap="memberResult">
+        SELECT
+        MEMBER_ID,
+        MEMBER_NAME,
+        PHONE_NUMBER,
+        POSITION,
+        MEMBER_STATUS,
+        RESIDENT_NUMBER,
+        STORE_NO,
+        STORE_NAME
+        FROM MEMBER
+        JOIN STORE USING(STORE_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'storeName'">
+                STORE_NAME
+            </when>
+            <when test="condition == 'memberName'">
+                MEMBER_NAME
+            </when>
+            <otherwise>
+                POSITION
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        ORDER BY STORE_NO DESC
+    </select>
+
+    <update id="updateHeadMember">
+        UPDATE MEMBER
+
+    </update>
 
 </mapper>

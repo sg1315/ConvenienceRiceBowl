@@ -1,7 +1,10 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface MemberService {
@@ -26,4 +29,12 @@ public interface MemberService {
     int updateMemberStatus(Member member);
 
     List<Member> selectMemberList();
+
+    int memberListCount();
+
+    ArrayList<Member> selectHeadMemberList(PageInfo pi);
+
+    ArrayList<Member> searchMember(String condition, String keyword, PageInfo pi);
+
+
 }
