@@ -43,11 +43,36 @@ public class HeadServiceImpl implements HeadService {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return announcementMapper.selectAnnouncementlist(rowBounds);
     }
+    //공지사항추가
     @Override
     public int insertAnnouncement(Announcement announcement){
         return announcementMapper.insertAnnouncement(announcement);
     }
 
+
+    //공지사항세부사항 불러오기
+    @Override
+    public Announcement selectDetailAnnouncement(int announcementNo) {
+        return announcementMapper.selectDetailAnnouncement(announcementNo);
+    }
+    //공지사항수정하기
+    @Override
+    public int updateAnnouncementDetail(Announcement announcement){
+        return announcementMapper.updateAnnouncementDetail(announcement);
+    }
+    //공지사항검색
+    @Override
+    public ArrayList<Announcement> searchAnnouncement(String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return announcementMapper.searchAnnouncement(condition,keyword,rowBounds);
+    }
+
+    //공지사항삭제
+    @Override
+    public int deleteAnnouncement(int announcementNo) {
+        return announcementMapper.deleteAnnouncement(announcementNo);
+    }
 
     //상품추가
     @Override
@@ -128,11 +153,6 @@ public class HeadServiceImpl implements HeadService {
     }
 
 
-    @Override
-    public Announcement selectDetailAnnouncement(int announcementNo) {
-        System.out.println(announcementMapper.selectDetailAnnouncement(announcementNo));
-        return announcementMapper.selectDetailAnnouncement(announcementNo);
-    }
 
     @Override
     public int selectcirculation(){return circulationMapper.selectcirculation();}

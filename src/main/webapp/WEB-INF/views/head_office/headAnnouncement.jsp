@@ -73,7 +73,7 @@
         }
 
         #table1 thead {
-            height: 30px;
+            height: 50px;
             background-color: #D9D9D9;
             border-bottom: 3px solid #939393;
         }
@@ -180,7 +180,7 @@
         }
 
         .modal-body {
-            height: 92%;
+            max-height: 60%;
         }
 
         #detail-x_img {
@@ -219,6 +219,9 @@
             display: flex;
             align-items: center;
             padding-left: 30px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
         #comment-btn button{
             width: 7%;
@@ -265,18 +268,6 @@
             padding-bottom: 5px;
         }
 
-        #modal-footer {
-            border-top: 3px solid #B4B4B4;
-            height: 8%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #modal-pageing {
-            margin: 0;
-        }
-
         #modal-pageing img {
             width: 30px;
         }
@@ -315,6 +306,9 @@
         .modal-content {
             height: 90%;
         }
+        #modify-form{
+            height: 100%;
+        }
 
         .modal-body {
             padding: 10px 50px !important;
@@ -322,6 +316,7 @@
 
         .modal-footer {
             background-color: #D9D9D9;
+            height: 8%;
         }
 
         #modify-x_img {
@@ -367,13 +362,13 @@
     </div>
 
     <div id="top-manu">
-        <div id="top_serch">
-            <form>
-                <select class="search-input-gray">
-                    <option>제목</option>
-                    <option>아이디</option>
+        <div id="top_serch" >
+            <form id="search-form" action="searchAnnouncement" method="post">
+                <select class="search-input-gray" name="condition">
+                    <option value="announcementTitle">제목</option>
+                    <option value="storeName">아이디</option>
                 </select>
-                <input class="search-input-gray" id="search-filed" type="text">
+                <input class="search-input-gray" id="search-filed" type="text" name="keyword">
                 <input class="search-input-submit-gray" type="submit" value="검색">
             </form>
         </div>
@@ -396,31 +391,24 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="A" items="${list}">
-                <tr data-ano="${A.announcementNo}">
-                    <td>${A.announcementNo}</td>
-                    <td>${A.announcementDetail}</td>
-                    <td>${A.storeName}</td>
-                    <td>${A.announcementDate}</td>
-                </tr>
-            </c:forEach>
+                <c:forEach var="A" items="${list}">
+                    <tr data-ano="${A.announcementNo}">
+                        <td>${A.announcementNo}</td>
+                        <td>${A.announcementTitle}</td>
+                        <td>${A.storeName}</td>
+                        <td>${A.announcementDate}</td>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
     </div>
     <div id="footer">
         <div id="main-pageing">
-            <img src="/resources/common/공통_페이징바화살표.png">
-            <button type="button" class="btn btn-outline-secondary">1</button>
-            <button type="button" class="btn btn-outline-secondary">2</button>
-            <button type="button" class="btn btn-outline-secondary">3</button>
-            <button type="button" class="btn btn-outline-secondary">4</button>
-            <button type="button" class="btn btn-outline-secondary">5</button>
-            <button type="button" class="btn btn-outline-secondary">6</button>
-            <button type="button" class="btn btn-outline-secondary">7</button>
-            <button type="button" class="btn btn-outline-secondary">8</button>
-            <button type="button" class="btn btn-outline-secondary">9</button>
-            <button type="button" class="btn btn-outline-secondary">10</button>
-            <img src="/resources/common/공통_페이징바화살표.png">
+            <img src="/resources/common/공통_페이징바화살표.png" />
+            <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+                <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_announcement?cpage=${i}'">${i}</button>
+            </c:forEach>
+            <img src="/resources/common/공통_페이징바화살표.png" />
         </div>
     </div>
 
@@ -458,7 +446,7 @@
         </div>
     </div>
 
-    <<!-- detail-Modal -->
+    <!-- detail-Modal -->
     <div class="modal fade" id="detail-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -476,9 +464,10 @@
                 <div class="modal-body" id="detail-modal-body">
                     <div id="detail-modal-body-top">
                         <p id="detail-modal-title"></p>
+                        <p id="detail-modal-ano" style="display: none"></p>
                         <div>
-                            <button class="black-btn">수정</button>
-                            <button class="red-btn">삭제</button>
+                            <button class="black-btn" id="modify-btn" data-bs-dismiss="modal">수정</button>
+                            <button class="red-btn" onclick="postFormSubmit('delete')">삭제</button>
                         </div>
                     </div>
                     <div>
@@ -486,13 +475,13 @@
                     </div>
                 </div>
                 <div id="comment-btn">
-                    <button class="white-btn-border">∧댓글</button>
+                    <button class="white-btn-border" onclick="replyon()">∧댓글</button>
                 </div>
-                <div id="comment">
+                <div id="comment" style="display: none;">
                     <div id="comment-detail">
                         <div id="comment-detail-input">
-                            <input class="search-input" type="text">
-                            <button class=gray-btn-border>작성</button>
+                            <input class="search-input" type="text" id="reply-input">
+                            <button class="gray-btn-border" onclick="insertReply()">작성</button>
                         </div>
                         <div id="comment-table-box">
                             <table id="comment-table">
@@ -516,27 +505,19 @@
                                         확인
                                     </td>
                                 </tr>
+                                <c:forEach var="A" items="${list}">
+                                    <tr data-ano="${A.announcementNo}">
+                                        <td>${A.announcementNo}</td>
+                                        <td>${A.announcementTitle}</td>
+                                        <td>${A.storeName}</td>
+                                        <td>${A.announcementDate}</td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal-footer" id="modal-footer">
-                    <div id="modal-pageing">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
-                        <button type="button" class="btn btn-outline-secondary">6</button>
-                        <button type="button" class="btn btn-outline-secondary">7</button>
-                        <button type="button" class="btn btn-outline-secondary">8</button>
-                        <button type="button" class="btn btn-outline-secondary">9</button>
-                        <button type="button" class="btn btn-outline-secondary">10</button>
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -545,26 +526,29 @@
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                            id="modify-btn-close-modal">
+                <div class="modal-header" >
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="modify-btn-close-modal">
                         <img src="/resources/common/공통_Icon.png" id="modify-x_img">
                     </button>
                 </div>
-                <div class="modal-body">
-                    <!--모달 내용-->
-                    <div id="modify-modal-body-top">
-                        <input type="text" placeholder="제목을 입력하세요">
-                        <p>2025.04.01</p>
+                <form id="modify-form" action="updateAnnouncementDetail.he" method="post">
+                    <div class="modal-body">
+                        <!--모달 내용-->
+                        <div id="modify-modal-body-top">
+                            <input type="text" id="modify-title" name="announcementTitle" placeholder="제목을 입력하세요">
+                            <input id="modify-modal-ano" style="display: none" name="announcementNo">
+                            <p id="modify-date"></p>
+                        </div>
+                        <textarea id="modify-textbox" placeholder="내용을 입력하세요(1000자 이하)" name="announcementDetail"></textarea>
                     </div>
-                    <textarea id="modify-textbox" placeholder="내용을 입력하세요(1000자 이하)">업데이트 내용이다 다들 확인해라 안했으면 큰일난다.</textarea>
-                </div>
-                <div class="modal-footer">
-                    <button>완료</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="black-btn">완료</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
 
 </div>
 <script>
@@ -573,35 +557,103 @@
         row.addEventListener('click', function () {
             const ano = this.getAttribute('data-ano');
 
-            fetch(`/getAnnouncementDetail?ano=`+ ano)
-                .then(response => response.json())
-                .then(data => {
+            // 기존의 fetch를 jQuery AJAX로 변경
+            $.ajax({
+                url: '/getAnnouncementDetail?ano=' + ano, // 서버에서 데이터를 가져오는 URL
+                method: 'GET', // HTTP 요청 메소드
+                dataType: 'json', // 응답 데이터 타입 (JSON)
+                success: function (data) {
                     // 데이터를 모달에 뿌리기
                     document.querySelector("#detail-modal-date").textContent = data.announcementDate;
                     document.querySelector('#detail-modal-title').textContent = data.announcementTitle;
                     document.querySelector('#detail-modal-detail').textContent = data.announcementDetail;
+                    document.querySelector('#detail-modal-ano').textContent = ano;
 
                     // 모달 띄우기
                     const myModal = new bootstrap.Modal(document.getElementById('detail-staticBackdrop'));
-                    myModal.show();})
-
+                    myModal.show();
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX 요청 실패:', error);
+                }
+            });
         });
     });
 
+    function postFormSubmit(action) {
+        // 삭제 버튼을 클릭하면 'delete'를 전달하고, 삭제할 데이터의 id(ano)를 찾습니다.
+        const ano = document.querySelector('#detail-modal-ano').innerHTML;
 
-    document.querySelectorAll('#detail-modal-body button').forEach(button => {
-        if (button.textContent === '수정') {
-            button.addEventListener('click', function () {
-                // 기존 모달을 숨기기
-                var myDetailModal = bootstrap.Modal.getInstance(document.getElementById('detail-staticBackdrop'));
-                myDetailModal.hide(); // 기존 모달 숨기기
+        if (action === 'delete') {
+            // 확인 메시지 (사용자에게 삭제 여부 확인)
+            if (confirm('정말로 삭제하시겠습니까?')) {
+                // AJAX 요청을 보내 삭제 요청
+                $.ajax({
+                    url: '/deleteAnnouncement',  // 서버에서 삭제를 처리할 URL
+                    type: 'POST',  // POST 방식으로 요청
+                    data: {
+                        ano: ano
+                    },
+                    success: function(response) {
+                        alert('삭제되었습니다.');
 
-                // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
-                var newModal = new bootstrap.Modal(document.getElementById('modify-staticBackdrop'));
-                newModal.show(); // 새로운 모달 열기
-            });
+                        location.reload();
+                    }
+                });
+            }
         }
+    }
+
+    document.querySelector('#modify-btn').addEventListener('click', function() {
+
+        document.querySelector('#modify-title').value = document.querySelector('#detail-modal-title').innerHTML;
+        document.querySelector('#modify-textbox').value = document.querySelector('#detail-modal-detail').innerHTML;
+        document.querySelector('#modify-date').textContent = document.querySelector('#detail-modal-date').innerHTML;
+        document.querySelector('#modify-modal-ano').value = document.querySelector('#detail-modal-ano').innerHTML;
+
+
+        const myModal = new bootstrap.Modal(document.getElementById('modify-staticBackdrop'));
+        myModal.show();
     });
+
+    function replyon() {
+        const comment= document.querySelector('#comment-btn');
+        const reply = document.querySelector('#comment');
+        if(reply.style.display == 'none') {
+            reply.style.display = 'flex';
+            comment.style.position = "relative";
+        } else{
+            reply.style.display = 'none';
+            comment.style.position = 'absolute';
+            comment.style.bottom = '0';
+            comment.style.width = '100%';
+        }
+
+    }
+
+    function insertReply(){
+        const replyAno= document.querySelector('#detail-modal-ano').innerHTML;
+        const replycontent= document.querySelector('#reply-input').value;
+
+        $.ajax({
+            url: '/insertReply',
+            type: 'POST',
+            data: {
+                announcementNo: replyAno,
+                replyContent: replycontent
+            },
+            success: function(res){
+                contentArea.value = ""; //댓글 입력창 초기화
+                //댓글목록 다시 불러와서 그려주기
+                getReplyList(bno, function(data){
+                    drawReplyList(data);
+                });
+            },
+            error: function(error){
+                console.log("댓글 작성 ajax통신 실패");
+            }
+        })
+    }
 </script>
 </body>
 </html>

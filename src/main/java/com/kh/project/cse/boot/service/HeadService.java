@@ -7,6 +7,19 @@ import java.util.List;
 
 public interface HeadService {
 
+    //상품추가
+    int insertProduct(Product product);
+    //상품검색
+    ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
+    //상품전체목록 수
+    int ProductListCount();
+    //전체상품목록
+    ArrayList<Product> selectAllProduct(PageInfo pi);
+    //카테고리목록
+    List<Category> selectAllCategories();
+
+
+
     //공지사항추가
     int insertAnnouncement(Announcement announcement);
 
@@ -19,22 +32,18 @@ public interface HeadService {
     //공지사항 세부
     Announcement selectDetailAnnouncement(int announcementNo);
 
+    //공지사항수정
+    int updateAnnouncementDetail(Announcement announcement);
+
+    //공지사항검색
+    ArrayList<Announcement> searchAnnouncement(String condition, String keyword,PageInfo pi);
+
+    //공지사항 삭제
+    int deleteAnnouncement(int announcementNo);
 
 
-    //상품추가
-    int insertProduct(Product product);
-    //상품검색
-    ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
-    //상품전체목록 수
-    int ProductListCount();
-    //전체상품목록
-    ArrayList<Product> selectAllProduct(PageInfo pi);
-    //카테고리목록
-    List<Category> selectAllCategories();
     //상품수정
     int updateProduct(Product product);
-
-
 
 
     //지점전체목록수
