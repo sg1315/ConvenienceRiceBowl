@@ -28,7 +28,7 @@ public interface ProductMapper {
     //지점
 
     //발주요청 상품 목록
-    ArrayList<Product> orderRequestProductList(RowBounds rowBounds);
+    ArrayList<Product> orderRequestProductList();
     //발주요청 상품 검색
-    ArrayList<Product> orderRequestProductSearch(String category, String keyword, RowBounds rowBounds);
+    ArrayList<Product> orderRequestProductSearch(String category, String keyword);
 }

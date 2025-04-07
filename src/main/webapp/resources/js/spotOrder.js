@@ -1,5 +1,5 @@
 // 발주 요청 상품 목록 검색
-$('#search-box').submit(function (e) {
+$(document).on('submit', '#search-box', function (e)  {
     e.preventDefault();
 
     const keyword = $('#product-search').val();
@@ -83,9 +83,9 @@ document.addEventListener('click', function (e) {
 document.querySelector("#order-request-table tbody").addEventListener('input', function (e) {
     if (e.target.classList.contains('quantity-input')) {
         const row = e.target.closest('tr');
-        const circulateionAmount = parseInt(e.target.value) || 1;
+        const circulationAmount = parseInt(e.target.value) || 1;
         const inputPrice = parseInt(row.dataset.inputprice);
-        const total = circulateionAmount * inputPrice;
+        const total = circulationAmount * inputPrice;
         row.querySelector('.total-price').textContent = total.toLocaleString();
         updateSummary();
     }
@@ -110,13 +110,13 @@ document.getElementById('btn-order-submit').addEventListener('click', function (
 
     rows.forEach(row => {
         const productNo = row.dataset.productno;
-        const circulateionAmount = parseInt(row.querySelector('.quantity-input').value);
+        const circulationAmount = parseInt(row.querySelector('.quantity-input').value);
         const inputPrice = parseInt(row.dataset.inputprice);
         const salePrice = parseInt(row.dataset.saleprice);
 
         orderList.push({
             productNo: productNo,
-            circulateionAmount: circulateionAmount,
+            circulationAmount: circulationAmount,
             inputPrice: inputPrice,
             salePrice: salePrice,
         });

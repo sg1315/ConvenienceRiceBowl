@@ -171,6 +171,8 @@
         .modal-body{
             height: 75%;
             flex-grow: 1;
+            overflow: hidden;
+            padding: 0;
         }
         #modal-body{
             height: 75%;
@@ -342,19 +344,50 @@
         #order-cancel{
             border-bottom-right-radius: 10px;
         }
-        #modal-pageing{
+        #modal-pageing {
             display: flex;
-            justify-content:center;
+            justify-content: center;
             width: 72%;
 
             background-color: #D9D9D9;
-            height:100%;
+            height: 100%;
         }
         #order-product-table, #order-request-table{
             text-align: center;
         }
         #order-product-table tr, #order-request-table tr{
             border-bottom: #d9d9d9 solid 2px;
+        }
+        #order-product-table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-product-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-product-table tbody {
+            display: block;
+            overflow-y: auto;
+            width: 100%;
+            height: 90%;
+        }
+
+        #order-product-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-product-table thead th {
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
         #order-request-table td{
             text-align: center;
@@ -440,13 +473,15 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
+                <c:forEach var="o" items="${olist}">
+                    <tr>
+                        <td>${o.minuteGroup}</td>
+                        <td>${o.rnum}</td>
+                        <td>${o.totalAmount}</td>
+                        <td>${o.totalInputPrice}</td>
+                        <td>상태</td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -480,7 +515,7 @@
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <form id="search-box" action="orderProductSearch" method="get">
+                            <form id="search-box" action="productSearch" method="get">
                                 <div id="category-select">
                                     <select class="selectbox" id="order-request-category-select" name="category">
                                         <option value="all">카테고리</option>
@@ -531,11 +566,11 @@
                     </div>
 
                     <div id="modal-pageing-left">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            <button type="button" class="btn btn-outline-secondary page-btn" data-page="${i}">${i}</button>
-                        </c:forEach>
-                        <img src="/resources/common/공통_페이징바화살표.png">
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
+<%--                        <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }">--%>
+<%--                            <button type="button" class="btn btn-outline-secondary page-btn" data-page="${i}">${i}</button>--%>
+<%--                        </c:forEach>--%>
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
                     </div>
                 </div>
 
@@ -581,13 +616,13 @@
                     </div>
 
                     <div id="modal-pageing-right">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
-                        <img src="/resources/common/공통_페이징바화살표.png">
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">1</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">2</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">3</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">4</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">5</button>--%>
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
                     </div>
                 </div>
             </div>

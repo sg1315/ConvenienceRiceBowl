@@ -1,8 +1,10 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.Circulation;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.mappers.CirculationMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,12 @@ import java.util.List;
 public class SpotServiceImpl implements SpotService {
 
     private final ProductMapper productMapper;
+    private final CirculationMapper circulationMapper;
 
     @Autowired
-    public SpotServiceImpl(ProductMapper productMapper) {
+    public SpotServiceImpl(ProductMapper productMapper, CirculationMapper circulationMapper) {
         this.productMapper = productMapper;
+        this.circulationMapper = circulationMapper;
     }
 
 
@@ -33,17 +37,46 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public ArrayList<Product> orderRequestProductList(PageInfo pi) {
-        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-        return productMapper.orderRequestProductList(rowBounds);
+    public ArrayList<Product> orderRequestProductList() {
+//        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.orderRequestProductList();
     }
 
     @Override
-    public ArrayList<Product> orderRequestProductSearch(String category, String keyword, PageInfo pi) {
+    public ArrayList<Product> orderRequestProductSearch(String category, String keyword) {
+//        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+//        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.orderRequestProductSearch(category, keyword);
+    }
+
+    @Override
+    public int insertOrder(List<Circulation> orderList, int storeNo) {
+
+        int result = 1;
+
+        for (Circulation circulation : orderList) {
+            System.out.println();
+            int insertResult = circulationMapper.insertOrder(circulation, storeNo);
+            if (insertResult == 0) {
+                result = 0;
+                break;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public int orderRequestListCount(int storeNo) {
+        return circulationMapper.orderRequestListCount(storeNo);
+    }
+
+    @Override
+    public ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-        return productMapper.orderRequestProductSearch(category, keyword, rowBounds);
+
+        return circulationMapper.orderRequestList(rowBounds, storeNo);
     }
 
 

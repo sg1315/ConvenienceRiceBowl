@@ -7,6 +7,7 @@ import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.ResourceTransactionManager;
@@ -96,42 +97,44 @@ public class SpotController {
 
     //발주
     @RequestMapping("/spot_order")
-    public String spot_order(@RequestParam(defaultValue = "1") int cpage,Model model) {
+    public String spot_order(@RequestParam(defaultValue = "1") int cpage, Model model) {
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        //circuration-mapper도 수정해야함
 
-        int listCount = spotService.ProductListCount();
-        PageInfo pi = new PageInfo(listCount, cpage, 5, 10);
+        int listCount = spotService.orderRequestListCount(storeNo);
+        System.out.println(listCount);
+        PageInfo pi = new PageInfo(listCount, cpage, 10,10);
 
         List<Category> clist = spotService.orderRequestCategoryList();
-        ArrayList<Product> plist = spotService.orderRequestProductList(pi);
-
-        model.addAttribute("pi", pi);
+        ArrayList<Product> plist = spotService.orderRequestProductList();
+        ArrayList<Circulation> olist = spotService.orderRequestList(pi, storeNo);
 
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
+        model.addAttribute("olist", olist);
         return "spot/spotOrder";
     }
     @GetMapping("/spot_order/productSearch")
     @ResponseBody
-    public ArrayList<Product> productSearch(@RequestParam(defaultValue = "1") int cpage, @RequestParam("category") String category, @RequestParam("keyword") String keyword, Model model) {
-        int listCount = spotService.ProductListCount();
-        PageInfo pi = new PageInfo(listCount, cpage, 5, 10);
+    public ArrayList<Product> productSearch(@RequestParam("category") String category, @RequestParam("keyword") String keyword, Model model) {
 
-        ArrayList<Product> slist = spotService.orderRequestProductSearch(category, keyword, pi);
+        ArrayList<Product> slist = spotService.orderRequestProductSearch(category, keyword);
 
         model.addAttribute("slist", slist);
-        model.addAttribute("pi", pi);
         return slist;
     }
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
-        for (Circulation c : orderList) {
-            System.out.println("상품번호: " + c.getProductNo());
-            System.out.println("수량: " + c.getCirculateionAmount());
-            System.out.println("입고가: " + c.getInputPrice());
-            System.out.println("판매가: " + c.getSalePrice());
-            System.out.println("--------------------");
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        //circuration-mapper도 수정해야함
+        int result = 0;
+
+        result = spotService.insertOrder(orderList, storeNo);
+        if (result > 0) {
+            return ResponseEntity.ok("발주 요청 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
-        return ResponseEntity.ok("발주 요청 완료");
     }
 
 
