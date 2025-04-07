@@ -4,6 +4,7 @@ import com.kh.project.cse.boot.domain.vo.Attendance;
 import com.kh.project.cse.boot.mappers.AttendanceMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,6 +20,10 @@ public class SpotServiceImpl implements SpotService {
         return attendanceMapper.selectInfoList();
     }
 
+    @Override
+    public int updateWorkTime(Attendance attendance) {
+        return attendanceMapper.updateWorkTime(attendance);
+    }
 
 
 }

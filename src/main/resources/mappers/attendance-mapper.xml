@@ -33,6 +33,21 @@
         JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
     </select>
 
+    <update id="updateWorkTime" parameterType="attendance">
+        UPDATE ATTENDANCE
+        <set>
+            <if test="workingTime != null">
+                WORKING_TIME = #{workingTime},
+            </if>
+            <if test="workoutTime != null">
+                WORKOUT_TIME = #{workoutTime},
+            </if>
+        </set>
+        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{member.memberId})
+    </update>
+
+
+
 
 
 </mapper>
