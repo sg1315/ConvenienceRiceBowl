@@ -80,7 +80,7 @@
             grid-template-columns: 100%;
         }
         #enrollButton{border-radius: 0 0 8px 8px;}
-        #enrollButton > button{
+        #enrollButton button{
             color: white;
             background-color: #8A8A8A;
             border: none;
@@ -152,7 +152,7 @@
                 <div id="checkResult"></div>
             </div>
             <div class="enrollForm-1" id="enrollButton">
-                <button type="submit" disabled>회원가입</button>
+                <button type="submit" onclick="return checkBeforeSubmit()">회원가입</button>
                 <button type="reset" onclick="closeEnrollModal()">취소</button>
             </div>
             <script>
@@ -195,7 +195,6 @@
                                     checkResult.innerText = "존재하는 지점입니다.";
                                     isStoreNameOk = true;
                                 }
-                                toggleSubmitButton();
                             }, error: function (){
                                 console.log("지점명 중복체크 ajax 실패");
                             }
@@ -223,7 +222,6 @@
                                 checkResult.innerText = "사용 가능한 아이디입니다.";
                                 isUserIdOk = true;
                             }
-                            toggleSubmitButton();
                         }, error: function (){
                             console.log("아이디 중복체크 ajax 실패");
                         }
@@ -234,41 +232,52 @@
                     const password = document.getElementById("memberPwd").value;
                     const passwordCheck = document.getElementById("memberPwdCheck").value;
                     const checkResult = document.getElementById("checkResult");
+                    isPasswordOk = false;
                     clearTimeout(eventFlag);
-                    if(password === passwordCheck){
-                        isPasswordOk = true;
-                        checkResult.style.color = "green";
-                        checkResult.innerText = "비밀번호가 같습니다.";
-                    } else {
-                        isPasswordOk = false;
-                        eventFlag = setTimeout(function (){
-                            checkResult.style.color = "red";
-                            checkResult.innerText = "비밀번호가 같지 않습니다.";
-                        },500)
+                    if(password !== ""){
+                        if(password === passwordCheck){
+                            isPasswordOk = true;
+                            checkResult.style.color = "green";
+                            checkResult.innerText = "비밀번호가 같습니다.";
+                        } else {
+                            eventFlag = setTimeout(function (){
+                                checkResult.style.color = "red";
+                                checkResult.innerText = "비밀번호가 같지 않습니다.";
+                            },500)
+                        }
+                    } else{
+                        checkResult.innerText = "";
                     }
-                    toggleSubmitButton();
                 }
                 function resetCheck(){
                     isStoreNameOk = false;
-                    toggleSubmitButton();
                 }
                 function resetStoreCheck(){
                     isStoreNameOk = false;
-                    toggleSubmitButton();
                 }
                 function resetIdCheck(){
                     isUserIdOk = false;
-                    toggleSubmitButton();
                 }
                 function resetPasswordCheck(){
                     passwordCheck();
                 }
-                function toggleSubmitButton(){
-                    const submitBtn = document.querySelector("#enrollButton button[type='submit']");
-                    submitBtn.disabled = !(isUserIdOk && isStoreNameOk&&isPasswordOk);
-                //  셋다 ture 일때만 원래 값이 반전
+                function checkBeforeSubmit() {
+                    const checkResult = document.getElementById("checkResult");
+                    if(!isStoreNameOk){
+                        checkResult.style.color = "red";
+                        checkResult.innerText = "지점을 확인해 주세요.";
+                        return false;
+                    } else if (!isUserIdOk){
+                        checkResult.style.color = "red";
+                        checkResult.innerText = "아이디 중복확인을 해주세요.";
+                        return false;
+                    } else if (!isPasswordOk){
+                        checkResult.style.color = "red";
+                        checkResult.innerText = "비밀번호 입력을 하지 않았거나 같지 않습니다.";
+                        return false;
+                    }
+                    return true;
                 }
-
             </script>
         </div>
 </body>
