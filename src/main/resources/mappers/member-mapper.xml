@@ -200,9 +200,9 @@
         ORDER BY STORE_NO DESC
     </select>
 
-    <update id="updateHeadMember">
-        UPDATE MEMBER
-
-    </update>
+<delete id="deleteMember">
+    DELETE MEMBER
+    WHERE MEMBER_NO = #{memberNO}
+</delete>
 
 </mapper>
