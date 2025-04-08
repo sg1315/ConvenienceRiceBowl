@@ -26,7 +26,6 @@ public class SpotController {
     private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
-    private Member member;
 
     //대시보드
     @RequestMapping("/spot_dashboard")
@@ -82,7 +81,11 @@ public class SpotController {
     public String spot_expiration(@RequestParam(defaultValue = "1") int cpage, Model model) {
         int boardCount = spotService.selectExpiryCount();
         PageInfo pi = new PageInfo(boardCount,cpage,10,5);
-        ArrayList<Expiry> list = spotService.selectExpiryList(pi);
+        ArrayList<Expiry> expiryList = spotService.selectExpiryList(pi);
+
+        model.addAttribute("expiryList",expiryList);
+        model.addAttribute("pi",pi);
+
         return "spot/sporExpiration";
     }
 

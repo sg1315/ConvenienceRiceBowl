@@ -174,18 +174,25 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="e" items="${expiry}">
+                <c:forEach var="e" items="${expiryList}">
                     <tr onclick = "location.href = 'detail.bo?bno=${e.productNo}'">
                         <td>${e.productNo }</td>
                         <td>${e.categoryName }</td>
                         <td>${e.productName }</td>
                         <td>${e.inventoryCount }</td>
                         <td>${e.price }</td>
-                        <td>${e.nearExpiry }</td>
                         <td>
-                            <c:if test="${not empty e.originName }">
-                                ★
-                            </c:if>
+                            <c:choose>
+                                <c:when test="${e.nearExpiry == 1}">
+                                    <botton onclick="">폐기하기</botton>
+                                </c:when>
+                                <c:when test="${e.nearExpiry == 2}">
+                                    <p style="color: red; font-weight: 600">임박 -1</p>
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                 </c:forEach>
