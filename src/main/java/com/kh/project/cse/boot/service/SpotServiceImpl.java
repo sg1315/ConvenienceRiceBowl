@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.kh.project.cse.boot.mappers.AttendanceMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,6 +103,12 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public ArrayList<Circulation> orderSearch(int storeNo, String SetNo) {
         return null;
+    }
+
+    //매출집계 - 검색
+    @Override
+    public List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate) {
+        return circulationMapper.selectSalesMonth(storeNo,startDate,endDate);
     }
 
 }

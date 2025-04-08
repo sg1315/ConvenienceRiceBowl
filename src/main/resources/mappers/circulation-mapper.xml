@@ -103,4 +103,27 @@
 <!--        ORDER BY RNUM DESC-->
     </select>
 
+
+    <!--매출집계 - 검색 -->
+    <select id="selectSalesMonth" resultMap="circulationResult">
+        SELECT
+        CIRCULATION_NO,
+        STORE_NO,
+        PRODUCT_NO,
+        INPUT_PRICE,
+        SALE_PRICE,
+        CIRCULATION_AMOUNT,
+        CIRCULATION_DATE,
+        STATUS
+        FROM
+        CIRCULATION
+        WHERE
+        STORE_NO = #{storeNo}
+        AND TRUNC(CIRCULATION_DATE) &gt;= #{startDate}
+        AND TRUNC(CIRCULATION_DATE) &lt; #{endDate}
+        ORDER BY
+        CIRCULATION_DATE ASC
+    </select>
+
+
 </mapper>

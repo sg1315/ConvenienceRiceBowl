@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,5 +38,6 @@ public interface SpotService {
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
     //발주요청 목록 검색
     ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
-
+    //매출집계 - 검색
+    List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
 }
