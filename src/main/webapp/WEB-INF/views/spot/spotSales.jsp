@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 
 <html>
   <head>
@@ -35,7 +37,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 100%;
         border-bottom-right-radius: 20px;
         padding-bottom: 10px;
-        padding: auto;
       }
 
       #top-right1 {
@@ -96,6 +97,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         height: 100%;
         border-radius: 20px;
         padding: 50px;
+        padding-top: 20px;
       }
 
       #table1 {
@@ -283,7 +285,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               <label>
                 <input type="month" id="endMonth" name="endMonth" class="date-input" required value="${endMonthVal}">
               </label>
-              <button type="submit" class="search-input-submit">🔍검색</button>
+              <button type="submit" class="search-input-submit" id="submitSearch">🔍검색</button>
             </form>
           </div>
         </div>
@@ -291,7 +293,19 @@ contentType="text/html;charset=UTF-8" language="java" %>
       <div id="main">
         <div id="main-in">
           <div id="main-title">
-            <p>03월 ~ 04월</p>
+            <c:set var="startMonthText" value="${fn:substring(startMonthVal, 5, 7)}" />
+            <c:set var="endMonthText" value="${fn:substring(endMonthVal, 5, 7)}" />
+
+            <c:choose>
+              <c:when test="${startMonthText eq endMonthText}">
+                <p>${startMonthText + 0}월</p>
+              </c:when>
+              <c:otherwise>
+                <p>${startMonthText + 0}월 ~ ${endMonthText + 0}월</p>
+              </c:otherwise>
+            </c:choose>
+
+
           </div>
           <table class="table table-hover" id="table1">
             <thead>
@@ -306,7 +320,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
             <tbody>
             <c:forEach var="sales" items="${list}">
-              <tr>
+              <tr class="table-row" data-date="${sales.circulationDate}">
                 <td>${sales.circulationDate}</td>
                 <td><fmt:formatNumber value="${sales.inputPrice}" type="number" /></td>
                 <td><fmt:formatNumber value="${sales.salePrice}" type="number" /></td>
@@ -318,55 +332,29 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </table>
         </div>
         <div id="main-pageing">
-          <a href="#"><img src="/resources/common/공통_페이징바화살표.png"></a>
-          <button type="button" class="btn btn-outline-secondary">1</button>
-          <button type="button" class="btn btn-outline-secondary">2</button>
-          <button type="button" class="btn btn-outline-secondary">3</button>
-          <button type="button" class="btn btn-outline-secondary">4</button>
-          <button type="button" class="btn btn-outline-secondary">5</button>
-          <button type="button" class="btn btn-outline-secondary">6</button>
-          <button type="button" class="btn btn-outline-secondary">7</button>
-          <button type="button" class="btn btn-outline-secondary">8</button>
-          <button type="button" class="btn btn-outline-secondary">9</button>
-          <button type="button" class="btn btn-outline-secondary">10</button>
-          <a href="#"><img src="/resources/common/공통_페이징바화살표.png" style="transform: scaleX(-1);"></a>
+          <a href="#"><img src="/resources/common/공통_페이징바화살표.png" /></a>
+          <c:forEach begin="1" end="10" var="i">
+            <button type="button" class="btn btn-outline-secondary">${i}</button>
+          </c:forEach>
+          <a href="#"><img src="/resources/common/공통_페이징바화살표.png" style="transform: scaleX(-1);" /></a>
         </div>
+      </div>
+    </div>
       </div>
 
       <!--start point-->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-        crossorigin="anonymous"
-      ></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
       <!-- Modal -->
       <!-- detail-Modal -->
-      <div
-        class="modal fade"
-        id="detail-staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="detail-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div id="modal-header">
               <div id="mo-header-title">
                 <p>일자별 매출집계 내역</p>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  id="btn-close-modal"
-                >
-                  <img
-                    src="/resources/common/공통_Icon.png"
-                    id="detail-x_img"
-                  />
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                  <img src="/resources/common/공통_Icon.png" id="detail-x_img"/>
                 </button>
               </div>
               <div id="header-searchbar">
@@ -380,16 +368,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   <option>음료</option>
                 </select>
                 <div class="search-div">
-                  <input
-                    type="text"
-                    class="search-input"
-                    placeholder="상품명 or 상품번호"
-                  />
-                  <input
-                    type="submit"
-                    class="search-input-submit"
-                    value="검색"
-                  />
+                  <input type="text" class="search-input" placeholder="상품명 or 상품번호"/>
+                  <input type="submit" class="search-input-submit" value="검색"/>
                 </div>
               </div>
             </div>
@@ -400,42 +380,17 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   <tr>
                     <th class="col-2">날짜</th>
                     <th class="col-2">상품번호</th>
-                    <th class="col-1">카테고리</th>
+                    <th class="col-2">카테고리</th>
                     <th class="col-3">상품명</th>
                     <th class="col-1">수량</th>
                     <th class="col-1">판매가</th>
-                    <th class="col-2">판매/폐기</th>
+                    <th class="col-2">구분</th>
                   </tr>
                 </thead>
 
-                <tbody>
-                  <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
-                    <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
-                    <td>64,000</td>
-                    <td>판매</td>
-                  </tr>
-                  <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
-                    <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
-                    <td>0</td>
-                    <td>폐기</td>
-                  </tr>
-                  <tr>
-                    <td>2025-03-01</td>
-                    <td>p1219045</td>
-                    <td>스낵</td>
-                    <td>달콤 프란찌(딸기)</td>
-                    <td>10</td>
-                    <td>64,000</td>
-                    <td>판매</td>
-                  </tr>
+                <tbody id="modal-tbody">
+                <tr class="table-row"></tr>
+
                 </tbody>
               </table>
             </div>
@@ -488,37 +443,54 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
       </div>
 
-      <script>
-        // 테이블의 모든 행에 클릭 이벤트 추가
-        document.querySelectorAll('#table1 tbody tr').forEach((row) => {
-          row.addEventListener('click', function () {
-            // 모달을 띄우기 위한 코드
-            var myModal = new bootstrap.Modal(
-              document.getElementById('detail-staticBackdrop')
-            );
-            myModal.show(); // 모달 열기
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll("#table1 tbody .table-row");
+
+        rows.forEach(row => {
+          row.addEventListener("click", function () {
+            const clickedDate = this.dataset.date;
+            const modalTbody = document.getElementById("modal-tbody");
+            modalTbody.innerHTML = ""; // 기존 내용 초기화
+
+            fetch("/spot_sales/detail?date=" + encodeURIComponent(clickedDate))
+                    .then(response => response.json())
+                    .then(data => {
+                      console.log("받은 데이터 👉", data);
+                      if (!Array.isArray(data)) {
+                        alert("받은 데이터가 배열이 아닙니다!");
+                        return;
+                      }
+                      data.forEach((item) => {
+                        const tr = document.createElement("tr");
+
+
+                        tr.innerHTML = `
+                        <td>${item.circulationDate}</td>
+                        <td>${item.productNo}</td>
+                        <td>${item.categoryName}</td>
+                        <td>${item.productName}</td>
+                        <td>${item.circulationAmount}</td>
+                        <td>${item.salePrice.toLocaleString()}</td>
+                        <td>${item.status == 1 || item.status == 2 ? "구분표시" : ""}</td>`;
+
+                        modalTbody.appendChild(tr);
+                      });
+
+
+                      const modal = new bootstrap.Modal(document.getElementById("detail-staticBackdrop"));
+                      modal.show();
+                    })
+                    .catch(err => {
+                      alert("상세 데이터를 불러오지 못했습니다.");
+                      console.error(err);
+                    });
           });
         });
+      });
+    </script>
 
-        document.querySelectorAll('#modal-body button').forEach((button) => {
-          if (button.textContent === '수정') {
-            button.addEventListener('click', function () {
-              // 기존 모달을 숨기기
-              var myDetailModal = bootstrap.Modal.getInstance(
-                document.getElementById('detail-staticBackdrop')
-              );
-              myDetailModal.hide(); // 기존 모달 숨기기
-
-              // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
-              var newModal = new bootstrap.Modal(
-                document.getElementById('modify-staticBackdrop')
-              );
-              newModal.show(); // 새로운 모달 열기
-            });
-          }
-        });
-      </script>
-      <!--end point-->
+    <!--end point-->
     </div>
   </body>
 </html>

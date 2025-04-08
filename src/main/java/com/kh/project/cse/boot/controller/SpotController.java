@@ -290,7 +290,6 @@ public class SpotController {
             Member loginUser = (Member) session.getAttribute("loginUser");
             int storeNo = loginUser.getStoreNo();
 
-            // ✔ 시작일은 그대로, 종료일은 다음 달 1일로 설정
             LocalDate startDate = LocalDate.parse(startMonth + "-01");
             LocalDate endDate = YearMonth.parse(endMonth).plusMonths(1).atDay(1); // 다음 달 1일
 
@@ -305,6 +304,16 @@ public class SpotController {
 
             return "spot/spotSales";
         }
+
+        //매출 집계 - 모달
+        @GetMapping("/spot_sales/detail")
+        @ResponseBody
+        public List<Circulation> getDetail(@RequestParam("date") String date, HttpSession session) {
+            Member loginUser = (Member) session.getAttribute("loginUser");
+            int storeNo = loginUser.getStoreNo();
+            return spotService.getDetailsByDate(date, storeNo);
+        }
+
 
 
 

@@ -39,6 +39,8 @@ public interface CirculationMapper {
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
                                        @Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate);
+    //매출집계 - 모달
+    List<Circulation> getDetailsByDate(String date, int storeNo);
 
 
 }

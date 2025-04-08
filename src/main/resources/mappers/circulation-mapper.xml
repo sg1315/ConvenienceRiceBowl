@@ -24,8 +24,16 @@
         <result column="MINUTE_GROUP" property="minuteGroup"/>
         <result column="TOTAL_AMOUNT" property="totalAmount"/>
         <result column="TOTAL_INPUT_PRICE" property="totalInputPrice"/>
-
     </resultMap>
+
+    <!-- 매출 전용 -->
+    <resultMap id="circulationSummaryResult" type="Circulation">
+        <result column="CIRCULATION_DATE" property="circulationDate"/>
+        <result column="INPUT_PRICE" property="inputPrice"/>
+        <result column="SALE_PRICE" property="salePrice"/>
+        <result column="CIRCULATION_AMOUNT" property="circulationAmount"/>
+    </resultMap>
+
 
     <insert id="insertOrder">
         INSERT INTO CIRCULATION (
@@ -147,29 +155,46 @@
         WHERE C.SET_NO = #{setNo}
     </select>
 
-
-
-
-    <!--매출집계 - 검색 -->
-    <select id="selectSalesMonth" resultMap="circulationResult">
+    <!-- 매출 자료 (자동계산) -->
+    <select id="selectSalesMonth" resultMap="circulationSummaryResult">
         SELECT
-        CIRCULATION_NO,
-        STORE_NO,
-        PRODUCT_NO,
-        INPUT_PRICE,
-        SALE_PRICE,
-        CIRCULATION_AMOUNT,
         CIRCULATION_DATE,
-        STATUS
+        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS INPUT_PRICE,
+        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS SALE_PRICE,
+        SUM(CIRCULATION_AMOUNT) AS CIRCULATION_AMOUNT
         FROM
         CIRCULATION
         WHERE
         STORE_NO = #{storeNo}
-        AND TRUNC(CIRCULATION_DATE) &gt;= #{startDate}
-        AND TRUNC(CIRCULATION_DATE) &lt; #{endDate}
+        AND CIRCULATION_DATE &gt; #{startDate}
+        AND CIRCULATION_DATE &lt; #{endDate}
+        GROUP BY
+        CIRCULATION_DATE
         ORDER BY
         CIRCULATION_DATE ASC
     </select>
+    <!-- 상세 유통 내역 (모달용) -->
+    <select id="getDetailsByDate" resultMap="circulationResult">
+        SELECT
+        c.CIRCULATION_NO,
+        c.STORE_NO,
+        c.PRODUCT_NO,
+        c.INPUT_PRICE,
+        c.SALE_PRICE,
+        c.CIRCULATION_AMOUNT,
+        TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') AS CIRCULATION_DATE,
+        c.STATUS,
+        s.STORE_NAME,
+        p.PRODUCT_NAME,
+        ca.CATEGORY_NAME
+        FROM CIRCULATION c
+        JOIN STORE s ON c.STORE_NO = s.STORE_NO
+        JOIN PRODUCT p ON c.PRODUCT_NO = p.PRODUCT_NO
+        JOIN CATEGORY ca ON p.CATEGORY_NO = ca.CATEGORY_NO
+        WHERE c.STORE_NO = #{storeNo}
+        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
+    </select>
+
 
     <!--본사 승인 미승인-->
     <update id="updateheadorder">
