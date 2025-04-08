@@ -254,19 +254,28 @@
             }
         </script>
         <div id="main-pageing">
-            <img src="/resources/common/공통_페이징바화살표.png">
-            <button type="button" class="btn btn-outline-secondary">1</button>
-            <button type="button" class="btn btn-outline-secondary">2</button>
-            <button type="button" class="btn btn-outline-secondary">3</button>
-            <button type="button" class="btn btn-outline-secondary">4</button>
-            <button type="button" class="btn btn-outline-secondary">5</button>
-            <button type="button" class="btn btn-outline-secondary">6</button>
-            <button type="button" class="btn btn-outline-secondary">7</button>
-            <button type="button" class="btn btn-outline-secondary">8</button>
-            <button type="button" class="btn btn-outline-secondary">9</button>
-            <button type="button" class="btn btn-outline-secondary">10</button>
-            <img src="/resources/common/공통_페이징바화살표.png">
-        </div>
+                    <c:choose>
+                        <c:when test="${ pi.currentPage < 11 }">
+                            <img src="/resources/common/공통_페이징바화살표.png">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/resources/common/공통_페이징바화살표.png" onclick="location.href='/spot_expiration?cpage=${pi.startPage - 1}'">
+                        </c:otherwise>
+                    </c:choose>
+
+                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                        <button type="button" class="btn btn-outline-secondary" onclick="location.href='/spot_expiration?cpage=${p}'">${p}</button>
+                    </c:forEach>
+
+                    <c:choose>
+                        <c:when test="${ pi.endPage eq pi.maxPage }">
+                            <img src="/resources/common/공통_페이징바화살표.png">
+                        </c:when>
+                        <c:otherwise>
+                            <img src="/resources/common/공통_페이징바화살표.png" onclick="location.href='/spot_expiration?cpage=${pi.endPage + 1}'">
+                        </c:otherwise>
+                    </c:choose>
+            </div>
     </div>
 </div>
 </body>
