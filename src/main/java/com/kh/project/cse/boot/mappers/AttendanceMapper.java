@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.ResultMap;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AttendanceMapper {
@@ -14,4 +15,8 @@ public interface AttendanceMapper {
 
 
     int updateWorkTime(Attendance attendance);
+
+    int updateWorkingBtnTime(Map<String, Object> paramMap);
+
+    int updateWorkLeaveBtnTime(Map<String, Object> paramMap);
 }

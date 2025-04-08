@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SpotServiceImpl implements SpotService {
@@ -23,6 +24,16 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public int updateWorkTime(Attendance attendance) {
         return attendanceMapper.updateWorkTime(attendance);
+    }
+
+    @Override
+    public int updateWorkingTime(Map<String, Object> paramMap) {
+        return attendanceMapper.updateWorkingBtnTime(paramMap);
+    }
+
+    @Override
+    public int updateLeaveTime(Map<String, Object> paramMap) {
+        return attendanceMapper.updateWorkLeaveBtnTime(paramMap);
     }
 
 

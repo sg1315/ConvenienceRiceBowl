@@ -46,6 +46,19 @@
         WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{member.memberId})
     </update>
 
+    <update id="updateWorkingBtnTime" parameterType="map">
+        UPDATE ATTENDANCE
+        SET WORKING_TIME = #{time}
+        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
+    </update>
+
+    <update id="updateWorkLeaveBtnTime" parameterType="map">
+        UPDATE ATTENDANCE
+        SET WORKOUT_TIME = #{time}
+        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
+    </update>
+
+
 
 
 

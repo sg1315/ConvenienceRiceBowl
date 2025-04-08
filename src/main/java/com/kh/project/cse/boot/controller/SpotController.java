@@ -9,6 +9,8 @@ import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -135,9 +137,9 @@ public class SpotController {
         return "spot/spotMember";
     }
     @GetMapping("/spot_attendance")
-    public String spotAttendanceInfo(Model model) {
+    public String spotAttendanceInfo(@SessionAttribute("loginUser") Member loginMember, Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
-
+        model.addAttribute("loginMember", loginMember);
         System.out.println("attendanceList: " + attendanceList);
 
         model.addAttribute("attendanceList", attendanceList);
@@ -186,9 +188,28 @@ public class SpotController {
 
     @PostMapping("/spot_attendance/updateTime")
     @ResponseBody
-    public String updateTime(){
-        return "11";
-    }
+    public Map<String, Object> updateAttendanceTime(@RequestBody Map<String, String> request) {
+        String memberId = request.get("memberId");
+        String time = request.get("time");
+        String type = request.get("type");
+
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.parse(time));
+
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("memberId", memberId);
+        paramMap.put("time", timestamp);
+
+        int result = 0;
+        if ("출근".equals(type)) {
+            result = spotService.updateWorkingTime(paramMap);
+        } else if ("퇴근".equals(type)) {
+            result = spotService.updateLeaveTime(paramMap);
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("result", result == 1 ? "success" : "fail");
+        return response;
+        }
 
 
 

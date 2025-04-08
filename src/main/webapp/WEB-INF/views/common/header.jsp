@@ -432,12 +432,12 @@
 
                 <div>
                   <strong>현재 비밀번호</strong>
-                  <input type="password" name="currentPwd" placeholder="*******" required>
+                  <input type="password" name="currentPwd" placeholder="현재 비밀번호" required>
                 </div>
 
                 <div>
                   <strong>새 비밀번호</strong>
-                  <input type="password" name="newPwd" placeholder="새 비밀번호 입력">
+                  <input type="password" name="newPwd" placeholder="새 비밀번호">
                 </div>
 
                 <input type="hidden" name="memberNo" value="<%= loginUser != null ? loginUser.getMemberNo() : "" %>">
