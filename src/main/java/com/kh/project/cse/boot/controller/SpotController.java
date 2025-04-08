@@ -1,28 +1,26 @@
 package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.Attendance;
+import com.kh.project.cse.boot.domain.vo.Expiry;
 import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
 public class SpotController {
-
     private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
-
-    public SpotController(ResourceTransactionManager resourceTransactionManager, MemberService memberService, SpotService spotService) {
-        this.resourceTransactionManager = resourceTransactionManager;
-        this.memberService = memberService;
-        this.spotService = spotService;
-    }
 
     //대시보드
     @RequestMapping("/spot_dashboard")
@@ -75,7 +73,10 @@ public class SpotController {
 
     //유통기한
     @RequestMapping("/spot_expiration")
-    public String spot_expiration() {
+    public String spot_expiration(@RequestParam(defaultValue = "1") int cpage, Model model) {
+        int boardCount = spotService.selectExpiryCount();
+        PageInfo pi = new PageInfo(boardCount,cpage,10,5);
+        ArrayList<Expiry> list = spotService.selectExpiryList(pi);
         return "spot/sporExpiration";
     }
 

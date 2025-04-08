@@ -174,15 +174,16 @@
                 </thead>
 
                 <tbody>
-                <c:forEach var="p" items="${list}">
-                    <tr onclick = "location.href = 'detail.bo?bno=${p.productNo}'">
-                        <td>${p.productNo }</td>
-                        <td>${p.categoryName }</td>
-                        <td>${p.productName }</td>
-                        <td>${p.expirationDate }</td>
-                        <td>${p.createDate }</td>
+                <c:forEach var="e" items="${expiry}">
+                    <tr onclick = "location.href = 'detail.bo?bno=${e.productNo}'">
+                        <td>${e.productNo }</td>
+                        <td>${e.categoryName }</td>
+                        <td>${e.productName }</td>
+                        <td>${e.inventoryCount }</td>
+                        <td>${e.price }</td>
+                        <td>${e.nearExpiry }</td>
                         <td>
-                            <c:if test="${not empty p.originName }">
+                            <c:if test="${not empty e.originName }">
                                 ★
                             </c:if>
                         </td>

@@ -3,3 +3,38 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.ExpiryMapper">
+    <resultMap id="ExpiryResult" type="Expiry">
+        <result column="BOARD_NO" property="boardNo"/>
+        <result column="BOARD_TITLE" property="boardTitle"/>
+        <result column="BOARD_WRITER" property="boardWriter"/>
+        <result column="BOARD_CONTENT" property="boardContent"/>
+        <result column="ORIGIN_NAME" property="originName"/>
+        <result column="CHANGE_NAME" property="changeName"/>
+        <result column="COUNT" property="count"/>
+        <result column="CREATE_DATE" property="createDate"/>
+        <result column="STATUS" property="status"/>
+    </resultMap>
+
+    <select id="selectExpiryCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM BOARD
+        WHERE STATUS = 'Y'
+    </select>
+    <select id="selectExpiryList" resultMap="ExpiryResult ">
+        SELECT PRODUCT_NO,
+        CATEGORY_NAME,
+        PRODUCT_NAME,
+        EXPIRATION_DATE,
+        INVENTORY_COUNT,
+        INPUT_PRICE*INVENTORY_COUNT AS PRICE,
+        CASE
+        WHEN TRUNC(EXPIRATION_DATE) &lt;= TRUNC(SYSDATE) THEN 1
+        WHEN TRUNC(EXPIRATION_DATE) = TRUNC(SYSDATE + 1) THEN 2
+        ELSE 0
+        END AS NEAR_EXPIRY
+        FROM PRODUCT
+        JOIN INVENTORY USING(PRODUCT_NO)
+        JOIN CATEGORY USING(CATEGORY_NO)
+        ORDER BY EXPIRATION_DATE
+    </select>
+</mapper>
