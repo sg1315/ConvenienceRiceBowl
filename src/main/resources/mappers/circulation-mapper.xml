@@ -50,15 +50,13 @@
 
     <select id="orderRequestListCount" resultType="_int">
         SELECT
-        COUNT(*)
+            COUNT(*)
         FROM (
-        SELECT
-        TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP
-        FROM
-        CIRCULATION
-        WHERE STORE_NO = #{storeNo}
-        AND STATUS = 1
-        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
+            SELECT
+                TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP
+            FROM CIRCULATION
+            WHERE STORE_NO = #{storeNo} AND STATUS = 1
+            GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
         )
     </select>
 
@@ -101,6 +99,64 @@
 <!--                )-->
 <!--        )-->
 <!--        ORDER BY RNUM DESC-->
+    </select>
+
+    <select id="orderSearchListCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM (
+            SELECT
+                TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+                SET_NO,
+                SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+                SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+                STATUS
+            FROM CIRCULATION
+            WHERE STORE_NO = #{storeNo}
+                <if test="startDate != null and endDate == null">
+                    AND CIRCULATION_DATE &gt;= #{startDate}
+                </if>
+                <if test="endDate != null and startDate == null">
+                    AND CIRCULATION_DATE &lt;= #{endDate}
+                </if>
+                <if test="startDate != null and endDate != null">
+                    AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+                </if>
+                <if test="status != null">
+                    AND STATUS = #{status}
+                </if>
+                <if test="setNo != null and setNo != ''">
+                    AND SET_NO LIKE '%' || #{setNo} || '%'
+                </if>
+            GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        )
+    </select>
+
+    <select id="orderSearchList" resultMap="circulationResult">
+        SELECT
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STATUS
+        FROM CIRCULATION
+        WHERE STORE_NO = #{storeNo}
+            <if test="startDate != null and endDate == null">
+                AND CIRCULATION_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and startDate == null">
+                AND CIRCULATION_DATE &lt;= #{endDate}
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            </if>
+            <if test="status != null">
+                AND STATUS = #{status}
+            </if>
+            <if test="setNo != null and setNo != ''">
+                AND SET_NO LIKE '%' || #{setNo} || '%'
+            </if>
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        ORDER BY SET_NO DESC
     </select>
 
 </mapper>

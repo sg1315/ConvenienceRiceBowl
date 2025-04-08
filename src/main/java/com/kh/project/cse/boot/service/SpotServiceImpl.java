@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -100,8 +101,16 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public ArrayList<Circulation> orderSearch(int storeNo, String SetNo) {
-        return null;
+    public int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
+        return circulationMapper.orderSearchListCount(storeNo, setNo, status, startDate, endDate);
+    }
+
+    @Override
+    public ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return circulationMapper.orderSearchList(rowBounds, storeNo, setNo, status, startDate, endDate);
     }
 
 }

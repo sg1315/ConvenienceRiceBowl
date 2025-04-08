@@ -160,7 +160,6 @@ $(document).ready(function () {
             status: status,
             setNo: setNo
         };
-
         console.log(data);
 
         $.ajax({
@@ -168,7 +167,8 @@ $(document).ready(function () {
             type: 'GET',
             data: data,
             success: function (data) {
-                renderOrderList(data);
+                console.log(data);
+                // renderOrderList(data);
             },
             error: function () {
                 alert('검색 중 오류가 발생했습니다.');
@@ -176,21 +176,4 @@ $(document).ready(function () {
         });
     });
 
-    function renderOrderList(data) {
-        let html = '';
-        if (data.length === 0) {
-            html = '<p>검색 결과가 없습니다.</p>';
-        } else {
-            html += '<table><tr><th>발주번호</th><th>상태</th><th>날짜</th></tr>';
-            data.forEach(function (item) {
-                html += '<tr>' +
-                    '<td>' + item.setNo + '</td>' +
-                    '<td>' + item.statusName + '</td>' +
-                    '<td>' + item.createdAt + '</td>' +
-                    '</tr>';
-            });
-            html += '</table>';
-        }
-        $('#orderListContainer').html(html);
-    }
 });

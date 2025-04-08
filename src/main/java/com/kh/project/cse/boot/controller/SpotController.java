@@ -11,6 +11,7 @@ import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -22,17 +23,13 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +122,7 @@ public class SpotController {
         ArrayList<Product> plist = spotService.orderRequestProductList();
         ArrayList<Circulation> olist = spotService.orderRequestList(pi, storeNo);
 
+        model.addAttribute("pi", pi);
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
         model.addAttribute("olist", olist);
@@ -139,6 +137,7 @@ public class SpotController {
         model.addAttribute("pslist", pslist);
         return pslist;
     }
+    //발주 - 발주요청
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
         int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
@@ -154,15 +153,39 @@ public class SpotController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
     }
+    //발주 - 발주목록 검색
     @GetMapping("/spot_order/orderSearch")
     @ResponseBody
-    public ArrayList<Circulation> orderSearch(@RequestParam(required = false) Date startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) String status, @RequestParam(required = false) String setNo) {
+    public ArrayList<Circulation> orderSearch(@RequestParam(defaultValue = "1") int cpage, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate, @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate, @RequestParam(required = false) Integer status, @RequestParam(required = false) String setNo, Model model) {
         int storeNo = 2; // 세션 등에서 가져오기
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(status);
-        System.out.println(setNo);
-        return null;
+        //date값 보정
+        if (startDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            startDate = cal.getTime();
+        }
+        if (endDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            endDate = cal.getTime();
+        }
+        int listCount = spotService.orderSearchListCount(storeNo, setNo, status, startDate, endDate);
+        PageInfo pi = new PageInfo(listCount, cpage, 10,10);
+
+        ArrayList<Circulation> oslist = spotService.orderSearchList(pi, storeNo, setNo, status, startDate, endDate);
+
+        model.addAttribute("pi", pi);
+        model.addAttribute("oslist", oslist);
+
+        return oslist;
     }
 
 
