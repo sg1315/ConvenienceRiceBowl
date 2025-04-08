@@ -79,5 +79,9 @@ public interface HeadService {
     //발주관리사항 총수
     int selectcirculation();
 
+    //발주 승인 미승인
+
+    int updateheadorder(String setNo, int status);
+
 
 }

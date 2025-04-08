@@ -267,7 +267,8 @@
                             data-minuteGroup="${C.minuteGroup}"
                             data-storeName="${C.storeName}"
                             data-totalAmount="${C.totalAmount}"
-                            data-totalInputPrice="${C.totalInputPrice}">
+                            data-totalInputPrice="${C.totalInputPrice}"
+                            data-status="${C.status}">
                             <td>${C.minuteGroup}</td>
                             <td>${C.setNo}</td>
                             <td>${C.storeName}</td>
@@ -364,10 +365,14 @@
                 const storeName = this.getAttribute('data-storeName');
                 const totalAmount = this.getAttribute('data-totalAmount');
                 const totalInputPrice = this.getAttribute('data-totalInputPrice');
+                const status=this.getAttribute('data-status');
                 document.querySelector('#set').innerHTML = totalAmount;
                 document.querySelector('#pice').innerHTML = totalInputPrice;
-
-
+                document.querySelector('#staticBackdropLabel').innerHTML = sno;
+                if(status != 1){
+                    document.querySelector('#modal-header2-btn').style.display = 'none';
+                    document.querySelector('#modal-header2-btn2').style.display = 'none';
+                }
 
 
                 // 기존의 fetch를 jQuery AJAX로 변경
@@ -394,6 +399,7 @@
 
                         let rowCount = $("#modal-table tbody tr").length;
                         document.querySelector('#sett').innerHTML = rowCount;
+
                         // 모달 띄우기
                         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
                         myModal.show();
@@ -407,6 +413,35 @@
                 });
             });
         });
+
+        function updateOrderStatus(statusCode) {
+            const sno = document.querySelector('#staticBackdropLabel').innerHTML;
+            console.log(sno);
+            $.ajax({
+                url: '/updateheadorder',
+                method: 'POST', // HTTP 요청 메소드
+                dataType: 'json', // 응답 데이터 타입 (JSON)
+                data:{
+                    sno: sno,
+                    status: statusCode },
+                success: function(data) {
+                    alert(data.message);
+
+                    // 모달 닫기
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+                    if (modal) {
+                        modal.hide();
+                    }
+                    location.reload();
+                },
+                error: function(err) {
+                    alert("상태 변경 실패");
+                    console.error(err);
+                }
+            })
+        }
+        document.getElementById('modal-header2-btn').addEventListener('click', () => updateOrderStatus(5)); // 승인
+        document.getElementById('modal-header2-btn2').addEventListener('click', () => updateOrderStatus(6)); // 거절
 
     </script>
 

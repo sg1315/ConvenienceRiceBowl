@@ -46,6 +46,17 @@ public class HeadController {
         ArrayList<Circulation> list = headService.getOderDetail(sno);
         return list;
     }
+    //본사 발주 승인,미승인
+    @ResponseBody
+    @PostMapping("/updateheadorder")
+    public Map<String, Object> updateheadorder(@RequestParam("sno") String sno, @RequestParam("status") int status) {
+        int result = headService.updateheadorder(sno, status);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", result > 0 ? "처리 성공" : "처리 실패");
+
+        return response;
+    }
 
     //공지사항추가
     @PostMapping("/insertAnnouncement.he")

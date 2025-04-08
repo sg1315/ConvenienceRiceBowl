@@ -23,6 +23,8 @@ public interface CirculationMapper {
     ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
     ArrayList<Circulation> getOderDetail(@Param("setNo") String setNo);
+    //발주승인 미승인
+    int updateheadorder(@Param("setNo") String setNo, @Param("status") int status);
 
     //지점
     //발주 요청
@@ -37,5 +39,6 @@ public interface CirculationMapper {
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
                                        @Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate);
+
 
 }

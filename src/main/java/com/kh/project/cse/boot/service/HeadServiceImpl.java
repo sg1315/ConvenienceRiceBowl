@@ -219,6 +219,10 @@ public class HeadServiceImpl implements HeadService {
     @Override
     public int selectcirculation(){return circulationMapper.selectcirculation();}
 
+    @Override
+    public int updateheadorder(String setNo, int status) {
+        return circulationMapper.updateheadorder(setNo,status);
+    }
 
 
 }

@@ -171,5 +171,12 @@
         CIRCULATION_DATE ASC
     </select>
 
+    <!--본사 승인 미승인-->
+    <update id="updateheadorder">
+        UPDATE CIRCULATION
+        SET STATUS = #{status}
+        WHERE SET_NO = #{setNo}
+    </update>
+
 
 </mapper>
