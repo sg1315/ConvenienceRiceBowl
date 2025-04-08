@@ -111,4 +111,10 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.selectSalesMonth(storeNo,startDate,endDate);
     }
 
+    //매출집계 - 모달
+    @Override
+    public List<Circulation> getDetailsByDate(String date, int storeNo) {
+        return circulationMapper.getDetailsByDate(date,storeNo);
+    }
+
 }

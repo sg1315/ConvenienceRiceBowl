@@ -40,4 +40,6 @@ public interface SpotService {
     ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
+    //매출집계 - 모달
+    List<Circulation> getDetailsByDate(String date, int storeNo);
 }
