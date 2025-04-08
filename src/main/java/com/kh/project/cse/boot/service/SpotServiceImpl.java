@@ -8,10 +8,12 @@ import com.kh.project.cse.boot.mappers.ExpiryMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class SpotServiceImpl implements SpotService {
@@ -19,17 +21,17 @@ public class SpotServiceImpl implements SpotService {
     private final ExpiryMapper expiryMapper;
 
     @Override
-    public int selectExpiryCount() {
-        return expiryMapper.selectExpiryCount();
+    public int selectExpiryCount(int storeNo) {
+        return expiryMapper.selectExpiryCount(storeNo);
     }
 
     @Override
-    public ArrayList<Expiry> selectExpiryList(PageInfo pi) {
+    public ArrayList<Expiry> selectExpiryList(int storeNo,PageInfo pi) {
 
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
 
-        return expiryMapper.selectExpiryList(rowBounds);
+        return expiryMapper.selectExpiryList(storeNo, rowBounds);
     }
 
     @Override
@@ -42,6 +44,17 @@ public class SpotServiceImpl implements SpotService {
         return attendanceMapper.updateWorkTime(attendance);
     }
 
+    @Override
+    public int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate) {
+        System.out.println(storeNo +" "+ productNo +" "+ inventoryCount +" "+ expirationDate);
+        int result = 0;
+        result = expiryMapper.insertExpiry(storeNo,productNo,inventoryCount);
+        System.out.println("result:"+ result);
+        if(result>0){
+            return expiryMapper.deleteExpiry(storeNo,productNo,expirationDate);
+        }
+        return 0;
+    }
 
 
 }

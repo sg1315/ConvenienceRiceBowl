@@ -14,6 +14,6 @@ public class Expiry {
     private String productName;
     private String expirationDate;
     private int inventoryCount;
-    private int price;
+    private String price;
     private String nearExpiry;
 }

@@ -6,9 +6,9 @@ import com.kh.project.cse.boot.domain.vo.Member;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Controller
 public class SpotController {
-    private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
 
@@ -78,10 +77,18 @@ public class SpotController {
 
     //유통기한
     @RequestMapping("/spot_expiration")
-    public String spot_expiration(@RequestParam(defaultValue = "1") int cpage, Model model) {
-        int boardCount = spotService.selectExpiryCount();
-        PageInfo pi = new PageInfo(boardCount,cpage,10,5);
-        ArrayList<Expiry> expiryList = spotService.selectExpiryList(pi);
+    public String spot_expiration(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "비정상적인 접근입니다.");
+            return "redirect:/loginForm";
+        }
+        int boardCount = spotService.selectExpiryCount(storeNo);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Expiry> expiryList = spotService.selectExpiryList(storeNo,pi);
 
         model.addAttribute("expiryList",expiryList);
         model.addAttribute("pi",pi);

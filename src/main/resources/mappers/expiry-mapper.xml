@@ -18,6 +18,7 @@
         SELECT PRODUCT_NO,EXPIRATION_DATE
         FROM INVENTORY
         WHERE INVENTORY_COUNT > 0
+        AND STORE_NO =#{storeNo}
         )
     </select>
     <select id="selectExpiryList" resultMap="ExpiryResult ">
@@ -25,9 +26,9 @@
         P.PRODUCT_NO,
         C.CATEGORY_NAME,
         P.PRODUCT_NAME,
-        I.EXPIRATION_DATE,
+        TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD') AS EXPIRATION_DATE,
         I.INVENTORY_COUNT,
-        P.INPUT_PRICE*I.INVENTORY_COUNT AS PRICE,
+        TO_CHAR(P.INPUT_PRICE*I.INVENTORY_COUNT, 'L999,999,999') AS PRICE,
         CASE
         WHEN TRUNC(I.EXPIRATION_DATE) &lt;= TRUNC(SYSDATE) THEN 1
         WHEN TRUNC(I.EXPIRATION_DATE) = TRUNC(SYSDATE + 1) THEN 2
@@ -37,6 +38,36 @@
         JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE I.INVENTORY_COUNT > 0
+        AND I.STORE_NO =#{storeNo}
         ORDER BY I.EXPIRATION_DATE
     </select>
+    <insert id="insertExpiry">
+        INSERT INTO CIRCULATION (
+            CIRCULATION_NO,
+            STORE_NO,
+            PRODUCT_NO,
+            INPUT_PRICE,
+            SALE_PRICE,
+            CIRCULATION_AMOUNT,
+            CIRCULATION_DATE,
+            STATUS
+        )
+        SELECT
+        SEQ_CIR.NEXTVAL,
+        #{storeNo},
+        #{productNo},
+        INPUT_PRICE,
+        SALE_PRICE,
+        #{inventoryCount},
+        SYSDATE,
+        4
+        FROM PRODUCT
+        WHERE PRODUCT_NO = #{productNo}
+    </insert>
+    <delete id="deleteExpiry">
+        DELETE FROM INVENTORY
+        WHERE STORE_NO = #{storeNo}
+        AND PRODUCT_NO = #{productNo}
+        AND TO_CHAR(EXPIRATION_DATE, 'YYYY-MM-DD') = #{expirationDate}
+    </delete>
 </mapper>
