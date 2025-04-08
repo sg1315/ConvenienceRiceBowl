@@ -460,10 +460,10 @@
                     </button>
                 </div>
                 <div id="order-search">
-                    <form method="get" action="orderSearch">
+                    <form id="order-search-form">
                         <div id="order-search-top">
-                            <button class="search-input-submit">저번 달</button>
-                            <button class="search-input-submit">최근</button>
+                            <button type="button" class="search-input-submit" id="previousMonth">저번 달</button>
+                            <button type="button" class="search-input-submit" id="lastMonth">최근</button>
                             <input class="date-input" type="date" name="startDate"> ~ <input class="date-input" type="date" name="endDate">
                         </div>
                         <div id="order-search-bottom">
@@ -478,8 +478,8 @@
                                 </select>
                             </div>
                             <div>
-                                <input class="search-input" type="text" name="searchSetNo" placeholder="발주번호">
-                                <input class="search-input-submit" type="submit" value="검색">
+                                <input class="search-input" type="text" name="setNo" placeholder="발주번호">
+                                <button class="search-input-submit" id="btn-order-search" type="button">검색</button>
                             </div>
                         </div>
                     </form>

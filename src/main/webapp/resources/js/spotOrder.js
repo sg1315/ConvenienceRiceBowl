@@ -145,3 +145,52 @@ document.getElementById('btn-order-submit').addEventListener('click', function (
         });
 });
 
+//발주 목록 검색
+$(document).ready(function () {
+    $('#btn-order-search').click(function (e) {
+        e.preventDefault();
+        const startDate = $('input[name="startDate"]').val();
+        const endDate = $('input[name="endDate"]').val();
+        const status = $('select[name="status"]').val();
+        const setNo = $('input[name="setNo"]').val();
+
+        const data = {
+            startDate: startDate,
+            endDate: endDate,
+            status: status,
+            setNo: setNo
+        };
+
+        console.log(data);
+
+        $.ajax({
+            url: '/spot_order/orderSearch',
+            type: 'GET',
+            data: data,
+            success: function (data) {
+                renderOrderList(data);
+            },
+            error: function () {
+                alert('검색 중 오류가 발생했습니다.');
+            }
+        });
+    });
+
+    function renderOrderList(data) {
+        let html = '';
+        if (data.length === 0) {
+            html = '<p>검색 결과가 없습니다.</p>';
+        } else {
+            html += '<table><tr><th>발주번호</th><th>상태</th><th>날짜</th></tr>';
+            data.forEach(function (item) {
+                html += '<tr>' +
+                    '<td>' + item.setNo + '</td>' +
+                    '<td>' + item.statusName + '</td>' +
+                    '<td>' + item.createdAt + '</td>' +
+                    '</tr>';
+            });
+            html += '</table>';
+        }
+        $('#orderListContainer').html(html);
+    }
+});

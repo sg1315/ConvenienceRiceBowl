@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -119,10 +120,10 @@ public class SpotController {
     @ResponseBody
     public ArrayList<Product> productSearch(@RequestParam("category") String category, @RequestParam("keyword") String keyword, Model model) {
 
-        ArrayList<Product> slist = spotService.orderRequestProductSearch(category, keyword);
+        ArrayList<Product> pslist = spotService.orderRequestProductSearch(category, keyword);
 
-        model.addAttribute("slist", slist);
-        return slist;
+        model.addAttribute("pslist", pslist);
+        return pslist;
     }
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
@@ -138,6 +139,16 @@ public class SpotController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
+    }
+    @GetMapping("/spot_order/orderSearch")
+    @ResponseBody
+    public ArrayList<Circulation> orderSearch(@RequestParam(required = false) Date startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) String status, @RequestParam(required = false) String setNo) {
+        int storeNo = 2; // 세션 등에서 가져오기
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(status);
+        System.out.println(setNo);
+        return null;
     }
 
 

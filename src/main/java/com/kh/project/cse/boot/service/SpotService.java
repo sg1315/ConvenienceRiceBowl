@@ -23,4 +23,6 @@ public interface SpotService {
     int orderRequestListCount(int storeNo);
     //발주요청 분단위 묶음 목록
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
+    //발주요청 목록 검색
+    ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
 }

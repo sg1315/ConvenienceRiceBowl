@@ -79,5 +79,10 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.orderRequestList(rowBounds, storeNo);
     }
 
+    @Override
+    public ArrayList<Circulation> orderSearch(int storeNo, String SetNo) {
+        return null;
+    }
+
 
 }
