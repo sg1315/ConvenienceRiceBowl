@@ -69,5 +69,8 @@ public interface HeadService {
     //발주관리사항 불러오기
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
 
+    //발주관리 세부사항
+    ArrayList<Circulation> getOderDetail(int setNo);
+
     int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers);
 }

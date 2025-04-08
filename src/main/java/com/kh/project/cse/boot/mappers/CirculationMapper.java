@@ -18,6 +18,7 @@ public interface CirculationMapper {
 
     ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
+    ArrayList<Circulation> getOderDetail(@Param("setNo") int setNo);
 
     //지점
     //발주 요청
