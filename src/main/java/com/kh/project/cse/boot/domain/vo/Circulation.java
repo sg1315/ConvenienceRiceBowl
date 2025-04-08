@@ -22,6 +22,9 @@ public class Circulation {
 
 
     private String storeName;
+    private String productName;
+    private String categoryName;
+    private int sumInputPrice;
 
     //발주목록 가져오기
     private String setNo;

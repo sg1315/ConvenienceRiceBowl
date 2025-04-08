@@ -43,7 +43,13 @@ public class HeadController {
     public String home3() {
         return "head_office/headOrder";
     }
-    //성진
+    //본사 발주 세부 사항
+    @ResponseBody
+    @GetMapping("/getOderDetail")
+    public ArrayList<Circulation> getOderDetail(@RequestParam("sno") int sno) {
+        ArrayList<Circulation> list = headService.getOderDetail(sno);
+        return list;
+    }
 
     //공지사항추가
     @PostMapping("/insertAnnouncement.he")
@@ -114,7 +120,6 @@ public class HeadController {
     @ResponseBody
     public List<Reply> replylist(@RequestParam("ano") int ano) {
         List<Reply> list = headService.selectReply(ano);
-        System.out.println(list);
         return list;
     }
 

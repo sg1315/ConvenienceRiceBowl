@@ -13,6 +13,9 @@
         <result column="CIRCULATION_DATE" property="circulationDate"/>
         <result column="STATUS" property="status"/>
         <result column="STORE_NAME" property="storeName"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="SUM_INPUT_PRICE" property="sumInputPrice"/>
 
         <!-- 발주목록 가져오기 -->
         <result column="SET_NO" property="setNo"/>
@@ -101,6 +104,47 @@
 <!--                )-->
 <!--        )-->
 <!--        ORDER BY RNUM DESC-->
+    </select>
+
+    <select id="selectCirculationlist" resultMap="circulationResult">
+        SELECT
+        TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+        SET_NO,
+        SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+        SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+        STORE_NAME,
+        STATUS
+        FROM  CIRCULATION C
+        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
+        WHERE STATUS IN (1,5,6,7)
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
+        ORDER BY SET_NO DESC
+    </select>
+
+    <select id="selectcirculation" resultType="_int">
+        SELECT
+        COUNT(*)
+        FROM (
+        SELECT
+        TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP
+        FROM CIRCULATION
+        WHERE STATUS IN (1,5,6,7)
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
+        )
+    </select>
+
+    <select id="getOderDetail" resultMap="circulationResult">
+        SELECT
+        P.PRODUCT_NO AS PRODUCT_NO,
+        Y.CATEGORY_NAME AS CATEGORY_NAME,
+        P.PRODUCT_NAME AS PRODUCT_NAME,
+        C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
+        (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE
+        FROM CIRCULATION C
+        LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
+        LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
+        LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
+        WHERE C.SET_NO = #{setNo}
     </select>
 
     <select id="selectCirculationlist" resultMap="circulationResult">

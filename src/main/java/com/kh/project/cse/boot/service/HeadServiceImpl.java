@@ -210,6 +210,11 @@ public class HeadServiceImpl implements HeadService {
         return circulationMapper.selectCirculationlist(rowBounds);
     }
 
+    //발주세부사항 불러오기
+    @Override
+    public ArrayList<Circulation> getOderDetail(int setNo) {
+        return circulationMapper.getOderDetail(setNo);
+    }
 
 
 }
