@@ -17,7 +17,7 @@
             <result column="MEMBER_STATUS" property="status"/>
         </association>
     </resultMap>
-
+    <!--근태관리 - 직원정보 불러오기-->
     <select id="selectInfoList" resultMap="attendanceMap">
         SELECT
         A.ATTENDANCE_NO,
@@ -32,7 +32,7 @@
         FROM ATTENDANCE A
         JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
     </select>
-
+    <!--근태관리 - 출퇴근 시간 업데이트-->
     <update id="updateWorkTime" parameterType="attendance">
         UPDATE ATTENDANCE
         <set>
@@ -45,13 +45,13 @@
         </set>
         WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{member.memberId})
     </update>
-
+    <!--근태관리 - 출근 버튼 클릭시-->
     <update id="updateWorkingBtnTime" parameterType="map">
         UPDATE ATTENDANCE
         SET WORKING_TIME = #{time}
         WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
     </update>
-
+    <!--근태관리 - 퇴근 버튼 클릭시-->
     <update id="updateWorkLeaveBtnTime" parameterType="map">
         UPDATE ATTENDANCE
         SET WORKOUT_TIME = #{time}

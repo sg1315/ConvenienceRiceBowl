@@ -15,22 +15,22 @@ public class SpotServiceImpl implements SpotService {
     public SpotServiceImpl(AttendanceMapper attendanceMapper) {
         this.attendanceMapper = attendanceMapper;
     }
-
+    //근태정보 조회 - 초기화면
     @Override
     public List<Attendance> selectInfoList() {
         return attendanceMapper.selectInfoList();
     }
-
+    //근태정보 - 모달 수정버튼
     @Override
     public int updateWorkTime(Attendance attendance) {
         return attendanceMapper.updateWorkTime(attendance);
     }
-
+    //근태관리 - 출퇴근시간 업데이트 //출근
     @Override
     public int updateWorkingTime(Map<String, Object> paramMap) {
         return attendanceMapper.updateWorkingBtnTime(paramMap);
     }
-
+    //근태관리 - 출퇴근시간 업데이트 //퇴근
     @Override
     public int updateLeaveTime(Map<String, Object> paramMap) {
         return attendanceMapper.updateWorkLeaveBtnTime(paramMap);

@@ -84,7 +84,7 @@
         WHERE MEMBER_ID = #{memberId}
         AND MEMBER_STATUS = 'Y'
     </select>
-
+    <!--개인정보 수정 및 직원정보 수정-->
     <update id="updateMember" parameterType="member">
         UPDATE MEMBER
         <set>
