@@ -212,10 +212,10 @@ public class HeadServiceImpl implements HeadService {
 
     //발주세부사항 불러오기
     @Override
-    public ArrayList<Circulation> getOderDetail(int setNo) {
+    public ArrayList<Circulation> getOderDetail(String setNo) {
         return circulationMapper.getOderDetail(setNo);
     }
-    
+
     @Override
     public int selectcirculation(){return circulationMapper.selectcirculation();}
 

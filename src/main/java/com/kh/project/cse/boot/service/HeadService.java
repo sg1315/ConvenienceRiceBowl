@@ -75,7 +75,7 @@ public interface HeadService {
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
 
     //발주관리 세부사항
-    ArrayList<Circulation> getOderDetail(int setNo);
+    ArrayList<Circulation> getOderDetail(String setNo);
     //발주관리사항 총수
     int selectcirculation();
 

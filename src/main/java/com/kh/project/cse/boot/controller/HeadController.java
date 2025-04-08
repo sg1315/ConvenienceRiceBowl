@@ -42,7 +42,7 @@ public class HeadController {
     //본사 발주 세부 사항
     @ResponseBody
     @GetMapping("/getOderDetail")
-    public ArrayList<Circulation> getOderDetail(@RequestParam("sno") int sno) {
+    public ArrayList<Circulation> getOderDetail(@RequestParam("sno") String sno) {
         ArrayList<Circulation> list = headService.getOderDetail(sno);
         return list;
     }

@@ -376,7 +376,6 @@
                     method: 'GET', // HTTP 요청 메소드
                     dataType: 'json', // 응답 데이터 타입 (JSON)
                     success: function (data) {
-
                         let str = "";
                         for(let o of data){
 

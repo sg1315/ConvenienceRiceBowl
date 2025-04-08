@@ -22,7 +22,7 @@ public interface CirculationMapper {
 
     ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
-    ArrayList<Circulation> getOderDetail(@Param("setNo") int setNo);
+    ArrayList<Circulation> getOderDetail(@Param("setNo") String setNo);
 
     //지점
     //발주 요청
