@@ -10,5 +10,30 @@
         <result column="REPLY_CONTENT" property="replyContent"/>
         <result column="MEMBER_NO" property="memberNo"/>
         <result column="CREATE_DATE" property="createDate"/>
+        <result column="STORE_NAME" property="storeName"/>
     </resultMap>
+
+    <insert id="insertReply">
+        INSERT INTO REPLY(
+        REPLY_NO,
+        ANNOUNCEMENT_NO,
+        REPLY_CONTENT,
+        MEMBER_NO
+        ) VALUES (
+        SEQ_RENO.NEXTVAL,
+        #{announcementNo},
+        #{replyContent},
+        10005
+        )
+    </insert>
+    <select id="selectReply" resultMap="replyResult">
+        SELECT
+        REPLY_CONTENT,
+        STORE_NAME,
+        TO_CHAR(CREATE_DATE, 'YY-MM-DD / HH24:MI:SS') AS CREATE_DATE
+        FROM REPLY R
+        LEFT JOIN MEMBER M ON ( R.MEMBER_NO = M. MEMBER_NO)
+        LEFT JOIN STORE S ON (M.STORE_NO = S.STORE_NO)
+        WHERE ANNOUNCEMENT_NO = #{ano}
+    </select>
 </mapper>

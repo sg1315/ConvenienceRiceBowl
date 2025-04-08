@@ -292,6 +292,19 @@
             color: #3C3C3C;
             font-weight: bold;
         }
+        #comment-table-box {
+            max-height: 250px; /* 높이는 원하는 대로 조정 가능 */
+            overflow-y: auto;
+        }
+
+        #comment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #comment-table td {
+            padding: 8px;
+        }
 
         /*
         -----------------------
@@ -485,34 +498,6 @@
                         </div>
                         <div id="comment-table-box">
                             <table id="comment-table">
-                                <tr>
-                                    <th>
-                                        강남점 25-03-20/09:31:20
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        확인
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        잠실점 25-03-20/09:31:20
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        확인
-                                    </td>
-                                </tr>
-                                <c:forEach var="A" items="${list}">
-                                    <tr data-ano="${A.announcementNo}">
-                                        <td>${A.announcementNo}</td>
-                                        <td>${A.announcementTitle}</td>
-                                        <td>${A.storeName}</td>
-                                        <td>${A.announcementDate}</td>
-                                    </tr>
-                                </c:forEach>
                             </table>
                         </div>
                     </div>
@@ -556,6 +541,8 @@
     document.querySelectorAll('#table1 tbody tr').forEach(row => {
         row.addEventListener('click', function () {
             const ano = this.getAttribute('data-ano');
+            document.querySelector('#comment').style.display = 'none';
+            document.querySelector('#comment-btn').style.position = 'absolute';
 
             // 기존의 fetch를 jQuery AJAX로 변경
             $.ajax({
@@ -619,40 +606,75 @@
     function replyon() {
         const comment= document.querySelector('#comment-btn');
         const reply = document.querySelector('#comment');
-        if(reply.style.display == 'none') {
+        const ano = document.querySelector('#detail-modal-ano').innerHTML;
+        if(reply.style.display === 'none') {
             reply.style.display = 'flex';
             comment.style.position = "relative";
+            getReplyList(ano, function(data){
+                drawReplyList(data);
+            });
         } else{
             reply.style.display = 'none';
             comment.style.position = 'absolute';
             comment.style.bottom = '0';
             comment.style.width = '100%';
         }
-
     }
 
-    function insertReply(){
-        const replyAno= document.querySelector('#detail-modal-ano').innerHTML;
-        const replycontent= document.querySelector('#reply-input').value;
-
+    function insertReply() {
+        const ano = document.querySelector('#detail-modal-ano').innerHTML;
+        const comment = document.querySelector('#reply-input');
         $.ajax({
-            url: '/insertReply',
-            type: 'POST',
+            url: "insertReply",
+            type: "post",
             data: {
-                announcementNo: replyAno,
-                replyContent: replycontent
+                announcementNo: ano,
+                replyContent: comment.value
             },
-            success: function(res){
-                contentArea.value = ""; //댓글 입력창 초기화
-                //댓글목록 다시 불러와서 그려주기
-                getReplyList(bno, function(data){
-                    drawReplyList(data);
-                });
+            success: function (res) {
+                if (res === "success") {
+                    comment.value = "";
+                    // 댓글 등록 후 댓글 리스트 다시 불러오기
+                    getReplyList(ano, function (data) {
+                        drawReplyList(data);  // 댓글 렌더링
+                    });
+                } else {
+                    console.log("reply insert 실패");
+                }
             },
-            error: function(error){
-                console.log("댓글 작성 ajax통신 실패");
+            error: function () {
+                console.log("reply insert ajax 요청 실패");
             }
-        })
+        });
+    }
+    function getReplyList(announcementNo, callback){
+        $.ajax({
+            url : "replylist",
+            // contextType: "application/json",
+            dataType: "json", //응답 데이터 타입(json, text, html, xml)
+            data : {
+                ano : announcementNo
+            },
+            success: function(replyList){
+                callback(replyList);
+            },
+            error: function(){
+                console.log("댓글 조회 ajax통신 실패");
+            }
+        });
+    }
+    function drawReplyList(replyList){
+
+        let str = "";
+        for(let r of replyList) {
+            str += "<tr>" +
+                    "<td>" + r.storeName + "&nbsp;&nbsp;&nbsp;" +  r.createDate + "</td>" +
+                    "</tr>"+
+                    "<tr>"+ "<td>" + r.replyContent + "</td>" + "</tr>";
+        }
+
+        const replyBody = document.querySelector("#comment-table");
+        replyBody.innerHTML = str;
     }
 </script>
 </body>
