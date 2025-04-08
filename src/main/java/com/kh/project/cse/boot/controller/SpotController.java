@@ -10,6 +10,7 @@ import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,9 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -274,6 +273,41 @@ public class SpotController {
         response.put("result", result == 1 ? "success" : "fail");
         return response;
         }
+
+        //매출 집계 - 검색
+        @GetMapping("/spot_sales")
+        public String spotSales(
+                @RequestParam(value = "startMonth", required = false) String startMonth,
+                @RequestParam(value = "endMonth", required = false) String endMonth,
+                HttpSession session,
+                Model model
+        ) {
+            if (startMonth == null || endMonth == null) {
+                String thisMonth = LocalDate.now().toString().substring(0, 7);
+                return "redirect:/spot_sales?startMonth=" + thisMonth + "&endMonth=" + thisMonth;
+            }
+
+            Member loginUser = (Member) session.getAttribute("loginUser");
+            int storeNo = loginUser.getStoreNo();
+
+            // ✔ 시작일은 그대로, 종료일은 다음 달 1일로 설정
+            LocalDate startDate = LocalDate.parse(startMonth + "-01");
+            LocalDate endDate = YearMonth.parse(endMonth).plusMonths(1).atDay(1); // 다음 달 1일
+
+            List<Circulation> result = spotService.getSalesByMonth(storeNo, startDate, endDate);
+
+            model.addAttribute("list", result);
+            model.addAttribute("startMonth", startMonth);
+            model.addAttribute("endMonth", endMonth);
+            System.out.println("로그인 유저: " + loginUser);
+            System.out.println("조회기간: " + startDate + " ~ " + endDate.minusDays(1)); // 확인용 출력
+            System.out.println("조회된 매출 데이터 건수: " + result.size());
+
+            return "spot/spotSales";
+        }
+
+
+
 
 
 

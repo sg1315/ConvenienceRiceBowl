@@ -5,18 +5,22 @@ import com.kh.project.cse.boot.domain.vo.Circulation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Mapper
 public interface CirculationMapper {
 
 
+    int selectcirculation();
 
 
+    ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
 
     //지점
@@ -28,7 +32,9 @@ public interface CirculationMapper {
     int orderRequestListCount(@Param("storeNo") int storeNo);
     ArrayList<Circulation> orderRequestList(RowBounds rowBounds, int storeNo);
 
-    ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
-
+    //매출집계 - 검색
+    List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
+                                       @Param("startDate") LocalDate startDate,
+                                       @Param("endDate") LocalDate endDate);
 
 }
