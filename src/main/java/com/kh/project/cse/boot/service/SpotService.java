@@ -13,4 +13,7 @@ public interface SpotService {
     List<Attendance> selectInfoList();
 
     ArrayList<Expiry> selectExpiryList(PageInfo pi);
+
+
+    int updateWorkTime(Attendance attendance);
 }

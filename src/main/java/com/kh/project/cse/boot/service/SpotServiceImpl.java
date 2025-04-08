@@ -5,7 +5,6 @@ import com.kh.project.cse.boot.domain.vo.Expiry;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.mappers.AttendanceMapper;
 import com.kh.project.cse.boot.mappers.ExpiryMapper;
-import com.kh.project.cse.boot.mappers.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
@@ -38,6 +37,10 @@ public class SpotServiceImpl implements SpotService {
         return attendanceMapper.selectInfoList();
     }
 
+    @Override
+    public int updateWorkTime(Attendance attendance) {
+        return attendanceMapper.updateWorkTime(attendance);
+    }
 
 
 
