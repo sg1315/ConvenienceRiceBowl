@@ -56,6 +56,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #form {
         width: 100%;
         padding: 30px;
+        font-family: "Open Sans", sans-serif;
       }
       #form-top {
         display: flex;
@@ -116,7 +117,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
         table-layout: auto;
       }
       #table1 thead {
-        height: 30px;
+        height: 50px;
+        font-size: 20px;
         background-color: #d9d9d9;
         border-bottom: 3px solid #939393;
       }
@@ -181,9 +183,16 @@ contentType="text/html;charset=UTF-8" language="java" %>
         background-color: #d9d9d9;
         width: 48%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
       }
+      #product-img img{
+        width: 300px;
+        height: 300px;
+      }
+
+
       #product-detail-box {
         background-color: #d9d9d9;
         width: 48%;
@@ -209,11 +218,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #product-detail-ok {
         display: flex;
         justify-content: right;
+        margin-top: 5px;
         margin-right: 28px;
       }
       #product-detail-table {
         border-collapse: separate;
-        border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
+        border-spacing: 10px 20px; /*상하 간격을 10px로 설정*/
       }
       #product-detail-table tr td {
         font-size: 20px;
@@ -244,6 +254,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
         background-color: #d9d9d9;
         width: 48%;
         display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #product-modify-img img{
+        width: 350px;
+        height: 350px;
         justify-content: center;
         align-items: center;
       }
@@ -289,7 +305,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
       #product-detail-modify-table {
         border-collapse: separate;
-        border-spacing: 10px 20px; /* 상하 간격을 10px로 설정 */
+        border-spacing: 10px 15px; /* 상하 간격을 10px로 설정 */
       }
       #product-detail-modify-table tr td {
         font-size: 20px;
@@ -299,6 +315,14 @@ contentType="text/html;charset=UTF-8" language="java" %>
   </head>
   <body onload="drawCategoryList()">
     <jsp:include page="../common/header2.jsp" />
+
+        <c:if test="${not empty alertMsg}">
+          <script>
+            alert("${alertMsg}");
+          </script>
+          <c:remove var="alertMsg" scope="session"/>
+        </c:if>
+
     <div id="form">
       <div id="form-top">
         <div id="form_name">상품 관리</div>
@@ -309,7 +333,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >
-            상품추가
+            상품추가/삭제
           </button>
         </div>
       </div>
@@ -330,20 +354,23 @@ contentType="text/html;charset=UTF-8" language="java" %>
       <div id="table-manu">
         <table id="table1">
           <colgroup>
+            <col style="width: 10%" />
+            <col style="width: 10%" />
+            <col style="width: 40%" />
             <col style="width: 15%" />
-            <col style="width: 5%" />
-            <col style="width: 50%" />
-            <col style="width: 10%" />
-            <col style="width: 10%" />
+            <col style="width: 15%" />
           </colgroup>
           <thead>
             <tr>
               <th>상품 번호</th>
               <th>카테고리</th>
+              <th style="display: none;">상품이미지</th>
               <th>상품명</th>
               <th>입고가</th>
               <th>판매가</th>
-              <th hidden></th>
+              <th style="display: none;"></th>
+              <th style="display: none;"></th>
+             
             </tr>
           </thead>
           <tbody>
@@ -351,10 +378,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
               <tr>
                 <td>${p.productNo}</td>
                 <td>${p.categoryName}</td>
+                <td style="display: none;"><img width="120px" height="99.5px" src="${p.filePath}" alt="상품이미지" ></td>
                 <td>${p.productName}</td>
                 <td>${p.inputPrice}</td>
                 <td>${p.salePrice}</td>
-                <td hidden>${p.availability}</td>
+                <td style="display: none;">${p.availability}</td>         
+                <td style="display: none;">${p.shortageAmount}</td>         
               </tr>
             </c:forEach>
           </tbody>
@@ -406,10 +435,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
               <form 
                 action="insertProduct.he"
                 id="insert-product-form"
-                method="post"
+                method="post" enctype="multipart/form-data"
               >
                 <div id="product-img">
-                  <input type="file" value="이미지 찾기" />
+                  <img src="/resources/common/상품_기본이미지아이콘.png" alt="상품 이미지" style="max-width: 100%; max-height: 100%;" onclick="chooseFile('#upfile')" id="addfile">
+                  <input style="display: none;" type="file" id="upfile" name="upfile" required onchange="loadImg(this,'#addfile')" />
                 </div>
                 <div id="product-detail-box">
                   <div id="product-detail">
@@ -454,10 +484,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
                             />
                           </td>
                         </tr>
+                        <tr>
+                          <td>재고부족량</td>
+                          <td>
+                            <input
+                              type="number"
+                              id="shortageAmount"
+                              name="shortageAmount"
+                            />
+                          </td>
+                        </tr>
                       </table>
                     </div>
                     <div id="product-detail-ok">
-                      <button class="black-btn" type="submit">완료</button>
+                      <button class="black-btn" type="submit" form="insert-product-form">완료</button>
                     </div>
                   </div>
                 </div>
@@ -492,10 +532,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </button>
             </div>
             <div class="modal-body" id="modal-modify-body">
-              <form action="updateProduct"
+              <form action=""
               id="update-product-form"
-              method="post">
-                <div id="product-modify-img">이미지사진</div>
+              method="post" enctype="multipart/form-data">
+                <div id="product-modify-img">
+                  <img id="modal-image" src="" alt="상품 이미지" onclick="chooseFile('#file1')">
+                  <input style="display: none;" type="file" name="file1" id="file1" onchange="loadImg(this,'#modal-image')">
+                </div>
                 <div id="product-detail-modify-box">
                   <div id="product-detail-modify">
                     <div id="product-detail-modify-puts">
@@ -529,14 +572,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
                         <tr>
                           <td>입고불가</td>
                           <td>
-                            <input type="checkbox" id="modal-availability"  name="availability" value="Y" />
+                            <input type="checkbox" id="modal-availability"  name="availability"/>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>재고부족량</td>
+                          <td>
+                            <input type="number" id="modal-shortageAmount"  name="shortageAmount" />
                           </td>
                         </tr>
                       </table>
                     </div>
                     <div id="product-detail-modify-btn">
-                      <button class="black-btn" type="submit" >수정완료</button>
-                      <button class="red-btn">삭제</button>
+                      <button class="black-btn" onclick="postFormSubmit('edit')">수정완료</button>
+                      <button class="red-btn" onclick="postFormSubmit('delete')">삭제</button>
                     </div>
                   </div>
                 </div>
@@ -555,11 +604,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
             row.addEventListener('click', function () {
               const productNo = this.children[0].textContent;
               const categoryName = this.children[1].textContent;
-              const productName = this.children[2].textContent;
-              const inputPrice = this.children[3].textContent;
-              const salePrice = this.children[4].textContent;
-              const availability = this.children[5].textContent;
+              const filePath = this.children[2].querySelector('img').src;
+              const productName = this.children[3].textContent;
+              const inputPrice = this.children[4].textContent;
+              const salePrice = this.children[5].textContent;
+              const availability = this.children[6].textContent;
+              const shortageAmount = this.children[7].textContent;
+       
 
+              document.getElementById('modal-image').src = filePath;
               document.getElementById("modal-productNo").value = productNo;
               let sel = document.getElementById('select-modify-modal').options;
               for (var i = 0; i < sel.length; i++) {
@@ -573,9 +626,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
               document.getElementById('modal-productName').value = productName;
               document.getElementById('modal-inputPrice').value = inputPrice;
               document.getElementById('modal-salePrice').value = salePrice;
-              if (availability == 'Y') {
+              if (availability == 'N') {
                 document.getElementById('modal-availability').checked = true;
               }
+              document.getElementById('modal-shortageAmount').value = shortageAmount;
 
               const modal = new bootstrap.Modal(
                 document.getElementById('staticBackdrop-modify')
@@ -636,7 +690,50 @@ contentType="text/html;charset=UTF-8" language="java" %>
           });
 
         }
+        function loadImg(changeInput, targetImg){
+                    //파일객체 -> files -> 선택된파일들이 담겨있음
+                    console.log(changeInput.files[0])
+                    const img = document.querySelector(targetImg);
+                    console.log(img)
+                    if(changeInput.files.length > 0){ //파일은 선택했을 때
+                        //파일을 읽어들일 객체
+                        const reader = new FileReader();
 
+                        //해당 파일을 읽얻들여 해당파일만의 고유한 url을 부여
+                        //url : Base64로 인코딩된 데이터 url(파일을 실제로 표현하는 형식인 바이너리 코드를 텍스트문자열로 인코딩한 방식)
+                        reader.readAsDataURL(changeInput.files[0]);
+
+                        //파일읽어들이기를 완료 했을 때 이벤트핸들러를 실행시켜줘
+                        reader.onload = function(ev){
+                            img.src = ev.target.result //이미지 요소에 불러온 파일의 url을 넣어준다.
+                        }
+
+
+                    } else { //파일이 있었는데 선택 후 취소했을 때
+                        img.src = null;
+                    }
+                }
+                function chooseFile(selector){
+                    const fileInput = document.querySelector(selector);
+                    fileInput.click();
+                }
+
+
+                function postFormSubmit(type){
+                    const formEl = document.querySelector("#update-product-form");
+                    switch(type){
+                        case "edit" : {
+                            //formEl.action = "updateForm.bo";
+                            $(formEl).attr("action", "updateProduct");
+                        }break;
+                        case "delete":{
+                            //formEl.action = "delete.bo";
+                            $(formEl).attr("action", "deleteProduct")
+                        }break;
+                    }
+                    
+                    $(formEl).submit();
+                }      
       </script>
       <!--end point-->
     </div>

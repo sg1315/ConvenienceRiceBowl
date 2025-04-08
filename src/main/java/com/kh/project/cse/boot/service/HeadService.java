@@ -8,7 +8,7 @@ import java.util.List;
 public interface HeadService {
 
     //상품추가
-    int insertProduct(Product product);
+    int insertProduct(Product product, Files files);
     //상품검색
     ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
     //상품전체목록 수
@@ -17,7 +17,12 @@ public interface HeadService {
     ArrayList<Product> selectAllProduct(PageInfo pi);
     //카테고리목록
     List<Category> selectAllCategories();
-
+    //파일있을 때 상품수정
+    int updateProduct(Product product, Files files);
+    //파일없을때 상품수정
+    int updateOneProduct(Product product);
+    //상품삭제
+    int deleteProduct(int productNo);
 
 
     //공지사항추가
@@ -48,26 +53,26 @@ public interface HeadService {
     ArrayList<Reply> selectReply(int announcementNo);
 
 
-    //상품수정
-    int updateProduct(Product product);
-
 
     //지점전체목록수
     int storeListCount();
     //지점전체목록
     ArrayList<Store> selectStore(PageInfo pi);
-
+    //검색
     ArrayList<Store> searchStore(String condition, String keyword, PageInfo pi);
-
+    //지점상태목록
     ArrayList<Store> selectStoreStatus(PageInfo pi);
-
+    //지점수정
     int updateStoreNo(String[] storeNumbers);
+    //지점삭제
+    int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers);
 
-    //발주관리사항 총수
-    int selectcirculation();
+
+
+
 
     //발주관리사항 불러오기
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
 
-    int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers);
+
 }

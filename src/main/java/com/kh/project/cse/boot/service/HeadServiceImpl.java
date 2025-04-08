@@ -17,21 +17,20 @@ public class HeadServiceImpl implements HeadService {
     private final CirculationMapper circulationMapper;
     private final StoreMapper storeMapper;
     private final MemberMapper memberMapper;
+    private final FilesMapper filesMapper;
     private final ReplyMapper replyMapper;
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper, ReplyMapper replyMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper, FilesMapper filesMapper, ReplyMapper replyMapper) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
         this.storeMapper = storeMapper;
         this.circulationMapper = circulationMapper;
         this.memberMapper = memberMapper;
+        this.filesMapper = filesMapper;
         this.replyMapper = replyMapper;
     }
-
-
-
 
 
 
@@ -50,7 +49,6 @@ public class HeadServiceImpl implements HeadService {
     public int insertAnnouncement(Announcement announcement){
         return announcementMapper.insertAnnouncement(announcement);
     }
-
 
     //공지사항세부사항 불러오기
     @Override
@@ -84,9 +82,22 @@ public class HeadServiceImpl implements HeadService {
     @Override
     public ArrayList<Reply> selectReply(int announcementNo) {return replyMapper.selectReply(announcementNo);}
 
+
+
     //상품추가
     @Override
-    public int insertProduct(Product product) { return productMapper.insertProduct(product);}
+    public int insertProduct(Product product, Files files) {
+        int result = 0;
+
+        int result1 = productMapper.insertProduct(product);
+
+        if (result1 >= 1) {
+            files.setProductNo(product.getProductNo());
+            int result2 = filesMapper.insertFiles(files);
+            result = result2 * result1;
+        }
+        return result;
+    }
     //상품검색
     @Override
     public ArrayList<Product> searchProduct(String condition, String keyword, PageInfo pi) {
@@ -108,7 +119,35 @@ public class HeadServiceImpl implements HeadService {
     public List<Category> selectAllCategories() { return productMapper.selectAllCategories();}
     //상품수정
     @Override
-    public int updateProduct(Product product) { return productMapper.updateProduct(product);}
+    public int updateProduct(Product product, Files files) {
+        int result =0;
+        int result1 = filesMapper.updateFiles(files);
+
+        if(result1 > 0){
+            product.setFilePath(files.getFilePath());
+            int result2 = productMapper.updateProduct(product);
+            result = result1 * result2;
+        }
+
+        return result;
+    }
+    @Override
+    public int updateOneProduct(Product product) {
+        return productMapper.updateProduct(product);
+    }
+
+
+    @Override
+    public int deleteProduct(int productNo) {
+       int result = 0;
+       int result1 = filesMapper.deleteFile(productNo);
+
+       if(result1 > 0){
+           int result2 = productMapper.deleteProduct(productNo);
+           result = result1 * result2;
+       }
+       return result;
+    }
 
     //지점목록 수
     @Override
@@ -149,6 +188,7 @@ public class HeadServiceImpl implements HeadService {
     }
     @Override
     public int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers) {
+
         int result1 = 0;
         int result2 = 0;
 
@@ -162,10 +202,6 @@ public class HeadServiceImpl implements HeadService {
         return result;
     }
 
-
-
-    @Override
-    public int selectcirculation(){return circulationMapper.selectcirculation();}
 
     @Override
     public ArrayList<Circulation> selectCirculationlist(PageInfo pi){

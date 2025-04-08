@@ -2,12 +2,42 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kh.project.cse.boot.mappers.AttechmentMapper">
-    <resultMap id="attechmentResult" type="Attechment">
+<mapper namespace="com.kh.project.cse.boot.mappers.FilesMapper">
+    <resultMap id="filesResult" type="Files">
         <result column="FILE_NO" property="fileNo"/>
         <result column="PRODUCT_NO" property="productNo"/>
         <result column="ORIGIN_NAME" property="originName"/>
         <result column="CHANGE_NAME" property="changeName"/>
         <result column="FILE_PATH" property="filePath"/>
     </resultMap>
+
+    <insert id="insertFiles">
+        INSERT INTO FILES(
+        FILE_NO,
+        PRODUCT_NO,
+        ORIGIN_NAME,
+        CHANGE_NAME,
+        FILE_PATH
+        ) VALUES (
+        SEQ_FIL.NEXTVAL,
+        #{productNo},
+        #{originName},
+        #{changeName},
+        #{filePath}
+        )
+    </insert>
+
+    <update id="updateFiles">
+        UPDATE FILES
+        SET
+        ORIGIN_NAME = #{originName},
+        CHANGE_NAME= #{changeName},
+        FILE_PATH = #{filePath}
+        WHERE PRODUCT_NO = #{productNo}
+    </update>
+
+    <delete id="deleteFile">
+        DELETE FILES
+        WHERE PRODUCT_NO = #{productNo}
+    </delete>
 </mapper>

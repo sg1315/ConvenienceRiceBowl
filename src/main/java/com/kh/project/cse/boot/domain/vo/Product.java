@@ -22,6 +22,8 @@ public class Product {
     private String availability;
     private String categoryName;
     private int count;
+    private String filePath;
+
 
 
 }
