@@ -255,7 +255,7 @@ public class HeadController {
                 return "";
         }
     }
-    //직원관리 - 직원수정
+    //직원관리 - 직원상태수정
     @PostMapping("/updateHeadMember")
     public String updateHeadMember(Member member, HttpSession session, Model model){
         String position =  member.getPosition();
@@ -274,15 +274,13 @@ public class HeadController {
 
     //개인정보수정
     @PostMapping("/updateMemberInfo")
-    @ResponseBody //테스트용(리턴 문자열 그대로 출력)
+    @ResponseBody
     public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
                                Member member, HttpSession session, Model model) {
 
         Member loginMember = (Member) session.getAttribute("loginUser");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encodedPwd = passwordEncoder.encode(newPwd);
-//        member.setMemberPwd(encodedPwd);
 
         if (loginMember == null) return "로그인 정보 없음";
 
@@ -291,7 +289,7 @@ public class HeadController {
         if (newPwd != null && !newPwd.trim().isEmpty()) {
             member.setMemberPwd(passwordEncoder.encode(newPwd));
         } else {
-            member.setMemberPwd(null); // 비밀번호 변경 안 함
+            member.setMemberPwd(null);
         }
 
         member.setMemberId(loginMember.getMemberId());

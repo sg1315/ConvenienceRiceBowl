@@ -199,6 +199,7 @@ public class SpotController {
 
         return "spot/spotMember";
     }
+    //근태정보 조회 - 초기화면
     @GetMapping("/spot_attendance")
     public String spotAttendanceInfo(@SessionAttribute("loginUser") Member loginMember, Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
@@ -209,7 +210,7 @@ public class SpotController {
 
         return "spot/spotAttendance";
     }
-
+    //근태정보 - 모달 수정버튼
     @PostMapping("/spot_attendance/updateAttendance")
     @ResponseBody
     public Map<String, Object> updateAttendanceNow(@RequestBody Map<String,Object> payload) {
@@ -248,7 +249,7 @@ public class SpotController {
         response.put("result", result > 0 ? "success" : "fail");
         return response;
     }
-
+    //근태관리 - 출퇴근시간 업데이트
     @PostMapping("/spot_attendance/updateTime")
     @ResponseBody
     public Map<String, Object> updateAttendanceTime(@RequestBody Map<String, String> request) {

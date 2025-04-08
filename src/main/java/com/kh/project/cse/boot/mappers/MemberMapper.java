@@ -16,15 +16,12 @@ public interface MemberMapper {
     Member loginMember(@Param("memberId") String memberId);
 
     int idCheck(@Param("checkId") String checkId);
-
+    //개인정보수정
     int updateMember(Member member);
-
     Member selectMemberById(@Param("memberId") String memberId);
-
     int updateMemberStatus(Member member);
-
+    //직원정보조회
     List<Member> selectMemberList();
-
     List<Member> selectMemberByKeyWord(@Param("keyword") String keyword);
 
     int memberListCount();

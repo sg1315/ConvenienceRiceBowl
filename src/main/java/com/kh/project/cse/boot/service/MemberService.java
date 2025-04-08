@@ -23,14 +23,12 @@ public interface MemberService {
 
     Store checkStore(Store store);
 
+    //개인정보수정
     int updateMember(Member member);
-
     Member selectMemberById(String memberId);
-
     int updateMemberStatus(Member member);
-
+    //직원정보 조회
     List<Member> selectMemberList();
-
     List<Member> selectMemberBykeyword(String keyword);
 
     int memberListCount();

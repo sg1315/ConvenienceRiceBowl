@@ -9,13 +9,14 @@ import java.util.Map;
 
 public interface SpotService {
 
-    //근태관리 목록
+    //근태정보 조회 - 초기화면
     List<Attendance> selectInfoList();
-    //근태시간 수정
+
+    //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
-    //근태 출퇴근
-    int updateWorkingTime(Map<String, Object> paramMap);
-    int updateLeaveTime(Map<String, Object> paramMap);
+    //근태관리 - 출퇴근시간 업데이트
+    int updateWorkingTime(Map<String, Object> paramMap); //출근
+    int updateLeaveTime(Map<String, Object> paramMap); //퇴근
 
     //상품 전체 목록 수
     int ProductListCount();
@@ -36,4 +37,5 @@ public interface SpotService {
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
     //발주요청 목록 검색
     ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
+
 }
