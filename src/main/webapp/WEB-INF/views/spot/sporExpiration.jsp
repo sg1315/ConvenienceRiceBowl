@@ -173,70 +173,21 @@
                 </tr>
                 </thead>
 
-                <tbody >
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>초코송이</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td><button>폐기하기</button></td>
+                <tbody>
+                <c:forEach var="p" items="${list}">
+                    <tr onclick = "location.href = 'detail.bo?bno=${p.productNo}'">
+                        <td>${p.productNo }</td>
+                        <td>${p.categoryName }</td>
+                        <td>${p.productName }</td>
+                        <td>${p.expirationDate }</td>
+                        <td>${p.createDate }</td>
+                        <td>
+                            <c:if test="${not empty p.originName }">
+                                ★
+                            </c:if>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>초코송이</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td><button>폐기하기</button></td>
-                    </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>초코송이</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td>임박<br>D-1</td>
-                    </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>초코송이</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td>임박<br>D-1</td>
-                    </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>초코송이</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td>임박<br>D-1</td>
-                    </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>표 찌그러져있는거 걱정 안하셔도 됩니다.</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td>임박<br>D-1</td>
-                    </tr>
-                    <tr>
-                        <td>123</td>
-                        <td>스낵</td>
-                        <td>수치 정해둔거 있어서 일괄적용할겁니다.</td>
-                        <td>2025-03-20</td>
-                        <td>10</td>
-                        <td>64,000</td>
-                        <td>임박<br>D-1</td>
-                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
