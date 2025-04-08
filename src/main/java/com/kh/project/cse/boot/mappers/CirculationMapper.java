@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Mapper
 public interface CirculationMapper {
     //발주 요청
-    int insertOrder(@Param("circulation") Circulation circulation, int storeNo);
+    int insertOrder(@Param("circulation") Circulation circulation, int storeNo, String setNo);
 
     //발주 요청 목록
     //발주 요청 분단위로 묶은 수

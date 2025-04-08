@@ -16,7 +16,7 @@ public interface SpotService {
     //발주요청 상품 검색
     ArrayList<Product> orderRequestProductSearch(String category, String keyword);
     //발주요청 발주
-    int insertOrder(List<Circulation> orderList, int storeNo);
+    int insertOrder(List<Circulation> orderList, int storeNo, String setNo);
 
     //발주요청 목록
     //발주요청 분단위로 묶은 수

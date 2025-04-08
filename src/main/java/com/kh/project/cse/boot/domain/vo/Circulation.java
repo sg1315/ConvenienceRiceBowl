@@ -21,6 +21,7 @@ public class Circulation {
     private int status;
 
     //발주목록 가져오기
+    private String setNo;
     private int rowNum;
     private int rnum;
     private String minuteGroup;

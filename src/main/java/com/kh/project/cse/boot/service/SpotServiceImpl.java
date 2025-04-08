@@ -51,13 +51,13 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public int insertOrder(List<Circulation> orderList, int storeNo) {
+    public int insertOrder(List<Circulation> orderList, int storeNo, String setNo) {
 
         int result = 1;
 
         for (Circulation circulation : orderList) {
             System.out.println();
-            int insertResult = circulationMapper.insertOrder(circulation, storeNo);
+            int insertResult = circulationMapper.insertOrder(circulation, storeNo, setNo);
             if (insertResult == 0) {
                 result = 0;
                 break;

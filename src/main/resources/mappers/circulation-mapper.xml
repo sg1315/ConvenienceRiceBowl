@@ -14,17 +14,20 @@
         <result column="STATUS" property="status"/>
 
         <!-- 발주목록 가져오기 -->
-        <result property="rowNum" column="ROWNUM"/>
-        <result property="rnum" column="RNUM"/>
-        <result property="minuteGroup" column="MINUTE_GROUP"/>
-        <result property="totalAmount" column="TOTAL_AMOUNT"/>
-        <result property="totalInputPrice" column="TOTAL_INPUT_PRICE"/>
+        <result column="SET_NO" property="setNo"/>
+        <result column="ROWNUM" property="rowNum"/>
+        <result column="RNUM" property="rnum"/>
+        <result column="MINUTE_GROUP" property="minuteGroup"/>
+        <result column="TOTAL_AMOUNT" property="totalAmount"/>
+        <result column="TOTAL_INPUT_PRICE" property="totalInputPrice"/>
+
     </resultMap>
 
     <insert id="insertOrder">
         INSERT INTO CIRCULATION (
         CIRCULATION_NO,
         STORE_NO,
+        SET_NO,
         PRODUCT_NO,
         INPUT_PRICE,
         SALE_PRICE,
@@ -34,6 +37,7 @@
         ) VALUES (
         SEQ_CIR.NEXTVAL,
         #{storeNo},
+        #{setNo},
         #{circulation.productNo},
         #{circulation.inputPrice},
         #{circulation.salePrice},
@@ -59,33 +63,43 @@
 
     <select id="orderRequestList" resultMap="circulationResult">
         SELECT
-        RNUM,
-        MINUTE_GROUP,
-        TOTAL_AMOUNT,
-        TOTAL_INPUT_PRICE
-        FROM(
-            SELECT
-            ROWNUM AS RNUM,
-            MINUTE_GROUP,
-            TOTAL_AMOUNT,
-            TOTAL_INPUT_PRICE
-                FROM (
-                    SELECT
-                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
-                    SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
-                    SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE
-                    FROM
-                    CIRCULATION
-                    WHERE
-                    STORE_NO = #{storeNo}
-                    AND STATUS = 1
-                    GROUP BY
-                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
-                    ORDER BY
-                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
-                )
-        )
-        ORDER BY RNUM DESC
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STATUS
+        FROM  CIRCULATION
+        WHERE  STORE_NO = #{storeNo} AND STATUS = 1
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        ORDER BY SET_NO DESC
+<!--        SELECT-->
+<!--        RNUM,-->
+<!--        MINUTE_GROUP,-->
+<!--        TOTAL_AMOUNT,-->
+<!--        TOTAL_INPUT_PRICE-->
+<!--        FROM(-->
+<!--            SELECT-->
+<!--            ROWNUM AS RNUM,-->
+<!--            MINUTE_GROUP,-->
+<!--            TOTAL_AMOUNT,-->
+<!--            TOTAL_INPUT_PRICE-->
+<!--                FROM (-->
+<!--                    SELECT-->
+<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,-->
+<!--                    SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,-->
+<!--                    SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE-->
+<!--                    FROM-->
+<!--                    CIRCULATION-->
+<!--                    WHERE-->
+<!--                    STORE_NO = #{storeNo}-->
+<!--                    AND STATUS = 1-->
+<!--                    GROUP BY-->
+<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')-->
+<!--                    ORDER BY-->
+<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')-->
+<!--                )-->
+<!--        )-->
+<!--        ORDER BY RNUM DESC-->
     </select>
 
 </mapper>

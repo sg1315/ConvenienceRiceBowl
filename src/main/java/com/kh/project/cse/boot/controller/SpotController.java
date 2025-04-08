@@ -14,6 +14,8 @@ import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +104,6 @@ public class SpotController {
         //circuration-mapper도 수정해야함
 
         int listCount = spotService.orderRequestListCount(storeNo);
-        System.out.println(listCount);
         PageInfo pi = new PageInfo(listCount, cpage, 10,10);
 
         List<Category> clist = spotService.orderRequestCategoryList();
@@ -126,10 +127,12 @@ public class SpotController {
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
         int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+
         //circuration-mapper도 수정해야함
         int result = 0;
 
-        result = spotService.insertOrder(orderList, storeNo);
+        result = spotService.insertOrder(orderList, storeNo, setNo);
         if (result > 0) {
             return ResponseEntity.ok("발주 요청 완료");
         } else {

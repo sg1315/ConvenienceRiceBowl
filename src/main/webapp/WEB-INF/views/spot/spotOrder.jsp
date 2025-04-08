@@ -407,6 +407,32 @@
         #order-table{
             text-align: center;
         }
+
+        #order-request-table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-request-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-request-table tbody {
+            display: block;
+            overflow-y: auto;
+            width: 100%;
+            height: 90%;
+        }
+
+        #order-request-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
         #modal-page-inner{
             width: 100%;
             display: flex;
@@ -434,24 +460,25 @@
                     </button>
                 </div>
                 <div id="order-search">
-                    <form>
+                    <form method="get" action="orderSearch">
                         <div id="order-search-top">
                             <button class="search-input-submit">저번 달</button>
                             <button class="search-input-submit">최근</button>
-                            <input class="date-input" type="date"> ~ <input class="date-input" type="date">
+                            <input class="date-input" type="date" name="startDate"> ~ <input class="date-input" type="date" name="endDate">
                         </div>
                         <div id="order-search-bottom">
                             <div class="selectbox" id="status-select">
-                                <select>
-                                    <option>상태</option>
-                                    <option>발주대기</option>
-                                    <option>발주요청</option>
-                                    <option>발주승인</option>
-                                    <option>발주거절</option>
+                                <select name="status">
+                                    <option value="">상태</option>
+                                    <option value="1">발주 대기</option>
+                                    <option value="5">발주 승인</option>
+                                    <option value="6">발주 거절</option>
+                                    <option value="7">입고 대기</option>
+                                    <option value="2">입고</option>
                                 </select>
                             </div>
                             <div>
-                                <input class="search-input" type="text" placeholder="발주번호">
+                                <input class="search-input" type="text" name="searchSetNo" placeholder="발주번호">
                                 <input class="search-input-submit" type="submit" value="검색">
                             </div>
                         </div>
@@ -476,10 +503,31 @@
                 <c:forEach var="o" items="${olist}">
                     <tr>
                         <td>${o.minuteGroup}</td>
-                        <td>${o.rnum}</td>
+                        <td>${o.setNo}</td>
                         <td>${o.totalAmount}</td>
                         <td>${o.totalInputPrice}</td>
-                        <td>상태</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${o.status == 1}">
+                                    <span>발주 대기</span>
+                                </c:when>
+                                <c:when test="${o.status == 2}">
+                                    <span>입고</span>
+                                </c:when>
+                                <c:when test="${o.status == 5}">
+                                    <span style="color: #0073ff">발주 승인</span>
+                                </c:when>
+                                <c:when test="${o.status == 6}">
+                                    <span style="color: red">발주 거절</span>
+                                </c:when>
+                                <c:when test="${o.status == 7}">
+                                    <span>입고 대기</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>알 수 없음</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -724,7 +772,7 @@
     });
 </script>
 
-<!-- spotOrder.jsp -->
+<!-- spotOrder.js -->
 <script src="/resources/js/spotOrder.js"></script>
 <script>
     //모달 열었을때 HTML을 저장, 닫을때 그 정보를 다시 불러옴
