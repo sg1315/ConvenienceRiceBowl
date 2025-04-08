@@ -15,6 +15,8 @@ public class Reply {
     private int announcementNo;
     private String replyContent;
     private int memberNo;
-    private Date createDate;
+    private String createDate;
+
+    private String storeName;
 
 }

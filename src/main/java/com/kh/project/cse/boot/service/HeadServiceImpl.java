@@ -17,15 +17,17 @@ public class HeadServiceImpl implements HeadService {
     private final CirculationMapper circulationMapper;
     private final StoreMapper storeMapper;
     private final MemberMapper memberMapper;
+    private final ReplyMapper replyMapper;
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper, ReplyMapper replyMapper) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
         this.storeMapper = storeMapper;
         this.circulationMapper = circulationMapper;
         this.memberMapper = memberMapper;
+        this.replyMapper = replyMapper;
     }
 
 
@@ -73,6 +75,14 @@ public class HeadServiceImpl implements HeadService {
     public int deleteAnnouncement(int announcementNo) {
         return announcementMapper.deleteAnnouncement(announcementNo);
     }
+
+    //댓글추가
+    @Override
+    public int insertReply(Reply reply) {return replyMapper.insertReply(reply);}
+
+    //댓글총수
+    @Override
+    public ArrayList<Reply> selectReply(int announcementNo) {return replyMapper.selectReply(announcementNo);}
 
     //상품추가
     @Override

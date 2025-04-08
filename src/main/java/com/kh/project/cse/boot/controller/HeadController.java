@@ -101,6 +101,22 @@ public class HeadController {
 
     }
 
+    //댓글추가
+    @PostMapping("insertReply")
+    public String insertReply(Reply reply, HttpSession session) {
+        headService.insertReply(reply);
+
+        return "redirect:/head_announcement";
+    }
+    //댓글불러오기
+    @GetMapping("replylist")
+    @ResponseBody
+    public List<Reply> replylist(@RequestParam("ano") int ano) {
+        List<Reply> list = headService.selectReply(ano);
+        System.out.println(list);
+        return list;
+    }
+
     //상품관리
     @RequestMapping("/head_product")
     public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {

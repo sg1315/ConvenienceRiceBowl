@@ -41,6 +41,12 @@ public interface HeadService {
     //공지사항 삭제
     int deleteAnnouncement(int announcementNo);
 
+    //댓글추가
+    int insertReply(Reply reply);
+
+    //댓글불러오기
+    ArrayList<Reply> selectReply(int announcementNo);
+
 
     //상품수정
     int updateProduct(Product product);
