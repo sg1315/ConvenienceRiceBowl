@@ -56,27 +56,24 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Store checkStore(Store Store) {return storeMapper.checkStore(Store);}
-
+    //개인정보수정
     @Override
     public int updateMember(Member member) {
         return memberMapper.updateMember(member);
     }
-    
     @Override
     public Member selectMemberById(String memberId) {
         return memberMapper.selectMemberById(memberId);
     }
-
     @Override
     public int updateMemberStatus(Member member) {
         return memberMapper.updateMemberStatus(member);
     }
-
+    //직원정보검색
     @Override
     public List<Member> selectMemberList() {
         return memberMapper.selectMemberList();
     }
-
     @Override
     public List<Member> selectMemberBykeyword(String keyword) {
         return memberMapper.selectMemberByKeyWord(keyword);

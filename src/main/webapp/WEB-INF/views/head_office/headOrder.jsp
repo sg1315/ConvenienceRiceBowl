@@ -173,6 +173,49 @@
         .modal-header{
             border:none !important;
         }
+
+        .modal-footer{
+            height: 8%;
+        }
+        #modal-table {
+            display: block;
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #modal-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #modal-table thead th {
+            position: sticky;
+            top: 0;
+            background-color: #D9D9D9;
+            z-index: 2;
+            border-bottom: 2px solid black;
+        }
+
+        #modal-table tbody {
+            display: block;
+            max-height: 840px; /* 원하는 스크롤 높이 */
+            overflow-y: auto;
+            width: 100%;
+        }
+
+        #modal-table tbody tr {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        #modal-header2-low2 div{
+            display: flex;
+            justify-content: right;
+        }
+
     </style>
 </head>
 <body>
@@ -220,12 +263,16 @@
                 </thead>
                 <tbody>
                     <c:forEach var="C" items="${list}">
-                        <tr>
-                            <td>${C.circulateionDate}</td>
-                            <td>${C.circulateionNo}</td>
+                        <tr data-sno="${C.setNo}"
+                            data-minuteGroup="${C.minuteGroup}"
+                            data-storeName="${C.storeName}"
+                            data-totalAmount="${C.totalAmount}"
+                            data-totalInputPrice="${C.totalInputPrice}">
+                            <td>${C.minuteGroup}</td>
+                            <td>${C.setNo}</td>
                             <td>${C.storeName}</td>
-                            <td>${C.circulateionAmount}</td>
-                            <td>${C.salePrice}</td>
+                            <td>${C.totalAmount}</td>
+                            <td>${C.totalInputPrice}</td>
                             <td>
                                 <c:choose>
                                     <c:when test="${C.status == 1}">대기</c:when>
@@ -242,16 +289,9 @@
         <div id="footer">
             <div id="main-pageing">
                 <img src="/resources/common/공통_페이징바화살표.png">
-                <button type="button" class="btn btn-outline-secondary">1</button>
-                <button type="button" class="btn btn-outline-secondary">2</button>
-                <button type="button" class="btn btn-outline-secondary">3</button>
-                <button type="button" class="btn btn-outline-secondary">4</button>
-                <button type="button" class="btn btn-outline-secondary">5</button>
-                <button type="button" class="btn btn-outline-secondary">6</button>
-                <button type="button" class="btn btn-outline-secondary">7</button>
-                <button type="button" class="btn btn-outline-secondary">8</button>
-                <button type="button" class="btn btn-outline-secondary">9</button>
-                <button type="button" class="btn btn-outline-secondary">10</button>
+                <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_order?cpage=${i}'">${i}</button>
+                </c:forEach>
                 <img src="/resources/common/공통_페이징바화살표.png">
             </div>
         </div>
@@ -265,7 +305,7 @@
             <div class="modal-content">
                 <div id="modal-head">
                     <div class="modal-header">
-                        <p class="modal-title fs-5" id="staticBackdropLabel">25-12-08 | 1234 | 강남점</p>
+                        <p class="modal-title fs-5" id="staticBackdropLabel"></p>
                         <button type="button" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
                             <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
                         </button>
@@ -278,10 +318,10 @@
                         </div>
                         <div id="modal-header2-low2">
                             <div>
-                                종류 수 (총수량) : 3 (240)
+                                종류 수 (총수량) : <p id="sett"></p> (<p id="set"></p>)
                             </div>
                             <div>
-                                총 1,902,000원
+                                총금액: <p id="pice"></p>
                             </div>
                         </div>
                     </div>
@@ -306,46 +346,69 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>123</td>
-                                <td>스낵</td>
-                                <td>달콤 프란찌</td>
-                                <td>80</td>
-                                <td>64000</td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <div id="modal-pageing">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
-                        <button type="button" class="btn btn-outline-secondary">6</button>
-                        <button type="button" class="btn btn-outline-secondary">7</button>
-                        <button type="button" class="btn btn-outline-secondary">8</button>
-                        <button type="button" class="btn btn-outline-secondary">9</button>
-                        <button type="button" class="btn btn-outline-secondary">10</button>
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                    </div>
+
                 </div>
             </div>
         </div>
     </div>
     <script>
+        document.querySelectorAll('#table1 tbody tr').forEach(row => {
+            row.addEventListener('click', function () {
+                const sno = this.getAttribute('data-sno');
+                const minuteGroup = this.getAttribute('data-minuteGroup');
+                const storeName = this.getAttribute('data-storeName');
+                const totalAmount = this.getAttribute('data-totalAmount');
+                const totalInputPrice = this.getAttribute('data-totalInputPrice');
+                document.querySelector('#set').innerHTML = totalAmount;
+                document.querySelector('#pice').innerHTML = totalInputPrice;
 
-            // 테이블의 모든 행에 클릭 이벤트 추가
-            document.querySelectorAll('#table1 tbody tr').forEach(row => {
-            row.addEventListener('click', function() {
-                // 모달을 띄우기 위한 코드
-                var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
-                myModal.show(); // 모달 열기
+
+
+
+                // 기존의 fetch를 jQuery AJAX로 변경
+                $.ajax({
+                    url: '/getOderDetail?sno=' + sno, // 서버에서 데이터를 가져오는 URL
+                    method: 'GET', // HTTP 요청 메소드
+                    dataType: 'json', // 응답 데이터 타입 (JSON)
+                    success: function (data) {
+                        let str = "";
+                        for(let o of data){
+
+                            str+= "<tr>" +
+                                "<td>" + o.productNo+ "</td>" +
+                                "<td>" + o.categoryName + "</td>" +
+                                "<td>" + o.productName + "</td>" +
+                                "<td>" + o.circulationAmount + "</td>" +
+                                "<td>" + o.sumInputPrice + "</td>" +
+                                "</tr>";
+                        }
+
+
+                        const odering = document.querySelector("#modal-table tbody");
+                        odering.innerHTML = str;
+
+                        let rowCount = $("#modal-table tbody tr").length;
+                        document.querySelector('#sett').innerHTML = rowCount;
+                        // 모달 띄우기
+                        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                        myModal.show();
+
+
+                    },
+
+                    error: function (xhr, status, error) {
+                        console.error('AJAX 요청 실패:', error);
+                    }
+                });
             });
         });
+
     </script>
-    <!--end point-->
+
 </body>
 </html>

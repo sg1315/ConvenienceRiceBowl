@@ -5,13 +5,16 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.ResultMap;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface AttendanceMapper {
-
+    //근태정보 조회 - 초기화면
     @ResultMap("AttendanceMap")
     List<Attendance> selectInfoList();
-
-
+    //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
+    //근태관리 - 출퇴근시간 업데이트
+    int updateWorkingBtnTime(Map<String, Object> paramMap); //출근
+    int updateWorkLeaveBtnTime(Map<String, Object> paramMap); //퇴근
 }

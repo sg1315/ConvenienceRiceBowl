@@ -11,9 +11,10 @@
     <result column="SALE_PRICE" property="salePrice"/>
     <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
     <result column="AVAILABILITY" property="availability"/>
-
+    <result column="FILE_PATH" property="filePath"/>
     <result column="CATEGORY_NAME" property="categoryName"/>
     <result column="COUNT" property="count"/>
+    <result column="FILE_PATH" property="filePath"/>
     </resultMap>
     <resultMap id="categoryResult" type="Category">
         <result column="CATEGORY_NO" property="categoryNo"/>
@@ -22,36 +23,42 @@
     </resultMap>
 
 
-    <insert id="insertProduct">
+    <insert id="insertProduct" parameterType="Product" useGeneratedKeys="false" >
         INSERT INTO PRODUCT(
         PRODUCT_NO,
         CATEGORY_NO,
         PRODUCT_NAME,
         INPUT_PRICE,
-        SALE_PRICE
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
 
         ) VALUES (
         SEQ_PRNO.NEXTVAL,
         #{categoryNo},
         #{productName},
         #{inputPrice},
-        #{salePrice}
+        #{salePrice},
+        #{shortageAmount}
         )
+        <selectKey keyProperty="productNo" resultType="int" order ="AFTER">
+            SELECT SEQ_PRNO.CURRVAL FROM DUAL
+        </selectKey>
     </insert>
 
     <select id="selectAllProduct" resultMap="headProductResult">
         SELECT
-        PRODUCT_NO,
+        P.PRODUCT_NO,
         CATEGORY_Name,
         PRODUCT_NAME,
         INPUT_PRICE,
         SALE_PRICE,
         SHORTAGE_AMOUNT,
-        AVAILABILITY
-        FROM PRODUCT
-        JOIN CATEGORY USING(CATEGORY_NO)
-        ORDER BY PRODUCT_NO DESC
-
+        AVAILABILITY,
+        FILE_PATH
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
+        ORDER BY P.PRODUCT_NO DESC
     </select>
     <select id="searchProduct" resultMap="headProductResult">
         SELECT
@@ -102,6 +109,40 @@
         WHERE PRODUCT_NO = #{productNo}
     </update>
 
+    <delete id="deleteProduct">
+        DELETE PRODUCT
+        WHERE PRODUCT_NO = #{productNo}
+    </delete>
 
+    <!--  지점  -->
+    <select id="orderRequestProductList" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        ORDER BY PRODUCT_NO ASC
+    </select>
+    <select id="orderRequestProductSearch" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NAME,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        WHERE (PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+        OR TO_CHAR(PRODUCT_NO) LIKE '%' || #{keyword} || '%')
+        <if test="category != null and category != 'all'">
+            AND CATEGORY_NAME = #{category}
+        </if>
+        ORDER BY PRODUCT_NO ASC
+    </select>
 
 </mapper>

@@ -192,12 +192,17 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 </div>
             </div>
             <div id="top-right1">
-                <button class="gowork-btn" onclick="changebtn(this)" data-type="출근">출근</button>
-                <button class="gohome-btn" onclick="changebtn(this)" style="display: none" data-type="퇴근"> 퇴근</button>
+                <c:choose>
+                    <c:when test="${todayAttendance.workingTime == null}">
+                        <button class="gowork-btn" onclick="changebtn(this)" data-type="출근">출근</button>
+                    </c:when>
+                    <c:when test="${todayAttendance.workoutTime == null}">
+                        <button class="gohome-btn" onclick="changebtn(this)" data-type="퇴근">퇴근</button>
+                    </c:when>
+                </c:choose>
             </div>
 
         </div>
-        <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
         <div id="main">
             <div id="main-in">
                 <table class="table table-hover" id="table1">
@@ -247,13 +252,30 @@ contentType="text/html;charset=UTF-8" language="java" %>
                                 </c:choose>
                             </td>
                             <td>
-                                <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm" />
+                                <c:choose>
+                                    <c:when test="${attendance.member.memberId == loginMember.memberId}">
+                    <span id="working-time">
+                        <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm" />
+                    </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatDate value="${attendance.workingTime}" pattern="yyyy-MM-dd HH:mm" />
+                                    </c:otherwise>
+                                </c:choose>
                                 <input type="hidden" class="data-working-time" value="<fmt:formatDate value='${attendance.workingTime}' pattern='yyyy-MM-dd\'T\'HH:mm' />" />
-                            </td>
                             </td>
                             <td>~</td>
                             <td>
-                                <fmt:formatDate value="${attendance.workoutTime}" pattern="yyyy-MM-dd HH:mm" />
+                                <c:choose>
+                                    <c:when test="${attendance.member.memberId == loginMember.memberId}">
+                    <span id="workout-time">
+                        <fmt:formatDate value="${attendance.workoutTime}" pattern="yyyy-MM-dd HH:mm" />
+                    </span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <fmt:formatDate value="${attendance.workoutTime}" pattern="yyyy-MM-dd HH:mm" />
+                                    </c:otherwise>
+                                </c:choose>
                                 <input type="hidden" class="data-workout-time" value="<fmt:formatDate value='${attendance.workoutTime}' pattern='yyyy-MM-dd\'T\'HH:mm' />" />
                             </td>
                         </tr>
@@ -359,61 +381,82 @@ contentType="text/html;charset=UTF-8" language="java" %>
           });
         });
 
+        const loginMemberId = "<c:out value='${loginMember.memberId}' default='' />";
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('#table1 tbody tr').forEach(row => {
+                row.addEventListener('click', function () {
+                    const rank = this.children[0].innerText;
+                    const id = this.children[1].innerText;
+                    const name = this.children[2].innerText;
+                    const workingTime = this.querySelector('.data-working-time').value;
+                    const workoutTime = this.querySelector('.data-workout-time').value;
+
+                    document.getElementById('modal-rank').innerText = rank;
+                    document.getElementById('modal-id').innerText = id;
+                    document.getElementById('modal-name').innerText = name;
+                    document.getElementById('modal-working_time').value = workingTime;
+                    document.getElementById('modal-workout_time').value = workoutTime;
+                    document.getElementById('modal-member_id').value = this.dataset.memberId;
+
+                    const modalEl = document.getElementById('staticBackdrop');
+                    const modal = new bootstrap.Modal(modalEl);
+
+                    modalEl.addEventListener('hidden.bs.modal', function () {
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                    });
+                    modal.show();
+
+                });
+            });
+        });
+
         function changebtn(this_btn) {
-            const now = new Date();
-            const kstOffset = 9 * 60 * 60 * 1000; // 9시간 오프셋
-            const kstTime = new Date(now.getTime() + kstOffset);
-            const updateTime = kstTime.toISOString().slice(0, 16); // yyyy-MM-ddTHH:mm
-
-            const type = this_btn.dataset.type; // "출근" or "퇴근"
-            const workingInput = document.getElementById("modal-working_time");
-            const workoutInput = document.getElementById("modal-workout_time");
-            const memberId = document.getElementById('modal-id').innerText.trim();
-
-            let timeToSend = '';
-            let url = '';
-
-            if (type === '출근') {
-                workingInput.value = updateTime;
-                timeToSend = updateTime;
-                url = '/spot_attendance/updateTime';
-
-                this_btn.style.display = "none";
-                document.querySelector(".gohome-btn").style.display = "inline-block";
-            } else {
-                workoutInput.value = updateTime;
-                timeToSend = updateTime;
-                url = '/spot_attendance/updateTime';
-
-                this_btn.style.display = "none";
-                document.querySelector(".gowork-btn").style.display = "inline-block";
+            if (!loginMemberId) {
+                alert("로그인 정보가 없습니다.");
+                return;
             }
 
-            const data = {
-                memberId: document.getElementById("modal-member_id").value,
-                time: timeToSend
-            };
-            console.log("보내는 데이터 확인:", data);
+            const now = new Date();
+            const kstOffset = 9 * 60 * 60 * 1000;
+            const kstTime = new Date(now.getTime() + kstOffset);
+            const updateTime = kstTime.toISOString().slice(0, 16);
 
-            fetch(url, {
+            const type = this_btn.dataset.type;
+            const data = { memberId: loginMemberId, time: updateTime, type };
+
+            fetch('/spot_attendance/updateTime', {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             })
-                .then(response => {
-                    if (!response.ok) throw new Error("서버 오류 발생");
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(result => {
-                    console.log("서버 응답:", result);
-                    alert(type + " 시간이 저장되었습니다!");
+                    if (result && result.result === 'success') {
+                        if (type === "출근") {
+                            this_btn.innerText = "퇴근";
+                            this_btn.dataset.type = "퇴근";
+                            this_btn.classList.remove("gohome-btn");
+                            this_btn.classList.add("gowork-btn");
+                            document.getElementById("working-time").innerText = updateTime.replace("T", " ");
+                            alert("출근 시간이 저장되었습니다.");
+                        } else if (type === "퇴근") {
+                            this_btn.innerText = "출근";
+                            this_btn.dataset.type = "출근";
+                            this_btn.classList.remove("gowork-btn");
+                            this_btn.classList.add("gohome-btn");
+                            this_btn.disabled = true;
+                            document.getElementById("workout-time").innerText = updateTime.replace("T", " ");
+                            alert("퇴근 시간이 저장되었습니다.");
+                        }
+
+                    } else {
+                        alert('시간 저장에 실패했습니다.');
+                    }
                 })
-                .catch(err => {
-                    console.error(err);
-                    alert("시간 저장 중 오류가 발생했어요.");
-                });
+
+
         }
 
         document.getElementById('footer-btn-edit').addEventListener('click', function () {
@@ -426,14 +469,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 return;
             }
 
+            if (workingTime >= workoutTime) {
+                alert('출근시간은 퇴근시간보다 빠를 수 없습니다.');
+                return;
+            }
+
             fetch('/spot_attendance/updateAttendance', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    memberId,
-                    workingTime,
-                    workoutTime
-                })
+                body: JSON.stringify({ memberId, workingTime, workoutTime })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -449,9 +493,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
                     alert('서버 오류 발생');
                 });
         });
-
-
-
     </script>
     </div>
   </body>

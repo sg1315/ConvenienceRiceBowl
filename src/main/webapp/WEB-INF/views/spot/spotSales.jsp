@@ -1,5 +1,8 @@
+<%@ page import="java.time.LocalDate" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
   <head>
     <title>지점 월매출</title>
@@ -242,6 +245,12 @@ contentType="text/html;charset=UTF-8" language="java" %>
         color: #3c3c3c;
         font-weight: bold;
       }
+      #searchdate form input[type=month]{
+        text-align: center;
+        padding: 5px;
+        font-size: 16px;
+        border-radius: 6px;
+      }
     </style>
   </head>
   <body>
@@ -254,14 +263,28 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <p class="main_name">매출집계</p>
           </div>
         </div>
+        <%
+          // Java 코드로 오늘 날짜를 'yyyy-MM' 형식으로 JSP에서 쓰기 위해 request에 저장
+          String thisMonth = LocalDate.now().toString().substring(0, 7);
+          request.setAttribute("thisMonth", thisMonth);
+        %>
 
         <div id="top-right1">
           <a href="/spot_salesYear"><button class="search-input-submit">년도별</button></a>
           <div id="searchdate">
-            <input type="month" class="date-input" />
-            <span>~</span>
-            <input type="month" class="date-input" />
-            <button class="search-input-submit">검색</button>
+            <c:set var="startMonthVal" value="${param.startMonth ne null ? param.startMonth : thisMonth}" />
+            <c:set var="endMonthVal" value="${param.endMonth ne null ? param.endMonth : thisMonth}" />
+
+            <form action="/spot_sales" method="get">
+              <label>
+                <input type="month" id="startMonth" name="startMonth" class="date-input" required value="${startMonthVal}">
+              </label>
+              <span>~</span>
+              <label>
+                <input type="month" id="endMonth" name="endMonth" class="date-input" required value="${endMonthVal}">
+              </label>
+              <button type="submit" class="search-input-submit">🔍검색</button>
+            </form>
           </div>
         </div>
       </div>
@@ -282,27 +305,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
             </thead>
 
             <tbody>
+            <c:forEach var="sales" items="${list}">
               <tr>
-                <td>2025-03-01</td>
-                <td>160,000</td>
-                <td>320,000</td>
-                <td>50</td>
-                <td>160,000</td>
+                <td>${sales.circulationDate}</td>
+                <td><fmt:formatNumber value="${sales.inputPrice}" type="number" /></td>
+                <td><fmt:formatNumber value="${sales.salePrice}" type="number" /></td>
+                <td>${sales.circulationAmount}</td>
+                <td><fmt:formatNumber value="${sales.salePrice - sales.inputPrice}" type="number" /></td>
               </tr>
-              <tr>
-                <td>2025-03-01</td>
-                <td>160,000</td>
-                <td>320,000</td>
-                <td>50</td>
-                <td>160,000</td>
-              </tr>
-              <tr>
-                <td>2025-03-01</td>
-                <td>160,000</td>
-                <td>320,000</td>
-                <td>50</td>
-                <td>160,000</td>
-              </tr>
+            </c:forEach>
             </tbody>
           </table>
         </div>
