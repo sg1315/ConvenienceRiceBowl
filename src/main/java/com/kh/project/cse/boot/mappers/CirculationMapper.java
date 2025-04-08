@@ -14,9 +14,9 @@ import java.util.ArrayList;
 @Mapper
 public interface CirculationMapper {
 
-    int selectcirculation();
 
-    ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
+
+
 
 
     //지점
@@ -27,4 +27,8 @@ public interface CirculationMapper {
     //발주 요청 분단위로 묶은 수
     int orderRequestListCount(@Param("storeNo") int storeNo);
     ArrayList<Circulation> orderRequestList(RowBounds rowBounds, int storeNo);
+
+    ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
+
+
 }

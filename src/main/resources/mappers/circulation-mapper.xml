@@ -4,13 +4,13 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.CirculationMapper">
     <resultMap id="circulationResult" type="Circulation">
-        <result column="CIRCULATION_NO" property="circulationNo"/>
+        <result column="CIRCULATION_NO" property="circulateionNo"/>
         <result column="STORE_NO" property="storeNo"/>
         <result column="PRODUCT_NO" property="productNo"/>
         <result column="INPUT_PRICE" property="inputPrice"/>
         <result column="SALE_PRICE" property="salePrice"/>
-        <result column="CIRCULATION_AMOUNT" property="circulationAmount"/>
-        <result column="CIRCULATION_DATE" property="circulationDate"/>
+        <result column="CIRCULATION_AMOUNT" property="circulateionAmount"/>
+        <result column="CIRCULATION_DATE" property="circulateionDate"/>
         <result column="STATUS" property="status"/>
         <result column="STORE_NAME" property="storeName"/>
 
@@ -101,6 +101,19 @@
 <!--                )-->
 <!--        )-->
 <!--        ORDER BY RNUM DESC-->
+    </select>
+
+    <select id="selectCirculationlist" resultMap="circulationResult">
+    SELECT
+    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+    SET_NO,
+    SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+    SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+    STATUS
+    FROM  CIRCULATION
+    WHERE  STORE_NO = #{storeNo} AND STATUS = 1
+    GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+    ORDER BY SET_NO DESC
     </select>
 
 </mapper>

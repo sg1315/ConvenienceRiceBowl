@@ -12,7 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,16 +27,20 @@ public class HeadController {
 
     //
     //본사 발주
+//  @RequestMapping("/head_order")
+//    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+//
+//        int circulation = headService.selectcirculation();
+//
+//        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
+//        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+//
+//        model.addAttribute("list", list);
+//        model.addAttribute("pi", pi);
+//       return "head_office/headOrder";
+//      }
     @RequestMapping("/head_order")
-    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
-
-        int circulation = headService.selectcirculation();
-
-        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
-        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
-
-        model.addAttribute("list", list);
-        model.addAttribute("pi", pi);
+    public String home3() {
         return "head_office/headOrder";
     }
     //성진
@@ -71,9 +75,6 @@ public class HeadController {
         Announcement announcement = headService.selectDetailAnnouncement(ano);
         return announcement;
     }
-
-
-
     //공지사항수정
     @PostMapping("updateAnnouncementDetail.he")
     public String updateAnnouncementDetail(@ModelAttribute Announcement announcement, HttpSession session) {
@@ -123,26 +124,38 @@ public class HeadController {
         int listCount = headService.ProductListCount();
 
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
-
         ArrayList<Product> list = headService.selectAllProduct(pi);
+
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
+
         return "head_office/headProduct";
     }
 
     //상품추가
     @PostMapping("/insertProduct.he")
-    public String insertProduct(Product product, HttpSession session, Model model) {
+    public String insertProduct(@ModelAttribute Product product, MultipartFile upfile, HttpSession session, Model model) {
 
-        System.out.println(product);
-        int result = headService.insertProduct(product);
-        int cpage = 1;
+        Files files = new Files();
+        if(!upfile.getOriginalFilename().equals("")){
 
-        if (result >= 1){
-            return head_product(cpage, model);
+            String changeName = com.kh.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
+
+            files.setChangeName(changeName);
+            files.setOriginName(upfile.getOriginalFilename());
+            files.setFilePath("/resources/uploadfile/" + changeName);
         }
 
-        return "head_office/headProduct";
+        int result = headService.insertProduct(product, files);
+
+        if (result >= 1){
+            session.setAttribute("alertMsg", "상품추가 성공");
+            return head_product(1, model);
+        }else {
+            session.setAttribute("alertMsg", "상품추가 실패");
+            return "head_office/headProduct";
+        }
+
     }
 
     @PostMapping("/searchProduct")
@@ -160,17 +173,56 @@ public class HeadController {
 
 
     @PostMapping("/updateProduct")
-    public String updateProduct(Product product, HttpSession session, Model model) {
-        System.out.println(product);
-        int result = headService.updateProduct(product);
-        int cpage = 1;
+    public String updateProduct(Product product, MultipartFile file1, HttpSession session, Model model) {
+        int result = 0;
 
-        if (result >= 1){
-            return head_product(1, model);
+        if(product.getAvailability() == null){
+            product.setAvailability("Y");
+        } else if (product.getAvailability().equals("on")) {
+            product.setAvailability("N");
         }
 
-        return "head_office/headProduct";
+        Files files = new Files();
+        if(!file1.getOriginalFilename().equals("")){
+            String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
+
+            files.setProductNo(product.getProductNo());
+            files.setChangeName(changeName);
+            files.setOriginName(file1.getOriginalFilename());
+            files.setFilePath("/resources/uploadfile/" + changeName);
+
+            System.out.println(files);
+            result = headService.updateProduct(product, files);
+        }else {
+             result = headService.updateOneProduct(product);
+        }
+
+        if (result >= 1){
+            session.setAttribute("alertMsg", "상품수정 성공");
+            return head_product(1, model);
+        }else {
+            session.setAttribute("alertMsg", "상품추가 실패");
+            return "head_office/headProduct";
+        }
+
     }
+
+    @PostMapping("deleteProduct")
+    public String deleteStoreStatus(@ModelAttribute Product product, HttpSession session, Model model){
+
+        int productNo = product.getProductNo();
+
+        int result = headService.deleteProduct(productNo);
+
+        if (result >= 1){
+            session.setAttribute("alertMsg", "상품삭제 성공");
+            return head_product(1, model);
+        }else {
+            session.setAttribute("alertMsg", "상품삭제 실패");
+            return "head_office/headProduct";
+        }
+    }
+
 
     @RequestMapping("/head_store")
     public String head_store(@RequestParam(defaultValue = "1") int cpage,Model model) {

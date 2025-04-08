@@ -24,11 +24,15 @@ public interface ProductMapper {
 
     int updateProduct(Product product);
 
+    int deleteProduct(int productNo);
+
+
 
     //지점
-
     //발주요청 상품 목록
     ArrayList<Product> orderRequestProductList();
     //발주요청 상품 검색
     ArrayList<Product> orderRequestProductSearch(String category, String keyword);
+
+
 }

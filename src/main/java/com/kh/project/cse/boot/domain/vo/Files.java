@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Attechment {
+public class Files {
     private int fileNo;
     private int productNo;
     private String originName;
