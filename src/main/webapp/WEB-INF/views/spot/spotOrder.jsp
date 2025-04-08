@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>지점 발주</title>
     <link rel="stylesheet" href="/resources/css/btn.css">
     <style>
@@ -50,6 +52,12 @@
             gap: 10px;
             padding-top: 20px;
         }
+        #top-right1 form{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
         #order-request{
             width: 15%;
             height: 100%;
@@ -75,13 +83,22 @@
             align-items: center;
             padding-right: 10px;
         }
+        #order-search-bottom{
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            gap: 10px;
+        }
+
         #top-left p {
             padding-left: 15px;
         }
         #main{
             background-color: #D9D9D9;
             width: 100%;
-            height: 90%;
+            height: 85%;
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
             padding: 50px 50px 100px;
@@ -127,16 +144,18 @@
             color: #3C3C3C;
             font-weight: bold;
         }
-        #btn-close-modal{
+        .btn-close{
             width: 20px;
             height: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: none;
+            background: #d9d9d9;
         }
         .x_img{
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
         }
 
         /* modal */
@@ -152,6 +171,12 @@
         .modal-body{
             height: 75%;
             flex-grow: 1;
+            overflow: hidden;
+            padding: 0;
+        }
+        #modal-body{
+            height: 75%;
+        /*  이 부분 학원가서 학원 모니터로 확인  */
         }
 
         .modal-body input, .modal-body select{
@@ -173,6 +198,7 @@
             max-width: 60%;
             position: absolute;
             left: 24%;
+            height: 100%;
         }
 
         #header-title2{
@@ -198,6 +224,9 @@
             display:flex;
             flex-wrap:wrap;
             height:16%;
+        }
+        #modal-header-right-form{
+            width: 100%;
         }
         #modal-header-left{
             display: block;
@@ -229,6 +258,10 @@
             width: 100%;
             display: flex;
             justify-content: space-around;
+        }
+        #order-request-category-select{
+            width: 100%;
+            text-align: center;
         }
         #category-select{
             width: 30%;
@@ -311,27 +344,101 @@
         #order-cancel{
             border-bottom-right-radius: 10px;
         }
-        #modal-pageing{
+        #modal-pageing {
             display: flex;
-            justify-content:center;
+            justify-content: center;
             width: 72%;
 
             background-color: #D9D9D9;
-            height:9%;
+            height: 100%;
+        }
+        #order-product-table, #order-request-table{
+            text-align: center;
+        }
+        #order-product-table tr, #order-request-table tr{
+            border-bottom: #d9d9d9 solid 2px;
+        }
+        #order-product-table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-product-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-product-table tbody {
+            display: block;
+            overflow-y: auto;
+            width: 100%;
+            height: 90%;
+        }
+
+        #order-product-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-product-table thead th {
+            background-color: #f9f9f9;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        #order-request-table td{
+            text-align: center;
+            vertical-align: middle;
+        }
+        #order-request-table td:nth-child(5){
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #order-request-table input{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
         }
         #order-table{
             text-align: center;
         }
+
+        #order-request-table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        #order-request-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        #order-request-table tbody {
+            display: block;
+            overflow-y: auto;
+            width: 100%;
+            height: 90%;
+        }
+
+        #order-request-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
         #modal-page-inner{
             width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-
-        /* /modal */
-
-
     </style>
 </head>
 <body>
@@ -346,49 +453,43 @@
         </div>
 
         <div id="top-right1">
-            <div id="order-request">
-                <button class="gray-btn-border" id="btn-order-request" type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
-                    발주<br>요청
-                </button>
-            </div>
-            <div id="order-search">
-                <form>
-                    <div id="order-search-top">
-                        <button class="search-input-submit">저번 달</button>
-                        <button class="search-input-submit">최근</button>
-                        <input class="date-input" type="date"> ~ <input class="date-input" type="date">
-                    </div>
-                    <div id="order-search-bottom">
-                        <div class="selectbox" id="status-select">
-                            <select>
-                                <option>상태</option>
-                                <option>발주대기</option>
-                                <option>발주요청</option>
-                                <option>발주승인</option>
-                                <option>발주거절</option>
-                            </select>
+            <form>
+                <div id="order-request">
+                    <button class="gray-btn-border" id="btn-order-request" type="button" data-bs-toggle="modal" data-bs-target="#staticOrder">
+                        발주<br>요청
+                    </button>
+                </div>
+                <div id="order-search">
+                    <form id="order-search-form">
+                        <div id="order-search-top">
+                            <button type="button" class="search-input-submit" id="previousMonth">저번 달</button>
+                            <button type="button" class="search-input-submit" id="lastMonth">최근</button>
+                            <input class="date-input" type="date" name="startDate"> ~ <input class="date-input" type="date" name="endDate">
                         </div>
-                        <div>
-                            <input class="search-input" type="text" placeholder="발주번호">
-                            <input class="search-input-submit" type="submit" value="검색">
+                        <div id="order-search-bottom">
+                            <div class="selectbox" id="status-select">
+                                <select name="status">
+                                    <option value="">상태</option>
+                                    <option value="1">발주 대기</option>
+                                    <option value="5">발주 승인</option>
+                                    <option value="6">발주 거절</option>
+                                    <option value="7">입고 대기</option>
+                                    <option value="2">입고</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input class="search-input" type="text" name="setNo" placeholder="발주번호">
+                                <button class="search-input-submit" id="btn-order-search" type="button">검색</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-
+                    </form>
+                </div>
+            </form>
         </div>
-
     </div>
     <div id="main">
         <div id="main-in">
             <table class="table table-hover" id="table1">
-                <colgroup>
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                    <col style="width: 10%;">
-                    <col style="width: 20%;">
-                    <col style="width: 20%;">
-                </colgroup>
                 <thead>
                 <tr>
                     <th class="col-2">발주일자</th>
@@ -399,74 +500,36 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr><tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr><tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
-                <tr>
-                    <td>2025-03-31</td>
-                    <td>123456</td>
-                    <td>100</td>
-                    <td>1,000,000</td>
-                    <td>발주완료</td>
-                </tr>
+                <c:forEach var="o" items="${olist}">
+                    <tr>
+                        <td>${o.minuteGroup}</td>
+                        <td>${o.setNo}</td>
+                        <td>${o.totalAmount}</td>
+                        <td>${o.totalInputPrice}</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${o.status == 1}">
+                                    <span>발주 대기</span>
+                                </c:when>
+                                <c:when test="${o.status == 2}">
+                                    <span>입고</span>
+                                </c:when>
+                                <c:when test="${o.status == 5}">
+                                    <span style="color: #0073ff">발주 승인</span>
+                                </c:when>
+                                <c:when test="${o.status == 6}">
+                                    <span style="color: red">발주 거절</span>
+                                </c:when>
+                                <c:when test="${o.status == 7}">
+                                    <span>입고 대기</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>알 수 없음</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -500,239 +563,116 @@
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <form id="search-box">
+                            <form id="search-box" action="productSearch" method="get">
                                 <div id="category-select">
-                                    <select class="selectbox">
-                                        <option>카테고리</option>
-                                        <option>스낵</option>
-                                        <option>음료</option>
-                                        <option>기타</option>
+                                    <select class="selectbox" id="order-request-category-select" name="category">
+                                        <option value="all">카테고리</option>
+                                        <c:forEach var="c" items="${clist}">
+                                            <option value="${c.categoryName}">
+                                                <td>${c.categoryName}</td>
+                                            </option>
+                                        </c:forEach>
                                     </select>
                                 </div>
                                 <div id="search-content">
-                                    <input class="search-input" type="text" placeholder="상품명 or 상품번호" id="product-search" />
+                                    <input class="search-input" type="text" placeholder="상품명 or 상품번호" id="product-search" name="keyword" />
                                     <input class="search-input-submit" type="submit" value="검색" />
                                 </div>
                             </form>
                         </div>
                     </div>
-                        <div class="modal-body">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th class="col-2">상품번호</th>
-                                        <th class="col-2">카테고리</th>
-                                        <th class="col-5">상품명</th>
-                                        <th class="col-1"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>P12334</td>
-                                        <td>스낵</td>
-                                        <td>홈런볼</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr><tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr><tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>P164532</td>
-                                        <td>스낵</td>
-                                        <td>새우깡</td>
-                                        <td><img src="../resources/common/포스기_추가 아이콘.png"></td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="modal-body" id="orderRequestProductList">
+                        <table class="table table-hover" id="order-product-table">
+                            <thead>
+                            <tr>
+                                <th class="col-2">상품번호</th>
+                                <th class="col-2">카테고리</th>
+                                <th class="col-5">상품명</th>
+                                <th class="col-1"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <c:forEach var="p" items="${plist}">
+                                <tr>
+                                    <td>${p.productNo}</td>
+                                    <td>${p.categoryName}</td>
+                                    <td>${p.productName}</td>
+                                    <td>
+                                        <img src="../resources/common/포스기_추가 아이콘.png"
+                                             class="add-btn"
+                                             data-productno="${p.productNo}"
+                                             data-categoryname="${p.categoryName}"
+                                             data-productname="${p.productName}"
+                                             data-inputPrice="${p.inputPrice}"
+                                             data-salePrice="${p.salePrice}"
+                                             style="cursor: pointer;">
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <div id="modal-pageing-left">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
-                        <img src="/resources/common/공통_페이징바화살표.png">
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
+<%--                        <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }">--%>
+<%--                            <button type="button" class="btn btn-outline-secondary page-btn" data-page="${i}">${i}</button>--%>
+<%--                        </c:forEach>--%>
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
                     </div>
                 </div>
 
                 <div id="modal-right-wrap">
                     <div class="modal-header" id="modal-header-right">
-                        <div id="header-title2">
-                            <h1 class="modal-title fs-5">발주 요청 목록</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-                                <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
-                            </button>
-                        </div>
-                        <div id="header-content2">
-                            <div id="header-content2-left">
-                                <button class="black-btn">요청</button>
+                            <div id="header-title2">
+                                <h1 class="modal-title fs-5">발주 요청 목록</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                    <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
+                                </button>
                             </div>
-                            <div id="header-content2-right">
-                                <p>
-                                    종류 수(총 수량 : 3(240)
-                                </p>
-                                <p>
-                                    총 1,000,300 원
-                                </p>
+                            <div id="header-content2">
+                                <div id="header-content2-left">
+                                    <button class="black-btn" id="btn-order-submit">요청</button>
+                                </div>
+                                <div id="header-content2-right">
+                                    <p id="product-summary">
+                                        종류 (총 수량) : <span id="kind-count">0</span> (<span id="total-quantity">0</span>)
+                                    </p>
+                                    <p>
+                                        총 <span id="total-price">0</span> 원
+                                    </p>
+                                </div>
                             </div>
-                        </div>
+
                     </div>
                     <div class="modal-body">
-                        <table class="table table-hover">
+                        <table class="table table-hover" id="order-request-table">
                             <thead>
                             <tr>
                                 <th class="col-1"></th>
                                 <th class="col-2">상품번호</th>
                                 <th class="col-2">카테고리</th>
-                                <th class="col-5">상품명</th>
-                                <th class="col-1">수량</th>
+                                <th class="col-4">상품명</th>
+                                <th class="col-2">수량</th>
                                 <th class="col-2">금액</th>
-
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P12334</td>
-                                <td>스낵</td>
-                                <td>홈런볼</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
-                            <tr>
-                                <td><img src="../resources/common/포스기_삭제 아이콘.png"></td>
-                                <td>P164532</td>
-                                <td>스낵</td>
-                                <td>새우깡</td>
-                                <td>20</td>
-                                <td>30000</td>
-                            </tr>
+                                <%--             js로 목록 불러옴               --%>
                             </tbody>
                         </table>
                     </div>
 
                     <div id="modal-pageing-right">
-                        <img src="/resources/common/공통_페이징바화살표.png">
-                        <button type="button" class="btn btn-outline-secondary">1</button>
-                        <button type="button" class="btn btn-outline-secondary">2</button>
-                        <button type="button" class="btn btn-outline-secondary">3</button>
-                        <button type="button" class="btn btn-outline-secondary">4</button>
-                        <button type="button" class="btn btn-outline-secondary">5</button>
-                        <img src="/resources/common/공통_페이징바화살표.png">
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">1</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">2</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">3</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">4</button>--%>
+<%--                        <button type="button" class="btn btn-outline-secondary">5</button>--%>
+<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -750,7 +690,7 @@
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
                     <div id="modal-header2">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                             <img src="<c:url value="/resources/common/공통_Icon.png"/>" class="x_img">
                         </button>
                     </div>
@@ -760,7 +700,7 @@
                                 <option>카테고리</option>
                                 <option>스낵</option>
                                 <option>음료</option>
-                                <option>머였지</option>
+                                <option>기타</option>
                             </select>
                             <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
                             <input class="search-input-submit" type="submit" value="검색" />
@@ -778,92 +718,22 @@
                 <div id="modal-body">
                     <table class="table table-hover" id="order-table">
                         <thead>
-                            <tr>
-                                <th class="col-1">상품번호</th>
-                                <th class="col-2">카테고리</th>
-                                <th class="col-5">상품명</th>
-                                <th class="col-1">수량</th>
-                                <th class="col-2">금액</th>
-                            </tr>
+                        <tr>
+                            <th class="col-1">상품번호</th>
+                            <th class="col-2">카테고리</th>
+                            <th class="col-5">상품명</th>
+                            <th class="col-1">수량</th>
+                            <th class="col-2">금액</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>2</td>
-                                <td>3</td>
-                                <td>4</td>
-                                <td>5</td>
-                            </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>4</td>
+                            <td>5</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -885,23 +755,71 @@
                         <button class="red-btn" type="button">발주취소</button>
                     </div>
                 </div>
-
-    <!--Table Modal Script -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const rows = document.querySelectorAll("#table1 tbody tr");
-            rows.forEach(row => {
-                row.classList.add("table-row");
-                row.addEventListener("click", function () {
-                    const modal = new bootstrap.Modal(document.getElementById("staticBackdrop2"));
-                    modal.show();
-                });
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const rows = document.querySelectorAll("#table1 tbody tr");
+        rows.forEach(row => {
+            row.classList.add("table-row");
+            row.addEventListener("click", function () {
+                const modal = new bootstrap.Modal(document.getElementById("staticBackdrop2"));
+                modal.show();
             });
         });
+    });
+</script>
 
+<!-- spotOrder.js -->
+<script src="/resources/js/spotOrder.js"></script>
+<script>
+    //모달 열었을때 HTML을 저장, 닫을때 그 정보를 다시 불러옴
+    let initialModalContent = null;
 
-    </script>
-    <!--end point-->
-</div>
+    $('#staticOrder').on('show.bs.modal', function () {
+        initialModalContent = $('#staticOrder .modal-content').html();
+        $('#order-request-table tbody').empty();
+        addedProducts.clear();
+    });
+
+    $('#staticOrder').on('hidden.bs.modal', function () {
+        if (initialModalContent) {
+            $('#staticOrder .modal-content').html(initialModalContent);
+        }
+    });
+
+    //삭제 버튼 클릭시 제거
+    document.querySelector("#order-request-table tbody").addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-btn')) {
+            const row = e.target.closest('tr');
+            const productNo = row.dataset.productno;
+            addedProducts.delete(productNo);
+            row.remove();
+        }
+    });
+
+    //총 수량, 금액 계산
+    function updateSummary() {
+        let kindCount = 0;      // 종류 수
+        let totalQuantity = 0;  // 총 수량
+        let totalPrice = 0;     // 총 금액
+
+        $('#order-request-table tbody tr').each(function () {
+            kindCount += 1;
+            const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
+            const price = parseInt($(this).data('inputprice')) || 0;
+
+            totalQuantity += quantity;
+            totalPrice += quantity * price;
+        });
+
+        // 화면에 반영
+        $('#kind-count').text(kindCount);
+        $('#total-quantity').text(totalQuantity);
+        $('#total-price').text(totalPrice.toLocaleString()); // 콤마 붙이기
+    }
+</script>
 </body>
 </html>

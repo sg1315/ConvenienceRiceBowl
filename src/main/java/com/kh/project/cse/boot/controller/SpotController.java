@@ -4,6 +4,15 @@ import com.kh.project.cse.boot.domain.vo.Attendance;
 import com.kh.project.cse.boot.domain.vo.Member;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
+import com.kh.project.cse.boot.domain.vo.Category;
+import com.kh.project.cse.boot.domain.vo.Circulation;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
+import com.kh.project.cse.boot.domain.vo.Product;
+import com.kh.project.cse.boot.service.SpotService;
+import com.kh.project.cse.boot.service.SpotServiceImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
@@ -18,6 +27,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+@RequiredArgsConstructor
 @Controller
 public class SpotController {
 
@@ -26,11 +45,6 @@ public class SpotController {
     private final SpotService spotService;
     private Member member;
 
-    public SpotController(ResourceTransactionManager resourceTransactionManager, MemberService memberService, SpotService spotService) {
-        this.resourceTransactionManager = resourceTransactionManager;
-        this.memberService = memberService;
-        this.spotService = spotService;
-    }
 
     //대시보드
     @RequestMapping("/spot_dashboard")
@@ -98,12 +112,61 @@ public class SpotController {
         return "receiving/receivingDetailsForm";
     }
 
-    //입고
+    //발주
     @RequestMapping("/spot_order")
-    public String spot_order() {
+    public String spot_order(@RequestParam(defaultValue = "1") int cpage, Model model) {
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        //circuration-mapper도 수정해야함
+
+        int listCount = spotService.orderRequestListCount(storeNo);
+        PageInfo pi = new PageInfo(listCount, cpage, 10,10);
+
+        List<Category> clist = spotService.orderRequestCategoryList();
+        ArrayList<Product> plist = spotService.orderRequestProductList();
+        ArrayList<Circulation> olist = spotService.orderRequestList(pi, storeNo);
+
+        model.addAttribute("clist", clist);
+        model.addAttribute("plist", plist);
+        model.addAttribute("olist", olist);
         return "spot/spotOrder";
     }
+    @GetMapping("/spot_order/productSearch")
+    @ResponseBody
+    public ArrayList<Product> productSearch(@RequestParam("category") String category, @RequestParam("keyword") String keyword, Model model) {
 
+        ArrayList<Product> pslist = spotService.orderRequestProductSearch(category, keyword);
+
+        model.addAttribute("pslist", pslist);
+        return pslist;
+    }
+    @PostMapping("/spot_order/requestOrder")
+    public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+
+        //circuration-mapper도 수정해야함
+        int result = 0;
+
+        result = spotService.insertOrder(orderList, storeNo, setNo);
+        if (result > 0) {
+            return ResponseEntity.ok("발주 요청 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
+        }
+    }
+    @GetMapping("/spot_order/orderSearch")
+    @ResponseBody
+    public ArrayList<Circulation> orderSearch(@RequestParam(required = false) Date startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) String status, @RequestParam(required = false) String setNo) {
+        int storeNo = 2; // 세션 등에서 가져오기
+        System.out.println(startDate);
+        System.out.println(endDate);
+        System.out.println(status);
+        System.out.println(setNo);
+        return null;
+    }
+
+
+    //입고
     @RequestMapping("/spot_input")
     public String spot_input() { return "spot/spotInput"; }
 
