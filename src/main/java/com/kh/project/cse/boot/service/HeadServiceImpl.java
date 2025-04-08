@@ -215,6 +215,10 @@ public class HeadServiceImpl implements HeadService {
     public ArrayList<Circulation> getOderDetail(int setNo) {
         return circulationMapper.getOderDetail(setNo);
     }
+    
+    @Override
+    public int selectcirculation(){return circulationMapper.selectcirculation();}
+
 
 
 }

@@ -26,21 +26,17 @@ public class HeadController {
 
 
     //
-    //본사 발주
-//  @RequestMapping("/head_order")
-//    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
-//
-//        int circulation = headService.selectcirculation();
-//
-//        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
-//        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
-//
-//        model.addAttribute("list", list);
-//        model.addAttribute("pi", pi);
-//       return "head_office/headOrder";
-//      }
+
     @RequestMapping("/head_order")
-    public String home3() {
+    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int circulation = headService.selectcirculation();
+
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
+        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "head_office/headOrder";
     }
     //본사 발주 세부 사항

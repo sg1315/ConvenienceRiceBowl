@@ -114,7 +114,7 @@ public class SpotController {
     //발주
     @RequestMapping("/spot_order")
     public String spot_order(@RequestParam(defaultValue = "1") int cpage, Model model) {
-        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        int storeNo = 5; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
         //circuration-mapper도 수정해야함
 
         int listCount = spotService.orderRequestListCount(storeNo);
@@ -140,7 +140,7 @@ public class SpotController {
     }
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
-        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        int storeNo = 5; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
         String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
 
         //circuration-mapper도 수정해야함

@@ -76,7 +76,8 @@ public interface HeadService {
 
     //발주관리 세부사항
     ArrayList<Circulation> getOderDetail(int setNo);
-
+    //발주관리사항 총수
+    int selectcirculation();
 
 
 }

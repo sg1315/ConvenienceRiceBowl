@@ -114,5 +114,35 @@
         WHERE PRODUCT_NO = #{productNo}
     </delete>
 
+    <!--  지점  -->
+    <select id="orderRequestProductList" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        ORDER BY PRODUCT_NO ASC
+    </select>
+    <select id="orderRequestProductSearch" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NAME,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        JOIN CATEGORY USING(CATEGORY_NO)
+        WHERE (PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+        OR TO_CHAR(PRODUCT_NO) LIKE '%' || #{keyword} || '%')
+        <if test="category != null and category != 'all'">
+            AND CATEGORY_NAME = #{category}
+        </if>
+        ORDER BY PRODUCT_NO ASC
+    </select>
 
 </mapper>
