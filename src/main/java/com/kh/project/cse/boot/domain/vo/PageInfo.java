@@ -65,7 +65,4 @@ public class PageInfo {
         //startPage가 11이면 endPage 20이다.(maxPage 13이라면?)
         this.endPage = endPage > maxPage ? maxPage : endPage;
     }
-
-
-
 }

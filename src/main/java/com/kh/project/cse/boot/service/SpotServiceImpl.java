@@ -48,30 +48,31 @@ public class SpotServiceImpl implements SpotService {
         return attendanceMapper.updateWorkLeaveBtnTime(paramMap);
     }
 
+    //발주 - 상품 수 카운트
     @Override
     public int ProductListCount() {
         return productMapper.ProductListCount();
     }
-
+    //발주 - 발주 요청 상품 카테고리 목록
     @Override
     public List<Category> orderRequestCategoryList() {
         return productMapper.selectAllCategories();
     }
-
+    //발주 - 발주 요청 상품 목록
     @Override
     public ArrayList<Product> orderRequestProductList() {
 //        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 //        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return productMapper.orderRequestProductList();
     }
-
+    //발주 - 발주 요청 상품 검색
     @Override
     public ArrayList<Product> orderRequestProductSearch(String category, String keyword) {
 //        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 //        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return productMapper.orderRequestProductSearch(category, keyword);
     }
-
+    //발주 - 발주 요청
     @Override
     public int insertOrder(List<Circulation> orderList, int storeNo, String setNo) {
 
@@ -87,12 +88,12 @@ public class SpotServiceImpl implements SpotService {
         }
         return result;
     }
-
+    //발주 - 발주 요청 목록 카운트
     @Override
     public int orderRequestListCount(int storeNo) {
         return circulationMapper.orderRequestListCount(storeNo);
     }
-
+    //발주 - 발주 요청 목록
     @Override
     public ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
@@ -100,12 +101,12 @@ public class SpotServiceImpl implements SpotService {
 
         return circulationMapper.orderRequestList(rowBounds, storeNo);
     }
-
+    //발주 - 검색한 발주 요청 목록 카운트
     @Override
     public int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
         return circulationMapper.orderSearchListCount(storeNo, setNo, status, startDate, endDate);
     }
-
+    //발주 - 검색한 발주 요청 목록
     @Override
     public ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();

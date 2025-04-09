@@ -124,10 +124,11 @@ public class SpotController {
             @RequestParam(required = false) Integer status,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            HttpSession session,
             Model model) {
 
-        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
-        //circuration-mapper도 수정해야함
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        int storeNo = loginUser.getStoreNo();
 
         //date값 보정
         if (startDate != null) {
@@ -148,20 +149,33 @@ public class SpotController {
             cal.set(Calendar.MILLISECOND, 999);
             endDate = cal.getTime();
         }
-
-        int listCount = spotService.orderRequestListCount(storeNo);
-        PageInfo pi = new PageInfo(listCount, cpage, 10,10);
-
         List<Category> clist = spotService.orderRequestCategoryList();
         ArrayList<Product> plist = spotService.orderRequestProductList();
-        ArrayList<Circulation> olist = spotService.orderRequestList(pi, storeNo);
-        ArrayList<Circulation> oslist = spotService.orderSearchList(pi, storeNo, setNo, status, startDate, endDate);
+
+        ArrayList<Circulation> resultList;
+        PageInfo pi;
+
+        if (setNo != null || status != null || startDate != null || endDate != null) {
+            int searchCount = spotService.orderSearchListCount(storeNo, setNo, status, startDate, endDate);
+            pi = new PageInfo(searchCount, cpage, 10, 10);
+
+            resultList = spotService.orderSearchList(pi, storeNo, setNo, status, startDate, endDate);
+
+            model.addAttribute("olist", null);
+            model.addAttribute("oslist", resultList);
+        } else {
+            int listCount = spotService.orderRequestListCount(storeNo);
+            pi = new PageInfo(listCount, cpage, 10, 10);
+
+            resultList = spotService.orderRequestList(pi, storeNo);
+
+            model.addAttribute("olist", resultList);
+            model.addAttribute("oslist", null);
+        }
 
         model.addAttribute("pi", pi);
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
-        model.addAttribute("olist", olist);
-        model.addAttribute("oslist", oslist);
 
         model.addAttribute("setNo", setNo);
         model.addAttribute("status", status);
@@ -180,11 +194,11 @@ public class SpotController {
     }
     //발주 - 발주요청
     @PostMapping("/spot_order/requestOrder")
-    public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
-        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
-        String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
+    public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList, HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        int storeNo = loginUser.getStoreNo();
+        String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmm"));
 
-        //circuration-mapper도 수정해야함
         int result = 0;
 
         result = spotService.insertOrder(orderList, storeNo, setNo);
