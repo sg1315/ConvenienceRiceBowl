@@ -329,6 +329,7 @@
         }
         #modal-order-detail-footer{
             width: 100%;
+            height: 10%;
             display: flex;
         }
         #modal-space, #order-cancel{
@@ -460,7 +461,7 @@
                     </button>
                 </div>
                 <div id="order-search">
-                    <form id="order-search-form">
+                    <form id="order-search-form" method="get" action="/spot_order">
                         <div id="order-search-top">
                             <button type="button" class="search-input-submit" id="previousMonth">저번 달</button>
                             <button type="button" class="search-input-submit" id="lastMonth">최근</button>
@@ -479,7 +480,7 @@
                             </div>
                             <div>
                                 <input class="search-input" type="text" name="setNo" placeholder="발주번호">
-                                <button class="search-input-submit" id="btn-order-search" type="button">검색</button>
+                                <button class="search-input-submit" id="btn-order-search" type="submit">검색</button>
                             </div>
                         </div>
                     </form>
@@ -500,36 +501,49 @@
                 </tr>
                 </thead>
                 <tbody >
-                <c:forEach var="o" items="${olist}">
-                    <tr>
-                        <td>${o.minuteGroup}</td>
-                        <td>${o.setNo}</td>
-                        <td>${o.totalAmount}</td>
-                        <td>${o.totalInputPrice}</td>
-                        <td>
-                            <c:choose>
-                                <c:when test="${o.status == 1}">
-                                    <span>발주 대기</span>
-                                </c:when>
-                                <c:when test="${o.status == 2}">
-                                    <span>입고</span>
-                                </c:when>
-                                <c:when test="${o.status == 5}">
-                                    <span style="color: #0073ff">발주 승인</span>
-                                </c:when>
-                                <c:when test="${o.status == 6}">
-                                    <span style="color: red">발주 거절</span>
-                                </c:when>
-                                <c:when test="${o.status == 7}">
-                                    <span>입고 대기</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <span>알 수 없음</span>
-                                </c:otherwise>
-                            </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <c:choose>
+                    <c:when test="${not empty oslist}">
+                        <c:forEach var="os" items="${oslist}">
+                            <tr>
+                                <td>${os.minuteGroup}</td>
+                                <td>${os.setNo}</td>
+                                <td>${os.totalAmount}</td>
+                                <td>${os.totalInputPrice}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${os.status == 1}">발주 대기</c:when>
+                                        <c:when test="${os.status == 2}">입고</c:when>
+                                        <c:when test="${os.status == 5}">발주 승인</c:when>
+                                        <c:when test="${os.status == 6}">발주 거절</c:when>
+                                        <c:when test="${os.status == 7}">입고 대기</c:when>
+                                        <c:otherwise>알 수 없음</c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+
+                    <c:otherwise>
+                        <c:forEach var="o" items="${olist}">
+                            <tr>
+                                <td>${o.minuteGroup}</td>
+                                <td>${o.setNo}</td>
+                                <td>${o.totalAmount}</td>
+                                <td>${o.totalInputPrice}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${o.status == 1}">발주 대기</c:when>
+                                        <c:when test="${o.status == 2}">입고</c:when>
+                                        <c:when test="${o.status == 5}">발주 승인</c:when>
+                                        <c:when test="${o.status == 6}">발주 거절</c:when>
+                                        <c:when test="${o.status == 7}">입고 대기</c:when>
+                                        <c:otherwise>알 수 없음</c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>
@@ -695,16 +709,7 @@
                         </button>
                     </div>
                     <div id="modal-header3">
-                        <form>
-                            <select class="selectbox">
-                                <option>카테고리</option>
-                                <option>스낵</option>
-                                <option>음료</option>
-                                <option>기타</option>
-                            </select>
-                            <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
-                            <input class="search-input-submit" type="submit" value="검색" />
-                        </form>
+                        <%--           css 유지를 위해 만든 여백             --%>
                     </div>
                     <div id="modal-header4">
                         <p>
@@ -741,15 +746,7 @@
                     <div id="modal-space">
                     </div>
                     <div id="modal-pageing">
-                        <div id="modal-page-inner">
-                            <img src="/resources/common/공통_페이징바화살표.png">
-                            <button type="button" class="btn btn-outline-secondary">1</button>
-                            <button type="button" class="btn btn-outline-secondary">2</button>
-                            <button type="button" class="btn btn-outline-secondary">3</button>
-                            <button type="button" class="btn btn-outline-secondary">4</button>
-                            <button type="button" class="btn btn-outline-secondary">5</button>
-                            <img src="/resources/common/공통_페이징바화살표.png">
-                        </div>
+
                     </div>
                     <div id="order-cancel">
                         <button class="red-btn" type="button">발주취소</button>
@@ -790,16 +787,6 @@
         }
     });
 
-    //삭제 버튼 클릭시 제거
-    document.querySelector("#order-request-table tbody").addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-btn')) {
-            const row = e.target.closest('tr');
-            const productNo = row.dataset.productno;
-            addedProducts.delete(productNo);
-            row.remove();
-        }
-    });
-
     //총 수량, 금액 계산
     function updateSummary() {
         let kindCount = 0;      // 종류 수
@@ -809,7 +796,7 @@
         $('#order-request-table tbody tr').each(function () {
             kindCount += 1;
             const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
-            const price = parseInt($(this).data('inputprice')) || 0;
+            const price = parseInt($(this).attr('data-inputprice')) || 0;  // <-- 이 부분 수정
 
             totalQuantity += quantity;
             totalPrice += quantity * price;
