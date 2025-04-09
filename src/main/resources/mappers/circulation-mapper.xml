@@ -211,6 +211,22 @@
         WHERE C.SET_NO = #{setNo}
     </select>
 
+    <select id="head_lastorder" resultMap="circulationResult">
+        SELECT
+        TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+        SET_NO,
+        SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+        SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+        STORE_NAME,
+        STATUS
+        FROM  CIRCULATION C
+        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
+        WHERE STATUS IN (1,5,6,7)
+        AND CIRCULATION_DATE BETWEEN #{start} AND #{end}
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
+        ORDER BY SET_NO DESC
+    </select>
+
     <!-- 매출 자료 (자동계산) -->
     <select id="selectSalesMonth" resultMap="circulationSummaryResult">
         SELECT

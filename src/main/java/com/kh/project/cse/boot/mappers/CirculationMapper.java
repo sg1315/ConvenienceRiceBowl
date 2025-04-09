@@ -17,13 +17,18 @@ import java.util.Date;
 @Mapper
 public interface CirculationMapper {
 
+
     int selectcirculation();
+
 
     ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
     ArrayList<Circulation> getOderDetail(@Param("setNo") String setNo);
     //발주승인 미승인
     int updateheadorder(@Param("setNo") String setNo, @Param("status") int status);
+
+    //지난달 발주내역
+    List<Circulation> head_lastorder(@Param("start")LocalDate start,@Param("end") LocalDate end);
 
     //지점
     //발주 요청
