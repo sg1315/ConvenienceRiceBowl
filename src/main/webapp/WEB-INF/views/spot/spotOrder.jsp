@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -534,7 +535,7 @@
                                 <td >${os.minuteGroup}</td>
                                 <td>${os.setNo}</td>
                                 <td>${os.totalAmount}</td>
-                                <td>${os.totalInputPrice}</td>
+                                <td><fmt:formatNumber value="${os.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${os.status == 1}">발주 대기</c:when>
@@ -555,7 +556,7 @@
                                 <td>${o.minuteGroup}</td>
                                 <td>${o.setNo}</td>
                                 <td>${o.totalAmount}</td>
-                                <td>${o.totalInputPrice}</td>
+                                <td><fmt:formatNumber value="${o.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
                                         <c:when test="${o.status == 1}">발주 대기</c:when>
@@ -803,7 +804,7 @@
                                 "<td>" + o.categoryName + "</td>" +
                                 "<td>" + o.productName + "</td>" +
                                 "<td>" + o.circulationAmount + "</td>" +
-                                "<td>" + o.sumInputPrice + "</td>" +
+                                "<td>" + o.sumInputPrice.toLocaleString() + "</td>" +
                                 "</tr>";
                         }
 

@@ -58,7 +58,7 @@ document.addEventListener('click', function (e) {
 
         const categoryName = btn.dataset.categoryname;
         const productName = btn.dataset.productname;
-        const inputPrice = parseInt(btn.dataset.inputprice);
+        const inputPrice = parseInt(btn.dataset.inputprice).toLocaleString();
         const salePrice = parseInt(btn.dataset.saleprice);
 
         const newRow = `
