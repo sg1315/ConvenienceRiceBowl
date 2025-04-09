@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
   <head>
     <!-- JavaScript -->
@@ -439,7 +438,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               >
                 <div id="product-img">
                   <img src="/resources/common/상품_기본이미지아이콘.png" alt="상품 이미지" style="max-width: 100%; max-height: 100%;" onclick="chooseFile('#upfile')" id="addfile">
-                  <input style="display: none;" type="file" id="upfile" name="upfile" required onchange="loadImg(this,'#addfile')" />
+                  <input style="display: none;" type="file" id="upfile" name="upfile" onchange="loadImg(this,'#addfile')" />
                 </div>
                 <div id="product-detail-box">
                   <div id="product-detail">
@@ -460,7 +459,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                             <input
                               type="text"
                               id="productName"
-                              name="productName"
+                              name="productName" required
                             />
                           </td>
                         </tr>
@@ -470,7 +469,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                             <input
                               type="number"
                               id="inputPrice"
-                              name="inputPrice"
+                              name="inputPrice" required
                             />
                           </td>
                         </tr>
@@ -480,7 +479,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                             <input
                               type="number"
                               id="salePrice"
-                              name="salePrice"
+                              name="salePrice" required
                             />
                           </td>
                         </tr>
@@ -490,7 +489,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                             <input
                               type="number"
                               id="shortageAmount"
-                              name="shortageAmount"
+                              name="shortageAmount" required
                             />
                           </td>
                         </tr>

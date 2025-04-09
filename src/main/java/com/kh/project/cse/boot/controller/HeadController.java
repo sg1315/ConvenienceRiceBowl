@@ -25,24 +25,19 @@ public class HeadController {
     private final MemberService memberService;
 
 
-    //
-    //본사 발주
-//  @RequestMapping("/head_order")
-//    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
-//
-//        int circulation = headService.selectcirculation();
-//
-//        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
-//        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
-//
-//        model.addAttribute("list", list);
-//        model.addAttribute("pi", pi);
-//       return "head_office/headOrder";
-//      }
-    @RequestMapping("/head_order")
-    public String home3() {
-        return "head_office/headOrder";
-    }
+  @RequestMapping("/head_order")
+    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int circulation = headService.selectcirculation();
+
+        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
+        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
+       return "head_office/headOrder";
+      }
+
     //성진
 
     //공지사항추가
@@ -118,6 +113,7 @@ public class HeadController {
         return list;
     }
 
+
     //상품관리
     @RequestMapping("/head_product")
     public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
@@ -135,6 +131,7 @@ public class HeadController {
     //상품추가
     @PostMapping("/insertProduct.he")
     public String insertProduct(@ModelAttribute Product product, MultipartFile upfile, HttpSession session, Model model) {
+        int result = 0;
 
         Files files = new Files();
         if(!upfile.getOriginalFilename().equals("")){
@@ -144,9 +141,15 @@ public class HeadController {
             files.setChangeName(changeName);
             files.setOriginName(upfile.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
+
+            result = headService.insertProduct(product, files);
+
+        }else{
+            result  =  headService.insertOneProduct(product);
         }
 
-        int result = headService.insertProduct(product, files);
+
+
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품추가 성공");
@@ -207,7 +210,7 @@ public class HeadController {
 
     }
 
-    @PostMapping("deleteProduct")
+    @PostMapping("/deleteProduct")
     public String deleteStoreStatus(@ModelAttribute Product product, HttpSession session, Model model){
 
         int productNo = product.getProductNo();

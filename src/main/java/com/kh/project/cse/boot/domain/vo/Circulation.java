@@ -30,4 +30,6 @@ public class Circulation {
     private String minuteGroup;
     private int totalAmount;
     private int totalInputPrice;
+
+
 }

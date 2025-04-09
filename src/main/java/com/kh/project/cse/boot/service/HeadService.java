@@ -9,6 +9,8 @@ public interface HeadService {
 
     //상품추가
     int insertProduct(Product product, Files files);
+
+    int insertOneProduct(Product product);
     //상품검색
     ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
     //상품전체목록 수
@@ -73,6 +75,8 @@ public interface HeadService {
 
     //발주관리사항 불러오기
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
+    int selectcirculation();
+
 
 
 }

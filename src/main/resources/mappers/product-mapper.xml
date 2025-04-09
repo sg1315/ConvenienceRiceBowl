@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.project.cse.boot.mappers.ProductMapper">
+
     <resultMap id="headProductResult" type="Product">
     <result column="PRODUCT_NO" property="productNo"/>
     <result column="CATEGORY_NO" property="categoryNo"/>
@@ -21,8 +22,6 @@
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="EXPIRATION_DATE" property="expirationDate"/>
     </resultMap>
-
-
     <insert id="insertProduct" parameterType="Product" useGeneratedKeys="false" >
         INSERT INTO PRODUCT(
         PRODUCT_NO,
@@ -31,7 +30,6 @@
         INPUT_PRICE,
         SALE_PRICE,
         SHORTAGE_AMOUNT
-
         ) VALUES (
         SEQ_PRNO.NEXTVAL,
         #{categoryNo},
@@ -43,6 +41,24 @@
         <selectKey keyProperty="productNo" resultType="int" order ="AFTER">
             SELECT SEQ_PRNO.CURRVAL FROM DUAL
         </selectKey>
+    </insert>
+    <insert id="insertOneProduct" parameterType="Product" useGeneratedKeys="false" >
+        INSERT INTO PRODUCT(
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        ) VALUES (
+        SEQ_PRNO.NEXTVAL,
+        #{categoryNo},
+        #{productName},
+        #{inputPrice},
+        #{salePrice},
+        #{shortageAmount}
+        )
+
     </insert>
 
     <select id="selectAllProduct" resultMap="headProductResult">
@@ -113,6 +129,39 @@
         DELETE PRODUCT
         WHERE PRODUCT_NO = #{productNo}
     </delete>
+
+    <select id="posProductSearch" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        PRODUCT_NAME,
+        SALE_PRICE
+        FROM PRODUCT
+        WHERE
+        PRODUCT_NO LIKE '%${keyword}%'
+    </select>
+
+
+    <select id="posAllProductSelect" resultMap="headProductResult">
+    SELECT
+    PRODUCT_NO,
+    PRODUCT_NAME,
+    SALE_PRICE
+    FROM PRODUCT
+    ORDER BY PRODUCT_NO DESC
+    </select>
+
+
+    <select id="posOneProductSelect" resultMap="headProductResult" >
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        WHERE  PRODUCT_NO = #{productNo}
+    </select>
 
 
 </mapper>

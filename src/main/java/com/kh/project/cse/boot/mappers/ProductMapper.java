@@ -14,6 +14,8 @@ import java.util.List;
 public interface ProductMapper {
     int insertProduct(Product product);
 
+    int insertOneProduct(Product product);
+
     ArrayList<Product> searchProduct(String condition, String keyword, RowBounds rowBounds);
 
     ArrayList<Product> selectAllProduct(RowBounds rowBounds);
@@ -27,7 +29,6 @@ public interface ProductMapper {
     int deleteProduct(int productNo);
 
 
-
     //지점
     //발주요청 상품 목록
     ArrayList<Product> orderRequestProductList();
@@ -35,4 +36,11 @@ public interface ProductMapper {
     ArrayList<Product> orderRequestProductSearch(String category, String keyword);
 
 
+    // pos
+    ArrayList<Product> posProductSearch(String keyword);
+
+    ArrayList<Product> posAllProductSelect();
+
+
+    Product posOneProductSelect(int productNo);
 }
