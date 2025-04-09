@@ -7,6 +7,7 @@ import com.kh.project.cse.boot.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -26,19 +24,62 @@ public class HeadController {
     private final HeadService headService;
     private final MemberService memberService;
 
-
-    //
-
     @RequestMapping("/head_order")
-    public String home3(@RequestParam(defaultValue = "1") int cpage, Model model) {
+    public String head_order(
+            @RequestParam(defaultValue = "1") int cpage,
+            @RequestParam(required = false) String setNo,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            HttpSession session,
+            Model model) {
 
-        int circulation = headService.selectcirculation();
+//        Member loginUser = (Member) session.getAttribute("loginUser");
+//        int storeNo = loginUser.getStoreNo();
 
-        PageInfo pi = new PageInfo(circulation, cpage, 10 , 10);
-        ArrayList<Circulation> list = headService.selectCirculationlist(pi);
+        //date값 보정
+        if (startDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            startDate = cal.getTime();
+        }
+        if (endDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            endDate = cal.getTime();
+        }
+        ArrayList<Circulation> resultList;
+        PageInfo pi;
 
-        model.addAttribute("list", list);
+        if (setNo != null || startDate != null || endDate != null) {
+            int searchCount = headService.circulationSearchListCount(setNo, startDate, endDate);
+            pi = new PageInfo(searchCount, cpage, 10, 10);
+
+            resultList = headService.circulationSearchList(pi, setNo, startDate, endDate);
+
+            model.addAttribute("olist", null);
+            model.addAttribute("oslist", resultList);
+        } else {
+            int circulation = headService.selectcirculation();
+            pi = new PageInfo(circulation, cpage, 10, 10);
+
+            resultList = headService.selectCirculationlist(pi);
+
+            model.addAttribute("olist", resultList);
+            model.addAttribute("oslist", null);
+        }
+
         model.addAttribute("pi", pi);
+        model.addAttribute("setNo", setNo);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "head_office/headOrder";
     }
     //본사 발주 세부 사항
@@ -163,19 +204,17 @@ public class HeadController {
         int result = 0;
 
         Files files = new Files();
-        if(!upfile.getOriginalFilename().equals("")){
-
+        if(!upfile.getOriginalFilename().equals("")){ //첨부파일이 있을 때
             String changeName = com.kh.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
 
+            files.setProductNo(product.getProductNo());
             files.setChangeName(changeName);
             files.setOriginName(upfile.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
 
-            result = headService.insertProduct(product, files);
-
-        }else{
-            result  =  headService.insertOneProduct(product);
         }
+
+        result = headService.insertProduct(product, files);
 
 
 
@@ -207,15 +246,15 @@ public class HeadController {
     @PostMapping("/updateProduct")
     public String updateProduct(Product product, MultipartFile file1, HttpSession session, Model model) {
         int result = 0;
-
         if(product.getAvailability() == null){
             product.setAvailability("Y");
-        } else if (product.getAvailability().equals("on")) {
+        } else {
             product.setAvailability("N");
         }
 
         Files files = new Files();
-        if(!file1.getOriginalFilename().equals("")){
+        if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
+
             String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             files.setProductNo(product.getProductNo());
@@ -223,17 +262,19 @@ public class HeadController {
             files.setOriginName(file1.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
 
-            System.out.println(files);
-            result = headService.updateProduct(product, files);
-        }else {
-             result = headService.updateOneProduct(product);
+            if(product.getFilePath() != null){  //기존첨부파일이 있을 때 -> update
+                result = headService.updateProduct(product, files);
+            }else{ //기존첨부파일 없을 때 -> insert
+                result = headService.insertFile(product.getProductNo(),files);
+            }
+
         }
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품수정 성공");
             return head_product(1, model);
         }else {
-            session.setAttribute("alertMsg", "상품추가 실패");
+            session.setAttribute("alertMsg", "상품수정 실패");
             return "head_office/headProduct";
         }
 
@@ -364,7 +405,7 @@ public class HeadController {
     public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
                                Member member, HttpSession session, Model model) {
 
-        Member loginMember = (Member) session.getAttribute("loginUser");
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -386,7 +427,7 @@ public class HeadController {
 
         if (result > 0) {
             Member updatedMember = memberService.selectMemberById(member.getMemberId());
-            session.setAttribute("loginUser", updatedMember);
+            session.setAttribute("loginMember", updatedMember);
             return "업데이트 성공";
         } else {
             return "업데이트 실패";

@@ -187,8 +187,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
         align-items: center;
       }
       #product-img img{
-        width: 300px;
-        height: 300px;
+        width: 350px;
+        height: 350px;
       }
 
 
@@ -209,6 +209,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         display: flex;
         justify-content: center;
         align-items: center;
+        
       }
       #product-detail-table tr td input {
         border: 2px solid #d9d9d9;
@@ -279,6 +280,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         display: flex;
         justify-content: center;
         align-items: center;
+        margin: 5px auto;
       }
       #product-detail-modify-table tr td{
         text-align: center;
@@ -381,8 +383,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 <td>${p.productName}</td>
                 <td>${p.inputPrice}</td>
                 <td>${p.salePrice}</td>
+                <td style="display: none;">${p.shortageAmount}</td>  
                 <td style="display: none;">${p.availability}</td>         
-                <td style="display: none;">${p.shortageAmount}</td>         
               </tr>
             </c:forEach>
           </tbody>
@@ -569,15 +571,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
                           </td>
                         </tr>
                         <tr>
-                          <td>입고불가</td>
-                          <td>
-                            <input type="checkbox" id="modal-availability"  name="availability"/>
-                          </td>
-                        </tr>
-                        <tr>
                           <td>재고부족량</td>
                           <td>
                             <input type="number" id="modal-shortageAmount"  name="shortageAmount" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>입고불가</td>
+                          <td>
+                            <input type="checkbox" id="modal-availability"  name="availability"/>
                           </td>
                         </tr>
                       </table>
@@ -607,8 +609,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
               const productName = this.children[3].textContent;
               const inputPrice = this.children[4].textContent;
               const salePrice = this.children[5].textContent;
-              const availability = this.children[6].textContent;
-              const shortageAmount = this.children[7].textContent;
+              const shortageAmount = this.children[6].textContent;
+              const availability = this.children[7].textContent;
        
 
               document.getElementById('modal-image').src = filePath;
@@ -618,18 +620,16 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 if (sel[i].label == categoryName) {
                   console.log(sel[i].label);
                    sel[i].selected = true;
-                   
                 }
               }
-              
               document.getElementById('modal-productName').value = productName;
               document.getElementById('modal-inputPrice').value = inputPrice;
               document.getElementById('modal-salePrice').value = salePrice;
+              document.getElementById('modal-shortageAmount').value = shortageAmount;
               if (availability == 'N') {
                 document.getElementById('modal-availability').checked = true;
               }
-              document.getElementById('modal-shortageAmount').value = shortageAmount;
-
+              
               const modal = new bootstrap.Modal(
                 document.getElementById('staticBackdrop-modify')
               );

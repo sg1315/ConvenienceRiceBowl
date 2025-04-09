@@ -237,11 +237,11 @@
             <div id="marge">
             </div>
             <div id="top_search">
-                <form id="top_search_form">
-                    <input class="date-input" type="date">
+                <form id="top_search_form" action="head_order" method="post">
+                    <input class="date-input" type="date" name="startDate">
                     ~
-                    <input class="date-input" type="date">
-                    <input class="search-input" type="number" >
+                    <input class="date-input" type="date" name="endDate">
+                    <input class="search-input" type="number" name="setNo" placeholder="발주번호">
                     <input class="search-input-submit-gray" type="submit" value="검색">
                 </form>
             </div>
@@ -267,28 +267,56 @@
                     </tr>
                 </thead>
                 <tbody id="order-list-body">
-                    <c:forEach var="C" items="${list}">
-                        <tr data-sno="${C.setNo}"
-                            data-minuteGroup="${C.minuteGroup}"
-                            data-storeName="${C.storeName}"
-                            data-totalAmount="${C.totalAmount}"
-                            data-totalInputPrice="${C.totalInputPrice}"
-                            data-status="${C.status}">
-                            <td>${C.minuteGroup}</td>
-                            <td>${C.setNo}</td>
-                            <td>${C.storeName}</td>
-                            <td>${C.totalAmount}</td>
-                            <td>${C.totalInputPrice}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${C.status == 1}">대기</c:when>
-                                    <c:when test="${C.status == 5}">승인</c:when>
-                                    <c:when test="${C.status == 6}">거절</c:when>
-                                    <c:when test="${C.status == 7}">발주완료</c:when>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
+                <c:choose>
+                    <c:when test="${not empty oslist}">
+                        <c:forEach var="C" items="${oslist}">
+                            <tr data-sno="${C.setNo}"
+                                data-minuteGroup="${C.minuteGroup}"
+                                data-storeName="${C.storeName}"
+                                data-totalAmount="${C.totalAmount}"
+                                data-totalInputPrice="${C.totalInputPrice}"
+                                data-status="${C.status}">
+                                <td>${C.minuteGroup}</td>
+                                <td>${C.setNo}</td>
+                                <td>${C.storeName}</td>
+                                <td>${C.totalAmount}</td>
+                                <td>${C.totalInputPrice}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${C.status == 1}">대기</c:when>
+                                        <c:when test="${C.status == 5}">승인</c:when>
+                                        <c:when test="${C.status == 6}">거절</c:when>
+                                        <c:when test="${C.status == 7}">발주완료</c:when>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                            <c:forEach var="C" items="${olist}">
+                                <tr data-sno="${C.setNo}"
+                                    data-minuteGroup="${C.minuteGroup}"
+                                    data-storeName="${C.storeName}"
+                                    data-totalAmount="${C.totalAmount}"
+                                    data-totalInputPrice="${C.totalInputPrice}"
+                                    data-status="${C.status}">
+                                    <td>${C.minuteGroup}</td>
+                                    <td>${C.setNo}</td>
+                                    <td>${C.storeName}</td>
+                                    <td>${C.totalAmount}</td>
+                                    <td>${C.totalInputPrice}</td>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${C.status == 1}">대기</c:when>
+                                            <c:when test="${C.status == 5}">승인</c:when>
+                                            <c:when test="${C.status == 6}">거절</c:when>
+                                            <c:when test="${C.status == 7}">발주완료</c:when>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
         </div>

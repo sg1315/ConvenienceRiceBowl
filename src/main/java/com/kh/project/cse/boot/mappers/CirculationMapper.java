@@ -1,6 +1,5 @@
 package com.kh.project.cse.boot.mappers;
 
-import com.kh.project.cse.boot.domain.vo.Announcement;
 import com.kh.project.cse.boot.domain.vo.Circulation;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
@@ -8,16 +7,14 @@ import org.apache.ibatis.session.RowBounds;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.session.RowBounds;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
 @Mapper
 public interface CirculationMapper {
 
-
+    //본사
     int selectcirculation();
 
 
@@ -29,6 +26,11 @@ public interface CirculationMapper {
 
     //지난달 발주내역
     List<Circulation> head_lastorder(@Param("start")LocalDate start,@Param("end") LocalDate end);
+
+    //발주목록검색
+    int circulationSearchListCount(String setNo,  Date startDate, Date endDate);
+    ArrayList<Circulation> circulationSearchList(RowBounds rowBounds, @Param("setNo") String setNo, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
 
     //지점
     //발주 요청
@@ -43,6 +45,12 @@ public interface CirculationMapper {
     //검색한 발주 요청 분단위로 묶은 수
     int orderSearchListCount(@Param("storeNo") int storeNo, String setNo, Integer status, Date startDate, Date endDate);
     ArrayList<Circulation> orderSearchList(RowBounds rowBounds, @Param("storeNo") int storeNo, @Param("setNo") String setNo, @Param("status") Integer status, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    //발주 요청 상세
+    ArrayList<Circulation> spotOrderDetail(@Param("setNo") String setNo);
+
+    //발주요청 - 지난달 발주 목록
+    List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, @Param("storeNo") int storeNo);
 
     //매출집계 - 검색
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,

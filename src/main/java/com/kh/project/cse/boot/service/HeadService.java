@@ -4,6 +4,7 @@ import com.kh.project.cse.boot.domain.vo.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -11,8 +12,8 @@ public interface HeadService {
 
     //상품추가
     int insertProduct(Product product, Files files);
+    int insertFile(int productNo, Files files);
 
-    int insertOneProduct(Product product);
     //상품검색
     ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
     //상품전체목록 수
@@ -23,8 +24,7 @@ public interface HeadService {
     List<Category> selectAllCategories();
     //파일있을 때 상품수정
     int updateProduct(Product product, Files files);
-    //파일없을때 상품수정
-    int updateOneProduct(Product product);
+
     //상품삭제
     int deleteProduct(int productNo);
 
@@ -91,4 +91,8 @@ public interface HeadService {
     List<Circulation> head_lastorder(LocalDate start, LocalDate end);
 
 
+    //발부목록 검생
+    int circulationSearchListCount( String setNo, Date startDate, Date endDate);
+    //검색한 발주 요청 목록
+    ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate);
 }

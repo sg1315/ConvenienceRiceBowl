@@ -1,10 +1,8 @@
 package com.kh.project.cse.boot.service;
 
-import com.kh.project.cse.boot.domain.vo.Attendance;
-import com.kh.project.cse.boot.domain.vo.Expiry;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.CirculationMapper;
+import com.kh.project.cse.boot.mappers.InventoryMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import org.apache.ibatis.session.RowBounds;
 import com.kh.project.cse.boot.mappers.AttendanceMapper;
@@ -13,9 +11,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +25,7 @@ public class SpotServiceImpl implements SpotService {
     private final ExpiryMapper expiryMapper;
     private final CirculationMapper circulationMapper;
     private final ProductMapper productMapper;
+    private final InventoryMapper inventoryMapper;
 
     @Override
     public int selectExpiryCount(int storeNo) {
@@ -149,6 +148,16 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.orderSearchList(rowBounds, storeNo, setNo, status, startDate, endDate);
     }
 
+    @Override
+    public ArrayList<Circulation> spotOrderDetail(String setNo) {
+        return circulationMapper.spotOrderDetail(setNo);
+    }
+
+    @Override
+    public List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo) {
+        return circulationMapper.previousMonthOrder(startDate, endDate, storeNo);
+    }
+
     //매출집계 - 검색
     @Override
     public List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate) {
@@ -166,5 +175,47 @@ public class SpotServiceImpl implements SpotService {
         return expiryMapper.searchExpiryListCount(searchExpiry, keyword, storeNo);
     }
 
+
+    @Override
+    public ArrayList<Product> spotSelectAllProduct(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.selectAllProduct(rowBounds);
+    }
+    @Override
+    public ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
+    }
+
+
+
+
+    @Override
+    public int inventoryCount(int storeNo) {
+        return inventoryMapper.inventoryCount(storeNo);
+    }
+
+    @Override
+    public ArrayList<Inventory> selectInventory(PageInfo pi, int storeNo) {
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return inventoryMapper.selectInventory(rowBounds,storeNo);
+    }
+
+    @Override
+    public int searchInventoryCount(int storeNo, String condition, String keyword, int check) {
+        return inventoryMapper.searchInventoryCount(storeNo,condition,keyword,check);
+    }
+
+    @Override
+    public ArrayList<Inventory> searchInventory(PageInfo pi, int storeNo, String condition, String keyword, int check) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return inventoryMapper.searchInventory(rowBounds,storeNo,condition,keyword,check);
+    }
 
 }

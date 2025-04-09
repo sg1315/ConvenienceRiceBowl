@@ -53,7 +53,7 @@ public class PosController {
     public ResponseEntity<?> posCirculationInsert(@RequestBody List<Circulation> list, HttpSession session) {
         //list.forEach(System.out::println);
 
-        Member member = (Member) session.getAttribute("loginUser");
+        Member member = (Member) session.getAttribute("loginMember");
 
         String setNo = member.getStoreNo() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
 

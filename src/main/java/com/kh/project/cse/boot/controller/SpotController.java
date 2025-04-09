@@ -1,8 +1,11 @@
 package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.*;
+import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
+import com.kh.project.cse.boot.service.SpotService;
+import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,6 +37,8 @@ import java.time.format.DateTimeFormatter;
 public class SpotController {
     private final MemberService memberService;
     private final SpotService spotService;
+    private final HeadService headService;
+    private Member member;
 
 
     //대시보드
@@ -44,7 +49,35 @@ public class SpotController {
 
     //상품목록
     @RequestMapping("/spot_product")
-    public String spot_product() {
+    public String spot_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
+
+        int listCount = spotService.ProductListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+        ArrayList<Product> list = spotService.spotSelectAllProduct(pi);
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "spot/spotProduct";
+    }
+    @PostMapping("/spotSearchForm")
+    public String spotSearchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam(defaultValue = "Y") String inputcheck, @RequestParam String condition, @RequestParam String keyword, Model model) {
+
+        int listCount = spotService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Product> list = new ArrayList<>();
+        inputcheck = inputcheck.equals("on")? "N" : "Y";
+
+        if(inputcheck.equals("Y")){
+            list = headService.searchProduct(condition, keyword, pi);
+        }else {
+            list = spotService.spotSearchProduct(inputcheck, condition, keyword, pi);
+        }
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
         return "spot/spotProduct";
     }
 
@@ -69,7 +102,37 @@ public class SpotController {
 
     //재고
     @RequestMapping("/spot_inventory")
-    public String spot_inventory() {
+    public String spot_inventory(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
+//        Member loginUser = (Member) session.getAttribute("loginUser");
+//        int storeNo = loginUser.getStoreNo();
+        int storeNo = 5;
+        int inventoryCount = spotService.inventoryCount(storeNo);
+        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 12);
+        ArrayList<Inventory> list = spotService.selectInventory(pi, storeNo);
+
+        model.addAttribute("pi", pi);
+        model.addAttribute("list", list);
+        return "spot/spotInventory";
+    }
+
+    @PostMapping("/searchInventory")
+    public String searchInventory(
+            @RequestParam(defaultValue = "1") int cpage,
+            @RequestParam String condition,
+            @RequestParam String keyword,
+            @RequestParam(value = "check", required = false, defaultValue = "0") int check,
+            Model model,
+            HttpSession session) {
+
+        int storeNo = 5;
+
+        // 조건에 따라 Service 호출
+        int count = spotService.searchInventoryCount(storeNo, condition, keyword, check);
+        PageInfo pi = new PageInfo(count, cpage, 10, 10);
+        ArrayList<Inventory> list = spotService.searchInventory(pi, storeNo, condition, keyword, check);
+        System.out.println("수"+count);
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "spot/spotInventory";
     }
 
@@ -152,7 +215,7 @@ public class SpotController {
             HttpSession session,
             Model model) {
 
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
 
         //date값 보정
@@ -188,6 +251,7 @@ public class SpotController {
 
             model.addAttribute("olist", null);
             model.addAttribute("oslist", resultList);
+            model.addAttribute("pi", pi);
         } else {
             int listCount = spotService.orderRequestListCount(storeNo);
             pi = new PageInfo(listCount, cpage, 10, 10);
@@ -196,9 +260,8 @@ public class SpotController {
 
             model.addAttribute("olist", resultList);
             model.addAttribute("oslist", null);
+            model.addAttribute("pi", pi);
         }
-
-        model.addAttribute("pi", pi);
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
 
@@ -220,7 +283,7 @@ public class SpotController {
     //발주 - 발주요청
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList, HttpSession session) {
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
         String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmm"));
 
@@ -232,6 +295,32 @@ public class SpotController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
+    }
+    //발주 - 발주 상세 내역
+    @ResponseBody
+    @GetMapping("/spot_order/orderDetail")
+    public ArrayList<Circulation> spotOderDetail(@RequestParam("setNo") String setNo) {
+        System.out.println(setNo);
+        ArrayList<Circulation> sodlist = spotService.spotOrderDetail(setNo);
+        for(Circulation c : sodlist){
+            System.out.println(sodlist);
+        }
+        return sodlist;
+    }
+    //발주 - 지난 달 발주 목록
+    @ResponseBody
+    @PostMapping("/spot_order/previousMonthOrder")
+    public List<Circulation> previousMonthOrder(
+            @RequestParam String startDate,
+            @RequestParam String endDate,
+            HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        return spotService.previousMonthOrder(start, end, storeNo);
     }
 
 
@@ -270,7 +359,7 @@ public class SpotController {
     }
     //근태정보 조회 - 초기화면
     @GetMapping("/spot_attendance")
-    public String spotAttendanceInfo(@SessionAttribute("loginUser") Member loginMember, Model model) {
+    public String spotAttendanceInfo(@SessionAttribute("loginMember") Member loginMember, Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
         model.addAttribute("loginMember", loginMember);
         System.out.println("attendanceList: " + attendanceList);
