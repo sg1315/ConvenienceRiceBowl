@@ -17,4 +17,10 @@ public class Inventory {
     private int inventoryCount;
     private Date expeirationDate;
 
+
+    private String categoryName;
+    private String productName;
+    private int shortageAmount;
+    private int totalInventory;
+    private int inventoryStatus;
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @Mapper
 public interface CirculationMapper {
 
-
+    //본사
     int selectcirculation();
 
 
@@ -26,6 +26,11 @@ public interface CirculationMapper {
 
     //지난달 발주내역
     List<Circulation> head_lastorder(@Param("start")LocalDate start,@Param("end") LocalDate end);
+
+    //발주목록검색
+    int circulationSearchListCount(String setNo,  Date startDate, Date endDate);
+    ArrayList<Circulation> circulationSearchList(RowBounds rowBounds, @Param("setNo") String setNo, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
 
     //지점
     //발주 요청

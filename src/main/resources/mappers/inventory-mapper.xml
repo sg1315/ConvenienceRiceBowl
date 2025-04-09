@@ -9,5 +9,98 @@
         <result column="PRODUCT_NO" property="productNo"/>
         <result column="INVENTORY_COUNT" property="inventoryCount"/>
         <result column="EXPIRATION_DATE" property="expeirationDate"/>
+
+        <result column="CATEGORY_NAME" property="categoryName"/>
+        <result column="PRODUCT_NAME" property="productName"/>
+        <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
+        <result column="TOTAL_INVENTORY" property="totalInventory"/>
+        <result column="INVENTORY_STATUS" property="inventoryStatus"/>
+
     </resultMap>
+
+    <select id="inventoryCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM INVENTORY
+        WHERE STORE_NO = #{storeNo}
+    </select>
+
+    <select id="selectInventory" resultMap="inventroyResult">
+        SELECT
+        I.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        SUM(I.INVENTORY_COUNT) AS TOTAL_INVENTORY,
+        (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) AS INVENTORY_STATUS
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        LEFT JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE I.STORE_NO = 5
+        GROUP BY I.PRODUCT_NO, C.CATEGORY_NAME, P.PRODUCT_NAME
+        ORDER BY I.PRODUCT_NO DESC
+    </select>
+
+    <select id="searchInventoryCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM (
+        SELECT
+        I.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        SUM(I.INVENTORY_COUNT) AS TOTAL_INVENTORY,
+        (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) AS INVENTORY_STATUS
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        LEFT JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE I.STORE_NO = #{storeNo}
+
+        <!-- 검색 조건 -->
+        <if test="condition == 'productNo' and keyword != null and keyword != ''">
+            AND TO_CHAR(I.PRODUCT_NO) LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="condition == 'categoryName' and keyword != null and keyword != ''">
+            AND C.CATEGORY_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="condition == 'productName' and keyword != null and keyword != ''">
+            AND P.PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+
+        GROUP BY I.PRODUCT_NO, C.CATEGORY_NAME, P.PRODUCT_NAME
+
+        <!-- 재고부족 체크 (체크 시 check=1로 전달됨) -->
+        <if test="check != null and check == 1">
+            HAVING (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) = 0
+        </if>
+        )
+    </select>
+
+    <select id="searchInventory" resultMap="inventroyResult">
+        SELECT
+        I.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        SUM(I.INVENTORY_COUNT) AS TOTAL_INVENTORY,
+        (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) AS INVENTORY_STATUS
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        LEFT JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE I.STORE_NO = #{storeNo}
+
+        <!-- 검색 조건 -->
+        <if test="condition == 'productNo' and keyword != null and keyword != ''">
+            AND TO_CHAR(I.PRODUCT_NO) LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="condition == 'categoryName' and keyword != null and keyword != ''">
+            AND C.CATEGORY_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+        <if test="condition == 'productName' and keyword != null and keyword != ''">
+            AND P.PRODUCT_NAME LIKE '%' || #{keyword} || '%'
+        </if>
+
+        GROUP BY I.PRODUCT_NO, C.CATEGORY_NAME, P.PRODUCT_NAME
+
+        <!-- 재고부족 체크 (체크 시 check=1로 전달됨) -->
+        <if test="check != null and check == 1">
+            HAVING (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) = 0
+        </if>
+    </select>
 </mapper>

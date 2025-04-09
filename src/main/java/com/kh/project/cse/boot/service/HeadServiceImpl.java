@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -239,5 +240,18 @@ public class HeadServiceImpl implements HeadService {
     @Override
     public List<Circulation> head_lastorder(LocalDate start, LocalDate end) {
         return circulationMapper.head_lastorder(start, end);
+    }
+
+    @Override
+    public int circulationSearchListCount(String setNo, Date startDate, Date endDate) {
+        return circulationMapper.circulationSearchListCount(setNo,startDate,endDate);
+    }
+
+    @Override
+    public ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return circulationMapper.circulationSearchList(rowBounds,  setNo,  startDate, endDate);
     }
 }
