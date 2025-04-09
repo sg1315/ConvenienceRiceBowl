@@ -1,4 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <%@ page
+<%@ page import="java.time.LocalDate" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page
 contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -143,7 +146,11 @@ contentType="text/html;charset=UTF-8" language="java" %>
       <div id="main">
         <div id="main-in">
           <div id="main-title">
-            <p>< 2025 ></p>
+            <%
+              String year = String.valueOf(java.time.LocalDate.now().getYear());
+              request.setAttribute("yearCurrent", year);
+            %>
+            &lt;<p id="year"><span>${yearCurrent}</span></p>&gt;
           </div>
           <table class="table table-hover table-bordered table-sm" id="table1">
             <thead>
@@ -157,73 +164,73 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
             <tbody>
               <tr>
-                <td>1월</td>
+                <td><span class="monthText">1</span>월</td>
                 <td>200,000</td>
                 <td>600,000</td>
                 <td>400,000</td>
               </tr>
               <tr>
-                <td>2월</td>
+                <td><span class="monthText">2</span>월</td>
                 <td>200,000</td>
                 <td>600,000</td>
                 <td>400,000</td>
               </tr>
               <tr>
-                <td>3월</td>
+                <td><span class="monthText">3</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>4월</td>
+                <td><span class="monthText">4</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>5월</td>
+                <td><span class="monthText">5</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>6월</td>
+                <td><span class="monthText">6</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>7월</td>
+                <td><span class="monthText">7</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>8월</td>
+                <td><span class="monthText">8</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>9월</td>
+                <td><span class="monthText">9</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>10월</td>
+                <td><span class="monthText">10</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>11월</td>
+                <td><span class="monthText">11</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
               </tr>
               <tr>
-                <td>12월</td>
+                <td><span class="monthText">12</span>월</td>
                 <td>400,000</td>
                 <td>600,000</td>
                 <td>200,000</td>
@@ -236,11 +243,26 @@ contentType="text/html;charset=UTF-8" language="java" %>
     </div>
 
     <script>
-      // 테이블의 모든 행에 클릭 이벤트 추가
       document.querySelectorAll('#table1 tbody tr').forEach((row) => {
         row.addEventListener('click', function () {
-          // myModal.show(); // 모달 열기
-          //클릭시 해당 월로 월 매출집계로 가는 기능 추가해야함
+          const cells = this.querySelectorAll('td');
+          const year =  document.getElementById("year").textContent.trim();
+          console.log(year);
+          cells.forEach((cell) => {
+            const span = cell.querySelector('.monthText');
+            if (span) {
+              let month = span.textContent.trim();
+
+              if(parseInt(month) < 10){
+                const paddedMonth = '0'+ month
+                let add = year + '-' + paddedMonth;
+                window.location.href = '/spot_sales?startMonth='+ add +'&endMonth='+ add;
+              }else{
+                let add = year + '-' + month;
+                window.location.href = '/spot_sales?startMonth='+ add +'&endMonth='+ add;
+              }
+            }
+          });
         });
       });
 

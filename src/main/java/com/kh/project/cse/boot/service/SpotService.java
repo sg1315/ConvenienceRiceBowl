@@ -3,7 +3,6 @@ package com.kh.project.cse.boot.service;
 import com.kh.project.cse.boot.domain.vo.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,4 +41,5 @@ public interface SpotService {
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
+
 }

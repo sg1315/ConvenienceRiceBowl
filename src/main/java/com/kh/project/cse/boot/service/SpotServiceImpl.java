@@ -9,7 +9,6 @@ import com.kh.project.cse.boot.mappers.AttendanceMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -116,5 +115,6 @@ public class SpotServiceImpl implements SpotService {
     public List<Circulation> getDetailsByDate(String date, int storeNo) {
         return circulationMapper.getDetailsByDate(date,storeNo);
     }
+
 
 }

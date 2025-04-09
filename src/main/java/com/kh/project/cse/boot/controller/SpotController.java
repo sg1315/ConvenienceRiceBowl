@@ -312,7 +312,9 @@ public class SpotController {
             Member loginUser = (Member) session.getAttribute("loginUser");
             int storeNo = loginUser.getStoreNo();
             return spotService.getDetailsByDate(date, storeNo);
+
         }
+
 
 
 
