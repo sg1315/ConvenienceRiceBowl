@@ -208,12 +208,7 @@ public class HeadServiceImpl implements HeadService {
 
         return result;
     }
-
-
-    @Override
-    public int selectcirculation() {
-        return circulationMapper.selectcirculation();
-    }
+    
 
 
     @Override
