@@ -219,6 +219,7 @@ public class SpotController {
 
             model.addAttribute("olist", null);
             model.addAttribute("oslist", resultList);
+            model.addAttribute("pi", pi);
         } else {
             int listCount = spotService.orderRequestListCount(storeNo);
             pi = new PageInfo(listCount, cpage, 10, 10);
@@ -227,9 +228,8 @@ public class SpotController {
 
             model.addAttribute("olist", resultList);
             model.addAttribute("oslist", null);
+            model.addAttribute("pi", pi);
         }
-
-        model.addAttribute("pi", pi);
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
 
