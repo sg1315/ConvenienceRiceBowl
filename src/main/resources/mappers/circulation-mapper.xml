@@ -37,25 +37,25 @@
 
     <insert id="insertOrder">
         INSERT INTO CIRCULATION (
-        CIRCULATION_NO,
-        STORE_NO,
-        SET_NO,
-        PRODUCT_NO,
-        INPUT_PRICE,
-        SALE_PRICE,
-        CIRCULATION_AMOUNT,
-        CIRCULATION_DATE,
-        STATUS
+            CIRCULATION_NO,
+            STORE_NO,
+            SET_NO,
+            PRODUCT_NO,
+            INPUT_PRICE,
+            SALE_PRICE,
+            CIRCULATION_AMOUNT,
+            CIRCULATION_DATE,
+            STATUS
         ) VALUES (
-        SEQ_CIR.NEXTVAL,
-        #{storeNo},
-        #{setNo},
-        #{circulation.productNo},
-        #{circulation.inputPrice},
-        #{circulation.salePrice},
-        #{circulation.circulationAmount},
-        DEFAULT,
-        1
+            SEQ_CIR.NEXTVAL,
+            #{storeNo},
+            #{setNo},
+            #{circulation.productNo},
+            #{circulation.inputPrice},
+            #{circulation.salePrice},
+            #{circulation.circulationAmount},
+            DEFAULT,
+            1
         )
     </insert>
 
