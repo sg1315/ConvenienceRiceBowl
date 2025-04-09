@@ -43,4 +43,6 @@ public interface CirculationMapper {
     List<Circulation> getDetailsByDate(String date, int storeNo);
 
 
+
+    int posCirculationInsert(Circulation circulation);
 }

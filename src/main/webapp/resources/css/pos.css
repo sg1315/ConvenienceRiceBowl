@@ -98,7 +98,7 @@ td > img:hover{
   width: calc(100% - 20px);
   border: 1px solid #6b6b6b;
   border-collapse: collapse;
-  margin: 10px;
+  margin: 8px;
 }
 
 
@@ -179,7 +179,7 @@ td > img:hover{
   color: white;
   justify-content: center;
 
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .enter-title{

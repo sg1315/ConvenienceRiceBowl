@@ -98,6 +98,12 @@ public class HeadServiceImpl implements HeadService {
         }
         return result;
     }
+
+    @Override
+    public int insertOneProduct(Product product) {
+        return productMapper.insertOneProduct(product);
+    }
+
     //상품검색
     @Override
     public ArrayList<Product> searchProduct(String condition, String keyword, PageInfo pi) {
@@ -136,7 +142,6 @@ public class HeadServiceImpl implements HeadService {
         return productMapper.updateProduct(product);
     }
 
-
     @Override
     public int deleteProduct(int productNo) {
        int result = 0;
@@ -148,6 +153,8 @@ public class HeadServiceImpl implements HeadService {
        }
        return result;
     }
+
+
 
     //지점목록 수
     @Override
@@ -204,6 +211,12 @@ public class HeadServiceImpl implements HeadService {
 
 
     @Override
+    public int selectcirculation() {
+        return circulationMapper.selectcirculation();
+    }
+
+
+    @Override
     public ArrayList<Circulation> selectCirculationlist(PageInfo pi){
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
@@ -223,6 +236,5 @@ public class HeadServiceImpl implements HeadService {
     public int updateheadorder(String setNo, int status) {
         return circulationMapper.updateheadorder(setNo,status);
     }
-
 
 }

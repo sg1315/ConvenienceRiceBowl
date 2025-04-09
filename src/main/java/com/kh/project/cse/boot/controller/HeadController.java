@@ -130,6 +130,7 @@ public class HeadController {
         return list;
     }
 
+
     //상품관리
     @RequestMapping("/head_product")
     public String head_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
@@ -147,6 +148,7 @@ public class HeadController {
     //상품추가
     @PostMapping("/insertProduct.he")
     public String insertProduct(@ModelAttribute Product product, MultipartFile upfile, HttpSession session, Model model) {
+        int result = 0;
 
         Files files = new Files();
         if(!upfile.getOriginalFilename().equals("")){
@@ -156,9 +158,15 @@ public class HeadController {
             files.setChangeName(changeName);
             files.setOriginName(upfile.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
+
+            result = headService.insertProduct(product, files);
+
+        }else{
+            result  =  headService.insertOneProduct(product);
         }
 
-        int result = headService.insertProduct(product, files);
+
+
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품추가 성공");
@@ -219,7 +227,7 @@ public class HeadController {
 
     }
 
-    @PostMapping("deleteProduct")
+    @PostMapping("/deleteProduct")
     public String deleteStoreStatus(@ModelAttribute Product product, HttpSession session, Model model){
 
         int productNo = product.getProductNo();

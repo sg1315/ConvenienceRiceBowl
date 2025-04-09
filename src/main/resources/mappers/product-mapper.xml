@@ -44,6 +44,24 @@
             SELECT SEQ_PRNO.CURRVAL FROM DUAL
         </selectKey>
     </insert>
+    <insert id="insertOneProduct" parameterType="Product" useGeneratedKeys="false" >
+        INSERT INTO PRODUCT(
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        ) VALUES (
+        SEQ_PRNO.NEXTVAL,
+        #{categoryNo},
+        #{productName},
+        #{inputPrice},
+        #{salePrice},
+        #{shortageAmount}
+        )
+
+    </insert>
 
     <select id="selectAllProduct" resultMap="headProductResult">
         SELECT
@@ -144,5 +162,38 @@
         </if>
         ORDER BY PRODUCT_NO ASC
     </select>
+    <select id="posProductSearch" resultMap="headProductResult">
+        SELECT
+        PRODUCT_NO,
+        PRODUCT_NAME,
+        SALE_PRICE
+        FROM PRODUCT
+        WHERE
+        PRODUCT_NO LIKE '%${keyword}%'
+    </select>
+
+
+    <select id="posAllProductSelect" resultMap="headProductResult">
+    SELECT
+    PRODUCT_NO,
+    PRODUCT_NAME,
+    SALE_PRICE
+    FROM PRODUCT
+    ORDER BY PRODUCT_NO DESC
+    </select>
+
+
+    <select id="posOneProductSelect" resultMap="headProductResult" >
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        WHERE  PRODUCT_NO = #{productNo}
+    </select>
+
 
 </mapper>
