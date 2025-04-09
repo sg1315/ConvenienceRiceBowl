@@ -322,6 +322,20 @@ public class SpotController {
 
         return spotService.previousMonthOrder(start, end, storeNo);
     }
+    //발주 - 발주 취소(삭제)
+    @ResponseBody
+    @PostMapping("/spot_order/cancelOrder")
+    public String cancelOrder(@RequestParam("setNo") String setNo, HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+
+        int result = spotService.cancelOrder(setNo, storeNo);
+        if (result > 0) {
+            return "success";
+        } else {
+            return "fail";
+        }
+    }
 
 
     //입고

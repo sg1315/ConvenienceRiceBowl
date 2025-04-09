@@ -4,6 +4,8 @@ import com.kh.project.cse.boot.domain.vo.Attendance;
 import com.kh.project.cse.boot.domain.vo.Expiry;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,11 +52,12 @@ public interface SpotService {
     //발주요청 - 목록 검색
     //발주요청 - 검색한 발주 요청 분단위로 묶은 목록
     int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate);
-    //검색한 발주 요청 목록
+    //검색한 - 발주 요청 목록
     ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
-
-    //발주요청 발주 상세
+    //발주요청 - 발주 상세
     ArrayList<Circulation> spotOrderDetail(String setNo);
+    //발주요청 - 발주 취소
+    int cancelOrder(@RequestParam("setNo") String setNo, int storeNo);
 
     //발주요청 - 지난달 발주 목록 검색
     List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo);

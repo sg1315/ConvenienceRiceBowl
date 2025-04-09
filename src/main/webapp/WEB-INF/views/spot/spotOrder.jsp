@@ -308,6 +308,9 @@
         #modal-header1,#modal-header3{
             width: 70%;
         }
+        #modal-header1{
+            height: 15%;
+        }
         #modal-header3 form{
             display: flex;
             gap: 10px;
@@ -721,8 +724,8 @@
             <div class="modal-content" id="modal-content2">
                 <div id="modal-header">
                     <div id="modal-header1">
-                        <p>
-                            <%--해당 발주 시간--%>
+                        <p id="order-info">
+                            <!-- 여기에 내용이 들어갑니다 -->
                         </p>
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
@@ -766,7 +769,7 @@
 
                     </div>
                     <div id="order-cancel">
-                        <button class="red-btn" type="button" onclick="deleteOrder()">발주취소</button>
+                        <button id="cancel-order-btn" class="red-btn" type="button" style="display: none;">발주취소</button>
                     </div>
                 </div>
             </div>
@@ -807,8 +810,42 @@
                         const ordering = document.querySelector("#order-table tbody");
                         ordering.innerHTML = str;
 
+                        const orderInfo = document.getElementById("order-info");
+                        const orderDate = data[0]?.circulationDate || "날짜 없음";
+                        const status = data[0]?.status || "상태 없음";
+
+                        let statusText = "";
+                        switch (status) {
+                            case 1:
+                                statusText = "발주 대기";
+                                break;
+                            case 2:
+                                statusText = "입고";
+                                break;
+                            case 5:
+                                statusText = "발주 승인";
+                                break;
+                            case 6:
+                                statusText = "발주 거절";
+                                break;
+                            case 7:
+                                statusText = "입고 대기";
+                                break;
+                            default:
+                                statusText = "알 수 없음";
+                        }
+
+                        // orderInfo.innerHTML = orderDate + setNo +  status;
+                        orderInfo.innerHTML = `발주일자: `+ orderDate + ` | 발주번호: ` + setNo + ` | 상태: ` + statusText;
                         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop2'));
                         myModal.show();
+
+                        const cancelButton = document.getElementById("cancel-order-btn");
+                        if (status === 1) {
+                            cancelButton.style.display = "inline-block";
+                        } else {
+                            cancelButton.style.display = "none";
+                        }
 
                         updateDetailSummary();
                     },
@@ -819,7 +856,40 @@
                 });
             });
         });
+
+        //발주 취소
+        const cancelButton = document.getElementById("cancel-order-btn");
+        cancelButton.addEventListener("click", function () {
+            const orderInfo = document.getElementById("order-info");
+            const setNoMatch = orderInfo.textContent.match(/발주번호: (\S+)/);
+            const setNo = setNoMatch ? setNoMatch[1] : null;
+
+            if (!setNo) {
+                alert("발주번호를 찾을 수 없습니다.");
+                return;
+            }
+
+            if (confirm("정말 발주를 취소하시겠습니까?")) {
+                $.ajax({
+                    url: '/spot_order/cancelOrder?setNo=' + setNo,
+                    method: 'POST',
+                    success: function (response) {
+                        if (response === "success") {
+                            alert("발주가 취소되었습니다.");
+                            location.reload();
+                        } else {
+                            alert("발주 취소에 실패했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("서버와의 통신에 실패했습니다.");
+                    }
+                });
+            }
+        });
     });
+
+
 
     //총 수량, 금액 계산
     function updateDetailSummary() {

@@ -112,7 +112,6 @@ public class SpotServiceImpl implements SpotService {
         int result = 1;
 
         for (Circulation circulation : orderList) {
-            System.out.println();
             int insertResult = circulationMapper.insertOrder(circulation, storeNo, setNo);
             if (insertResult == 0) {
                 result = 0;
@@ -151,6 +150,18 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public ArrayList<Circulation> spotOrderDetail(String setNo) {
         return circulationMapper.spotOrderDetail(setNo);
+    }
+
+    @Override
+    public int cancelOrder(String setNo, int storeNo) {
+        int result = 0;
+        result = circulationMapper.cancelOrder(setNo, storeNo);
+
+        if(result>0){
+            return result;
+        }else{
+            return 0;
+        }
     }
 
     @Override
