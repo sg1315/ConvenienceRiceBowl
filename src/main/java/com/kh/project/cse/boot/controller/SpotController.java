@@ -1,14 +1,8 @@
 package com.kh.project.cse.boot.controller;
 
-import com.kh.project.cse.boot.domain.vo.Attendance;
-import com.kh.project.cse.boot.domain.vo.Expiry;
-import com.kh.project.cse.boot.domain.vo.Member;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.Circulation;
-import com.kh.project.cse.boot.domain.vo.Product;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -106,7 +100,31 @@ public class SpotController {
 
         return "spot/sporExpiration";
     }
+    //유통기한 검색
+    @RequestMapping("/searchExpiry")
+    public String searchExpiry(@RequestParam(defaultValue = "1") int cpage, @RequestParam String searchExpiry,@RequestParam String keyword, HttpSession session, Model model){
+        System.out.println(searchExpiry);
 
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "로그아웃된 상태입니다. 다시 로그인 해주세요. ");
+            return "redirect:/loginForm";
+        }
+
+        int boardCount = spotService.searchExpiryListCount(searchExpiry, keyword, storeNo);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Expiry> expiryList = spotService.searchExpiryList(searchExpiry, keyword,storeNo,pi);
+
+        model.addAttribute("expiryList",expiryList);
+        model.addAttribute("pi",pi);
+        model.addAttribute("searchExpiry",searchExpiry);
+        model.addAttribute("keyword",keyword);
+
+        return "spot/sporExpiration";
+    }
 
     @RequestMapping("/inputmodal")
     public String inputmodal() {

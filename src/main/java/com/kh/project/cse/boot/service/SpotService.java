@@ -11,19 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 public interface SpotService {
-    int selectExpiryCount(int storeNo);
 
+    // 유통기한 페이지 수
+    int selectExpiryCount(int storeNo);
+    //유통기한 리스트 불러오기
+    ArrayList<Expiry> selectExpiryList(int storeNo,PageInfo pi);
+    // 유통기한 페이징
+    int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate);
 
     //근태정보 조회 - 초기화면
     List<Attendance> selectInfoList();
-
-    ArrayList<Expiry> selectExpiryList(int storeNo,PageInfo pi);
-
-
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
-
-    int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate);
     //근태관리 - 출퇴근시간 업데이트
     int updateWorkingTime(Map<String, Object> paramMap); //출근
     int updateLeaveTime(Map<String, Object> paramMap); //퇴근
@@ -49,4 +48,8 @@ public interface SpotService {
     ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
+
+    int searchExpiryListCount(String searchExpiry, String keyword, int storeNo);
+
+    ArrayList<Expiry> searchExpiryList(String searchExpiry, String keyword, int storeNo, PageInfo pi);
 }

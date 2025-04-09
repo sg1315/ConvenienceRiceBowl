@@ -40,6 +40,13 @@ public class SpotServiceImpl implements SpotService {
 
         return expiryMapper.selectExpiryList(storeNo, rowBounds);
     }
+    @Override
+    public ArrayList<Expiry> searchExpiryList(String searchExpiry, String keyword, int storeNo, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+
+        return expiryMapper.searchExpiryList(searchExpiry,keyword,storeNo, rowBounds);
+    }
     //근태정보 조회 - 초기화면
     @Override
     public List<Attendance> selectInfoList() {
@@ -136,5 +143,11 @@ public class SpotServiceImpl implements SpotService {
     public List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate) {
         return circulationMapper.selectSalesMonth(storeNo,startDate,endDate);
     }
+
+    @Override
+    public int searchExpiryListCount(String searchExpiry, String keyword,int storeNo) {
+        return expiryMapper.searchExpiryListCount(searchExpiry, keyword, storeNo);
+    }
+
 
 }

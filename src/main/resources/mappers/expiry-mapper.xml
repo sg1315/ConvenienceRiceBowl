@@ -14,14 +14,11 @@
     </resultMap>
 
     <select id="selectExpiryCount" resultType="_int">
-        SELECT COUNT(*) FROM (
-        SELECT PRODUCT_NO,EXPIRATION_DATE
-        FROM INVENTORY
+        SELECT COUNT(*) FROM INVENTORY
         WHERE INVENTORY_COUNT > 0
         AND STORE_NO =#{storeNo}
-        )
     </select>
-    <select id="selectExpiryList" resultMap="ExpiryResult ">
+    <select id="selectExpiryList" resultMap="ExpiryResult">
         SELECT
         P.PRODUCT_NO,
         C.CATEGORY_NAME,
@@ -39,6 +36,55 @@
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE I.INVENTORY_COUNT > 0
         AND I.STORE_NO =#{storeNo}
+        ORDER BY I.EXPIRATION_DATE
+    </select>
+    <select id="searchExpiryListCount" resultType="_int">
+        SELECT COUNT(*) FROM PRODUCT
+        JOIN INVENTORY USING(PRODUCT_NO)
+        JOIN CATEGORY USING(CATEGORY_NO)
+        WHERE INVENTORY_COUNT > 0
+        AND STORE_NO = #{storeNo}
+        <choose>
+            <when test="searchExpiry == 'productNo'">
+                AND PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchExpiry == 'categoryName'">
+                AND CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+                AND PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
+    </select>
+    <select id="searchExpiryList" resultMap="ExpiryResult">
+        SELECT
+        P.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD') AS EXPIRATION_DATE,
+        I.INVENTORY_COUNT,
+        TO_CHAR(P.INPUT_PRICE*I.INVENTORY_COUNT, 'L999,999,999') AS PRICE,
+        CASE
+        WHEN TRUNC(I.EXPIRATION_DATE) &lt;= TRUNC(SYSDATE) THEN 1
+        WHEN TRUNC(I.EXPIRATION_DATE) = TRUNC(SYSDATE + 1) THEN 2
+        ELSE 0
+        END AS NEAR_EXPIRY
+        FROM PRODUCT P
+        JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE I.INVENTORY_COUNT > 0
+        AND I.STORE_NO = #{storeNo}
+        <choose>
+            <when test="searchExpiry == 'productNo'">
+                AND P.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchExpiry == 'categoryName'">
+                AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+                AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
         ORDER BY I.EXPIRATION_DATE
     </select>
     <insert id="insertExpiry">
