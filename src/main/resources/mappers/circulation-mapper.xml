@@ -170,6 +170,20 @@
         ORDER BY SET_NO DESC
     </select>
 
+    <select id="spotOrderDetail" resultMap="circulationResult">
+        SELECT
+            P.PRODUCT_NO AS PRODUCT_NO,
+            Y.CATEGORY_NAME AS CATEGORY_NAME,
+            P.PRODUCT_NAME AS PRODUCT_NAME,
+            C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
+            (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE
+        FROM CIRCULATION C
+            LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
+            LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
+            LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
+        WHERE C.SET_NO = #{setNo}
+    </select>
+
     <select id="selectCirculationlist" resultMap="circulationResult">
         SELECT
         TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,

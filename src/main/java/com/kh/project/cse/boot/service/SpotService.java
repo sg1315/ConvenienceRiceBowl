@@ -44,6 +44,9 @@ public interface SpotService {
     //검색한 발주 요청 목록
     ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
 
+    //발주요청 발주 상세
+    ArrayList<Circulation> spotOrderDetail(String setNo);
+
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달

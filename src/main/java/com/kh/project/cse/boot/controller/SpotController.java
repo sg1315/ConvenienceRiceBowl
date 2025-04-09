@@ -208,6 +208,17 @@ public class SpotController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
     }
+    //발주 - 발주 상세 내역
+    @ResponseBody
+    @GetMapping("/spot_order/orderDetail")
+    public ArrayList<Circulation> spotOderDetail(@RequestParam("setNo") String setNo) {
+        System.out.println(setNo);
+        ArrayList<Circulation> sodlist = spotService.spotOrderDetail(setNo);
+        for(Circulation c : sodlist){
+            System.out.println(sodlist);
+        }
+        return sodlist;
+    }
 
 
     //입고

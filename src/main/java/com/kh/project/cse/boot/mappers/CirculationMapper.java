@@ -44,6 +44,9 @@ public interface CirculationMapper {
     int orderSearchListCount(@Param("storeNo") int storeNo, String setNo, Integer status, Date startDate, Date endDate);
     ArrayList<Circulation> orderSearchList(RowBounds rowBounds, @Param("storeNo") int storeNo, @Param("setNo") String setNo, @Param("status") Integer status, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
+    //발주 요청 상세
+    ArrayList<Circulation> spotOrderDetail(@Param("setNo") String setNo);
+
     //매출집계 - 검색
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
                                        @Param("startDate") LocalDate startDate,
