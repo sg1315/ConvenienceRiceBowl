@@ -310,10 +310,10 @@ public class HeadController {
         return "head_office/headStore";}
 
 
-    @PostMapping("/searchStore")
+    @GetMapping("/searchStore")
     public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model){
 
-        int listCount = headService.storeListCount();
+        int listCount = headService.searchstoreListCount(condition,keyword);
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
         ArrayList<Store> list = headService.searchStore(condition, keyword, pi);

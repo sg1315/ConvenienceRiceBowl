@@ -95,4 +95,6 @@ public interface HeadService {
     int circulationSearchListCount( String setNo, Date startDate, Date endDate);
     //검색한 발주 요청 목록
     ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate);
+
+    int searchstoreListCount(String condition, String keyword);
 }

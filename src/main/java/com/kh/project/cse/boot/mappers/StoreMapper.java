@@ -29,4 +29,6 @@ public interface StoreMapper {
     ArrayList<Store> selectStoreStatus(RowBounds rowBounds);
 
     int deleteStore(String storeNumber);
+
+    int searchStoreListCount(@Param("condition") String condition, @Param("keyword") String keyword);
 }

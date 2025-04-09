@@ -62,7 +62,25 @@
         STORE_STATUS = 1
         ORDER BY STORE_STATUS DESC
     </select>
-
+    <select id="searchStoreListCount" resultType="_int">
+        SELECT
+        COUNT(*) AS COUNT
+        FROM STORE
+        JOIN MEMBER USING(STORE_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'storeNo'">
+                STORE_NO
+            </when>
+            <when test="condition == 'storeName'">
+                STORE_NAME
+            </when>
+            <otherwise>
+                MEMBER_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+    </select>
     <select id="searchStore" resultMap="storeResult">
         SELECT
         STORE_NO,
@@ -71,7 +89,7 @@
         STORE_STATUS,
         MEMBER_NAME
         FROM STORE
-        JOIN MEMBER USING (store_No)
+        JOIN MEMBER USING(STORE_NO)
         WHERE
         <choose>
             <when test="condition == 'storeNo'">
