@@ -7,14 +7,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.nio.file.Files;
 
 @RequiredArgsConstructor
 @Controller
@@ -30,7 +26,7 @@ public class LoginController {
     @GetMapping("/logout.me")
     public String logout(HttpSession session) {
         session.setAttribute("alertMsg", "로그아웃 완료");
-        session.removeAttribute("loginUser");
+        session.removeAttribute("loginMember");
         return "redirect:/loginForm";
     }
 
@@ -50,21 +46,21 @@ public class LoginController {
             String position = loginMember.getPosition();
             System.out.println("position:"+loginMember.getPosition());
             if(position.equals("1")){
-                session.setAttribute("loginUser", loginMember);
+                session.setAttribute("loginMember", loginMember);
                 mv.setViewName("redirect:/head_order");
             } else if(position.equals("2")){
                 int storeNo = loginMember.getStoreNo();
                 int result = 0;
                 result = memberService.checkStoreStatus(storeNo);
                 if(result > 0){
-                    session.setAttribute("loginUser", loginMember);
+                    session.setAttribute("loginMember", loginMember);
                     mv.setViewName("redirect:/spot_dashboard");
                 } else {
                     session.setAttribute("alertMsg", "아직 지점이 승인되지않은 상태입니다.");
                     mv.setViewName("redirect:/loginForm");
                 }
             } else {
-                session.setAttribute("loginUser", loginMember);
+                session.setAttribute("loginMember", loginMember);
                 mv.setViewName("redirect:/spot_dashboard");
             }
         }

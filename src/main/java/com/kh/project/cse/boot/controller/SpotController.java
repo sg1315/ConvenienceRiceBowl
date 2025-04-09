@@ -1,22 +1,14 @@
 package com.kh.project.cse.boot.controller;
 
-import com.kh.project.cse.boot.domain.vo.Attendance;
-import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.Circulation;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
-import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.support.ResourceTransactionManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,26 +20,20 @@ import java.util.*;
 import java.time.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+
+
+
 
 @RequiredArgsConstructor
 @Controller
 public class SpotController {
-
-    private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
-    private Member member;
 
 
     //대시보드
@@ -101,10 +87,49 @@ public class SpotController {
 
     //유통기한
     @RequestMapping("/spot_expiration")
-    public String spot_expiration() {
+    public String spot_expiration(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "비정상적인 접근입니다.");
+            return "redirect:/loginForm";
+        }
+        int boardCount = spotService.selectExpiryCount(storeNo);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Expiry> expiryList = spotService.selectExpiryList(storeNo,pi);
+
+        model.addAttribute("expiryList",expiryList);
+        model.addAttribute("pi",pi);
+
         return "spot/sporExpiration";
     }
+    //유통기한 검색
+    @RequestMapping("/searchExpiry")
+    public String searchExpiry(@RequestParam(defaultValue = "1") int cpage, @RequestParam String searchExpiry,@RequestParam String keyword, HttpSession session, Model model){
+        System.out.println(searchExpiry);
 
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "로그아웃된 상태입니다. 다시 로그인 해주세요. ");
+            return "redirect:/loginForm";
+        }
+
+        int boardCount = spotService.searchExpiryListCount(searchExpiry, keyword, storeNo);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Expiry> expiryList = spotService.searchExpiryList(searchExpiry, keyword,storeNo,pi);
+
+        model.addAttribute("expiryList",expiryList);
+        model.addAttribute("pi",pi);
+        model.addAttribute("searchExpiry",searchExpiry);
+        model.addAttribute("keyword",keyword);
+
+        return "spot/sporExpiration";
+    }
 
     @RequestMapping("/inputmodal")
     public String inputmodal() {

@@ -1,19 +1,27 @@
 package com.kh.project.cse.boot.service;
 
+import com.kh.project.cse.boot.domain.vo.Attendance;
+import com.kh.project.cse.boot.domain.vo.Expiry;
+import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public interface SpotService {
 
+    // 유통기한 페이지 수
+    int selectExpiryCount(int storeNo);
+    //유통기한 리스트 불러오기
+    ArrayList<Expiry> selectExpiryList(int storeNo,PageInfo pi);
+    // 유통기한 페이징
+    int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate);
+
     //근태정보 조회 - 초기화면
     List<Attendance> selectInfoList();
-
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
     //근태관리 - 출퇴근시간 업데이트
@@ -48,4 +56,8 @@ public interface SpotService {
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
+
+    int searchExpiryListCount(String searchExpiry, String keyword, int storeNo);
+
+    ArrayList<Expiry> searchExpiryList(String searchExpiry, String keyword, int storeNo, PageInfo pi);
 }
