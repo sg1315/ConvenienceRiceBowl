@@ -139,7 +139,7 @@ public class SpotController {
     //공지사항
     @RequestMapping("/spot_notice")
     public String spot_notice() {
-        return "spot/spotNotice";
+        return "spot/spotAnnouncement";
     }
 
     //월매출

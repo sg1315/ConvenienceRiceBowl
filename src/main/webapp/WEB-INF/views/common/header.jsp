@@ -353,7 +353,7 @@
       </div>
       <div id="nav-menu">
         <div class="menu-bar" id="menu-1">
-          <a href="spot-notice">공지사항</a>
+          <a href="spot_notice">공지사항</a>
         </div>
         <div class="menu-bar" id="menu-2">
           <div>
