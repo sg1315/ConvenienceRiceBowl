@@ -222,7 +222,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 20px;
         height: 20px;
       }
-      
+
     </style>
   </head>
   <body>
@@ -245,22 +245,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       <div id="top-manu">
         <div id="top_serch">
-          <form action="searchStore">
+          <form action="searchStore" method="post">
             <select
               class="search-input-gray"
               id="search-select"
               name="condition"
             >
-              <option value="storeNo" ${condition == 'storeNo' ? 'selected' : ''}>지점번호</option>
-              <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
-              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>지점장</option>
+              <option value="storeNo">지점번호</option>
+              <option value="storeName">지점명</option>
+              <option value="memberName">지점장</option>
             </select>
             <input
               class="search-input-gray"
               id="search-filed"
               type="text"
               name="keyword"
-              value="${keyword}"
             />
             <input
               class="search-input-submit-gray"

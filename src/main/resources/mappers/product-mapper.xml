@@ -47,7 +47,7 @@
 
     <select id="selectAllProduct" resultMap="headProductResult">
         SELECT
-        P.PRODUCT_NO,
+        DISTINCT P.PRODUCT_NO,
         CATEGORY_NAME,
         PRODUCT_NAME,
         INPUT_PRICE,

@@ -136,6 +136,7 @@ public class HeadServiceImpl implements HeadService {
         int result =0;
         int result1 = filesMapper.updateFiles(files);
 
+
         if(result1 > 0){
             product.setFilePath(files.getFilePath());
             int result2 = productMapper.updateProduct(product);
@@ -144,9 +145,10 @@ public class HeadServiceImpl implements HeadService {
 
         return result;
     }
-
-
-
+    @Override
+    public int updateProductOne(Product product) {
+        return productMapper.updateProduct(product);
+    }
     @Override
     public int deleteProduct(int productNo) {
         int result = 0;
@@ -259,4 +261,6 @@ public class HeadServiceImpl implements HeadService {
     public int searchstoreListCount(String condition, String keyword) {
         return storeMapper.searchStoreListCount(condition,keyword);
     }
+
+
 }
