@@ -89,20 +89,25 @@ public class HeadServiceImpl implements HeadService {
     @Override
     public int insertProduct(Product product, Files files) {
         int result = 0;
-
-        int result1 = productMapper.insertProduct(product);
-
-        if (result1 >= 1) {
-            files.setProductNo(product.getProductNo());
-            int result2 = filesMapper.insertFiles(files);
-            result = result2 * result1;
+        if(files.getOriginName() != null){
+            result = productMapper.insertProduct(product);
+            System.out.println("새로운 상품번호 : " + product.getProductNo() );
+            if (result >= 1) {
+                files.setProductNo(product.getProductNo());
+                int result2 = filesMapper.insertFiles(files);
+                result *= result2;
+            }
+        }else{
+            result = productMapper.insertProduct(product);
         }
+
         return result;
     }
-
+    //첨부파일 추가
     @Override
-    public int insertOneProduct(Product product) {
-        return productMapper.insertOneProduct(product);
+    public int insertFile(int productNo, Files files) {
+        files.setProductNo(productNo);
+        return filesMapper.insertFiles(files);
     }
 
     //상품검색
@@ -138,22 +143,22 @@ public class HeadServiceImpl implements HeadService {
 
         return result;
     }
-    @Override
-    public int updateOneProduct(Product product) {
-        return productMapper.updateProduct(product);
-    }
+
 
 
     @Override
     public int deleteProduct(int productNo) {
-       int result = 0;
-       int result1 = filesMapper.deleteFile(productNo);
+        int result = 0;
+        Product p = productMapper.OneProductSelect(productNo);
 
-       if(result1 > 0){
-           int result2 = productMapper.deleteProduct(productNo);
-           result = result1 * result2;
-       }
-       return result;
+        if(p.getFilePath() != null){
+           int result1 = filesMapper.deleteFile(productNo);
+           result += result1;
+        }
+        int result2 = productMapper.deleteProduct(productNo);
+        result +=result2;
+
+        return result;
     }
 
     //지점목록 수

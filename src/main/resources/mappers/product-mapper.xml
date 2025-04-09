@@ -31,7 +31,6 @@
         INPUT_PRICE,
         SALE_PRICE,
         SHORTAGE_AMOUNT
-
         ) VALUES (
         SEQ_PRNO.NEXTVAL,
         #{categoryNo},
@@ -40,33 +39,16 @@
         #{salePrice},
         #{shortageAmount}
         )
-        <selectKey keyProperty="productNo" resultType="int" order ="AFTER">
-            SELECT SEQ_PRNO.CURRVAL FROM DUAL
+        <selectKey keyProperty="productNo"  resultType="int"  order ="AFTER">
+            SELECT SEQ_PRNO.currval From dual
         </selectKey>
     </insert>
-    <insert id="insertOneProduct" parameterType="Product" useGeneratedKeys="false" >
-        INSERT INTO PRODUCT(
-        PRODUCT_NO,
-        CATEGORY_NO,
-        PRODUCT_NAME,
-        INPUT_PRICE,
-        SALE_PRICE,
-        SHORTAGE_AMOUNT
-        ) VALUES (
-        SEQ_PRNO.NEXTVAL,
-        #{categoryNo},
-        #{productName},
-        #{inputPrice},
-        #{salePrice},
-        #{shortageAmount}
-        )
 
-    </insert>
 
     <select id="selectAllProduct" resultMap="headProductResult">
         SELECT
         P.PRODUCT_NO,
-        CATEGORY_Name,
+        CATEGORY_NAME,
         PRODUCT_NAME,
         INPUT_PRICE,
         SALE_PRICE,
@@ -78,25 +60,45 @@
         LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
         ORDER BY P.PRODUCT_NO DESC
     </select>
-    <select id="searchProduct" resultMap="headProductResult">
+    <select id="OneProductSelect" resultMap="headProductResult">
         SELECT
-        PRODUCT_NO,
-        CATEGORY_NAME,
+        P.PRODUCT_NO,
+        C.CATEGORY_Name,
         PRODUCT_NAME,
         INPUT_PRICE,
-        SALE_PRICE
-        FROM PRODUCT
-        JOIN CATEGORY USING(CATEGORY_NO)
+        SALE_PRICE,
+        SHORTAGE_AMOUNT,
+        AVAILABILITY,
+        FILE_PATH
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
+        WHERE P.PRODUCT_NO = #{productNo}
+        ORDER BY P.PRODUCT_NO DESC
+    </select>
+    <select id="searchProduct" resultMap="headProductResult">
+        SELECT
+        P.PRODUCT_NO,
+        C.CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT,
+        AVAILABILITY,
+        FILE_PATH
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
         WHERE
         <choose>
             <when test="condition == 'productNo'">
-                PRODUCT_NO
+                P.PRODUCT_NO
             </when>
             <when test="condition == 'productName'">
                 PRODUCT_NAME
             </when>
             <otherwise>
-                CATEGORY_NAME
+                C.CATEGORY_NAME
             </otherwise>
         </choose>
         LIKE '%${keyword}%'
@@ -195,5 +197,34 @@
         WHERE  PRODUCT_NO = #{productNo}
     </select>
 
+    <select id="spotSearchProduct" resultMap="headProductResult" >
+        SELECT
+        P.PRODUCT_NO,
+        C.CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT,
+        AVAILABILITY,
+        FILE_PATH
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'productNo'">
+                P.PRODUCT_NO
+            </when>
+            <when test="condition == 'productName'">
+                PRODUCT_NAME
+            </when>
+            <otherwise>
+                C.CATEGORY_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        and AVAILABILITY = #{inputcheck}
+        ORDER BY PRODUCT_NO DESC
+    </select>
 
 </mapper>

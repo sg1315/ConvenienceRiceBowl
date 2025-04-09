@@ -1,12 +1,10 @@
 package com.kh.project.cse.boot.service;
 
-import com.kh.project.cse.boot.domain.vo.Attendance;
-import com.kh.project.cse.boot.domain.vo.Expiry;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.CirculationMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.kh.project.cse.boot.mappers.AttendanceMapper;
 import com.kh.project.cse.boot.mappers.ExpiryMapper;
 import lombok.RequiredArgsConstructor;
@@ -165,6 +163,21 @@ public class SpotServiceImpl implements SpotService {
     public int searchExpiryListCount(String searchExpiry, String keyword,int storeNo) {
         return expiryMapper.searchExpiryListCount(searchExpiry, keyword, storeNo);
     }
+
+
+    @Override
+    public ArrayList<Product> spotSelectAllProduct(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.selectAllProduct(rowBounds);
+    }
+    @Override
+    public ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
+    }
+
 
 
 }

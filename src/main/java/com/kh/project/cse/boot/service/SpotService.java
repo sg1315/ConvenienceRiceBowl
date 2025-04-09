@@ -60,4 +60,10 @@ public interface SpotService {
     int searchExpiryListCount(String searchExpiry, String keyword, int storeNo);
 
     ArrayList<Expiry> searchExpiryList(String searchExpiry, String keyword, int storeNo, PageInfo pi);
+
+    ArrayList<Product> spotSelectAllProduct(PageInfo pi);
+
+    ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi);
+
+
 }

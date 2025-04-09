@@ -163,19 +163,17 @@ public class HeadController {
         int result = 0;
 
         Files files = new Files();
-        if(!upfile.getOriginalFilename().equals("")){
-
+        if(!upfile.getOriginalFilename().equals("")){ //첨부파일이 있을 때
             String changeName = com.kh.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
 
+            files.setProductNo(product.getProductNo());
             files.setChangeName(changeName);
             files.setOriginName(upfile.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
 
-            result = headService.insertProduct(product, files);
-
-        }else{
-            result  =  headService.insertOneProduct(product);
         }
+
+        result = headService.insertProduct(product, files);
 
 
 
@@ -207,15 +205,15 @@ public class HeadController {
     @PostMapping("/updateProduct")
     public String updateProduct(Product product, MultipartFile file1, HttpSession session, Model model) {
         int result = 0;
-
         if(product.getAvailability() == null){
             product.setAvailability("Y");
-        } else if (product.getAvailability().equals("on")) {
+        } else {
             product.setAvailability("N");
         }
 
         Files files = new Files();
-        if(!file1.getOriginalFilename().equals("")){
+        if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
+
             String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             files.setProductNo(product.getProductNo());
@@ -223,17 +221,19 @@ public class HeadController {
             files.setOriginName(file1.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
 
-            System.out.println(files);
-            result = headService.updateProduct(product, files);
-        }else {
-             result = headService.updateOneProduct(product);
+            if(product.getFilePath() != null){  //기존첨부파일이 있을 때 -> update
+                result = headService.updateProduct(product, files);
+            }else{ //기존첨부파일 없을 때 -> insert
+                result = headService.insertFile(product.getProductNo(),files);
+            }
+
         }
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품수정 성공");
             return head_product(1, model);
         }else {
-            session.setAttribute("alertMsg", "상품추가 실패");
+            session.setAttribute("alertMsg", "상품수정 실패");
             return "head_office/headProduct";
         }
 
