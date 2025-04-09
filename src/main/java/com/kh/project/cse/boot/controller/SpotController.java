@@ -1,6 +1,7 @@
 package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.*;
+import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
 import jakarta.servlet.http.HttpSession;
@@ -182,7 +183,7 @@ public class SpotController {
             HttpSession session,
             Model model) {
 
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
 
         //date값 보정
@@ -250,7 +251,7 @@ public class SpotController {
     //발주 - 발주요청
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList, HttpSession session) {
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
         String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmm"));
 
@@ -281,7 +282,7 @@ public class SpotController {
             @RequestParam String startDate,
             @RequestParam String endDate,
             HttpSession session) {
-        Member loginUser = (Member) session.getAttribute("loginUser");
+        Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
 
         LocalDate start = LocalDate.parse(startDate);
@@ -326,7 +327,7 @@ public class SpotController {
     }
     //근태정보 조회 - 초기화면
     @GetMapping("/spot_attendance")
-    public String spotAttendanceInfo(@SessionAttribute("loginUser") Member loginMember, Model model) {
+    public String spotAttendanceInfo(@SessionAttribute("loginMember") Member loginMember, Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
         model.addAttribute("loginMember", loginMember);
         System.out.println("attendanceList: " + attendanceList);

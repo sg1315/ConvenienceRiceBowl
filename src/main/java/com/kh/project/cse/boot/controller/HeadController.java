@@ -362,7 +362,7 @@ public class HeadController {
     public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
                                Member member, HttpSession session, Model model) {
 
-        Member loginMember = (Member) session.getAttribute("loginUser");
+        Member loginMember = (Member) session.getAttribute("loginMember");
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -384,7 +384,7 @@ public class HeadController {
 
         if (result > 0) {
             Member updatedMember = memberService.selectMemberById(member.getMemberId());
-            session.setAttribute("loginUser", updatedMember);
+            session.setAttribute("loginMember", updatedMember);
             return "업데이트 성공";
         } else {
             return "업데이트 실패";
