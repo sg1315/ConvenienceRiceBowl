@@ -222,6 +222,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 20px;
         height: 20px;
       }
+      
     </style>
   </head>
   <body>
@@ -244,21 +245,22 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       <div id="top-manu">
         <div id="top_serch">
-          <form action="searchStore" method="post">
+          <form action="searchStore">
             <select
               class="search-input-gray"
               id="search-select"
               name="condition"
             >
-              <option value="storeNo">지점번호</option>
-              <option value="storeName">지점명</option>
-              <option value="memberName">지점장</option>
+              <option value="storeNo" ${condition == 'storeNo' ? 'selected' : ''}>지점번호</option>
+              <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
+              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>지점장</option>
             </select>
             <input
               class="search-input-gray"
               id="search-filed"
               type="text"
               name="keyword"
+              value="${keyword}"
             />
             <input
               class="search-input-submit-gray"
@@ -298,22 +300,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </div>
       <div id="footer">
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-          <c:forEach
-            var="i"
-            begin="${ pi.startPage }"
-            end="${ pi.endPage }"
-            step="1"
-          >
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              onclick="location.href='head_store?cpage=${i}'"
-            >
-              ${i}
-            </button>
+          <c:if test="${pi.startPage > 1}">
+            <a href="searchStore?cpage=${pi.startPage - 1}&condition=${condition}&keyword=${keyword}">
+              <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+          </c:if>
+          <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+            <button type="button"
+                    class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                    onclick="location.href='searchStore?cpage=${i}&condition=${condition}&keyword=${keyword}'">${i}</button>
           </c:forEach>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="searchStore?cpage=${pi.endPage + 1}&&condition=${condition}&keyword=${keyword}">
+              <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+          </c:if>
         </div>
       </div>
 
@@ -352,6 +353,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   <img src="/resources/common/공통_Icon.png" id="x_img" />
                 </button>
               </div>
+
             </div>
             <div class="modal-body">
               <!--모달 내용-->
@@ -381,29 +383,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </table>
             </div>
             <div class="modal-footer">
-              <div id="modal-pageing">
-                <img src="/resources/common/공통_페이징바화살표.png" />
-                <c:forEach
-                  var="i"
-                  begin="${ pi.startPage }"
-                  end="${ pi.endPage }"
-                  step="1"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary"
-                    
-                  >
-                    ${i}
-                  </button>
-                </c:forEach>
-                <img src="/resources/common/공통_페이징바화살표.png" />
-              </div>
               <div id="mobal-footer-btn">
                 <button class="yes-btn" onclick="checkedYes()">승인</button>
                 <button class="no-btn" onclick="checkedNo()">거절</button>
               </div>
-            
             </div>
           </div>
         </div>

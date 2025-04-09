@@ -254,4 +254,9 @@ public class HeadServiceImpl implements HeadService {
 
         return circulationMapper.circulationSearchList(rowBounds,  setNo,  startDate, endDate);
     }
+
+    @Override
+    public int searchstoreListCount(String condition, String keyword) {
+        return storeMapper.searchStoreListCount(condition,keyword);
+    }
 }
