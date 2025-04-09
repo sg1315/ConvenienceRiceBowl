@@ -278,6 +278,8 @@ public class HeadController {
         ArrayList<Store> list = headService.searchStore(condition, keyword, pi);
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
+        model.addAttribute("condition", condition);
+        model.addAttribute("keyword", keyword);
 
         if(list == null){
             session.setAttribute("alertMsg", "실패");

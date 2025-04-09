@@ -222,6 +222,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 20px;
         height: 20px;
       }
+      
     </style>
   </head>
   <body>
@@ -241,31 +242,32 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </button>
         </div>
       </div>
-
+      <form action="searchStore" method="post">
       <div id="top-manu">
         <div id="top_serch">
-          <form action="searchStore" method="post">
+
             <select
               class="search-input-gray"
               id="search-select"
               name="condition"
             >
-              <option value="storeNo">지점번호</option>
-              <option value="storeName">지점명</option>
-              <option value="memberName">지점장</option>
+              <option value="storeNo" ${condition == 'storeNo' ? 'selected' : ''}>지점번호</option>
+              <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
+              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>지점장</option>
             </select>
             <input
               class="search-input-gray"
               id="search-filed"
               type="text"
               name="keyword"
+              value="${keyword}"
             />
             <input
               class="search-input-submit-gray"
               type="submit"
               value="검색"
             />
-          </form>
+
         </div>
       </div>
       <div id="table-manu">
@@ -306,17 +308,20 @@ contentType="text/html;charset=UTF-8" language="java" %>
             step="1"
           >
             <button
-              type="button"
+              type="submit"
               class="btn btn-outline-secondary"
-              onclick="location.href='head_store?cpage=${i}'"
+              name="cpage" value="${i}"
             >
               ${i}
             </button>
           </c:forEach>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <button class="pageBtn" disabled>
+            <img src="../../../resources/common/pagingbarRightBtn.png">
+          </button>
+
         </div>
       </div>
-
+      </form>
       <!--start point-->
       <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
@@ -352,6 +357,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   <img src="/resources/common/공통_Icon.png" id="x_img" />
                 </button>
               </div>
+
             </div>
             <div class="modal-body">
               <!--모달 내용-->
@@ -381,29 +387,10 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </table>
             </div>
             <div class="modal-footer">
-              <div id="modal-pageing">
-                <img src="/resources/common/공통_페이징바화살표.png" />
-                <c:forEach
-                  var="i"
-                  begin="${ pi.startPage }"
-                  end="${ pi.endPage }"
-                  step="1"
-                >
-                  <button
-                    type="button"
-                    class="btn btn-outline-secondary"
-                    
-                  >
-                    ${i}
-                  </button>
-                </c:forEach>
-                <img src="/resources/common/공통_페이징바화살표.png" />
-              </div>
               <div id="mobal-footer-btn">
                 <button class="yes-btn" onclick="checkedYes()">승인</button>
                 <button class="no-btn" onclick="checkedNo()">거절</button>
               </div>
-            
             </div>
           </div>
         </div>
