@@ -240,8 +240,8 @@
         CIRCULATION
         WHERE
         STORE_NO = #{storeNo}
-        AND CIRCULATION_DATE &gt; #{startDate}
-        AND CIRCULATION_DATE &lt; #{endDate}
+        AND CIRCULATION_DATE &gt;= #{startDate}
+        AND CIRCULATION_DATE &lt;= #{endDate}
         GROUP BY
         CIRCULATION_DATE
         ORDER BY
@@ -268,7 +268,6 @@
         WHERE c.STORE_NO = #{storeNo}
         AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
     </select>
-
 
     <!--본사 승인 미승인-->
     <update id="updateheadorder">

@@ -5,6 +5,7 @@ import com.kh.project.cse.boot.domain.vo.Expiry;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public interface SpotService {
 
     //근태정보 조회 - 초기화면
     List<Attendance> selectInfoList();
+
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
     //근태관리 - 출퇴근시간 업데이트
@@ -62,6 +64,7 @@ public interface SpotService {
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
+
 
     int searchExpiryListCount(String searchExpiry, String keyword, int storeNo);
 
