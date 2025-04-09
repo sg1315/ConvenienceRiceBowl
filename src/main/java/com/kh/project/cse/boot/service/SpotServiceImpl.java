@@ -2,6 +2,7 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.CirculationMapper;
+import com.kh.project.cse.boot.mappers.InventoryMapper;
 import com.kh.project.cse.boot.mappers.ProductMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,14 @@ public class SpotServiceImpl implements SpotService {
     private final AttendanceMapper attendanceMapper;
     private final ProductMapper productMapper;
     private final CirculationMapper circulationMapper;
+    private final InventoryMapper inventoryMapper;
 
     @Autowired
-    public SpotServiceImpl(AttendanceMapper attendanceMapper, ProductMapper productMapper, CirculationMapper circulationMapper) {
+    public SpotServiceImpl(AttendanceMapper attendanceMapper, ProductMapper productMapper, CirculationMapper circulationMapper, InventoryMapper inventoryMapper) {
         this.attendanceMapper = attendanceMapper;
         this.productMapper = productMapper;
         this.circulationMapper = circulationMapper;
+        this.inventoryMapper = inventoryMapper;
     }
     //근태정보 조회 - 초기화면
     @Override
@@ -125,6 +128,32 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public List<Circulation> getDetailsByDate(String date, int storeNo) {
         return circulationMapper.getDetailsByDate(date,storeNo);
+    }
+
+    @Override
+    public int inventoryCount(int storeNo) {
+        return inventoryMapper.inventoryCount(storeNo);
+    }
+
+    @Override
+    public ArrayList<Inventory> selectInventory(PageInfo pi, int storeNo) {
+
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return inventoryMapper.selectInventory(rowBounds,storeNo);
+    }
+
+    @Override
+    public int searchInventoryCount(int storeNo, String condition, String keyword, int check) {
+        return inventoryMapper.searchInventoryCount(storeNo,condition,keyword,check);
+    }
+
+    @Override
+    public ArrayList<Inventory> searchInventory(PageInfo pi, int storeNo, String condition, String keyword, int check) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return inventoryMapper.searchInventory(rowBounds,storeNo,condition,keyword,check);
     }
 
 }

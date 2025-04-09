@@ -1,13 +1,8 @@
 package com.kh.project.cse.boot.controller;
 
-import com.kh.project.cse.boot.domain.vo.Attendance;
-import com.kh.project.cse.boot.domain.vo.Member;
+import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.domain.vo.Category;
-import com.kh.project.cse.boot.domain.vo.Circulation;
-import com.kh.project.cse.boot.domain.vo.PageInfo;
-import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
@@ -83,7 +78,37 @@ public class SpotController {
 
     //재고
     @RequestMapping("/spot_inventory")
-    public String spot_inventory() {
+    public String spot_inventory(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
+//        Member loginUser = (Member) session.getAttribute("loginUser");
+//        int storeNo = loginUser.getStoreNo();
+        int storeNo = 5;
+        int inventoryCount = spotService.inventoryCount(storeNo);
+        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 12);
+        ArrayList<Inventory> list = spotService.selectInventory(pi, storeNo);
+
+        model.addAttribute("pi", pi);
+        model.addAttribute("list", list);
+        return "spot/spotInventory";
+    }
+
+    @PostMapping("/searchInventory")
+    public String searchInventory(
+            @RequestParam(defaultValue = "1") int cpage,
+            @RequestParam String condition,
+            @RequestParam String keyword,
+            @RequestParam(value = "check", required = false, defaultValue = "0") int check,
+            Model model,
+            HttpSession session) {
+
+        int storeNo = 5;
+
+        // 조건에 따라 Service 호출
+        int count = spotService.searchInventoryCount(storeNo, condition, keyword, check);
+        PageInfo pi = new PageInfo(count, cpage, 10, 10);
+        ArrayList<Inventory> list = spotService.searchInventory(pi, storeNo, condition, keyword, check);
+        System.out.println("수"+count);
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "spot/spotInventory";
     }
 
@@ -358,6 +383,7 @@ public class SpotController {
             int storeNo = loginUser.getStoreNo();
             return spotService.getDetailsByDate(date, storeNo);
         }
+
 
 
 

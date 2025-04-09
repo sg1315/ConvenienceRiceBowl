@@ -48,4 +48,16 @@ public interface SpotService {
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
+
+    //재고리스트카운트
+    int inventoryCount(int storeNo);
+
+    //재고불러오기
+    ArrayList<Inventory> selectInventory(PageInfo pi, int storeNo);
+
+    //재고검색
+    int searchInventoryCount(int storeNo, String condition, String keyword, int check);
+
+    ArrayList<Inventory> searchInventory(PageInfo pi, int storeNo, String condition, String keyword, int check);
+
 }

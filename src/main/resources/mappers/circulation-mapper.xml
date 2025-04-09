@@ -227,6 +227,62 @@
         ORDER BY SET_NO DESC
     </select>
 
+    <select id="circulationSearchListCount" resultType="_int">
+        SELECT COUNT(*)
+            FROM (
+            SELECT
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            STORE_NAME,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STATUS
+        FROM CIRCULATION C
+        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
+        WHERE STATUS IN (1,5,6,7)
+            <if test="startDate != null and endDate == null">
+                AND CIRCULATION_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and startDate == null">
+                AND CIRCULATION_DATE &lt;= #{endDate}
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            </if>
+            <if test="setNo != null and setNo != ''">
+                AND SET_NO LIKE '%' || #{setNo} || '%'
+            </if>
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
+        )
+    </select>
+
+    <select id="circulationSearchList" resultMap="circulationResult">
+        SELECT
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            STORE_NAME,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STATUS
+        FROM CIRCULATION C
+        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
+        WHERE STATUS IN (1,5,6,7)
+            <if test="startDate != null and endDate == null">
+                AND CIRCULATION_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and startDate == null">
+                AND CIRCULATION_DATE &lt;= #{endDate}
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            </if>
+            <if test="setNo != null and setNo != ''">
+                AND SET_NO LIKE '%' || #{setNo} || '%'
+            </if>
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
+        ORDER BY SET_NO DESC
+    </select>
+
     <!-- 매출 자료 (자동계산) -->
     <select id="selectSalesMonth" resultMap="circulationSummaryResult">
         SELECT

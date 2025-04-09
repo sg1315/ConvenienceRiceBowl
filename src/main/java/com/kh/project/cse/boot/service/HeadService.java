@@ -4,6 +4,7 @@ import com.kh.project.cse.boot.domain.vo.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -90,5 +91,8 @@ public interface HeadService {
     //발주 지난달
     List<Circulation> head_lastorder(LocalDate start, LocalDate end);
 
-
+    //발부목록 검생
+    int circulationSearchListCount( String setNo, Date startDate, Date endDate);
+    //검색한 발주 요청 목록
+    ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate);
 }

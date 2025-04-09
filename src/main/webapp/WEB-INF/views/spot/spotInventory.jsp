@@ -37,12 +37,17 @@ contentType="text/html;charset=UTF-8" language="java" %>
         background-color: #D9D9D9;
         width: 55%;
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding-right: 40px;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+
+      }
+      #search-form{
+        padding-right: 40px;
+        width: 100%;
         gap: 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
       }
 
       #right-check {
@@ -69,12 +74,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #search-box input:nth-child(1){
         width: 80%;
         padding: 10px;
-      }
-      .selectbox select {
-        color: #8a8a8a;
-      }
-      .selectbox option {
-        color: black;
       }
 
       #table1 {
@@ -247,23 +246,24 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <p class="main_name">재고</p>
           </div>
         </div>
-
         <div id="top-right1">
-          <div id="right-check">
-            <input type="checkbox"/>
-            <p>재고부족</p>
-          </div>
-          <div class="selectbox" id="category-select">
-            <select>
-              <option>카테고리</option>
-              <option>스낵</option>
-              <option>음료</option>
-            </select>
-          </div>
-          <div id="search-box">
-            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-            <input class="search-input-submit" type="submit" value="검색" />
-          </div>
+          <form id="search-form" action="searchInventory" method="post">
+            <div id="right-check">
+              <input type="checkbox" name="check" value="1"/>
+              <p>재고부족</p>
+            </div>
+            <div class="selectbox" id="category-select">
+              <select name="condition">
+                <option value="productNo">상품번호</option>
+                <option value="categoryName">카테고리</option>
+                <option value="productName">상품명</option>
+              </select>
+            </div>
+            <div id="search-box">
+              <input class="search-input" type="text" placeholder="상품명 or 상품번호" name="keyword"/>
+              <input class="search-input-submit" type="submit" value="검색" />
+            </div>
+          </form>
         </div>
       </div>
       <div id="main">
@@ -279,34 +279,19 @@ contentType="text/html;charset=UTF-8" language="java" %>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1219045</td>
-                <td>스낵</td>
-                <td>달콤 프란찌(딸기)</td>
-                <td>32</td>
-                <td>재고부족</td>
-              </tr>
-              <tr>
-                <td>1219045</td>
-                <td>스낵</td>
-                <td>달콤 프란찌(딸기)</td>
-                <td>32</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>1219045</td>
-                <td>스낵</td>
-                <td>달콤 프란찌(딸기)</td>
-                <td>32</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>1219045</td>
-                <td>스낵</td>
-                <td>달콤 프란찌(딸기)</td>
-                <td>32</td>
-                <td></td>
-              </tr>
+              <c:forEach var="I" items="${list}">
+                <tr data-ano="${I.productNo}">
+                  <td>${I.productNo}</td>
+                  <td>${I.categoryName}</td>
+                  <td>${I.productName}</td>
+                  <td>${I.totalInventory}</td>
+                  <td>
+                    <c:choose>
+                      <c:when test="${I.inventoryStatus == 0}">재고부족</c:when>
+                    </c:choose>
+                  </td>
+                </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
@@ -392,6 +377,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </div>
         </div>
       </div>
+
       <script>
         // 테이블의 모든 행에 클릭 이벤트 추가
         document.querySelectorAll('#table1 tbody tr').forEach((row) => {
