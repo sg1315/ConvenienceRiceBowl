@@ -117,4 +117,19 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.getDetailsByDate(date,storeNo);
     }
 
+    @Override
+    public ArrayList<Product> spotSelectAllProduct(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.selectAllProduct(rowBounds);
+    }
+    @Override
+    public ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
+    }
+
+
+
 }

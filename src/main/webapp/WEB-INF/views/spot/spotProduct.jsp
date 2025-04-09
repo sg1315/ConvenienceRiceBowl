@@ -44,6 +44,15 @@
       border-top-right-radius: 20px;
       gap: 10px;
     }
+    #top-right1 form{
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin: auto;
+      gap: 10px;
+
+    }
 
     #right-check{
       display: flex;
@@ -150,7 +159,15 @@
     }
 
     /* 모달창 시작 */
-    .modal-content {
+    #modify-x_img {
+      width: 15px;
+      height: 20px;
+    }
+    #btn-close-modify-modal {
+      border: none;
+      background: none;
+    }
+    #modal-content {
       height: 500px;
     }
     .modal-header {
@@ -164,61 +181,9 @@
       justify-content: space-between;
       border: none !important;
     }
-    #btn-close-modal {
-      border: none;
-      background: none;
-    }
-    #product-img {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #product-detail-box {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #product-detail {
-      background-color: white;
-      width: 100%;
-      height: 90%;
-    }
-    #product-detail-puts {
-      height: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
 
-    #product-detail-ok {
-      display: flex;
-      justify-content: right;
-      margin-right: 28px;
-    }
-    #product-detail-table {
-      border-collapse: separate;
-      border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
-    }
-    #product-detail-table tr td {
-      font-size: 20px;
-      font-weight: bold;
-    }
 
-    /*
-      수정하기 모달창
-       */
-    #modify-x_img {
-      width: 15px;
-      height: 20px;
-    }
-    #btn-close-modify-modal {
-      border: none;
-      background: none;
-    }
+
     #product-modify-img {
       background-color: #d9d9d9;
       width: 48%;
@@ -226,6 +191,13 @@
       justify-content: center;
       align-items: center;
     }
+    #product-modify-img img{
+        width: 350px;
+        height: 350px;
+        justify-content: center;
+        align-items: center;
+      }
+
     #product-detail-modify-box {
       background-color: #d9d9d9;
       width: 48%;
@@ -236,30 +208,25 @@
     #product-detail-modify {
       background-color: white;
       width: 100%;
-      height: 90%;
     }
     #product-detail-modify-puts {
-      height: 90%;
       display: flex;
       justify-content: center;
       align-items: center;
     }
     #product-detail-modify-table tr td input {
-      /*border: 2px solid #d9d9d9;*/
       border-radius: 5px;
     }
 
     #product-detail-modify-table {
       border-collapse: separate;
-      /*border-spacing: 10px 30px; !* 상하 간격을 10px로 설정 *!*/
       border-spacing: 10px 20px;
     }
     #product-detail-modify-table tr td {
       font-size: 18px;
       font-weight: bold;
     }
-    #product-detail-modify-table td{
-    }
+
 
     #product-detail-modify-table p {
       padding-left: 10px;
@@ -289,7 +256,7 @@
     #product-detail-modify-table td:first-child::after{
       content: none;
     }
-
+    
 
 
 
@@ -307,85 +274,65 @@
     </div>
 
     <div id="top-right1">
+      <form action="spotSearchForm" method="post">
       <div id="right-check">
-        <input type="checkbox">
+        <input type="checkbox" name="inputcheck">
         <p>입고불가</p>
       </div>
-      <div class="selectbox" id="category-select">
-        <select>
-          <option>카테고리</option>
-          <option>스낵</option>
-          <option>음료</option>
-        </select>
+        <div class="selectbox" id="category-select" >
+          <select name="condition">
+            <option value="productNo">상품번호</option>
+              <option value="category">카테고리</option>
+              <option value="productName">상품명</option>n>
+          </select>
+        </div>
+        <div id="search-box">
+          <input class="search-input" type="text" placeholder="상품명 or 상품번호" name="keyword" />
+          <input class="search-input-submit" type="submit" value="검색" />
+        </div>
       </div>
-      <div id="search-box">
-        <input class="search-input" type="text" placeholder="상품명 or 상품번호" />
-        <input class="search-input-submit" type="submit" value="검색" />
-      </div>
-    </div>
-
+      </form>
   </div>
   <div id="main">
     <div id="main-in">
       <table class="table table-hover" id="table1">
         <thead>
-        <tr>
-          <th class="col-1">상품번호</th>
+
+          <th class="col-1">상품 번호</th>
           <th class="col-1">카테고리</th>
+          <th style="display: none;">상품이미지</th>
           <th class="col-2">상품명</th>
           <th class="col-1">입고가</th>
           <th class="col-1">판매가</th>
           <th class="col-1">입고불가</th>
-        </tr>
+          <th style="display: none;"></th>
         </thead>
         <tbody >
-        <tr>
-          <td>1219045</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(딸기)</td>
-          <td>3200</td>
-          <td>6400</td>
-          <td><img src="/resources/common/상품목록_Cancel.png"></td>
-        </tr>
-        <tr>
-          <td>1219046</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(메론)</td>
-          <td>3200</td>
-          <td>6400</td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>1219047</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(초코)</td>
-          <td>3200</td>
-          <td>6400</td>
-          <td><img src="/resources/common/상품목록_Cancel.png"></td>
-        </tr>
-        <tr>
-          <td>1219048</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(사과)</td>
-          <td>3200</td>
-          <td>6400</td>
-          <td></td>
-        </tr>
+          <c:forEach var="p" items="${list}">
+            <tr>
+              <td >${p.productNo}</td>
+              <td >${p.categoryName}</td>
+              <td style="display: none;"><img width="120px" height="99.5px" src="${p.filePath}" alt="상품이미지" ></td>
+              <td >${p.productName}</td>
+              <td  >${p.inputPrice}</td>
+              <td  >${p.salePrice}</td>
+              <td >
+                <c:if test="${p.availability eq 'N'}">
+                  <img src="/resources/common/상품목록_Cancel.png" alt="">
+                   <br>
+                </c:if>
+               </td>         
+              <td style="display: none;">${p.shortageAmount}</td>         
+            </tr>
+          </c:forEach>
         </tbody>
       </table>
     </div>
     <div id="main-pageing">
       <img src="/resources/common/공통_페이징바화살표.png">
-      <button type="button" class="btn btn-outline-secondary">1</button>
-      <button type="button" class="btn btn-outline-secondary">2</button>
-      <button type="button" class="btn btn-outline-secondary">3</button>
-      <button type="button" class="btn btn-outline-secondary">4</button>
-      <button type="button" class="btn btn-outline-secondary">5</button>
-      <button type="button" class="btn btn-outline-secondary">6</button>
-      <button type="button" class="btn btn-outline-secondary">7</button>
-      <button type="button" class="btn btn-outline-secondary">8</button>
-      <button type="button" class="btn btn-outline-secondary">9</button>
-      <button type="button" class="btn btn-outline-secondary">10</button>
+      <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
+        <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_product?cpage=${i}'">${i}</button>
+    </c:forEach>
       <img src="/resources/common/공통_페이징바화살표.png">
     </div>
   </div>
@@ -402,18 +349,20 @@
        aria-labelledby="staticBackdropLabel"
        aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
+      <div class="modal-content" id="modal-content">
         <div class="modal-header">
           <div id="header-title">
             <h1 class="modal-title fs-5">상품정보</h1>
           </div>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-            <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
+            <img src="/resources/common/공통_Icon.png" id="modify-x_img" />
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" >
           <!--모달 내용-->
-          <div id="product-modify-img">이미지사진</div>
+          <div id="product-modify-img"> 
+            <img id="modal-image" src="" alt="상품 이미지">
+          </div>
           <div id="product-detail-modify-box">
             <div id="product-detail-modify">
               <div id="product-detail-modify-puts">
@@ -421,7 +370,7 @@
                   <tr>
                     <td>상품번호</td>
                     <td>
-                      <input type="text" id="modal-productCode" readonly>
+                      <input type="text" id="modal-productNo"  readonly>
                     </td>
                   </tr>
                   <tr>
@@ -439,13 +388,13 @@
                   <tr>
                     <td>입고가</td>
                     <td>
-                      <input type="text" id="modal-productInputPrice" readonly>
+                      <input type="text" id="modal-inputPrice" readonly>
                     </td>
                   </tr>
                   <tr>
                     <td>판매가</td>
                     <td>
-                      <input type="text" id="modal-productSalePrice" readonly>
+                      <input type="text" id="modal-salePrice" readonly>
                     </td>
                   </tr>
                 </table>
@@ -466,18 +415,24 @@
       rows.forEach(row => {
         row.classList.add("table-row");
 
-        row.addEventListener("click", function () {
-          const code = this.children[0].textContent;
-          const category = this.children[1].textContent;
-          const name = this.children[2].textContent;
-          const input = this.children[3].textContent;
-          const sale = this.children[4].textContent;
+        row.addEventListener('click', function () {
+              const productNo = this.children[0].textContent;
+              const categoryName = this.children[1].textContent;
+              const filePath = this.children[2].querySelector('img').src;
+              const productName = this.children[3].textContent;
+              const inputPrice = this.children[4].textContent;
+              const salePrice = this.children[5].textContent;
+              const availability = this.children[6].textContent;
+              const shortageAmount = this.children[7].textContent;
 
-          document.getElementById("modal-productCode").value = code;
-          document.getElementById("modal-productCategory").value = category;
-          document.getElementById("modal-productName").value = name;
-          document.getElementById("modal-productInputPrice").value = input;
-          document.getElementById("modal-productSalePrice").value = sale;
+          document.getElementById("modal-productNo").value = productNo;
+          document.getElementById("modal-productCategory").value = categoryName;
+          document.getElementById('modal-image').src = filePath;
+
+          document.getElementById("modal-productName").value = productName;
+          document.getElementById("modal-inputPrice").value = inputPrice;
+          document.getElementById("modal-salePrice").value = salePrice;
+          // document.getElementById('modal-shortageAmount').value = shortageAmount;
 
           const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
           modal.show();

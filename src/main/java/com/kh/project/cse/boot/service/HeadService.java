@@ -9,8 +9,8 @@ public interface HeadService {
 
     //상품추가
     int insertProduct(Product product, Files files);
+    int insertFile(int productNo, Files files);
 
-    int insertOneProduct(Product product);
     //상품검색
     ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
     //상품전체목록 수
@@ -22,7 +22,6 @@ public interface HeadService {
     //파일있을 때 상품수정
     int updateProduct(Product product, Files files);
     //파일없을때 상품수정
-    int updateOneProduct(Product product);
     //상품삭제
     int deleteProduct(int productNo);
 
@@ -75,7 +74,6 @@ public interface HeadService {
 
     //발주관리사항 불러오기
     ArrayList<Circulation> selectCirculationlist(PageInfo pi);
-    int selectcirculation();
 
 
     //발주관리 세부사항
@@ -86,6 +84,7 @@ public interface HeadService {
     //발주 승인 미승인
 
     int updateheadorder(String setNo, int status);
+
 
 
 }

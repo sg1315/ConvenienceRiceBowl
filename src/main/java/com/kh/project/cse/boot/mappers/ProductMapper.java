@@ -14,7 +14,7 @@ import java.util.List;
 public interface ProductMapper {
     int insertProduct(Product product);
 
-    int insertOneProduct(Product product);
+
 
     ArrayList<Product> searchProduct(String condition, String keyword, RowBounds rowBounds);
 
@@ -40,7 +40,10 @@ public interface ProductMapper {
     ArrayList<Product> posProductSearch(String keyword);
 
     ArrayList<Product> posAllProductSelect();
-
-
     Product posOneProductSelect(int productNo);
+
+    ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, RowBounds rowBounds);
+
+
+    Product OneProductSelect(int productNo);
 }

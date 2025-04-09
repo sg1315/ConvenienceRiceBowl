@@ -2,14 +2,12 @@ package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.Attendance;
 import com.kh.project.cse.boot.domain.vo.Member;
-import com.kh.project.cse.boot.service.MemberService;
-import com.kh.project.cse.boot.service.SpotService;
+import com.kh.project.cse.boot.service.*;
 import com.kh.project.cse.boot.domain.vo.Category;
 import com.kh.project.cse.boot.domain.vo.Circulation;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.Product;
 import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -42,6 +40,7 @@ public class SpotController {
     private final ResourceTransactionManager resourceTransactionManager;
     private final MemberService memberService;
     private final SpotService spotService;
+    private final HeadService headService;
     private Member member;
 
 
@@ -53,7 +52,35 @@ public class SpotController {
 
     //상품목록
     @RequestMapping("/spot_product")
-    public String spot_product() {
+    public String spot_product(@RequestParam(defaultValue = "1") int cpage,Model model) {
+
+        int listCount = spotService.ProductListCount();
+
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+        ArrayList<Product> list = spotService.spotSelectAllProduct(pi);
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
+
+        return "spot/spotProduct";
+    }
+    @PostMapping("/spotSearchForm")
+    public String spotSearchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam(defaultValue = "Y") String inputcheck, @RequestParam String condition, @RequestParam String keyword, Model model) {
+
+        int listCount = spotService.ProductListCount();
+        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+
+        ArrayList<Product> list = new ArrayList<>();
+        inputcheck = inputcheck.equals("on")? "N" : "Y";
+
+        if(inputcheck.equals("Y")){
+            list = headService.searchProduct(condition, keyword, pi);
+        }else {
+            list = spotService.spotSearchProduct(inputcheck, condition, keyword, pi);
+        }
+
+        model.addAttribute("list",list);
+        model.addAttribute("pi", pi);
         return "spot/spotProduct";
     }
 
