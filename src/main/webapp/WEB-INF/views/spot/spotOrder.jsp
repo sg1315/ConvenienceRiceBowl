@@ -83,6 +83,9 @@
             align-items: center;
             padding-right: 10px;
         }
+        #order-search-top button:nth-child(1), #order-search-top button:nth-child(2){
+            margin: 0;
+        }
         #order-search-bottom{
             width: 100%;
             height: 50%;
@@ -483,8 +486,8 @@
                 <div id="order-search">
                     <form id="order-search-form" method="get" action="/spot_order">
                         <div id="order-search-top">
-                            <button type="button" class="search-input-submit" id="previousMonth">저번 달</button>
-                            <button type="button" class="search-input-submit" id="lastMonth">최근</button>
+                            <button type="button" class="search-input-submit" id="previousMonthOrder">저번 달</button>
+                            <button type="button" class="search-input-submit" onclick="recent()">최근</button>
                             <input class="date-input" type="date" name="startDate"> ~ <input class="date-input" type="date" name="endDate">
                         </div>
                         <div id="order-search-bottom">
@@ -600,7 +603,7 @@
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <form id="search-box" action="productSearch" method="get">
+                            <form id="search-box" method="get">
                                 <div id="category-select">
                                     <select class="selectbox" id="order-request-category-select" name="category">
                                         <option value="all">카테고리</option>
@@ -759,7 +762,7 @@
 
                     </div>
                     <div id="order-cancel">
-                        <button class="red-btn" type="button">발주취소</button>
+                        <button class="red-btn" type="button" onclick="deleteOrder()">발주취소</button>
                     </div>
                 </div>
             </div>
@@ -797,11 +800,9 @@
                                 "</tr>";
                         }
 
-                        // tbody에 데이터 출력
                         const ordering = document.querySelector("#order-table tbody");
                         ordering.innerHTML = str;
 
-                        // 모달 열기
                         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop2'));
                         myModal.show();
 
@@ -815,6 +816,7 @@
             });
         });
     });
+
     //총 수량, 금액 계산
     function updateDetailSummary() {
         let kindCount = 0;      // 종류 수
@@ -839,8 +841,6 @@
 
 </script>
 
-<!-- spotOrder.js -->
-<script src="/resources/js/spotOrder.js"></script>
 <script>
     //모달 열었을때 HTML을 저장, 닫을때 그 정보를 다시 불러옴
     let initialModalContent = null;
@@ -877,6 +877,16 @@
         $('#total-quantity').text(totalQuantity);
         $('#total-price').text(totalPrice.toLocaleString());
     }
+    //최근 버튼
+    function recent() {
+        window.location.href = '/spot_order';
+    }
+
+
+
 </script>
+
 </body>
+<!-- spotOrder.js -->
+<script src="/resources/js/spotOrder.js"></script>
 </html>

@@ -47,6 +47,9 @@ public interface CirculationMapper {
     //발주 요청 상세
     ArrayList<Circulation> spotOrderDetail(@Param("setNo") String setNo);
 
+    //발주요청 - 지난달 발주 목록
+    List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, @Param("storeNo") int storeNo);
+
     //매출집계 - 검색
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
                                        @Param("startDate") LocalDate startDate,

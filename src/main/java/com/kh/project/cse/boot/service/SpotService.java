@@ -23,29 +23,32 @@ public interface SpotService {
     //상품 전체 목록 수
     int ProductListCount();
 
-    //발주요청 카테고리 목록
+    //발주요청 - 카테고리 목록
     List<Category> orderRequestCategoryList();
-    //발주요청 상품 목록
+    //발주요청 - 상품 목록
     ArrayList<Product> orderRequestProductList();
-    //발주요청 상품 검색
+    //발주요청 - 상품 검색
     ArrayList<Product> orderRequestProductSearch(String category, String keyword);
-    //발주요청 발주
+    //발주요청 - 발주
     int insertOrder(List<Circulation> orderList, int storeNo, String setNo);
 
-    //발주요청 목록
-    //발주요청 분단위로 묶은 수
+    //발주요청 - 목록
+    //발주요청 - 분단위로 묶은 수
     int orderRequestListCount(int storeNo);
-    //발주요청 분단위 묶음 목록
+    //발주요청 - 분단위 묶음 목록
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
 
-    //발주요청 목록 검색
-    //검색한 발주 요청 분단위로 묶은 목록
+    //발주요청 - 목록 검색
+    //발주요청 - 검색한 발주 요청 분단위로 묶은 목록
     int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate);
     //검색한 발주 요청 목록
     ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
 
     //발주요청 발주 상세
     ArrayList<Circulation> spotOrderDetail(String setNo);
+
+    //발주요청 - 지난달 발주 목록 검색
+    List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo);
 
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);

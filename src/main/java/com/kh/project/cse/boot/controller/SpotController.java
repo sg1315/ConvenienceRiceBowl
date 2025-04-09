@@ -219,6 +219,21 @@ public class SpotController {
         }
         return sodlist;
     }
+    //발주 - 지난 달 발주 목록
+    @ResponseBody
+    @PostMapping("/spot_order/previousMonthOrder")
+    public List<Circulation> previousMonthOrder(
+            @RequestParam String startDate,
+            @RequestParam String endDate,
+            HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        int storeNo = loginUser.getStoreNo();
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        return spotService.previousMonthOrder(start, end, storeNo);
+    }
 
 
     //입고

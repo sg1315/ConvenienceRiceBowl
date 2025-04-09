@@ -120,6 +120,11 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.spotOrderDetail(setNo);
     }
 
+    @Override
+    public List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo) {
+        return circulationMapper.previousMonthOrder(startDate, endDate, storeNo);
+    }
+
     //매출집계 - 검색
     @Override
     public List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate) {
