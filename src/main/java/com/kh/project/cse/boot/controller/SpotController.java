@@ -263,6 +263,32 @@ public class SpotController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
     }
+    //발주 - 발주 상세 내역
+    @ResponseBody
+    @GetMapping("/spot_order/orderDetail")
+    public ArrayList<Circulation> spotOderDetail(@RequestParam("setNo") String setNo) {
+        System.out.println(setNo);
+        ArrayList<Circulation> sodlist = spotService.spotOrderDetail(setNo);
+        for(Circulation c : sodlist){
+            System.out.println(sodlist);
+        }
+        return sodlist;
+    }
+    //발주 - 지난 달 발주 목록
+    @ResponseBody
+    @PostMapping("/spot_order/previousMonthOrder")
+    public List<Circulation> previousMonthOrder(
+            @RequestParam String startDate,
+            @RequestParam String endDate,
+            HttpSession session) {
+        Member loginUser = (Member) session.getAttribute("loginUser");
+        int storeNo = loginUser.getStoreNo();
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        return spotService.previousMonthOrder(start, end, storeNo);
+    }
 
 
     //입고

@@ -83,6 +83,9 @@
             align-items: center;
             padding-right: 10px;
         }
+        #order-search-top button:nth-child(1), #order-search-top button:nth-child(2){
+            margin: 0;
+        }
         #order-search-bottom{
             width: 100%;
             height: 50%;
@@ -293,6 +296,7 @@
         #modal-header{
             display: flex;
             flex-wrap: wrap;
+            height: 15%;
             padding: 10px;
             background-color: #D9D9D9;
             border-top-left-radius: 10px;
@@ -363,6 +367,7 @@
             width: 100%;
             height: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         #order-product-table thead {
@@ -390,6 +395,7 @@
             top: 0;
             z-index: 1;
         }
+
         #order-request-table td{
             text-align: center;
             vertical-align: middle;
@@ -434,11 +440,28 @@
             table-layout: fixed;
         }
 
-        #modal-page-inner{
+        #order-table {
+            table-layout: fixed;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            height: 100%;
+            border-collapse: collapse;
+        }
+        #order-table thead {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+        #order-table tbody {
+            display: block;
+            overflow-y: auto;
+            width: 100%;
+            height: 90%;
+        }
+
+        #order-table tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
         }
     </style>
 </head>
@@ -463,8 +486,8 @@
                 <div id="order-search">
                     <form id="order-search-form" method="get" action="/spot_order">
                         <div id="order-search-top">
-                            <button type="button" class="search-input-submit" id="previousMonth">저번 달</button>
-                            <button type="button" class="search-input-submit" id="lastMonth">최근</button>
+                            <button type="button" class="search-input-submit" id="previousMonthOrder">저번 달</button>
+                            <button type="button" class="search-input-submit" onclick="recent()">최근</button>
                             <input class="date-input" type="date" name="startDate"> ~ <input class="date-input" type="date" name="endDate">
                         </div>
                         <div id="order-search-bottom">
@@ -504,8 +527,8 @@
                 <c:choose>
                     <c:when test="${not empty oslist}">
                         <c:forEach var="os" items="${oslist}">
-                            <tr>
-                                <td>${os.minuteGroup}</td>
+                            <tr data-setno="${os.setNo}">
+                                <td >${os.minuteGroup}</td>
                                 <td>${os.setNo}</td>
                                 <td>${os.totalAmount}</td>
                                 <td>${os.totalInputPrice}</td>
@@ -525,7 +548,7 @@
 
                     <c:otherwise>
                         <c:forEach var="o" items="${olist}">
-                            <tr>
+                            <tr data-setno="${o.setNo}">
                                 <td>${o.minuteGroup}</td>
                                 <td>${o.setNo}</td>
                                 <td>${o.totalAmount}</td>
@@ -580,7 +603,7 @@
                             <h1 class="modal-title fs-5">상품 목록</h1>
                         </div>
                         <div id="header-content">
-                            <form id="search-box" action="productSearch" method="get">
+                            <form id="search-box" method="get">
                                 <div id="category-select">
                                     <select class="selectbox" id="order-request-category-select" name="category">
                                         <option value="all">카테고리</option>
@@ -681,13 +704,6 @@
                     </div>
 
                     <div id="modal-pageing-right">
-<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
-<%--                        <button type="button" class="btn btn-outline-secondary">1</button>--%>
-<%--                        <button type="button" class="btn btn-outline-secondary">2</button>--%>
-<%--                        <button type="button" class="btn btn-outline-secondary">3</button>--%>
-<%--                        <button type="button" class="btn btn-outline-secondary">4</button>--%>
-<%--                        <button type="button" class="btn btn-outline-secondary">5</button>--%>
-<%--                        <img src="/resources/common/공통_페이징바화살표.png">--%>
                     </div>
                 </div>
             </div>
@@ -702,7 +718,7 @@
                 <div id="modal-header">
                     <div id="modal-header1">
                         <p>
-                            25-04-01 | 123451 | 발주상태기술
+                            <%--해당 발주 시간--%>
                         </p>
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
@@ -715,11 +731,11 @@
                         <%--           css 유지를 위해 만든 여백             --%>
                     </div>
                     <div id="modal-header4">
-                        <p>
-                            종류 수(총 수량 : 3(240)
+                        <p id="order-summary">
+                            종류 (총 수량) : <span id="order-kind-count">0</span> (<span id="order-total-quantity">0</span>)
                         </p>
                         <p>
-                            총 1,000,300 원
+                            총 <span id="order-total-price">0</span> 원
                         </p>
                     </div>
                 </div>
@@ -735,13 +751,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>2</td>
-                            <td>3</td>
-                            <td>4</td>
-                            <td>5</td>
-                        </tr>
+                            <%-- 불러올 발주 상세 --%>
                         </tbody>
                     </table>
                 </div>
@@ -752,7 +762,7 @@
 
                     </div>
                     <div id="order-cancel">
-                        <button class="red-btn" type="button">발주취소</button>
+                        <button class="red-btn" type="button" onclick="deleteOrder()">발주취소</button>
                     </div>
                 </div>
             </div>
@@ -762,18 +772,75 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const rows = document.querySelectorAll("#table1 tbody tr");
+
         rows.forEach(row => {
             row.classList.add("table-row");
             row.addEventListener("click", function () {
-                const modal = new bootstrap.Modal(document.getElementById("staticBackdrop2"));
-                modal.show();
+                const setNo = this.children[1]?.textContent?.trim();
+                console.log("선택된 발주번호 setNo:", setNo);
+
+                if (!setNo) {
+                    alert("발주번호를 찾을 수 없습니다.");
+                    return;
+                }
+
+                $.ajax({
+                    url: '/spot_order/orderDetail?setNo=' + setNo,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        let str = "";
+                        for (let o of data) {
+                            str += "<tr>" +
+                                "<td>" + o.productNo+ "</td>" +
+                                "<td>" + o.categoryName + "</td>" +
+                                "<td>" + o.productName + "</td>" +
+                                "<td>" + o.circulationAmount + "</td>" +
+                                "<td>" + o.sumInputPrice + "</td>" +
+                                "</tr>";
+                        }
+
+                        const ordering = document.querySelector("#order-table tbody");
+                        ordering.innerHTML = str;
+
+                        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop2'));
+                        myModal.show();
+
+                        updateDetailSummary();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('AJAX 요청 실패:', error);
+                        alert('발주 상세 정보를 불러오는 데 실패했습니다.');
+                    }
+                });
             });
         });
     });
+
+    //총 수량, 금액 계산
+    function updateDetailSummary() {
+        let kindCount = 0;      // 종류 수
+        let totalQuantity = 0;  // 총 수량
+        let totalPrice = 0;     // 총 금액
+
+        $('#order-table tbody tr').each(function () {
+            const td = $(this).find('td');
+            kindCount += 1;
+            const quantity = parseInt(td[3]?.textContent?.trim()) || 0;
+            const price = parseInt(td[4]?.textContent?.trim()) || 0;
+
+            totalQuantity += quantity;
+            totalPrice += quantity * price;
+        });
+
+        // 화면에 반영
+        $('#order-kind-count').text(kindCount);
+        $('#order-total-quantity').text(totalQuantity);
+        $('#order-total-price').text(totalPrice.toLocaleString());
+    }
+
 </script>
 
-<!-- spotOrder.js -->
-<script src="/resources/js/spotOrder.js"></script>
 <script>
     //모달 열었을때 HTML을 저장, 닫을때 그 정보를 다시 불러옴
     let initialModalContent = null;
@@ -799,7 +866,7 @@
         $('#order-request-table tbody tr').each(function () {
             kindCount += 1;
             const quantity = parseInt($(this).find('.quantity-input').val()) || 0;
-            const price = parseInt($(this).attr('data-inputprice')) || 0;  // <-- 이 부분 수정
+            const price = parseInt($(this).attr('data-inputprice')) || 0;
 
             totalQuantity += quantity;
             totalPrice += quantity * price;
@@ -808,8 +875,18 @@
         // 화면에 반영
         $('#kind-count').text(kindCount);
         $('#total-quantity').text(totalQuantity);
-        $('#total-price').text(totalPrice.toLocaleString()); // 콤마 붙이기
+        $('#total-price').text(totalPrice.toLocaleString());
     }
+    //최근 버튼
+    function recent() {
+        window.location.href = '/spot_order';
+    }
+
+
+
 </script>
+
 </body>
+<!-- spotOrder.js -->
+<script src="/resources/js/spotOrder.js"></script>
 </html>

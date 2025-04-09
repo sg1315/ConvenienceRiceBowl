@@ -82,34 +82,6 @@
         WHERE  STORE_NO = #{storeNo} AND STATUS = 1
         GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
         ORDER BY SET_NO DESC
-<!--        SELECT-->
-<!--        RNUM,-->
-<!--        MINUTE_GROUP,-->
-<!--        TOTAL_AMOUNT,-->
-<!--        TOTAL_INPUT_PRICE-->
-<!--        FROM(-->
-<!--            SELECT-->
-<!--            ROWNUM AS RNUM,-->
-<!--            MINUTE_GROUP,-->
-<!--            TOTAL_AMOUNT,-->
-<!--            TOTAL_INPUT_PRICE-->
-<!--                FROM (-->
-<!--                    SELECT-->
-<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,-->
-<!--                    SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,-->
-<!--                    SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE-->
-<!--                    FROM-->
-<!--                    CIRCULATION-->
-<!--                    WHERE-->
-<!--                    STORE_NO = #{storeNo}-->
-<!--                    AND STATUS = 1-->
-<!--                    GROUP BY-->
-<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')-->
-<!--                    ORDER BY-->
-<!--                    TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')-->
-<!--                )-->
-<!--        )-->
-<!--        ORDER BY RNUM DESC-->
     </select>
 
     <select id="orderSearchListCount" resultType="_int">
@@ -167,6 +139,36 @@
                 AND SET_NO LIKE '%' || #{setNo} || '%'
             </if>
         GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        ORDER BY SET_NO DESC
+    </select>
+
+    <select id="spotOrderDetail" resultMap="circulationResult">
+        SELECT
+            P.PRODUCT_NO AS PRODUCT_NO,
+            Y.CATEGORY_NAME AS CATEGORY_NAME,
+            P.PRODUCT_NAME AS PRODUCT_NAME,
+            C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
+            (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE
+        FROM CIRCULATION C
+            LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
+            LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
+            LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
+        WHERE C.SET_NO = #{setNo}
+    </select>
+
+    <select id="previousMonthOrder" resultMap="circulationResult">
+        SELECT
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STORE_NAME,
+            STATUS
+        FROM  CIRCULATION C
+        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
+        WHERE STORE_NO = #{storeNo}
+        AND CIRCULATION_DATE BETWEEN #{start} AND #{end}
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
         ORDER BY SET_NO DESC
     </select>
 
