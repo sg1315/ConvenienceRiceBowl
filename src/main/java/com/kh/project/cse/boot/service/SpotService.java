@@ -5,6 +5,7 @@ import com.kh.project.cse.boot.domain.vo.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +37,13 @@ public interface SpotService {
     int orderRequestListCount(int storeNo);
     //발주요청 분단위 묶음 목록
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
+
     //발주요청 목록 검색
-    ArrayList<Circulation> orderSearch(int storeNo, String SetNo);
+    //검색한 발주 요청 분단위로 묶은 목록
+    int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+    //검색한 발주 요청 목록
+    ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
     //매출집계 - 모달

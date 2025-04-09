@@ -12,6 +12,7 @@ import com.kh.project.cse.boot.service.SpotService;
 import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 import java.time.*;
 import java.util.Date;
 import java.util.HashMap;
@@ -113,9 +118,36 @@ public class SpotController {
 
     //발주
     @RequestMapping("/spot_order")
-    public String spot_order(@RequestParam(defaultValue = "1") int cpage, Model model) {
-        int storeNo = 5; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+    public String spot_order(
+            @RequestParam(defaultValue = "1") int cpage,
+            @RequestParam(required = false) String setNo,
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            Model model) {
+
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
         //circuration-mapper도 수정해야함
+
+        //date값 보정
+        if (startDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            startDate = cal.getTime();
+        }
+        if (endDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            endDate = cal.getTime();
+        }
 
         int listCount = spotService.orderRequestListCount(storeNo);
         PageInfo pi = new PageInfo(listCount, cpage, 10,10);
@@ -123,10 +155,18 @@ public class SpotController {
         List<Category> clist = spotService.orderRequestCategoryList();
         ArrayList<Product> plist = spotService.orderRequestProductList();
         ArrayList<Circulation> olist = spotService.orderRequestList(pi, storeNo);
+        ArrayList<Circulation> oslist = spotService.orderSearchList(pi, storeNo, setNo, status, startDate, endDate);
 
+        model.addAttribute("pi", pi);
         model.addAttribute("clist", clist);
         model.addAttribute("plist", plist);
         model.addAttribute("olist", olist);
+        model.addAttribute("oslist", oslist);
+
+        model.addAttribute("setNo", setNo);
+        model.addAttribute("status", status);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         return "spot/spotOrder";
     }
     @GetMapping("/spot_order/productSearch")
@@ -138,9 +178,10 @@ public class SpotController {
         model.addAttribute("pslist", pslist);
         return pslist;
     }
+    //발주 - 발주요청
     @PostMapping("/spot_order/requestOrder")
     public ResponseEntity<String> requestOrder(@RequestBody List<Circulation> orderList) {
-        int storeNo = 5; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
+        int storeNo = 2; //로그인으로 세션 저장 처리 된 후 session불러와서 가져올것.
         String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmm"));
 
         //circuration-mapper도 수정해야함
@@ -152,16 +193,6 @@ public class SpotController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
         }
-    }
-    @GetMapping("/spot_order/orderSearch")
-    @ResponseBody
-    public ArrayList<Circulation> orderSearch(@RequestParam(required = false) Date startDate, @RequestParam(required = false) String endDate, @RequestParam(required = false) String status, @RequestParam(required = false) String setNo) {
-        int storeNo = 2; // 세션 등에서 가져오기
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(status);
-        System.out.println(setNo);
-        return null;
     }
 
 

@@ -12,13 +12,12 @@ import org.apache.ibatis.session.RowBounds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 @Mapper
 public interface CirculationMapper {
 
-
     int selectcirculation();
-
 
     ArrayList<Circulation> selectCirculationlist(RowBounds rowBounds);
 
@@ -34,6 +33,11 @@ public interface CirculationMapper {
     //발주 요청 분단위로 묶은 수
     int orderRequestListCount(@Param("storeNo") int storeNo);
     ArrayList<Circulation> orderRequestList(RowBounds rowBounds, int storeNo);
+
+    //발주 요청 서치 목록
+    //검색한 발주 요청 분단위로 묶은 수
+    int orderSearchListCount(@Param("storeNo") int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+    ArrayList<Circulation> orderSearchList(RowBounds rowBounds, @Param("storeNo") int storeNo, @Param("setNo") String setNo, @Param("status") Integer status, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     //매출집계 - 검색
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
