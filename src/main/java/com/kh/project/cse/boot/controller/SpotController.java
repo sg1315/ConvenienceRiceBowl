@@ -1,6 +1,7 @@
 package com.kh.project.cse.boot.controller;
 
 import com.kh.project.cse.boot.domain.vo.*;
+import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
 import jakarta.servlet.http.HttpSession;

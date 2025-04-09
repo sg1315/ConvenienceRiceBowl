@@ -308,7 +308,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             <button
               type="button"
               class="btn btn-outline-secondary"
-              onclick="location.href='head_store?cpage=${i}'"
+              onclick="location.href='searchStore?cpage=${i}'"
             >
               ${i}
             </button>

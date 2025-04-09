@@ -176,8 +176,6 @@ public class HeadController {
         result = headService.insertProduct(product, files);
 
 
-
-
         if (result >= 1){
             session.setAttribute("alertMsg", "상품추가 성공");
             return head_product(1, model);
@@ -214,6 +212,7 @@ public class HeadController {
         Files files = new Files();
         if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
 
+
             String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             files.setProductNo(product.getProductNo());
@@ -221,12 +220,10 @@ public class HeadController {
             files.setOriginName(file1.getOriginalFilename());
             files.setFilePath("/resources/uploadfile/" + changeName);
 
-            if(product.getFilePath() != null){  //기존첨부파일이 있을 때 -> update
-                result = headService.updateProduct(product, files);
-            }else{ //기존첨부파일 없을 때 -> insert
-                result = headService.insertFile(product.getProductNo(),files);
-            }
+            result = headService.updateProduct(product, files);
 
+        }else{ //현재 첨부파일이 없을 때
+            result = headService.updateProductOne(product);
         }
 
         if (result >= 1){

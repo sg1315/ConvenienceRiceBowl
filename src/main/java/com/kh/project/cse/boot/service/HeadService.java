@@ -23,7 +23,6 @@ public interface HeadService {
     List<Category> selectAllCategories();
     //파일있을 때 상품수정
     int updateProduct(Product product, Files files);
-    //파일없을때 상품수정
     //상품삭제
     int deleteProduct(int productNo);
 
@@ -90,5 +89,5 @@ public interface HeadService {
     List<Circulation> head_lastorder(LocalDate start, LocalDate end);
 
 
-
+    int updateProductOne(Product product);
 }
