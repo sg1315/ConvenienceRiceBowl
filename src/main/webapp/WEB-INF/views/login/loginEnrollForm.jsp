@@ -113,10 +113,19 @@
                             <option value="4">알바</option>
                         </select>
                     </div>
+                    <c:if test="${param.position eq '2'}">
+                        <div class="flexInput-1">
+                            <select id="StoreNameList" name="storeNameList" onclick="selectStoreName()" required>
+                            </select>
+                        </div>
+                    </c:if>
+                    <c:else>
                     <div class="flexInput-1">
                         <input type="text" id="storeName" name="storeName" oninput="resetStoreCheck()" required>
                         <button type="button" onclick="checkStoreName()">확인</button>
                     </div>
+                    </c:else>
+
                     <div></div>
                     <div></div>
                     <div></div>
@@ -201,6 +210,32 @@
                         })
                     }
                 }
+                function selectStoreName(){
+                    const checkResult = document.getElementById("checkResult");
+                    $.ajax({
+                        url: "/api/Member/selectStoreName",
+                        type:'POST',
+                        success: function (storeNameList){
+                            if (storeNameList != null) {
+                                const select = document.getElementById("StoreNameList");
+                                select.innerHTML = ""; // 초기화
+
+                                storeNameList.forEach(store => {
+                                    const option = document.createElement("option");
+                                    option.value = store;
+                                    option.text = store;
+                                    select.appendChild(option);
+                                });
+                            } else {
+                                checkResult.style.color = "red";
+                                checkResult.innerText = "지점들을 불러오지 못하였습니다. 관리자에게 문의 주십시오.";
+                                isStoreNameOk = true;
+                            }
+                        }, error: function (){
+                            console.log("Select 지점명 ajax 실패");
+                        }
+                    })
+                }
                 function checkId() {
                     const memberId = document.getElementById("memberId").value;
                     const checkResult = document.getElementById("checkResult");
@@ -250,6 +285,10 @@
                     }
                 }
                 function resetCheck(){
+                    const position = document.getElementById("position").value;
+                    if(position === 2){
+                        isStoreNameOk = true;
+                    }
                     isStoreNameOk = false;
                 }
                 function resetStoreCheck(){
