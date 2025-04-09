@@ -300,25 +300,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </div>
       <div id="footer">
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-          <c:forEach
-            var="i"
-            begin="${ pi.startPage }"
-            end="${ pi.endPage }"
-            step="1"
-          >
-            <button
-              type="submit"
-              class="btn btn-outline-secondary"
-              name="cpage" value="${i}"
-            >
-              ${i}
-            </button>
+          <c:if test="${pi.startPage > 1}">
+            <a href="head_store?cpage=${pi.startPage - 1}">
+              <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+          </c:if>
+          <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+            <button type="button"
+                    class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                    onclick="location.href='head_store?cpage=${i}'">${i}</button>
           </c:forEach>
-          <button class="pageBtn" disabled>
-            <img src="../../../resources/common/pagingbarRightBtn.png">
-          </button>
-
+          <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="head_store?cpage=${pi.endPage + 1}">
+              <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+          </c:if>
         </div>
       </div>
       </form>
