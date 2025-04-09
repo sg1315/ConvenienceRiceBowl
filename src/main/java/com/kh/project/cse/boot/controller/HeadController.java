@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +58,16 @@ public class HeadController {
         response.put("message", result > 0 ? "처리 성공" : "처리 실패");
 
         return response;
+    }
+    //본사 지난달 내역보기
+    @ResponseBody
+    @PostMapping("head_lastorder")
+    public List<Circulation> getLastMonthOrders(@RequestParam String startDate,
+                                             @RequestParam String endDate) {
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        System.out.println(headService.head_lastorder(start, end));
+        return headService.head_lastorder(start, end);
     }
 
     //공지사항추가

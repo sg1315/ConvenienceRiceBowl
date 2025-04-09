@@ -26,6 +26,9 @@ public interface CirculationMapper {
     //발주승인 미승인
     int updateheadorder(@Param("setNo") String setNo, @Param("status") int status);
 
+    //지난달 발주내역
+    List<Circulation> head_lastorder(@Param("start")LocalDate start,@Param("end") LocalDate end);
+
     //지점
     //발주 요청
     int insertOrder(@Param("circulation") Circulation circulation, int storeNo, String setNo);
@@ -41,6 +44,7 @@ public interface CirculationMapper {
                                        @Param("endDate") LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
+
 
 
 }

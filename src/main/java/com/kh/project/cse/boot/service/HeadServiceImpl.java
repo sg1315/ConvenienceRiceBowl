@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -224,5 +225,8 @@ public class HeadServiceImpl implements HeadService {
         return circulationMapper.updateheadorder(setNo,status);
     }
 
-
+    @Override
+    public List<Circulation> head_lastorder(LocalDate start, LocalDate end) {
+        return circulationMapper.head_lastorder(start, end);
+    }
 }

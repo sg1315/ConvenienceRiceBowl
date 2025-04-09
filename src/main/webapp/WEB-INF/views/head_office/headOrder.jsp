@@ -216,6 +216,11 @@
             justify-content: right;
         }
 
+        #modal-head-left{
+            font-weight: bold;
+            display: flex;
+        }
+
     </style>
 </head>
 <body>
@@ -226,8 +231,8 @@
         </div>
         <div id="top-manu">
             <div id="top_btn">
-                <button class="gray-btn-border">저번달</button>
-                <button class="gray-btn-border">최근</button>
+                <button class="gray-btn-border" id="btn-last-month">저번달</button>
+                <button class="gray-btn-border" onclick="recent()">최근</button>
             </div>
             <div id="marge">
             </div>
@@ -261,7 +266,7 @@
                         <th>상태</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="order-list-body">
                     <c:forEach var="C" items="${list}">
                         <tr data-sno="${C.setNo}"
                             data-minuteGroup="${C.minuteGroup}"
@@ -306,7 +311,11 @@
             <div class="modal-content">
                 <div id="modal-head">
                     <div class="modal-header">
-                        <p class="modal-title fs-5" id="staticBackdropLabel"></p>
+                        <div id="modal-head-left">
+                            <p class="modal-title fs-5" id="staticBackdropLabel"></p>
+                            <p id="order-num"></p>
+                            <p id="spot-name"></p>
+                        </div>
                         <button type="button" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
                             <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
                         </button>
@@ -368,7 +377,9 @@
                 const status=this.getAttribute('data-status');
                 document.querySelector('#set').innerHTML = totalAmount;
                 document.querySelector('#pice').innerHTML = totalInputPrice;
-                document.querySelector('#staticBackdropLabel').innerHTML = sno;
+                document.querySelector('#staticBackdropLabel').innerHTML = minuteGroup+ " |"+ '&nbsp';
+                document.querySelector('#order-num').innerHTML =sno;
+                document.querySelector('#spot-name').innerHTML = '&nbsp' + "|"+ '&nbsp'+storeName;
                 if(status != 1){
                     document.querySelector('#modal-header2-btn').style.display = 'none';
                     document.querySelector('#modal-header2-btn2').style.display = 'none';
@@ -415,7 +426,7 @@
         });
 
         function updateOrderStatus(statusCode) {
-            const sno = document.querySelector('#staticBackdropLabel').innerHTML;
+            const sno = document.querySelector('#order-num').innerHTML;
             console.log(sno);
             $.ajax({
                 url: '/updateheadorder',
@@ -442,6 +453,64 @@
         }
         document.getElementById('modal-header2-btn').addEventListener('click', () => updateOrderStatus(5)); // 승인
         document.getElementById('modal-header2-btn2').addEventListener('click', () => updateOrderStatus(6)); // 거절
+
+        function recent() {
+            window.location.href = '/head_order';
+        }
+
+        function statusText(code) {
+            switch (code) {
+                case 1: return '대기';
+                case 5: return '승인';
+                case 6: return '거절';
+                case 7: return '발주완료';
+            }
+        }
+
+        // 버튼 클릭 이벤트
+        document.getElementById('btn-last-month').addEventListener('click', function () {
+            const today = new Date();
+            const lastMonthStart = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+            const lastMonthEnd = new Date(today.getFullYear(), today.getMonth(), 0);
+
+            const format = (date) => date.toISOString().split('T')[0];
+            const startDate = format(lastMonthStart);
+            const endDate = format(lastMonthEnd);
+
+            $.ajax({
+                type: 'POST',
+                url: '/head_lastorder',
+                dataType: 'json',
+                data: {
+                    startDate: startDate,
+                    endDate: endDate
+                },
+                success: function (data) {
+                    console.log(data);
+                    let html = '';
+                    for (let C of data) {
+                        html +=
+                        "<tr data-sno="+C.setNo+
+                            "data-minuteGroup=" +C.minuteGroup+
+                            "data-storeName=" + C.storeName +
+                            "data-totalAmount=" + C.totalAmount +
+                            "data-totalInputPrice=" +C.totalInputPrice +
+                            "data-status=" + C.status +">" +
+                            "<td>" +C.minuteGroup+"</td>" +
+                            "<td>" +C.setNo + "</td>" +
+                            "<td>" +C.storeName + "</td>" +
+                            "<td>" +C.totalAmount + "</td>" +
+                            "<td>" +C.totalInputPrice + "</td>" +
+                            "<td>" +statusText(C.status) + "</td>" +
+                        "</tr>";
+                    }
+                    $('#order-list-body').html(html);
+                },
+                error: function () {
+                    alert("저번달 데이터 조회 실패!");
+                }
+            });
+        });
 
     </script>
 

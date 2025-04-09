@@ -2,8 +2,10 @@ package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public interface HeadService {
 
@@ -80,8 +82,10 @@ public interface HeadService {
     int selectcirculation();
 
     //발주 승인 미승인
-
     int updateheadorder(String setNo, int status);
+
+    //발주 지난달
+    List<Circulation> head_lastorder(LocalDate start, LocalDate end);
 
 
 }
