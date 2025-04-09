@@ -332,7 +332,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             data-bs-toggle="modal"
             data-bs-target="#staticBackdrop"
           >
-            상품추가/삭제
+            상품추가
           </button>
         </div>
       </div>
