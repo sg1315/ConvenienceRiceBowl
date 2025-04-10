@@ -322,11 +322,38 @@
         </div>
         <div id="footer">
             <div id="main-pageing">
-                <img src="/resources/common/공통_페이징바화살표.png">
-                <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
-                    <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_order?cpage=${i}'">${i}</button>
+                <c:set var="hasCondition" value="${not empty param.setNo or not empty param.startDate or not empty param.endDate}" />
+
+                <c:choose>
+                    <c:when test="${hasCondition}">
+                        <c:set var="baseUrl" value="head_order?setNo=${param.setNo}&startDate=${param.startDate}&endDate=${param.endDate}" />
+                        <c:set var="connector" value="&" />
+                    </c:when>
+                    <c:otherwise>
+                        <c:set var="baseUrl" value="head_order" />
+                        <c:set var="connector" value="?" />
+                    </c:otherwise>
+                </c:choose>
+
+                <c:if test="${pi.startPage > 1}">
+                    <a href="${baseUrl}${connector}cpage=${pi.startPage - 1}">
+                        <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="이전">
+                    </a>
+                </c:if>
+
+                <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                    <button type="button"
+                            class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                            onclick="location.href='${baseUrl}${connector}cpage=${i}'">
+                            ${i}
+                    </button>
                 </c:forEach>
-                <img src="/resources/common/공통_페이징바화살표.png">
+
+                <c:if test="${pi.endPage < pi.maxPage}">
+                    <a href="${baseUrl}${connector}cpage=${pi.endPage + 1}">
+                        <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="다음">
+                    </a>
+                </c:if>
             </div>
         </div>
     </div>
@@ -411,6 +438,9 @@
                 if(status != 1){
                     document.querySelector('#modal-header2-btn').style.display = 'none';
                     document.querySelector('#modal-header2-btn2').style.display = 'none';
+                } else{
+                    document.querySelector('#modal-header2-btn').style.display = 'block';
+                    document.querySelector('#modal-header2-btn2').style.display = 'block';
                 }
 
 

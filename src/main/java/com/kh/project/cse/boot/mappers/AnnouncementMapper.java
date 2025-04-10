@@ -22,6 +22,8 @@ public interface AnnouncementMapper {
 
     int updateAnnouncementDetail(Announcement announcement);
 
+    int searchAnnouncementCount(String condition, String keyword);
+
     ArrayList<Announcement> searchAnnouncement(String condition, String keyword,RowBounds rowBounds);
 
     int deleteAnnouncement(@Param("ano") int announcementNo);

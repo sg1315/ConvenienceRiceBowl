@@ -163,7 +163,7 @@
 
         #textbox {
             width: 100%;
-            height: 95%;
+            height: 85%;
         }
 
         /*
@@ -180,7 +180,7 @@
         }
 
         .modal-body {
-            max-height: 60%;
+            max-height: 92%;
         }
 
         #detail-x_img {
@@ -328,7 +328,6 @@
         }
 
         .modal-footer {
-            background-color: #D9D9D9;
             height: 8%;
         }
 
@@ -358,7 +357,7 @@
 
         #modify-textbox {
             width: 100%;
-            height: 95%;
+            height: 85%;
         }
     </style>
 </head>
@@ -417,11 +416,36 @@
     </div>
     <div id="footer">
         <div id="main-pageing">
-            <img src="/resources/common/공통_페이징바화살표.png" />
-            <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_announcement?cpage=${i}'">${i}</button>
+            <c:choose>
+                <c:when test="${not empty param.condition and not empty param.keyword}">
+                    <c:set var="baseUrl" value="/searchAnnouncement"/>
+                    <c:set var="queryString" value="condition=${param.condition}&keyword=${param.keyword}"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="baseUrl" value="/head_announcement"/>
+                    <c:set var="queryString" value=""/>
+                </c:otherwise>
+            </c:choose>
+
+            <c:if test="${pi.startPage > 1}">
+                <a href="${url}&cpage=${pi.startPage - 1}">
+                    <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="이전">
+                </a>
+            </c:if>
+
+            <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+                <button type="button"
+                        class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                        onclick="location.href='${baseUrl}?${queryString}&cpage=${i}'">
+                        ${i}
+                </button>
             </c:forEach>
-            <img src="/resources/common/공통_페이징바화살표.png" />
+
+            <c:if test="${pi.endPage < pi.maxPage}">
+                <a href="${url}&cpage=${pi.endPage + 1}">
+                    <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="다음">
+                </a>
+            </c:if>
         </div>
     </div>
 

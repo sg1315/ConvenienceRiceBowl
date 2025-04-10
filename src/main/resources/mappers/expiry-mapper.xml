@@ -87,29 +87,29 @@
         </choose>
         ORDER BY I.EXPIRATION_DATE
     </select>
-    <insert id="insertExpiry">
-        INSERT INTO CIRCULATION (
-            CIRCULATION_NO,
-            STORE_NO,
-            PRODUCT_NO,
-            INPUT_PRICE,
-            SALE_PRICE,
-            CIRCULATION_AMOUNT,
-            CIRCULATION_DATE,
-            STATUS
-        )
-        SELECT
-        SEQ_CIR.NEXTVAL,
-        #{storeNo},
-        #{productNo},
-        INPUT_PRICE,
-        SALE_PRICE,
-        #{inventoryCount},
-        SYSDATE,
-        4
-        FROM PRODUCT
-        WHERE PRODUCT_NO = #{productNo}
-    </insert>
+<!--    <insert id="insertExpiry">-->
+<!--        INSERT INTO CIRCULATION (-->
+<!--            CIRCULATION_NO,-->
+<!--            STORE_NO,-->
+<!--            PRODUCT_NO,-->
+<!--            INPUT_PRICE,-->
+<!--            SALE_PRICE,-->
+<!--            CIRCULATION_AMOUNT,-->
+<!--            CIRCULATION_DATE,-->
+<!--            STATUS-->
+<!--        )-->
+<!--        SELECT-->
+<!--        SEQ_CIR.NEXTVAL,-->
+<!--        #{storeNo},-->
+<!--        #{productNo},-->
+<!--        INPUT_PRICE,-->
+<!--        SALE_PRICE,-->
+<!--        #{inventoryCount},-->
+<!--        SYSDATE,-->
+<!--        4-->
+<!--        FROM PRODUCT-->
+<!--        WHERE PRODUCT_NO = #{productNo}-->
+<!--    </insert>-->
     <delete id="deleteExpiry">
         DELETE FROM INVENTORY
         WHERE STORE_NO = #{storeNo}
