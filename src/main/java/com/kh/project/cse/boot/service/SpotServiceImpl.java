@@ -59,13 +59,18 @@ public class SpotServiceImpl implements SpotService {
     }
     //근태관리 - 출퇴근시간 업데이트 //출근
     @Override
-    public int updateWorkingTime(Map<String, Object> paramMap) {
-        return attendanceMapper.updateWorkingBtnTime(paramMap);
+    public int insertWorkingTime(Map<String, Object> paramMap) {
+        return attendanceMapper.insertWorkingTime(paramMap);
     }
     //근태관리 - 출퇴근시간 업데이트 //퇴근
     @Override
     public int updateLeaveTime(Map<String, Object> paramMap) {
         return attendanceMapper.updateWorkLeaveBtnTime(paramMap);
+    }
+    //근태관리 - 출퇴근 상태 가져오기
+    @Override
+    public int getAttendanceStatus(String memberId) {
+        return attendanceMapper.getAttendanceStatus(memberId);
     }
 
     //발주 - 상품 수 카운트
@@ -167,8 +172,15 @@ public class SpotServiceImpl implements SpotService {
     //매출집계 - 모달
     @Override
     public List<Circulation> getDetailsByDate(String date, int storeNo) {
-        return circulationMapper.getDetailsByDate(date,storeNo);
+        if (date.length() == 4) {
+            return circulationMapper.getDetailsByYear(date, storeNo);
+        } else if (date.length() == 10) {
+            return circulationMapper.getDetailsByDate(date, storeNo);
+        } else {
+            throw new IllegalArgumentException("올바르지 않은 날짜 형식입니다: " + date);
+        }
     }
+
 
     @Override
     public int searchExpiryListCount(String searchExpiry, String keyword,int storeNo) {

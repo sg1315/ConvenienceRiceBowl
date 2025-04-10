@@ -357,17 +357,24 @@ public class SpotController {
 
         return "spot/spotMember";
     }
-    //근태정보 조회 - 초기화면
+    //근태정보 조회
     @GetMapping("/spot_attendance")
     public String spotAttendanceInfo(@SessionAttribute("loginMember") Member loginMember, Model model) {
         List<Attendance> attendanceList = spotService.selectInfoList();
         model.addAttribute("loginMember", loginMember);
-        System.out.println("attendanceList: " + attendanceList);
 
         model.addAttribute("attendanceList", attendanceList);
 
         return "spot/spotAttendance";
     }
+    //근태정보 갱신
+    @GetMapping("/spot_attendance/refresh")
+    public String refreshAttendanceList(Model model) {
+        List<Attendance> attendanceList = spotService.selectInfoList();
+        model.addAttribute("attendanceList", attendanceList);
+        return "spot/spotAttendance :: attendanceTable";  // 'attendanceTable' 부분만 반환
+    }
+
     //근태정보 - 모달 수정버튼
     @PostMapping("/spot_attendance/updateAttendance")
     @ResponseBody
@@ -412,10 +419,11 @@ public class SpotController {
     @ResponseBody
     public Map<String, Object> updateAttendanceTime(@RequestBody Map<String, String> request) {
         String memberId = request.get("memberId");
-        String time = request.get("time");
         String type = request.get("type");
 
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.parse(time));
+        String timeString = request.get("time");
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse(timeString);
+        Timestamp timestamp = Timestamp.from(offsetDateTime.toInstant());
 
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("memberId", memberId);
@@ -423,14 +431,33 @@ public class SpotController {
 
         int result = 0;
         if ("출근".equals(type)) {
-            result = spotService.updateWorkingTime(paramMap);
+            int status = 1;
+            paramMap.put("status", status);
+            result = spotService.insertWorkingTime(paramMap);
         } else if ("퇴근".equals(type)) {
+            int status = 2;
+            paramMap.put("status", status);
             result = spotService.updateLeaveTime(paramMap);
         }
-
         Map<String, Object> response = new HashMap<>();
-        response.put("result", result == 1 ? "success" : "fail");
+        response.put("status", result == 1 ? "success" : "fail");
         return response;
+        }
+        //근태관리 - 출퇴근 상태 가져오기
+        @GetMapping("/spot_attendance/getStatus")
+        @ResponseBody
+        public Map<String, Object> getAttendanceStatus(@RequestParam("memberId") String memberId) {
+            Map<String, Object> response = new HashMap<>();
+
+            int status = spotService.getAttendanceStatus(memberId);
+            if(status == 1) {
+                response.put("status", "출근");
+            } else if(status == 2) {
+                response.put("status","퇴근");
+            } else {
+                response.put("status","none");
+            }
+            return response;
         }
 
         //매출 집계 - 검색
@@ -446,8 +473,8 @@ public class SpotController {
                 return "redirect:/spot_sales?startMonth=" + thisMonth + "&endMonth=" + thisMonth;
             }
 
-            Member loginUser = (Member) session.getAttribute("loginUser");
-            int storeNo = loginUser.getStoreNo();
+            Member loginMember = (Member) session.getAttribute("loginMember");
+            int storeNo = loginMember.getStoreNo();
 
             LocalDate startDate = LocalDate.parse(startMonth + "-01");
             LocalDate endDate = YearMonth.parse(endMonth).plusMonths(1).atDay(1); // 다음 달 1일
@@ -457,7 +484,7 @@ public class SpotController {
             model.addAttribute("list", result);
             model.addAttribute("startMonth", startMonth);
             model.addAttribute("endMonth", endMonth);
-            System.out.println("로그인 유저: " + loginUser);
+            System.out.println("로그인 유저: " + loginMember);
             System.out.println("조회기간: " + startDate + " ~ " + endDate.minusDays(1)); // 확인용 출력
             System.out.println("조회된 매출 데이터 건수: " + result.size());
 
@@ -468,9 +495,63 @@ public class SpotController {
         @GetMapping("/spot_sales/detail")
         @ResponseBody
         public List<Circulation> getDetail(@RequestParam("date") String date, HttpSession session) {
-            Member loginUser = (Member) session.getAttribute("loginUser");
-            int storeNo = loginUser.getStoreNo();
+            Member loginMember = (Member) session.getAttribute("loginMember");
+            int storeNo = loginMember.getStoreNo();
             return spotService.getDetailsByDate(date, storeNo);
+        }
+
+        //매출집계 - 년도별 초기 로딩
+        @GetMapping("/spot_salesYear")
+        public String spotSalesPage(Model model, HttpSession session) {
+            Member loginMember = (Member) session.getAttribute("loginMember");
+            int storeNo = loginMember.getStoreNo();
+            String year = String.valueOf(LocalDate.now().getYear());
+
+            List<Circulation> monthList = new ArrayList<>();
+            for (int i = 1; i <= 12; i++) {
+                Circulation c = new Circulation();
+                c.setMonth(String.valueOf(i));
+                c.setTotalInput(0);
+                c.setTotalSale(0);
+                c.setTotalMargin(0);
+                monthList.add(c);
+            }
+
+            // 실제 데이터 덮어쓰기
+            List<Circulation> realData = spotService.getDetailsByDate(year, storeNo);
+            for (Circulation real : realData) {
+                int index = Integer.parseInt(real.getMonth()) - 1;
+                monthList.set(index, real);
+            }
+
+            model.addAttribute("yearCurrent", year);
+            model.addAttribute("circulationList", monthList);
+            return "spot/spotSalesYear";
+        }
+        //년매출 집계 - 선택시
+        @GetMapping("/spot_sales/year")
+        @ResponseBody
+        public List<Circulation> spotSales_year(@RequestParam("year") String year, HttpSession session) {
+            Member loginMember = (Member) session.getAttribute("loginMember");
+            int storeNo = loginMember.getStoreNo();
+
+            List<Circulation> monthList = new ArrayList<>();
+            for (int i = 1; i <= 12; i++) {
+                Circulation c = new Circulation();
+                c.setMonth(String.valueOf(i));
+                c.setTotalInput(0);
+                c.setTotalSale(0);
+                c.setTotalMargin(0);
+                monthList.add(c);
+            }
+
+            // 실제 데이터 덮어쓰기
+            List<Circulation> realData = spotService.getDetailsByDate(year, storeNo);
+            for (Circulation real : realData) {
+                int index = Integer.parseInt(real.getMonth()) - 1;
+                monthList.set(index, real);
+            }
+            return monthList;
         }
 
 

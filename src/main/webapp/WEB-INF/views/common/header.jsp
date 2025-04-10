@@ -377,7 +377,7 @@
                 <li><a href="spot_output"><img src="/resources/menubar_icons/출고 아이콘.png"> 출고</a></li>
                 <li><a href="spot_expiration"><img src="/resources/menubar_icons/유통기한 아이콘.png"> 유통기한 관리</a></li>
                 <li><a href="spot_inventory"><img src="/resources/menubar_icons/재고 아이콘.png"> 재고</a></li>
-                <li><a href="spot_sales"><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
+                <li><a href="spot_salesYear"><img src="/resources/menubar_icons/매출집계 아이콘.png"> 매출 집계</a></li>
                 <%--              <li><a>폐기 상품</a></li>--%>
                 <li><a href="spot_product"><img src="/resources/menubar_icons/전체 상품목록.png"> 전체 상품 목록</a></li>
               </ul>

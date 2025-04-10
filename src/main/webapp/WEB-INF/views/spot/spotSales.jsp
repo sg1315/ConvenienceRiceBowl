@@ -174,7 +174,6 @@
     #modal-body {
       height: 80%;
       padding: 20px 30px 10px 30px;
-      overflow-y: auto;
     }
     #modal-body-table {
       width: 100%;
@@ -404,7 +403,6 @@
       const inputPrice = parseInt(row.querySelector("td:nth-child(2)")?.innerText.replace(/,/g, "") || "0");
       const salePrice = parseInt(row.querySelector("td:nth-child(3)")?.innerText.replace(/,/g, "") || "0");
 
-
       fetch("/spot_sales/detail?date=" + encodeURIComponent(date))
               .then(res => res.json())
               .then(data => {
@@ -461,8 +459,6 @@
                 });
       });
     });
-
-
   });
 </script>
 

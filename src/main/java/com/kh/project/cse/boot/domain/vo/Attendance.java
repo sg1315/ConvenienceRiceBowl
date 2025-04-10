@@ -15,4 +15,5 @@ public class Attendance {
     private Date workingTime;
     private Date workoutTime;
     private Member member;
+    private String status;
 }

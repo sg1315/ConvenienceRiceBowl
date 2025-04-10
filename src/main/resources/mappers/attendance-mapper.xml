@@ -7,6 +7,7 @@
         <id column="ATTENDANCE_NO" property="attendanceNo"/>
         <result column="WORKING_TIME" property="workingTime"/>
         <result column="WORKOUT_TIME" property="workoutTime"/>
+        <result column="STATUS" property="status"/>
 
         <association property="member" javaType="Member">
             <id column="M_MEMBER_NO" property="memberNo"/>
@@ -31,7 +32,43 @@
         M.MEMBER_STATUS
         FROM ATTENDANCE A
         JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
+        ORDER BY A.WORKING_TIME DESC
     </select>
+    <!--근태관리 - 출근 버튼 클릭시 상태확인-->
+    <select id="getAttendanceStatus" resultType="Integer">
+        SELECT *
+        FROM (
+            SELECT STATUS
+            FROM (
+            SELECT STATUS
+            FROM ATTENDANCE A
+            JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
+            WHERE M.MEMBER_ID = #{memberId}
+            ORDER BY ATTENDANCE_NO DESC
+            )
+        )
+        WHERE ROWNUM = 1
+
+
+    </select>
+    <!--근태관리 - 출근 버튼 클릭시-->
+    <insert id="insertWorkingTime" parameterType="map">
+        INSERT INTO ATTENDANCE (ATTENDANCE_NO, MEMBER_NO, WORKING_TIME,STATUS)
+        VALUES (
+        SEQ_ATNO.NEXTVAL,
+        (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId}),
+        #{time},
+        #{status}
+        )
+    </insert>
+    <!--근태관리 - 퇴근 버튼 클릭시-->
+    <update id="updateWorkLeaveBtnTime" parameterType="map">
+        UPDATE ATTENDANCE
+        SET WORKOUT_TIME = #{time},STATUS = #{status}
+        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
+            AND STATUS = 1
+    </update>
+
     <!--근태관리 - 출퇴근 시간 업데이트-->
     <update id="updateWorkTime" parameterType="attendance">
         UPDATE ATTENDANCE
@@ -44,18 +81,6 @@
             </if>
         </set>
         WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{member.memberId})
-    </update>
-    <!--근태관리 - 출근 버튼 클릭시-->
-    <update id="updateWorkingBtnTime" parameterType="map">
-        UPDATE ATTENDANCE
-        SET WORKING_TIME = #{time}
-        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
-    </update>
-    <!--근태관리 - 퇴근 버튼 클릭시-->
-    <update id="updateWorkLeaveBtnTime" parameterType="map">
-        UPDATE ATTENDANCE
-        SET WORKOUT_TIME = #{time}
-        WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{memberId})
     </update>
 
 

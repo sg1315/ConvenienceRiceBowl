@@ -192,15 +192,88 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 </div>
             </div>
             <div id="top-right1">
-                <c:choose>
-                    <c:when test="${todayAttendance.workingTime == null}">
-                        <button class="gowork-btn" onclick="changebtn(this)" data-type="출근">출근</button>
-                    </c:when>
-                    <c:when test="${todayAttendance.workoutTime == null}">
-                        <button class="gohome-btn" onclick="changebtn(this)" data-type="퇴근">퇴근</button>
-                    </c:when>
-                </c:choose>
+                <button id="toggleBtn" class="gowork-btn">출근</button>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const btn = document.getElementById("toggleBtn");
+                    const memberId = '${loginMember.memberId}';
+                    console.log(memberId);
+                    let currentStatus = null;
+                    fetch("/spot_attendance/getStatus?memberId=" + memberId)
+                        .then(response => response.json())
+                        .then(data => {
+                            currentStatus = data.status;
+                            if (currentStatus === '출근') {
+                                btn.textContent = '퇴근';
+                                btn.classList.remove('gowork-btn');
+                                btn.classList.add('gohome-btn');
+                            } else {
+                                btn.textContent = '출근';
+                                btn.classList.remove('gohome-btn');
+                                btn.classList.add('gowork-btn');
+                            }
+                        })
+                        .catch(error => console.error('상태 가져오기 오류', error));
+
+                    // 버튼 클릭 시 출근/퇴근 상태 변경
+                    btn.addEventListener("click", function () {
+                        let type = btn.textContent.trim() === '출근' ? '출근' : '퇴근';
+                        let time = new Date().toLocaleString('en-US', { timeZone: 'Asia/Seoul' });
+                        let isoTime = new Date(time).toISOString();
+
+                        const requestData = {
+                            memberId: memberId,
+                            time: isoTime,
+                            type: type
+                        };
+
+                        btn.disabled = true;
+
+                        fetch(`/spot_attendance/updateTime`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(requestData)
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                btn.disabled = false;
+                                if (data.status === 'success') {
+                                    // 상태에 따른 버튼 텍스트 및 스타일 변경
+                                    if (type === '출근') {
+                                        btn.textContent = '퇴근';
+                                        btn.classList.remove('gowork-btn');
+                                        btn.classList.add("gohome-btn");
+                                    } else {
+                                        btn.textContent = '출근';
+                                        btn.classList.remove('gohome-btn');
+                                        btn.classList.add("gowork-btn");
+                                    }
+
+                                    // 출근 후 최신 데이터로 리스트 갱신
+                                    refreshAttendanceList();
+                                } else {
+                                    btn.disabled = false;
+                                    console.error("출근/퇴근 저장 실패");
+                                }
+                            })
+                            .catch(error => console.error('에러발생', error));
+                    });
+                });
+                function refreshAttendanceList() {
+                    fetch('/spot_attendance/refresh')
+                        .then(response => response.text())
+                        .then(data => {
+                            // 페이지에서 attendanceList 갱신 부분
+                            const tbody = document.querySelector("table#table1 tbody");
+                            tbody.innerHTML = data;
+                        })
+                        .catch(error => console.error('attendanceList 갱신 실패', error));
+                }
+            </script>
+
 
         </div>
         <div id="main">
@@ -228,7 +301,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                         <th>&nbsp;퇴근시간</th>
                     </tr>
                     </thead>
-
+                    <fragment name="attendanceTable">
                     <tbody>
                     <c:forEach var="attendance" items="${attendanceList}">
                         <tr data-residentno="${attendance.member.residentNo}" data-member-id="${attendance.member.memberId}">
@@ -281,6 +354,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                         </tr>
                     </c:forEach>
                     </tbody>
+                    </fragment>
                 </table>
             </div>
 
@@ -351,36 +425,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          const rows = document.querySelectorAll('#table1 tbody tr');
-
-          rows.forEach((row) => {
-            row.classList.add('table-row');
-
-            row.addEventListener('click', function () {
-                const rank = this.children[0].innerText;
-                const id = this.children[1].innerText;
-                const name = this.children[2].innerText;
-                const working_time = this.querySelector('.data-working-time').value;
-                const workout_time = this.querySelector('.data-workout-time').value;
-
-                document.getElementById('modal-rank').innerText = rank;
-                document.getElementById('modal-id').innerText = id;
-                document.getElementById('modal-name').innerText = name;
-
-                document.getElementById('modal-working_time').value = working_time;
-                document.getElementById('modal-workout_time').value = workout_time;
-
-                document.getElementById('modal-member_id').value = this.dataset.memberId;
-
-                const modal = new bootstrap.Modal(
-                    document.getElementById('staticBackdrop')
-                );
-                modal.show();
-            });
-          });
-        });
-
         const loginMemberId = "<c:out value='${loginMember.memberId}' default='' />";
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -411,53 +455,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 });
             });
         });
-
-        function changebtn(this_btn) {
-            if (!loginMemberId) {
-                alert("로그인 정보가 없습니다.");
-                return;
-            }
-
-            const now = new Date();
-            const kstOffset = 9 * 60 * 60 * 1000;
-            const kstTime = new Date(now.getTime() + kstOffset);
-            const updateTime = kstTime.toISOString().slice(0, 16);
-
-            const type = this_btn.dataset.type;
-            const data = { memberId: loginMemberId, time: updateTime, type };
-
-            fetch('/spot_attendance/updateTime', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data)
-            })
-                .then(response => response.json())
-                .then(result => {
-                    if (result && result.result === 'success') {
-                        if (type === "출근") {
-                            this_btn.innerText = "퇴근";
-                            this_btn.dataset.type = "퇴근";
-                            this_btn.classList.remove("gohome-btn");
-                            this_btn.classList.add("gowork-btn");
-                            document.getElementById("working-time").innerText = updateTime.replace("T", " ");
-                            alert("출근 시간이 저장되었습니다.");
-                        } else if (type === "퇴근") {
-                            this_btn.innerText = "출근";
-                            this_btn.dataset.type = "출근";
-                            this_btn.classList.remove("gowork-btn");
-                            this_btn.classList.add("gohome-btn");
-                            this_btn.disabled = true;
-                            document.getElementById("workout-time").innerText = updateTime.replace("T", " ");
-                            alert("퇴근 시간이 저장되었습니다.");
-                        }
-
-                    } else {
-                        alert('시간 저장에 실패했습니다.');
-                    }
-                })
-
-
-        }
 
         document.getElementById('footer-btn-edit').addEventListener('click', function () {
             const memberId = document.getElementById('modal-id').innerText.trim();
