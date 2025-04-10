@@ -31,4 +31,6 @@ public interface StoreMapper {
     int deleteStore(String storeNumber);
 
     int searchStoreListCount(@Param("condition") String condition, @Param("keyword") String keyword);
+
+    ArrayList<String> selectStoreName();
 }
