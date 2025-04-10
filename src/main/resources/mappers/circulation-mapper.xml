@@ -151,6 +151,7 @@
             P.PRODUCT_NAME AS PRODUCT_NAME,
             C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
             (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE,
+            C.INPUT_PRICE,
             C.STATUS
         FROM CIRCULATION C
             LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
@@ -332,7 +333,7 @@
         #{circulation.salePrice},
         #{circulation.circulationAmount},
         DEFAULT,
-    2
+        2
     )
     </insert>
 

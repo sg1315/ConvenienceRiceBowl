@@ -512,7 +512,8 @@
                     "<th class='col-3'>" + "상품명" + "</th>" +
                     "<th class='col-1'>" + "발주수량" + "</th>" +
                     "<th class='col-1'>" + "실입고수량" + "</th>" +
-                    "<th class='col-1'>" + "금액" + "</th>";
+                    "<th class='col-1'>" + "금액" + "</th>" +
+                    "<th class='col-1'>" + "수량 오류" + "</th>";
 
             const inputHead = document.querySelector("#modal-body-table thead");
             inputHead.innerHTML = headStr;
@@ -529,13 +530,33 @@
                           "<td>" + i.categoryName + "</td>" +
                           "<td>" + i.productName + "</td>" +
                           "<td>" + i.circulationAmount + "</td>" +
-                          "<td>" + i.circulationAmount + "</td>" +
-                          "<td>" + i.sumInputPrice.toLocaleString() + "</td>" +
+                          "<td>" +
+                          "<input id='inputAmount' type='number' value='" + i.circulationAmount + "' readonly />" +
+                          "</td>" +
+                          "<td><span class='sum-price'>" + i.sumInputPrice.toLocaleString() + "</span></td>" +
+                          "<td>" +
+                          "<input type='checkbox' class='edit-check''" + "'/>" +
+                          "</td>" +
                           "</tr>";
                 }
 
                 const inputDetail = document.querySelector("#modal-body-table tbody");
                 inputDetail.innerHTML = str;
+
+                document.querySelectorAll('.edit-check').forEach(checkbox => {
+                  checkbox.addEventListener('change', function () {
+                    const row = this.closest('tr');
+                    const input = row.querySelector('#inputAmount');
+
+                    if (this.checked) {
+                      input.removeAttribute('readonly');
+                      input.focus();
+                    } else {
+                      input.setAttribute('readonly', true);
+                    }
+                  });
+                });
+
 
                 const inputInfo = document.getElementById("input-info");
                 const inputDate = data[0]?.circulationDate || "날짜 없음";
@@ -548,6 +569,8 @@
                   inputButton.style.display = "inline-block";
 
                 updateOrderDetailSummary();
+
+
               },
               error: function (xhr, status, error) {
                 console.error('AJAX 요청 실패:', error);
@@ -564,7 +587,8 @@
               $('#input_list_modal tbody tr').each(function () {
                 const td = $(this).find('td');
                 kindCount += 1;
-                const quantity = parseInt(td[4]?.textContent?.trim()) || 0;
+                const input = td[4]?.querySelector('input');  // td[4]는 <td> 요소
+                const quantity = parseInt(input?.value) || 0;
                 const priceText = td[5]?.textContent?.trim().replace(/,/g, '') || "0";
                 const price = parseInt(priceText);
 
@@ -647,6 +671,47 @@
               $('#input-total-quantity').text(totalQuantity);
               $('#input-total-price').text(totalPrice.toLocaleString());
             }
+          }
+        });
+      });
+
+      document.getElementById('insert-input-btn').addEventListener('click', function () {
+        const rows = document.querySelectorAll('#modal-body-table tbody tr');
+        const resultData = [];
+
+        rows.forEach((row) => {
+          const tds = row.querySelectorAll('td');
+          const realInput = row.querySelector('.real-input');
+
+          const productNo = tds[0].textContent.trim();
+          const categoryName = tds[1].textContent.trim();
+          const productName = tds[2].textContent.trim();
+          const circulationAmount = parseInt(realInput.value) || 0;
+          const inputPrice = parseInt(realInput.dataset.price);
+          const sumInputPrice = inputPrice * circulationAmount;
+
+          resultData.push({
+            productNo,
+            categoryName,
+            productName,
+            circulationAmount,
+            inputPrice,
+            sumInputPrice
+          });
+        });
+
+        // 전송 (예시)
+        $.ajax({
+          url: '/spot_order/insertInput',
+          method: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ setNo: setNo, data: resultData }),
+          success: function (res) {
+            alert('입고 등록 완료');
+            // 모달 닫기, 리로드 등
+          },
+          error: function (xhr, status, error) {
+            alert('등록 실패: ' + error);
           }
         });
       });
