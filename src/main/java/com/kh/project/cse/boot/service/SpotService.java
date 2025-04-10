@@ -26,8 +26,11 @@ public interface SpotService {
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
     //근태관리 - 출퇴근시간 업데이트
-    int updateWorkingTime(Map<String, Object> paramMap); //출근
+    int insertWorkingTime(Map<String, Object> paramMap); //출근
     int updateLeaveTime(Map<String, Object> paramMap); //퇴근
+
+    //근태관리 - 출퇴근 상태 가져오기
+    int getAttendanceStatus(String memberId);
 
     //상품 전체 목록 수
     int ProductListCount();
@@ -93,4 +96,5 @@ public interface SpotService {
 
 
     int spotSearchProductCount(String inputcheck, String condition, String keyword);
+
 }

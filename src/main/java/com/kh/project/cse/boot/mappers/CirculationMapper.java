@@ -57,10 +57,14 @@ public interface CirculationMapper {
                                        @Param("startDate") LocalDate startDate,
                                        @Param("endDate") LocalDate endDate);
     //매출집계 - 모달
-    List<Circulation> getDetailsByDate(String date, int storeNo);
+    List<Circulation> getDetailsByDate(@Param("date") String date, int storeNo);
+    //매출집계 - 년도검색
+    List<Circulation> getDetailsByYear(@Param("year") String year, int storeNo);
 
     //유통기한폐기
     int insertExpiry(@Param("storeNo") int storeNo, @Param("productNo") int productNo, @Param("inventoryCount") int inventoryCount);
 
     int posCirculationInsert(Circulation circulation);
+
+
 }

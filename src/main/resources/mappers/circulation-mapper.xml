@@ -33,6 +33,13 @@
         <result column="SALE_PRICE" property="salePrice"/>
         <result column="CIRCULATION_AMOUNT" property="circulationAmount"/>
     </resultMap>
+    <!--년도별 매출 전용-->
+    <resultMap id="monthlySalesResultMap" type="Circulation">
+        <result column="MONTH" property="month"/>
+        <result column="TOTAL_INPUT" property="totalInput"/>
+        <result column="TOTAL_SALE" property="totalSale"/>
+        <result column="TOTAL_MARGIN" property="totalMargin"/>
+    </resultMap>
 
 
     <insert id="insertOrder">
@@ -324,7 +331,23 @@
         WHERE c.STORE_NO = #{storeNo}
         AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
     </select>
-
+    <!-- 매출집게 - 년도-->
+    <select id="getDetailsByYear" resultMap="monthlySalesResultMap">
+        SELECT
+        TO_CHAR(CIRCULATION_DATE, 'MM') AS MONTH,
+        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS TOTAL_INPUT,
+        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS TOTAL_SALE,
+        SUM((SALE_PRICE - INPUT_PRICE) * CIRCULATION_AMOUNT) AS TOTAL_MARGIN
+        FROM
+        CIRCULATION
+        WHERE
+        TO_CHAR(CIRCULATION_DATE, 'YYYY') = #{year} -- 예: '2025'
+        AND STORE_NO = #{storeNo}
+        GROUP BY
+        TO_CHAR(CIRCULATION_DATE, 'MM')
+        ORDER BY
+        MONTH ASC
+    </select>
     <!--본사 승인 미승인-->
     <update id="updateheadorder">
         UPDATE CIRCULATION

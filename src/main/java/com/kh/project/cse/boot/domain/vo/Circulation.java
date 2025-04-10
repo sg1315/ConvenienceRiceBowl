@@ -33,6 +33,10 @@ public class Circulation {
     private String minuteGroup;
     private int totalAmount;
     private int totalInputPrice;
-
+    //년도별 집계 가져오기
+    private String month;
+    private int totalInput;
+    private int totalSale;
+    private int totalMargin;
 
 }
