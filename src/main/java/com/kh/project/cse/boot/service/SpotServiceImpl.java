@@ -1,12 +1,8 @@
 package com.kh.project.cse.boot.service;
 
 import com.kh.project.cse.boot.domain.vo.*;
-import com.kh.project.cse.boot.mappers.CirculationMapper;
-import com.kh.project.cse.boot.mappers.InventoryMapper;
-import com.kh.project.cse.boot.mappers.ProductMapper;
+import com.kh.project.cse.boot.mappers.*;
 import org.apache.ibatis.session.RowBounds;
-import com.kh.project.cse.boot.mappers.AttendanceMapper;
-import com.kh.project.cse.boot.mappers.ExpiryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +22,7 @@ public class SpotServiceImpl implements SpotService {
     private final CirculationMapper circulationMapper;
     private final ProductMapper productMapper;
     private final InventoryMapper inventoryMapper;
+    private final AnnouncementMapper announcementMapper;
 
     @Override
     public int selectExpiryCount(int storeNo) {
@@ -192,6 +189,17 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public int spotSearchProductCount(String inputcheck, String condition, String keyword) {
         return productMapper.spotSearchProductCount(inputcheck,condition,keyword);
+    }
+    @Override
+    public int selectAnnouncementCount() {
+        return announcementMapper.selectAnnouncementCount();
+    }
+
+    @Override
+    public ArrayList<Announcement> selectAnnouncementlist(PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return announcementMapper.selectAnnouncementlist(rowBounds);
     }
 
 

@@ -147,7 +147,15 @@ public class SpotController {
 
     //공지사항
     @RequestMapping("/spot_notice")
-    public String spot_notice() {
+    public String spot_notice(@RequestParam(defaultValue = "1") int cpage, Model model) {
+
+        int announcementCount = headService.selectAnnouncementCount();
+
+        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 10);
+        ArrayList<Announcement> list = headService.selectAnnouncementlist(pi);
+
+        model.addAttribute("list", list);
+        model.addAttribute("pi", pi);
         return "spot/spotAnnouncement";
     }
 
