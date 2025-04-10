@@ -20,30 +20,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
         justify-content: space-between;
       }
       #top-left {
-        background-color: #d9d9d9;
         width: 55%;
       }
       #top-left1 {
-        background-color: white;
         display: flex;
         align-content: center;
         align-items: center;
         width: 100%;
-        border-bottom-right-radius: 20px;
         padding-bottom: 10px;
       }
-
-      #top-right1 {
-        background-color: #d9d9d9;
-        width: 45%;
-        display: flex;
-        justify-content: right;
-        align-items: center;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
-      }
-
-      
       #top-left p {
         padding-left: 15px;
       }
@@ -51,9 +36,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         background-color: #d9d9d9;
         width: 100%;
         height: 90%;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-radius: 20px;
         padding: 50px 50px 100px;
       }
       #main-in {
@@ -98,69 +81,25 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-weight: bold;
       }
 
-      /*
-        -----------------------
-        모달창
-         */
-      .modal-header {
-        display: flex;
-        justify-content: right !important;
-        background-color: #d9d9d9;
-      }
 
-      .modal-content {
-        height: 90%;
-      }
 
-      .modal-body {
-        padding: 10px 50px !important;
-      }
 
-      .modal-footer {
-        background-color: #d9d9d9;
-      }
-
-      #x_img {
-        width: 15px;
-        height: 20px;
-      }
-
-      #btn-close-modal {
-        border: none;
-        background: none;
-      }
-
-      #modal-body-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid black;
-        height: 5%;
-        font-weight: bold;
-      }
-
-      #modal-body-top input {
-        height: 90%;
-        width: 90%;
-      }
-
-      #textbox {
-        width: 100%;
-        height: 95%;
-      }
 
       /*
         -----------------------
         내용모달창
          */
+      #modal-content {
+        height: 90%;
+      }
 
       .detail-modal-header {
         height: 5%;
-        background-color: #d9d9d9;
+        background-color: #D9D9D9;
       }
-
       .modal-body {
-        height: 40%;
+        max-height: 92%;
+        padding: 10px 50px !important;
       }
 
       #detail-x_img {
@@ -184,44 +123,34 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
 
       #detail-modal-body-top {
-        height: 20%;
-        /* 퍼센트수정 */
+        height: 8%;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 3px solid #d9d9d9;
-      }
-      /* 내용 크기 수정 */
-      #detail-modal-body-top-title {
-        font-size: 25px;
-        font-weight: bold;
-      }
-      #detail-modal-body-top-content {
-        padding-top: 5px;
-        font-size: 15px;
+        border-bottom: 3px solid #D9D9D9;
       }
 
-      
-
-      #comment-btn-div {
-        border-bottom: 3px solid #b4b4b4;
-        border-top: 3px solid #b4b4b4;
-        height: 8%;
+      #comment-btn {
+        border-bottom: 3px solid #B4B4B4;
+        border-top: 3px solid #B4B4B4;
+        height: 5%;
+        background-color: #D9D9D9;
         display: flex;
         align-items: center;
-        background-color: #d9d9d9;
+        padding-left: 30px;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
       }
-      .comment-btn{
-        margin-left: 10px;
-      }
-      .comment-div{
-        margin-top: 5px;
+      #comment-btn button{
+        width: 7%;
+        height: 90%;
       }
 
       #comment {
         height: 30%;
         width: 100%;
-        background-color: #d9d9d9;
+        background-color: #D9D9D9;
         display: flex;
         justify-content: center;
       }
@@ -230,9 +159,21 @@ contentType="text/html;charset=UTF-8" language="java" %>
         width: 50%;
       }
 
+      #comment-detail-input{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding-top: 10px;
+      }
+
+      #comment-detail-input > button{
+        height: 100%;
+      }
+
       #comment-detail input {
-        width: 82%;
-        /* 퍼센트수정 */
+        border: 2px solid black;
+        border-radius: 5px;
+        width: 90%;
       }
 
       #comment-table {
@@ -242,20 +183,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
 
       #comment-table td {
-        border-bottom: 3px solid #b4b4b4;
+        border-bottom: 3px solid #B4B4B4;
         padding-bottom: 5px;
-      }
-
-      #modal-footer {
-        border-top: 3px solid #b4b4b4;
-        height: 8%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      #modal-pageing {
-        margin: 0;
       }
 
       #modal-pageing img {
@@ -269,18 +198,31 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #modal-pageing button {
         width: 30px;
         height: 30px;
-        border: #b4b4b4 solid 3px;
+        border: #B4B4B4 solid 3px;
         background: white;
-        color: #b4b4b4;
+        color: #B4B4B4;
         font-weight: bold;
         margin: 0px;
         padding: 0px;
       }
 
       #modal-pageing button:hover {
-        border: #3c3c3c solid 3px;
-        color: #3c3c3c;
+        border: #3C3C3C solid 3px;
+        color: #3C3C3C;
         font-weight: bold;
+      }
+      #comment-table-box {
+        max-height: 180px; /* 높이는 원하는 대로 조정 가능 */
+        overflow-y: auto;
+      }
+
+      #comment-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      #comment-table td {
+        padding: 8px;
       }
     </style>
   </head>
@@ -317,40 +259,35 @@ contentType="text/html;charset=UTF-8" language="java" %>
             </thead>
 
             <tbody>
-              <tr>
-                <td>1</td>
-                <td>3월26일(금) 업데이트 점검 안내</td>
-                <td>abcd123</td>
-                <td>2025-03-25</td>
-              </tr>
-                <tr>
-                  <td>2</td>
-                  <td>3월26일(금) 업데이트 점검 안내</td>
-                  <td>abcd123</td>
-                  <td>2025-03-25</td>
+              <c:forEach var="A" items="${list}">
+                <tr data-ano="${A.announcementNo}">
+                  <td>${A.announcementNo}</td>
+                  <td>${A.announcementTitle}</td>
+                  <td>${A.storeName}</td>
+                  <td>${A.announcementDate}</td>
                 </tr>
-                <tr>
-                  <td>3</td>
-                  <td>3월26일(금) 업데이트 점검 안내</td>
-                  <td>abcd123</td>
-                  <td>2025-03-25</td>
-                </tr>
+              </c:forEach>
             </tbody>
           </table>
         </div>
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-          <button type="button" class="btn btn-outline-secondary">1</button>
-          <button type="button" class="btn btn-outline-secondary">2</button>
-          <button type="button" class="btn btn-outline-secondary">3</button>
-          <button type="button" class="btn btn-outline-secondary">4</button>
-          <button type="button" class="btn btn-outline-secondary">5</button>
-          <button type="button" class="btn btn-outline-secondary">6</button>
-          <button type="button" class="btn btn-outline-secondary">7</button>
-          <button type="button" class="btn btn-outline-secondary">8</button>
-          <button type="button" class="btn btn-outline-secondary">9</button>
-          <button type="button" class="btn btn-outline-secondary">10</button>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <c:if test="${pi.startPage > 1}">
+            <a href="spot_notice&cpage=${pi.startPage - 1}">
+              <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+          </c:if>
+          <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+            <button type="button"
+                    class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                    onclick="location.href='/spot_notice?cpage=${p}'">
+                ${p}
+            </button>
+          </c:forEach>
+          <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="spot_notice&cpage=${pi.endPage + 1}">
+              <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+          </c:if>
         </div>
       </div>
 
@@ -361,202 +298,154 @@ contentType="text/html;charset=UTF-8" language="java" %>
         crossorigin="anonymous"
       ></script>
 
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-                id="btn-close-modal"
-              >
-                <img src="/resources/common/공통_Icon.png" id="x_img" />
-              </button>
-            </div>
-            <div class="modal-body">
-              <!--모달 내용-->
-              <div id="modal-body-top">
-                <input type="text" placeholder="제목을 입력하세요" />
-                <p>2025.04.01</p>
-              </div>
-              <textarea
-                id="textbox"
-                placeholder="내용을 입력하세요(1000자 이하)"
-              >
-              </textarea>
-            </div>
-            <div class="modal-footer">
-              <button>완료</button>
-            </div>
-          </div>
-        </div>
-      </div>
+
       <!-- detail-Modal -->
-      <div
-        class="modal fade"
-        id="detail-staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
+      <div class="modal fade" id="detail-staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+           aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
-          <div class="modal-content">
+          <div class="modal-content" id="modal-content">
             <div class="detail-modal-header">
               <div id="detail-modal-header">
-                <p>2025-03-20/09:21:08</p>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                  id="detail-btn-close-modal"
-                >
-                  <img
-                    src="/resources/common/공통_Icon.png"
-                    id="detail-x_img"
-                  />
+                <p id="detail-modal-date"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="detail-btn-close-modal">
+                  <img src="/resources/common/공통_Icon.png" id="detail-x_img">
                 </button>
               </div>
             </div>
 
             <div class="modal-body" id="detail-modal-body">
               <div id="detail-modal-body-top">
-                <p id="detail-modal-body-top-title">3월28일 업데이트</p>
+                <p id="detail-modal-title"></p>
+                <p id="detail-modal-ano" style="display: none"></p>
               </div>
               <div>
-                <p id="detail-modal-body-top-content">
-                  3월 28일(화) v7.1업데이트 점검에 대해 안내드립니다.
-                  지점장님들은 숙지하시어 매장운영에 차질없이 준비하시길
-                  바랍니다.
-                  <br />
-                  -----------------------------------------
-                  <br />
-                  일시 : 2025년 03월 25일(화) 10:00 ~ 11:00
-                  <br />
-                  (1시간)
-                  <br />
-                  내용
-                  <br />
-                  - ERP 안정화
-                  <br />
-                  - 신규상품 추가
-                </p>
+                <p id="detail-modal-detail"></p>
               </div>
             </div>
-            <div id="comment-btn-div">
-              <button class="comment-btn">댓글</button>
+            <div id="comment-btn">
+              <button class="white-btn-border" onclick="replyon()">∧댓글</button>
             </div>
-            <div id="comment">
+            <div id="comment" style="display: none;">
               <div id="comment-detail">
-                <div class="comment-div">
-                  <input type="text" class="comment-input" />
-                  <button class="comment-button-submit">작성</button>
+                <div id="comment-detail-input">
+                  <input class="search-input" type="text" id="reply-input">
+                  <button class="gray-btn-border" onclick="insertReply()">작성</button>
                 </div>
                 <div id="comment-table-box">
                   <table id="comment-table">
-                    <tr>
-                      <th>강남점 25-03-20/09:31:20</th>
-                    </tr>
-                    <tr>
-                      <td>확인</td>
-                    </tr>
-                    <tr>
-                      <th>잠실점 25-03-20/09:31:20</th>
-                    </tr>
-                    <tr>
-                      <td>확인</td>
-                    </tr>
                   </table>
                 </div>
               </div>
             </div>
 
-            <div class="modal-footer" id="modal-footer">
-              <div id="modal-pageing">
-                <img src="/resources/common/공통_페이징바화살표.png" />
-                <button type="button" class="btn btn-outline-secondary">
-                  1
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  2
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  3
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  4
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  5
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  6
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  7
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  8
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  9
-                </button>
-                <button type="button" class="btn btn-outline-secondary">
-                  10
-                </button>
-                <img src="/resources/common/공통_페이징바화살표.png" />
-              </div>
-            </div>
           </div>
         </div>
       </div>
-
-      <script>
-        // 테이블의 모든 행에 클릭 이벤트 추가
-        document.querySelectorAll('#table1 tbody tr').forEach((row) => {
-          row.addEventListener('click', function () {
-            // 모달을 띄우기 위한 코드
-            var myModal = new bootstrap.Modal(
-              document.getElementById('detail-staticBackdrop')
-            );
-            myModal.show(); // 모달 열기
-          });
-        });
-
-        document
-          .querySelectorAll('#detail-modal-body button')
-          .forEach((button) => {
-            if (button.textContent === '수정') {
-              button.addEventListener('click', function () {
-                // 기존 모달을 숨기기
-                var myDetailModal = bootstrap.Modal.getInstance(
-                  document.getElementById('detail-staticBackdrop')
-                );
-                myDetailModal.hide(); // 기존 모달 숨기기
-
-                // 새로운 모달 띄우기 (새로운 모달 ID와 내용으로 변경 가능)
-                var newModal = new bootstrap.Modal(
-                  document.getElementById('modify-staticBackdrop')
-                );
-                newModal.show(); // 새로운 모달 열기
-              });
-            }
-          });
-      </script>
       <!--end point-->
     </div>
+    <script>
+      document.querySelectorAll('#table1 tbody tr').forEach(row => {
+        row.addEventListener('click', function () {
+          const ano = this.getAttribute('data-ano');
+          document.querySelector('#comment').style.display = 'none';
+          document.querySelector('#comment-btn').style.position = 'absolute';
+
+          // 기존의 fetch를 jQuery AJAX로 변경
+          $.ajax({
+            url: '/getAnnouncementDetail?ano=' + ano, // 서버에서 데이터를 가져오는 URL
+            method: 'GET', // HTTP 요청 메소드
+            dataType: 'json', // 응답 데이터 타입 (JSON)
+            success: function (data) {
+              // 데이터를 모달에 뿌리기
+              document.querySelector("#detail-modal-date").textContent = data.announcementDate;
+              document.querySelector('#detail-modal-title').textContent = data.announcementTitle;
+              document.querySelector('#detail-modal-detail').textContent = data.announcementDetail;
+              document.querySelector('#detail-modal-ano').textContent = ano;
+
+              // 모달 띄우기
+              const myModal = new bootstrap.Modal(document.getElementById('detail-staticBackdrop'));
+              myModal.show();
+            },
+            error: function (xhr, status, error) {
+              console.error('AJAX 요청 실패:', error);
+            }
+          });
+        });
+      });
+
+      function replyon() {
+        const comment= document.querySelector('#comment-btn');
+        const reply = document.querySelector('#comment');
+        const ano = document.querySelector('#detail-modal-ano').innerHTML;
+        if(reply.style.display === 'none') {
+          reply.style.display = 'flex';
+          comment.style.position = "relative";
+          getReplyList(ano, function(data){
+            drawReplyList(data);
+          });
+        } else{
+          reply.style.display = 'none';
+          comment.style.position = 'absolute';
+          comment.style.bottom = '0';
+          comment.style.width = '100%';
+        }
+      }
+
+      function insertReply() {
+        const ano = document.querySelector('#detail-modal-ano').innerHTML;
+        const comment = document.querySelector('#reply-input');
+        $.ajax({
+          url: "insertReply",
+          type: "post",
+          data: {
+            announcementNo: ano,
+            replyContent: comment.value
+          },
+          success: function (res) {
+            if (res === "success") {
+              comment.value = "";
+              // 댓글 등록 후 댓글 리스트 다시 불러오기
+              getReplyList(ano, function (data) {
+                drawReplyList(data);  // 댓글 렌더링
+              });
+            } else {
+              console.log("reply insert 실패");
+            }
+          },
+          error: function () {
+            console.log("reply insert ajax 요청 실패");
+          }
+        });
+      }
+      function getReplyList(announcementNo, callback){
+        $.ajax({
+          url : "replylist",
+          dataType: "json",
+          data : {
+            ano : announcementNo
+          },
+          success: function(replyList){
+            callback(replyList);
+          },
+          error: function(){
+            console.log("댓글 조회 ajax통신 실패");
+          }
+        });
+      }
+      function drawReplyList(replyList){
+
+        let str = "";
+        for(let r of replyList) {
+          str += "<tr>" +
+                  "<td>" + r.storeName + "&nbsp;&nbsp;&nbsp;" +  r.createDate + "</td>" +
+                  "</tr>"+
+                  "<tr>"+ "<td>" + r.replyContent + "</td>" + "</tr>";
+        }
+
+        const replyBody = document.querySelector("#comment-table");
+        replyBody.innerHTML = str;
+      }
+    </script>
   </body>
 </html>

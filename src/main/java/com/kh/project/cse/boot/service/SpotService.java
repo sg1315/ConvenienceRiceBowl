@@ -85,5 +85,11 @@ public interface SpotService {
 
     ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi);
 
+    //공지사항 총수
+    int selectAnnouncementCount();
+
+    //공지사항불러오기
+    ArrayList<Announcement> selectAnnouncementlist(PageInfo pi);
+
 
 }

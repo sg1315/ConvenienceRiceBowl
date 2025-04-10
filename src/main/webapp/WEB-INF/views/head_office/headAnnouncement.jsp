@@ -293,7 +293,7 @@
             font-weight: bold;
         }
         #comment-table-box {
-            max-height: 250px; /* 높이는 원하는 대로 조정 가능 */
+            max-height: 180px; /* 높이는 원하는 대로 조정 가능 */
             overflow-y: auto;
         }
 
