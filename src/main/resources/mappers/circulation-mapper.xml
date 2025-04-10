@@ -37,25 +37,25 @@
 
     <insert id="insertOrder">
         INSERT INTO CIRCULATION (
-            CIRCULATION_NO,
-            STORE_NO,
-            SET_NO,
-            PRODUCT_NO,
-            INPUT_PRICE,
-            SALE_PRICE,
-            CIRCULATION_AMOUNT,
-            CIRCULATION_DATE,
-            STATUS
+                CIRCULATION_NO,
+                STORE_NO,
+                SET_NO,
+                PRODUCT_NO,
+                INPUT_PRICE,
+                SALE_PRICE,
+                CIRCULATION_AMOUNT,
+                CIRCULATION_DATE,
+                STATUS
         ) VALUES (
-            SEQ_CIR.NEXTVAL,
-            #{storeNo},
-            #{setNo},
-            #{circulation.productNo},
-            #{circulation.inputPrice},
-            #{circulation.salePrice},
-            #{circulation.circulationAmount},
-            DEFAULT,
-            1
+                SEQ_CIR.NEXTVAL,
+                #{storeNo},
+                #{setNo},
+                #{circulation.productNo},
+                #{circulation.inputPrice},
+                #{circulation.salePrice},
+                #{circulation.circulationAmount},
+                DEFAULT,
+                1
         )
     </insert>
 
@@ -159,26 +159,186 @@
         WHERE C.SET_NO = #{setNo}
     </select>
 
-    <select id="previousMonthOrder" resultMap="circulationResult">
+    <delete id="cancelOrder">
+    DELETE FROM CIRCULATION
+    WHERE SET_NO = #{setNo} AND STORE_NO = #{storeNo} AND STATUS = 1
+    </delete>
+
+<!--  ==========================================================================================================  -->
+    <select id="inputListCount" resultType="_int">
+        SELECT
+            COUNT(*)
+        FROM (
+            SELECT
+                TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP
+            FROM CIRCULATION
+            WHERE STORE_NO = #{storeNo}
+                AND STATUS IN (2,7)
+                AND NOT EXISTS (
+                SELECT 1
+                FROM CIRCULATION c2
+                WHERE c2.SET_NO = CIRCULATION.SET_NO
+                    AND c2.STORE_NO = CIRCULATION.STORE_NO
+                    AND c2.STATUS = 2
+                    AND CIRCULATION.STATUS = 7
+                )
+            GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
+        )
+    </select>
+
+    <select id="inputList" resultMap="circulationResult">
         SELECT
             TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
             SET_NO,
             SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
             SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
-            STORE_NAME,
             STATUS
-        FROM  CIRCULATION C
-        LEFT JOIN STORE S ON (C.STORE_NO = S.STORE_NO)
-        WHERE STORE_NO = #{storeNo} AND STATUS IN (1,2,5,6,7)
-        AND CIRCULATION_DATE BETWEEN #{start} AND #{end}
-        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS, STORE_NAME
-        ORDER BY SET_NO DESC
+        FROM CIRCULATION
+        WHERE STORE_NO = #{storeNo}
+            AND STATUS IN (2, 7)
+            AND NOT EXISTS (
+                SELECT 1
+                FROM CIRCULATION c2
+                WHERE c2.SET_NO = CIRCULATION.SET_NO
+                    AND c2.STORE_NO = CIRCULATION.STORE_NO
+                    AND c2.STATUS = 2
+                    AND CIRCULATION.STATUS = 7
+            )
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        ORDER BY
+            CASE STATUS
+                WHEN 7 THEN 1
+                WHEN 2 THEN 2
+            END,
+            SET_NO DESC
     </select>
 
-    <delete id="cancelOrder">
-    DELETE FROM CIRCULATION
-    WHERE SET_NO = #{setNo} AND STORE_NO = #{storeNo} AND STATUS = 1
-    </delete>
+    <select id="inputSearchListCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM (
+            SELECT
+                TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+                SET_NO,
+                SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+                SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+                STATUS
+            FROM CIRCULATION
+            WHERE STORE_NO = #{storeNo}
+                AND STATUS IN (2,7)
+                AND NOT EXISTS (
+                    SELECT 1
+                    FROM CIRCULATION c2
+                    WHERE c2.SET_NO = CIRCULATION.SET_NO
+                        AND c2.STORE_NO = CIRCULATION.STORE_NO
+                        AND c2.STATUS = 2
+                        AND CIRCULATION.STATUS = 7
+                )
+            <if test="startDate != null and endDate == null">
+                AND CIRCULATION_DATE &gt;= #{startDate}
+            </if>
+            <if test="endDate != null and startDate == null">
+                AND CIRCULATION_DATE &lt;= #{endDate}
+            </if>
+            <if test="startDate != null and endDate != null">
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            </if>
+            <if test="status != null">
+                AND STATUS = #{status}
+            </if>
+            <if test="setNo != null and setNo != ''">
+                AND SET_NO LIKE '%' || #{setNo} || '%'
+            </if>
+            GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        )
+    </select>
+
+    <select id="inputSearchList" resultMap="circulationResult">
+        SELECT
+            TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP,
+            SET_NO,
+            SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+            SUM(CIRCULATION_AMOUNT * INPUT_PRICE) AS TOTAL_INPUT_PRICE,
+            STATUS
+        FROM CIRCULATION
+        WHERE STORE_NO = #{storeNo}
+            AND STATUS IN (2, 7)
+            AND NOT EXISTS (
+                SELECT 1
+                FROM CIRCULATION c2
+                WHERE c2.SET_NO = CIRCULATION.SET_NO
+                    AND c2.STORE_NO = CIRCULATION.STORE_NO
+                    AND c2.STATUS = 2
+                    AND CIRCULATION.STATUS = 7
+            )
+        <if test="startDate != null and endDate == null">
+            AND CIRCULATION_DATE &gt;= #{startDate}
+        </if>
+        <if test="endDate != null and startDate == null">
+            AND CIRCULATION_DATE &lt;= #{endDate}
+        </if>
+        <if test="startDate != null and endDate != null">
+            AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+        </if>
+        <if test="status != null">
+            AND STATUS = #{status}
+        </if>
+        <if test="setNo != null and setNo != ''">
+            AND SET_NO LIKE '%' || #{setNo} || '%'
+        </if>
+        GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
+        ORDER BY
+            CASE STATUS
+                WHEN 7 THEN 1
+                WHEN 2 THEN 2
+            END,
+            SET_NO DESC
+    </select>
+
+    <select id="inputDetail" resultMap="circulationResult">
+        SELECT
+            C.CIRCULATION_DATE,
+            C.SET_NO,
+            P.PRODUCT_NO AS PRODUCT_NO,
+            Y.CATEGORY_NAME AS CATEGORY_NAME,
+            P.PRODUCT_NAME AS PRODUCT_NAME,
+            C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
+            (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE,
+            C.INPUT_PRICE,
+            C.STATUS
+        FROM CIRCULATION C
+            LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
+            LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
+            LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
+        WHERE C.SET_NO = #{setNo}
+    </select>
+
+    <insert id="insertInput">
+    INSERT INTO CIRCULATION (
+        CIRCULATION_NO,
+        STORE_NO,
+        SET_NO,
+        PRODUCT_NO,
+        INPUT_PRICE,
+        SALE_PRICE,
+        CIRCULATION_AMOUNT,
+        CIRCULATION_DATE,
+        STATUS
+    ) VALUES (
+        SEQ_CIR.NEXTVAL,
+        #{storeNo},
+        #{setNo},
+        #{circulation.productNo},
+        #{circulation.inputPrice},
+        #{circulation.salePrice},
+        #{circulation.circulationAmount},
+        DEFAULT,
+    2
+    )
+    </insert>
+
+
+
+    <!--  ==========================================================================================================  -->
 
     <select id="selectCirculationlist" resultMap="circulationResult">
         SELECT

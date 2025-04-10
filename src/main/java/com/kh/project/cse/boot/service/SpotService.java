@@ -50,7 +50,7 @@ public interface SpotService {
     ArrayList<Circulation> orderRequestList(PageInfo pi, int storeNo);
 
     //발주요청 - 목록 검색
-    //발주요청 - 검색한 발주 요청 분단위로 묶은 목록
+    //발주요청 - 검색한 발주 요청 분단위로 묶은 수
     int orderSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate);
     //검색한 - 발주 요청 목록
     ArrayList<Circulation> orderSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
@@ -59,8 +59,22 @@ public interface SpotService {
     //발주요청 - 발주 취소
     int cancelOrder(@RequestParam("setNo") String setNo, int storeNo);
 
-    //발주요청 - 지난달 발주 목록 검색
-    List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo);
+    //입고 - 목록
+    //입고 - setNo으로 묶은 수
+    int inputListCount(int storeNo);
+    //입고 - setNo 묶음 목록
+    ArrayList<Circulation> inputList(PageInfo pi, int storeNo);
+
+    //입고 - 목록 검색
+    //입고 - 검색한 입고 setNo으로 묶은 수
+    int inputSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+    //검색한 - 입고 목록
+    ArrayList<Circulation> inputSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+    //입고 - 입고 상세
+    ArrayList<Circulation> inputDetail(String setNo);
+    //입고 - 입고 완료
+    int insertInput(List<Circulation> inputList, int storeNo, String setNo);
+
 
     //매출집계 - 검색
     List<Circulation> getSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);

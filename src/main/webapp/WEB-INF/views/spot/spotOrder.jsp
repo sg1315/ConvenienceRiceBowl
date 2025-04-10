@@ -538,7 +538,7 @@
                                 <td><fmt:formatNumber value="${os.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${os.status == 1}">발주 대기</c:when>
+                                        <c:when test="${os.status == 1}">대기</c:when>
                                         <c:when test="${os.status == 2}">입고</c:when>
                                         <c:when test="${os.status == 5}">발주 승인</c:when>
                                         <c:when test="${os.status == 6}">발주 거절</c:when>
@@ -559,7 +559,7 @@
                                 <td><fmt:formatNumber value="${o.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${o.status == 1}">발주 대기</c:when>
+                                        <c:when test="${o.status == 1}">대기</c:when>
                                         <c:when test="${o.status == 2}">입고</c:when>
                                         <c:when test="${o.status == 5}">발주 승인</c:when>
                                         <c:when test="${o.status == 6}">발주 거절</c:when>
@@ -739,7 +739,7 @@
                         <%--           css 유지를 위해 만든 여백             --%>
                     </div>
                     <div id="modal-header4">
-                        <p id="order-summary">
+                        <p>
                             종류 (총 수량) : <span id="order-kind-count">0</span> (<span id="order-total-quantity">0</span>)
                         </p>
                         <p>
@@ -818,7 +818,7 @@
                         let statusText = "";
                         switch (status) {
                             case 1:
-                                statusText = "발주 대기";
+                                statusText = "대기";
                                 break;
                             case 2:
                                 statusText = "입고";
@@ -902,10 +902,11 @@
             const td = $(this).find('td');
             kindCount += 1;
             const quantity = parseInt(td[3]?.textContent?.trim()) || 0;
-            const price = parseInt(td[4]?.textContent?.trim()) || 0;
+            const priceText = td[4]?.textContent?.trim().replace(/,/g, '') || "0";
+            const price = parseInt(priceText);
 
             totalQuantity += quantity;
-            totalPrice += quantity * price;
+            totalPrice += price;
         });
 
         // 화면에 반영

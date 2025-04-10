@@ -38,8 +38,6 @@ $(document).on('submit', '#search-box', function (e)  {
         }
     });
 });
-//페이지 이동
-//
 
 //추가 버튼 클릭시 오른쪽 모달 출력 및 데이터 저장
 const addedProducts = new Set();

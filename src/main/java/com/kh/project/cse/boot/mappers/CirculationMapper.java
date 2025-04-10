@@ -45,12 +45,27 @@ public interface CirculationMapper {
     //검색한 발주 요청 분단위로 묶은 수
     int orderSearchListCount(@Param("storeNo") int storeNo, String setNo, Integer status, Date startDate, Date endDate);
     ArrayList<Circulation> orderSearchList(RowBounds rowBounds, @Param("storeNo") int storeNo, @Param("setNo") String setNo, @Param("status") Integer status, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
-    //발주요청 - 지난달 발주 목록
-    List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, @Param("storeNo") int storeNo);
     //발주 요청 상세
     ArrayList<Circulation> spotOrderDetail(@Param("setNo") String setNo);
     //발주 요청 취소
     int cancelOrder(@Param("setNo") String setNo, int storeNo);
+
+    //입고 목록
+    //입고 setNo으로 묶은 수
+    int inputListCount(@Param("storeNo") int storeNo);
+    ArrayList<Circulation> inputList(RowBounds rowBounds, int storeNo);
+
+    //입고 서치 목록
+    //검색한 입고 setNo으로 묶은 수
+    int inputSearchListCount(@Param("storeNo") int storeNo, String setNo, Integer status, Date startDate, Date endDate);
+    ArrayList<Circulation> inputSearchList(RowBounds rowBounds, @Param("storeNo") int storeNo, @Param("setNo") String setNo, @Param("status") Integer status, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+    //입고 상세
+    ArrayList<Circulation> inputDetail(@Param("setNo") String setNo);
+    //입고 완료
+    int insertInput(@Param("circulation") Circulation circulation, int storeNo, String setNo);
+
+
 
 
     //매출집계 - 검색
