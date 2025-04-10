@@ -189,7 +189,17 @@ public class SpotServiceImpl implements SpotService {
         return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
     }
 
+    @Override
+    public int selectOutputCount(int storeNo) {
+        return circulationMapper.selectOutputCount(storeNo);
+    }
 
+    @Override
+    public ArrayList<Circulation> selectOutputList(int storeNo, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+        return circulationMapper.selectOutputList(storeNo,rowBounds);
+    }
 
 
     @Override

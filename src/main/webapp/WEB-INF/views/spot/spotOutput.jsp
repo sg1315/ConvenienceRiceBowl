@@ -358,34 +358,17 @@
         </tr>
         </thead>
         <tbody >
-        <tr>
-          <td>25/12/10</td>
-          <td>1219045</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(딸기)</td>
-          <td>2</td>
-          <td>0</td>
-          <td>폐기</td>
-        </tr>
-        <tr>
-          <td>25/12/10</td>
-          <td>1219046</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(메론)</td>
-          <td>80</td>
-          <td>64,000</td>
-          <td>판매</td>
-        </tr>
-        <tr>
-          <td>25/12/10</td>
-          <td>1219047</td>
-          <td>스낵</td>
-          <td>달콤 프란찌(초코)</td>
-          <td>50</td>
-          <td>40,000</td>
-          <td>판매</td>
-        </tr>
-
+        <c:forEach var="o" items="${outputList}">
+          <tr class="outputList">
+            <td>${o.circulationDate}</td>
+            <td>${o.productNo}</td>
+            <td>${o.categoryName}</td>
+            <td>${o.productName}</td>
+            <td>${o.circulationAmount}</td>
+            <td>${o.price}</td>
+            <td>${o.status}</td>
+          </tr>
+        </c:forEach>
         </tbody>
       </table>
     </div>

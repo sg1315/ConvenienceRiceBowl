@@ -83,7 +83,21 @@ public class SpotController {
 
     //출고
     @RequestMapping("/spot_output")
-    public String spot_output() {
+    public String spot_output(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "비정상적인 접근입니다.");
+            return "redirect:/loginForm";
+        }
+        int boardCount = spotService.selectOutputCount(storeNo);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Circulation> expiryList = spotService.selectOutputList(storeNo,pi);
+
+        model.addAttribute("outputList",expiryList);
+        model.addAttribute("pi",pi);
         return "spot/spotOutput";
     }
 

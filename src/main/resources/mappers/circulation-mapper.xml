@@ -16,6 +16,7 @@
         <result column="PRODUCT_NAME" property="productName"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="SUM_INPUT_PRICE" property="sumInputPrice"/>
+        <result column="PRICE" property="price"/>
 
         <!-- 발주목록 가져오기 -->
         <result column="SET_NO" property="setNo"/>
@@ -332,5 +333,25 @@
         WHERE SET_NO = #{setNo}
     </update>
 
-
+    <select id="selectOutputCount">
+        SELECT COUNT(*) FROM CIRCULATION
+        WHERE STATUS = 3
+        AND STATUS = 4
+        AND STORE_NO =#{storeNo}
+    </select>
+    <select id="selectOutputList" resultMap="circulationResult">
+        SELECT
+        CI.CIRCULATION_DATE,
+        CI.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        CI.CIRCULATION_AMOUNT,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        CI.STATUS
+        FROM CIRCULATION CI
+        JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE CI.STORE_NO = #{storeNo}
+        ORDER BY CI.CIRCULATION_DATE
+    </select>
 </mapper>

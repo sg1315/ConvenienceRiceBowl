@@ -62,4 +62,8 @@ public interface CirculationMapper {
 
 
     int posCirculationInsert(Circulation circulation);
+
+    int selectOutputCount(@Param("storeNo") int storeNo);
+
+    ArrayList<Circulation> selectOutputList(@Param("storeNo") int storeNo, RowBounds rowBounds);
 }
