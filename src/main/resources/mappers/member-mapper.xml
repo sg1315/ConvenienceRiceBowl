@@ -171,6 +171,7 @@
         STORE_NAME
     FROM MEMBER
     JOIN STORE USING(STORE_NO)
+    ORDER BY MEMBER_NO DESC
 </select>
     <select id="searchMember" resultMap="memberResult">
         SELECT
@@ -182,6 +183,27 @@
         RESIDENT_NUMBER,
         STORE_NO,
         STORE_NAME
+        FROM MEMBER
+        JOIN STORE USING(STORE_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'storeName'">
+                STORE_NAME
+            </when>
+            <when test="condition == 'memberName'">
+                MEMBER_NAME
+            </when>
+            <otherwise>
+                POSITION
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        ORDER BY STORE_NO DESC
+    </select>
+
+    <select id="searchMemberListCount" resultType="_int">
+        SELECT
+        COUNT(*) AS COUNT
         FROM MEMBER
         JOIN STORE USING(STORE_NO)
         WHERE

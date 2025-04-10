@@ -251,9 +251,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
               id="search-select"
               name="condition"
             >
-              <option value="storeNo">지점번호</option>
-              <option value="storeName">지점명</option>
-              <option value="memberName">지점장</option>
+              <option value="storeNo" ${condition == 'storeNo' ? 'selected' : ''}>지점번호</option>
+              <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
+              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>지점장</option>
             </select>
             <input
               class="search-input-gray"
@@ -299,21 +299,30 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </div>
       <div id="footer">
         <div id="main-pageing">
-          <c:if test="${pi.startPage > 1}">
-            <a href="searchStore?cpage=${pi.startPage - 1}&condition=${condition}&keyword=${keyword}">
-              <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+
+
+        <c:if test="${pi.startPage > 1}">
+            <a href="searchStore?cpage=${pi.endPage - 1}&&condition=${condition}&keyword=${keyword}">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
             </a>
-          </c:if>
-          <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+        </c:if>
+
+        <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+
+
             <button type="button"
-                    class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                    onclick="location.href='searchStore?cpage=${i}&condition=${condition}&keyword=${keyword}'">${i}</button>
-          </c:forEach>
-          <c:if test="${pi.endPage < pi.maxPage}">
+                    class="btn btn-outline-secondary
+                     <c:if test='${pi.currentPage == i}'>active</c:if>"
+                    onclick="location.href='searchStore?cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
+                    ${i}
+            </button>
+        </c:forEach>
+
+        <c:if test="${pi.endPage < pi.maxPage}">
             <a href="searchStore?cpage=${pi.endPage + 1}&&condition=${condition}&keyword=${keyword}">
-              <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
             </a>
-          </c:if>
+        </c:if>
         </div>
       </div>
 

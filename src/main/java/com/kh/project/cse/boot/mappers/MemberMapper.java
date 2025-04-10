@@ -32,4 +32,6 @@ public interface MemberMapper {
 
 
     int deleteMember(String memberNumber);
+
+    int searchMemberListCount(String condition, String keyword);
 }

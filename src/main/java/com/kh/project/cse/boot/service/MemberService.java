@@ -38,4 +38,5 @@ public interface MemberService {
     ArrayList<Member> searchMember(String condition, String keyword, PageInfo pi);
 
     ArrayList<Store> selectStoreName();
+    int searchMemberListCount(String condition, String keyword);
 }

@@ -102,6 +102,11 @@ public class MemberServiceImpl implements MemberService {
     public ArrayList<Store> selectStoreName() {
         return storeMapper.selectStoreName();
     }
+    @Override
+    public int searchMemberListCount(String condition, String keyword) {
+
+        return memberMapper.searchMemberListCount(condition,keyword);
+    }
 
 
 }

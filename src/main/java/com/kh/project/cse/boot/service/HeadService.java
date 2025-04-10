@@ -11,20 +11,21 @@ import java.util.List;
 public interface HeadService {
 
     //상품추가
-    int insertProduct(Product product, Files files);
-    int insertFile(int productNo, Files files);
-
+    int insertProduct(Product product);
     //상품검색
     ArrayList<Product> searchProduct(String condition, String keyword,PageInfo pi);
+    //상품리스트 검색 목록 수
+    int searchProductCount(String condition, String keyword);
     //상품전체목록 수
     int ProductListCount();
     //전체상품목록
     ArrayList<Product> selectAllProduct(PageInfo pi);
+
+
     //카테고리목록
     List<Category> selectAllCategories();
-    //파일있을 때 상품수정
-    int updateProduct(Product product, Files files);
-
+    //상품수정
+    int updateProduct(Product product);
     //상품삭제
     int deleteProduct(int productNo);
 
@@ -67,6 +68,8 @@ public interface HeadService {
     ArrayList<Store> selectStore(PageInfo pi);
     //검색
     ArrayList<Store> searchStore(String condition, String keyword, PageInfo pi);
+    //지점 검색목록 수
+    int searchstoreListCount(String condition, String keyword);
     //지점상태목록
     ArrayList<Store> selectStoreStatus(PageInfo pi);
     //지점수정
@@ -100,8 +103,8 @@ public interface HeadService {
     //검색한 발주 요청 목록
     ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate);
 
-    int searchstoreListCount(String condition, String keyword);
-    int updateProductOne(Product product);
+
+
 
 
 }

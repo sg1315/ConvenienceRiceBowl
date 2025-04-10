@@ -12,6 +12,7 @@
 
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="PRODUCT_NAME" property="productName"/>
+        <result column="SALE_PRICE" property="salePrice"/>
         <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
         <result column="TOTAL_INVENTORY" property="totalInventory"/>
         <result column="INVENTORY_STATUS" property="inventoryStatus"/>
@@ -103,4 +104,32 @@
             HAVING (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) = 0
         </if>
     </select>
+
+
+
+    <select id="posAllInventroySelect" resultMap="inventroyResult">
+        SELECT
+        I.PRODUCT_NO,
+        P.PRODUCT_NAME,
+        P.SALE_PRICE,
+        INVENTORY_COUNT
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        WHERE I.STORE_NO = #{storeNo}
+        ORDER BY I.PRODUCT_NO DESC
+    </select>
+
+    <select id="posInventroySearch" resultMap="inventroyResult">
+        SELECT
+        I.PRODUCT_NO,
+        P.PRODUCT_NAME,
+        P.SALE_PRICE,
+        INVENTORY_COUNT
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        WHERE
+        I.STORE_NO = #{storeNo}
+        And P.PRODUCT_NO LIKE '%${keyword}%'
+    </select>
+
 </mapper>

@@ -86,4 +86,5 @@ public interface SpotService {
     ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi);
 
 
+    int spotSearchProductCount(String inputcheck, String condition, String keyword);
 }

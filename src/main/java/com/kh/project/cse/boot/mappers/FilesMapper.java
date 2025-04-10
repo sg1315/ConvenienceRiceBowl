@@ -10,4 +10,6 @@ public interface FilesMapper {
     int updateFiles(Files files);
 
     int deleteFile(int productNo);
+
+    Files selectProductFile(int productNo);
 }

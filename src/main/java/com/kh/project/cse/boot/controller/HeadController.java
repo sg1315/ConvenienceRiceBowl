@@ -203,18 +203,16 @@ public class HeadController {
     public String insertProduct(@ModelAttribute Product product, MultipartFile upfile, HttpSession session, Model model) {
         int result = 0;
 
-        Files files = new Files();
-        if(!upfile.getOriginalFilename().equals("")){ //첨부파일이 있을 때
+
+        if(!upfile.getOriginalFilename().equals("")){
             String changeName = com.kh.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
 
-            files.setProductNo(product.getProductNo());
-            files.setChangeName(changeName);
-            files.setOriginName(upfile.getOriginalFilename());
-            files.setFilePath("/resources/uploadfile/" + changeName);
-
+            product.setChangeName(changeName);
+            product.setOriginName(upfile.getOriginalFilename());
+            product.setFilePath("/resources/uploadfile/" + changeName);
         }
 
-        result = headService.insertProduct(product, files);
+        result = headService.insertProduct(product);
 
 
         if (result >= 1){
@@ -227,9 +225,11 @@ public class HeadController {
 
     }
 
-    @PostMapping("/searchProduct")
-    public String searchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, Model model) {
-        int listCount = headService.ProductListCount();
+    @RequestMapping("/searchProduct")
+    public String searchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model) {
+
+
+        int listCount = headService.searchProductCount(condition,keyword);
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
         ArrayList<Product> list = headService.searchProduct(condition, keyword, pi);
@@ -237,6 +237,9 @@ public class HeadController {
 
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
+        model.addAttribute("condition",condition);
+        model.addAttribute("keyword",keyword);
+
         return "head_office/headProduct";
     }
 
@@ -250,22 +253,16 @@ public class HeadController {
             product.setAvailability("N");
         }
 
-        Files files = new Files();
+
         if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
-
-
             String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
-            files.setProductNo(product.getProductNo());
-            files.setChangeName(changeName);
-            files.setOriginName(file1.getOriginalFilename());
-            files.setFilePath("/resources/uploadfile/" + changeName);
+            product.setChangeName(changeName);
+            product.setOriginName(file1.getOriginalFilename());
+            product.setFilePath("/resources/uploadfile/" + changeName);
 
-            result = headService.updateProduct(product, files);
-
-        }else{ //현재 첨부파일이 없을 때
-            result = headService.updateProductOne(product);
         }
+        result = headService.updateProduct(product);
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품수정 성공");
@@ -307,7 +304,7 @@ public class HeadController {
         return "head_office/headStore";}
 
 
-    @GetMapping("/searchStore")
+    @RequestMapping("/searchStore")
     public String searchStore(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model){
 
         int listCount = headService.searchstoreListCount(condition,keyword);
@@ -332,6 +329,7 @@ public class HeadController {
     @RequestMapping("/head_member")
     public String head_member(@RequestParam(defaultValue = "1") int cpage,HttpSession session, Model model) {
 
+
         int listCount = memberService.memberListCount();
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
 
@@ -347,17 +345,21 @@ public class HeadController {
         return "head_office/headMember";
     }
     //직원관리 - 검색
-    @PostMapping("/searchMember")
+    @RequestMapping("/searchMember")
     public String searchMember(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model) {
-        int listCount = memberService.memberListCount();
+
+        int listCount = memberService.searchMemberListCount(condition,keyword);
 
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
         if(condition.equals("position")){
             keyword = newKeyword(keyword);
         }
+
         ArrayList<Member> list = memberService.searchMember(condition,keyword,pi);
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
+        model.addAttribute("condition", condition);
+        model.addAttribute("keyword", keyword);
 
         if(list == null){
             session.setAttribute("alertMsg", "실패");

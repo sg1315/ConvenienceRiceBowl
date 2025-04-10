@@ -12,6 +12,7 @@
         <result column="FILE_PATH" property="filePath"/>
     </resultMap>
 
+
     <insert id="insertFiles">
         INSERT INTO FILES(
         FILE_NO,
@@ -27,6 +28,15 @@
         #{filePath}
         )
     </insert>
+    <select id="selectProductFile" resultMap="filesResult">
+        SELECT
+        FILE_NO,
+        PRODUCT_NO,
+        ORIGIN_NAME,
+        CHANGE_NAME
+        FROM FilES
+        WHERE PRODUCT_NO = #{productNo}
+    </select>
 
     <update id="updateFiles">
         UPDATE FILES
@@ -41,4 +51,6 @@
         DELETE FILES
         WHERE PRODUCT_NO = #{productNo}
     </delete>
+
+
 </mapper>

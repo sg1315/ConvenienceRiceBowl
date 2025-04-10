@@ -189,7 +189,10 @@ public class SpotServiceImpl implements SpotService {
         return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
     }
 
-
+    @Override
+    public int spotSearchProductCount(String inputcheck, String condition, String keyword) {
+        return productMapper.spotSearchProductCount(inputcheck,condition,keyword);
+    }
 
 
     @Override
