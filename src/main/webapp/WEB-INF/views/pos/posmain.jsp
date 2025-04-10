@@ -72,7 +72,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                 <tr>
                   <th>상품번호</th>
                   <th>상품명</th>
-                  <th>수량</th>
+                  <th style="display: none;">수량</th>
                   <th>금액</th>
                   <th>추가</th>
                 </tr>
@@ -82,10 +82,10 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                   <tr>
                     <td>${p.productNo}</td>
                     <td>${p.productName}</td>
-                    <td>1</td>   
+                    <td style="display: none;">${p.inventoryCount}</td>   
                     <td>${p.salePrice}</td>      
                     <td><img src="resources/common/포스기_추가 아이콘.png" onclick="addList(this)" alt=""></td>  
-                    <td style="display: none;">${p.categoryName}</td>
+                    
                   </tr>
                 </c:forEach>
               </tbody>
@@ -202,9 +202,11 @@ function addList(this_tb) {
   const selectedRow = this_tb.closest('tr');
   const productNo = selectedRow.cells[0].innerText;
   const productName = selectedRow.cells[1].innerText;
+  let productCount = selectedRow.cells[2];
   const price = selectedRow.cells[3].innerText;
 
   let found = false;
+
 
   // payTable에 동일한 상품번호가 있는지 확인
   for (let i = 0; i < payTable.rows.length; i++) {
@@ -239,14 +241,13 @@ function addList(this_tb) {
 
     // 수량 input
     cell = newRow.insertCell();
-    cell.innerHTML = `<input type='text' value='1' onchange='priceCount()'>`;
+    cell.innerHTML = `<input type='text' value='1' onchange='priceCount(this)'>`;
 
     // 가격
     cell = newRow.insertCell();
     cell.innerText = price;
 }
-  
-  // 금액 다시 계산
+
   priceCount();
 }
   // function addList(this_tb){
@@ -263,16 +264,12 @@ function addList(this_tb) {
   //     }else if(i == 3){
   //       addrow = objRow.insertCell();
   //       const num = test.cells[i-1].innerHTML;
-  //       addrow.innerHTML = "<input type='text' onchange='priceCount()' value ='"+ num +"'>";
+  //       addrow.innerHTML = "<input type='text' onchange='priceCount()' value ='1' >";
   //     }else{
   //       addrow = objRow.insertCell();
   //       addrow.innerHTML = test.cells[i-1].innerHTML;
   //     }
   //   }
-
-
-
-
   //   priceCount();
 
   // }
@@ -281,14 +278,15 @@ function addList(this_tb) {
   function deleteList(this_tb){
     const test = this_tb.closest('tr');
     test.remove();
-
     priceCount();
 
   }
 
-  function priceCount(){
+  function priceCount(this_input){
+
     const table = document.getElementById('tbshow').getElementsByTagName('tr')
     const total = document.getElementById('totalcount');
+
     var sum =0;
 
 
@@ -338,6 +336,8 @@ function addList(this_tb) {
   });
 }
 
+
+// 계산기
 function writeNo(this_div){
   let number = this_div.innerHTML
   let inputBox = document.getElementById("keyword");

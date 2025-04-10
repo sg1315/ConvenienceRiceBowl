@@ -332,5 +332,28 @@
         WHERE SET_NO = #{setNo}
     </update>
 
+    <insert id="posCirculationInsert" >
+        INSERT INTO CIRCULATION (
+        CIRCULATION_NO,
+        STORE_NO,
+        SET_NO,
+        PRODUCT_NO,
+        INPUT_PRICE,
+        SALE_PRICE,
+        CIRCULATION_AMOUNT,
+        CIRCULATION_DATE,
+        STATUS
+        ) VALUES (
+        SEQ_CIR.NEXTVAL,
+        #{storeNo},
+        #{setNo},
+        #{productNo},
+        #{inputPrice},
+        #{salePrice},
+        #{circulationAmount},
+        sysdate,
+        1
+        )
+    </insert>
 
 </mapper>

@@ -7,6 +7,9 @@
     <result column="PRODUCT_NO" property="productNo"/>
     <result column="CATEGORY_NO" property="categoryNo"/>
     <result column="PRODUCT_NAME" property="productName"/>
+    <result column="ORIGIN_NAME" property="originName"/>
+    <result column="CHANGE_NAME" property="changeName"/>
+    <result column="FILE_PATH" property="filePath"/>
     <result column="INPUT_PRICE" property="inputPrice"/>
     <result column="SALE_PRICE" property="salePrice"/>
     <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
@@ -14,7 +17,7 @@
     <result column="FILE_PATH" property="filePath"/>
     <result column="CATEGORY_NAME" property="categoryName"/>
     <result column="COUNT" property="count"/>
-    <result column="FILE_PATH" property="filePath"/>
+
     </resultMap>
     <resultMap id="categoryResult" type="Category">
         <result column="CATEGORY_NO" property="categoryNo"/>
@@ -28,6 +31,9 @@
         PRODUCT_NO,
         CATEGORY_NO,
         PRODUCT_NAME,
+        ORIGIN_NAME,
+        CHANGE_NAME,
+        FILE_PATH,
         INPUT_PRICE,
         SALE_PRICE,
         SHORTAGE_AMOUNT
@@ -35,6 +41,9 @@
         SEQ_PRNO.NEXTVAL,
         #{categoryNo},
         #{productName},
+        #{originName},
+        #{changeName},
+        #{filePath},
         #{inputPrice},
         #{salePrice},
         #{shortageAmount}
@@ -57,25 +66,9 @@
         FILE_PATH
         FROM PRODUCT P
         JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
-        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
         ORDER BY P.PRODUCT_NO DESC
     </select>
-    <select id="OneProductSelect" resultMap="headProductResult">
-        SELECT
-        P.PRODUCT_NO,
-        C.CATEGORY_Name,
-        PRODUCT_NAME,
-        INPUT_PRICE,
-        SALE_PRICE,
-        SHORTAGE_AMOUNT,
-        AVAILABILITY,
-        FILE_PATH
-        FROM PRODUCT P
-        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
-        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
-        WHERE P.PRODUCT_NO = #{productNo}
-        ORDER BY P.PRODUCT_NO DESC
-    </select>
+
     <select id="searchProduct" resultMap="headProductResult">
         SELECT
         P.PRODUCT_NO,
@@ -88,7 +81,6 @@
         FILE_PATH
         FROM PRODUCT P
         JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
-        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
         WHERE
         <choose>
             <when test="condition == 'productNo'">
@@ -118,21 +110,60 @@
         FROM PRODUCT
     </select>
 
+    <select id="searchProductCount" resultType="_int">
+        SELECT COUNT(*) AS COUNT
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'productNo'">
+                P.PRODUCT_NO
+            </when>
+            <when test="condition == 'productName'">
+                PRODUCT_NAME
+            </when>
+            <otherwise>
+                C.CATEGORY_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+    </select>
+
     <update id="updateProduct" >
         UPDATE PRODUCT
         SET
         CATEGORY_NO = #{categoryNo},
         PRODUCT_NAME= #{productName},
+        ORIGIN_NAME =  #{originName},
+        CHANGE_NAME = #{changeName},
+        FILE_PATH = #{filePath},
         INPUT_PRICE = #{inputPrice},
         SALE_PRICE = #{salePrice},
         AVAILABILITY = #{availability}
         WHERE PRODUCT_NO = #{productNo}
     </update>
 
+
     <delete id="deleteProduct">
         DELETE PRODUCT
         WHERE PRODUCT_NO = #{productNo}
     </delete>
+
+    <select id="OneProductSelect" resultMap="headProductResult">
+        SELECT
+        P.PRODUCT_NO,
+        C.CATEGORY_Name,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT,
+        AVAILABILITY,
+        FILE_PATH
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        WHERE P.PRODUCT_NO = #{productNo}
+        ORDER BY P.PRODUCT_NO DESC
+    </select>
 
     <!--  지점  -->
     <select id="orderRequestProductList" resultMap="headProductResult">
@@ -164,38 +195,8 @@
         </if>
         ORDER BY PRODUCT_NO ASC
     </select>
-    <select id="posProductSearch" resultMap="headProductResult">
-        SELECT
-        PRODUCT_NO,
-        PRODUCT_NAME,
-        SALE_PRICE
-        FROM PRODUCT
-        WHERE
-        PRODUCT_NO LIKE '%${keyword}%'
-    </select>
 
 
-    <select id="posAllProductSelect" resultMap="headProductResult">
-    SELECT
-    PRODUCT_NO,
-    PRODUCT_NAME,
-    SALE_PRICE
-    FROM PRODUCT
-    ORDER BY PRODUCT_NO DESC
-    </select>
-
-
-    <select id="posOneProductSelect" resultMap="headProductResult" >
-        SELECT
-        PRODUCT_NO,
-        CATEGORY_NO,
-        PRODUCT_NAME,
-        INPUT_PRICE,
-        SALE_PRICE,
-        SHORTAGE_AMOUNT
-        FROM PRODUCT
-        WHERE  PRODUCT_NO = #{productNo}
-    </select>
 
     <select id="spotSearchProduct" resultMap="headProductResult" >
         SELECT
@@ -209,7 +210,6 @@
         FILE_PATH
         FROM PRODUCT P
         JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
-        LEFT JOIN FILES F ON(F.PRODUCT_NO = P.PRODUCT_NO)
         WHERE
         <choose>
             <when test="condition == 'productNo'">
@@ -225,6 +225,41 @@
         LIKE '%${keyword}%'
         and AVAILABILITY = #{inputcheck}
         ORDER BY PRODUCT_NO DESC
+    </select>
+
+    <select id="spotSearchProductCount" resultType="_int" >
+        SELECT
+        Count(*) AS COUNT
+        FROM PRODUCT P
+        JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        WHERE
+        <choose>
+            <when test="condition == 'productNo'">
+                P.PRODUCT_NO
+            </when>
+            <when test="condition == 'productName'">
+                PRODUCT_NAME
+            </when>
+            <otherwise>
+                C.CATEGORY_NAME
+            </otherwise>
+        </choose>
+        LIKE '%${keyword}%'
+        and AVAILABILITY = #{inputcheck}
+        ORDER BY PRODUCT_NO DESC
+    </select>
+
+
+    <select id="posOneProductSelect" resultMap="headProductResult" >
+        SELECT
+        PRODUCT_NO,
+        CATEGORY_NO,
+        PRODUCT_NAME,
+        INPUT_PRICE,
+        SALE_PRICE,
+        SHORTAGE_AMOUNT
+        FROM PRODUCT
+        WHERE  PRODUCT_NO = #{productNo}
     </select>
 
 </mapper>

@@ -23,4 +23,5 @@ public class Inventory {
     private int shortageAmount;
     private int totalInventory;
     private int inventoryStatus;
+    private int salePrice;
 }

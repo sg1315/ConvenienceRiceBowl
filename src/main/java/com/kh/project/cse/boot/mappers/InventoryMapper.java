@@ -17,4 +17,11 @@ public interface InventoryMapper {
 
     ArrayList<Inventory> searchInventory(RowBounds rowBounds, int storeNo, String condition, String keyword, int check);
 
+
+
+
+    //포스기 전체출력
+    ArrayList<Inventory> posAllInventroySelect(int storeNo);
+    //포스기 검색
+    ArrayList<Inventory> posInventroySearch(String keyword, int storeNo);
 }

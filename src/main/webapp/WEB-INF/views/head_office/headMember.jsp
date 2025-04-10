@@ -183,9 +183,9 @@ contentType="text/html;charset=UTF-8" language="java" %>
         <div id="top_serch">
           <form action="searchMember" method="post">
             <select class="search-input-gray" name="condition">
-              <option value="storeName">지점명</option>
-              <option value="position">직급</option>
-              <option value="memberName">직원이름</option>
+              <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
+              <option value="position" ${condition == 'position' ? 'selected' : ''}>직급</option>
+              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>직원이름</option>
             </select>
             <input
               class="search-input-gray"
@@ -229,7 +229,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                 <td>${m.storeNo}</td>
                 <td>${m.storeName}</td>
                 <c:choose>
-                  <c:when test="${m.position eq '0'}"><td>본사</td></c:when>
+                  <c:when test="${m.position eq '1'}"><td>본사</td></c:when>
                   <c:when test="${m.position eq '2'}"><td>지점장</td></c:when>
                   <c:when test="${m.position eq '3'}"><td>매니저</td></c:when>
                   <c:when test="${m.position eq '4'}"><td>알바</td></c:when>
@@ -246,22 +246,29 @@ contentType="text/html;charset=UTF-8" language="java" %>
       </div>
       <div id="footer">
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-          <c:forEach
-            var="i"
-            begin="${ pi.startPage }"
-            end="${ pi.endPage }"
-            step="1"
-          >
-            <button
-              type="button"
-              class="btn btn-outline-secondary"
-              onclick="location.href='head_store?cpage=${i}'"
-            >
-              ${i}
+
+          <c:if test="${pi.startPage > 1}">
+            <a href="searchMember?cpage=${pi.startPage - 1}&condition=${param.condition}&keyword=${param.keyword}">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+        </c:if>
+
+        <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+
+
+            <button type="button"
+                    class="btn btn-outline-secondary
+                     <c:if test='${pi.currentPage == i}'>active</c:if>"
+                    onclick="location.href='searchMember?cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
+                    ${i}
             </button>
-          </c:forEach>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+        </c:forEach>
+
+        <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="searchMember?cpage=${pi.startPage + 1}&condition=${param.condition}&keyword=${param.keyword}">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+        </c:if>
         </div>
       </div>
 

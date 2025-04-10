@@ -88,28 +88,10 @@ public class HeadServiceImpl implements HeadService {
 
     //상품추가
     @Override
-    public int insertProduct(Product product, Files files) {
-        int result = 0;
-        if(files.getOriginName() != null){
-            result = productMapper.insertProduct(product);
-            System.out.println("새로운 상품번호 : " + product.getProductNo() );
-            if (result >= 1) {
-                files.setProductNo(product.getProductNo());
-                int result2 = filesMapper.insertFiles(files);
-                result *= result2;
-            }
-        }else{
-            result = productMapper.insertProduct(product);
-        }
+    public int insertProduct(Product product) {
+        return productMapper.insertProduct(product);
+    }
 
-        return result;
-    }
-    //첨부파일 추가
-    @Override
-    public int insertFile(int productNo, Files files) {
-        files.setProductNo(productNo);
-        return filesMapper.insertFiles(files);
-    }
 
     //상품검색
     @Override
@@ -132,23 +114,15 @@ public class HeadServiceImpl implements HeadService {
     public List<Category> selectAllCategories() { return productMapper.selectAllCategories();}
     //상품수정
     @Override
-    public int updateProduct(Product product, Files files) {
-        int result =0;
-        int result1 = filesMapper.updateFiles(files);
-
-
-        if(result1 > 0){
-            product.setFilePath(files.getFilePath());
-            int result2 = productMapper.updateProduct(product);
-            result = result1 * result2;
-        }
-
-        return result;
+    public int updateProduct(Product product) {
+            return  productMapper.updateProduct(product);
     }
+
     @Override
-    public int updateProductOne(Product product) {
-        return productMapper.updateProduct(product);
+    public int searchProductCount(String condition, String keyword) {
+        return productMapper.searchProductCount(condition, keyword);
     }
+
     @Override
     public int deleteProduct(int productNo) {
         int result = 0;

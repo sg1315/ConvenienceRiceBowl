@@ -339,67 +339,90 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
       </div>
 
-      <div id="top-manu">
-        <div id="top_serch">
-          <form id="searchForm" method="post" action="searchProduct">
-            <select class="search-input-gray" name="condition">
-              <option value="productNo">상품번호</option>
-              <option value="category">카테고리</option>
-              <option value="productName">상품명</option>
-            </select>
-            <input class="search-input-gray" id="search-filed" type="text" name="keyword"/>
-            <input class="search-input-submit-gray" type="submit" value="검색" />
-          </form>
-        </div>
-      </div>
-      <div id="table-manu">
-        <table id="table1">
-          <colgroup>
-            <col style="width: 10%" />
-            <col style="width: 10%" />
-            <col style="width: 40%" />
-            <col style="width: 15%" />
-            <col style="width: 15%" />
-          </colgroup>
-          <thead>
-            <tr>
-              <th>상품 번호</th>
-              <th>카테고리</th>
-              <th style="display: none;">상품이미지</th>
-              <th>상품명</th>
-              <th>입고가</th>
-              <th>판매가</th>
-              <th style="display: none;"></th>
-              <th style="display: none;"></th>
-             
-            </tr>
-          </thead>
-          <tbody>
-            <c:forEach var="p" items="${list}">
-              <tr>
-                <td>${p.productNo}</td>
-                <td>${p.categoryName}</td>
-                <td style="display: none;"><img width="120px" height="99.5px" src="${p.filePath}" alt="상품이미지" ></td>
-                <td>${p.productName}</td>
-                <td>${p.inputPrice}</td>
-                <td>${p.salePrice}</td>
-                <td style="display: none;">${p.shortageAmount}</td>  
-                <td style="display: none;">${p.availability}</td>         
-              </tr>
-            </c:forEach>
-          </tbody>
-        </table>
-      </div>
-      <div id="footer">
-        <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-            <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
-                <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_product?cpage=${i}'">${i}</button>
-            </c:forEach>
-          <img src="/resources/common/공통_페이징바화살표.png" />
-        </div>
-      </div>
 
+        <div id="top-manu">
+          <div id="top_serch">
+            <form id="searchForm" method="post" action="searchProduct">
+              <select class="search-input-gray" name="condition">
+
+                <option value="productNo" ${condition == 'productNo' ? 'selected' : ''}>상품번호</option>
+                <option value="categoryName" ${condition == 'categoryName' ? 'selected' : ''}>카테고리</option>
+                <option value="productName" ${condition == 'productName' ? 'selected' : ''}>상품명</option>
+  
+              </select>
+              <input class="search-input-gray" id="search-filed" type="text" name="keyword" value="${keyword}"/>
+              <input class="search-input-submit-gray" type="submit" value="검색" />
+            </form>
+          </div>
+        </div>
+        <div id="table-manu">
+          <table id="table1">
+            <colgroup>
+              <col style="width: 10%" />
+              <col style="width: 10%" />
+              <col style="width: 40%" />
+              <col style="width: 15%" />
+              <col style="width: 15%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>상품 번호</th>
+                <th>카테고리</th>
+                <th style="display: none;">상품이미지</th>
+                <th>상품명</th>
+                <th>입고가</th>
+                <th>판매가</th>
+                <th style="display: none;"></th>
+                <th style="display: none;"></th>
+              
+              </tr>
+            </thead>
+            <tbody>
+              <c:forEach var="p" items="${list}">
+                <tr>
+                  <td>${p.productNo}</td>
+                  <td>${p.categoryName}</td>
+                  <td style="display: none;"><img width="120px" height="99.5px" src="${p.filePath}" alt="상품이미지" ></td>
+                  <td>${p.productName}</td>
+                  <td>${p.inputPrice}</td>
+                  <td>${p.salePrice}</td>
+                  <td style="display: none;">${p.shortageAmount}</td>  
+                  <td style="display: none;">${p.availability}</td>         
+                </tr>
+              </c:forEach>
+            </tbody>
+          </table>
+        </div>
+        <div id="footer">
+          <div id="main-pageing">
+
+          <c:if test="${pi.startPage > 1}">
+            <a href="searchProduct?cpage=${pi.startPage - 1}&condition=${param.condition}&keyword=${param.keyword}">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+        </c:if>
+
+        <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+
+
+            <button type="button"
+                    class="btn btn-outline-secondary
+                     <c:if test='${pi.currentPage == i}'>active</c:if>"
+                    onclick="location.href='searchProduct?cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
+                    ${i}
+            </button>
+        </c:forEach>
+
+        <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="searchProduct?cpage=${pi.startPage + 1}&condition=${param.condition}&keyword=${param.keyword}">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+        </c:if>
+
+
+          </div>
+        </div>
+  
       <!--start point-->
       <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"

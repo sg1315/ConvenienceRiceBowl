@@ -98,7 +98,11 @@ public class MemberServiceImpl implements MemberService {
         return memberMapper.searchMember(condition,keyword,rowBounds);
     }
 
+    @Override
+    public int searchMemberListCount(String condition, String keyword) {
 
+        return memberMapper.searchMemberListCount(condition,keyword);
+    }
 
 
 }
