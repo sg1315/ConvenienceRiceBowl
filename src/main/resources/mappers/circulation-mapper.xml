@@ -332,5 +332,29 @@
         WHERE SET_NO = #{setNo}
     </update>
 
+    <insert id="insertExpiry">
+        INSERT INTO CIRCULATION (
+        CIRCULATION_NO,
+        STORE_NO,
+        PRODUCT_NO,
+        INPUT_PRICE,
+        SALE_PRICE,
+        CIRCULATION_AMOUNT,
+        CIRCULATION_DATE,
+        STATUS
+        )
+        SELECT
+        SEQ_CIR.NEXTVAL,
+        #{storeNo},
+        #{productNo},
+        INPUT_PRICE,
+        SALE_PRICE,
+        #{inventoryCount},
+        SYSDATE,
+        4
+        FROM PRODUCT
+        WHERE PRODUCT_NO = #{productNo}
+    </insert>
+
 
 </mapper>

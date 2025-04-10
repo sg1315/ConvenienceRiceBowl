@@ -44,6 +44,9 @@ public interface HeadService {
     //공지사항수정
     int updateAnnouncementDetail(Announcement announcement);
 
+    //공지사항검색 수
+    int searchAnnouncementCount(String condition,String keyword);
+
     //공지사항검색
     ArrayList<Announcement> searchAnnouncement(String condition, String keyword,PageInfo pi);
 
@@ -86,6 +89,7 @@ public interface HeadService {
 
     //발주 승인 미승인
     int updateheadorder(String setNo, int status);
+    void updateLaterToStatus7(String setNo);
 
     //발주 지난달
     List<Circulation> head_lastorder(LocalDate start, LocalDate end);
@@ -98,4 +102,6 @@ public interface HeadService {
 
     int searchstoreListCount(String condition, String keyword);
     int updateProductOne(Product product);
+
+
 }

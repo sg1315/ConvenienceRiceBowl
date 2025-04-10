@@ -296,18 +296,36 @@ contentType="text/html;charset=UTF-8" language="java" %>
           </table>
         </div>
         <div id="main-pageing">
-          <img src="/resources/common/공통_페이징바화살표.png" />
-          <button type="button" class="btn btn-outline-secondary">1</button>
-          <button type="button" class="btn btn-outline-secondary">2</button>
-          <button type="button" class="btn btn-outline-secondary">3</button>
-          <button type="button" class="btn btn-outline-secondary">4</button>
-          <button type="button" class="btn btn-outline-secondary">5</button>
-          <button type="button" class="btn btn-outline-secondary">6</button>
-          <button type="button" class="btn btn-outline-secondary">7</button>
-          <button type="button" class="btn btn-outline-secondary">8</button>
-          <button type="button" class="btn btn-outline-secondary">9</button>
-          <button type="button" class="btn btn-outline-secondary">10</button>
-          <img src="/resources/common/공통_페이징바화살표.png" />
+          <c:choose>
+            <c:when test="${not empty param.condition and not empty param.keyword}">
+              <c:set var="baseUrl" value="/searchInventory"/>
+              <c:set var="queryString" value="condition=${param.condition}&keyword=${param.keyword}&check=${param.check}"/>
+            </c:when>
+            <c:otherwise>
+              <c:set var="baseUrl" value="/spot_inventory"/>
+              <c:set var="queryString" value=""/>
+            </c:otherwise>
+          </c:choose>
+
+          <c:if test="${pi.startPage > 1}">
+            <a href="${baseUrl}?${queryString}&cpage=${pi.startPage - 1}">
+              <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="이전">
+            </a>
+          </c:if>
+
+          <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}">
+            <button type="button"
+                    class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                    onclick="location.href='${baseUrl}?${queryString}&cpage=${i}'">
+                ${i}
+            </button>
+          </c:forEach>
+
+          <c:if test="${pi.endPage < pi.maxPage}">
+            <a href="${baseUrl}?${queryString}&cpage=${pi.endPage + 1}">
+              <img src="${pageContext.request.contextPath}/resources/common/공통_페이징바화살표.png" alt="다음">
+            </a>
+          </c:if>
         </div>
       </div>
 

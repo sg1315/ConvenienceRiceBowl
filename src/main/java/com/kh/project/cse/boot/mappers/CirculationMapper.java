@@ -59,7 +59,8 @@ public interface CirculationMapper {
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(String date, int storeNo);
 
-
+    //유통기한폐기
+    int insertExpiry(@Param("storeNo") int storeNo, @Param("productNo") int productNo, @Param("inventoryCount") int inventoryCount);
 
     int posCirculationInsert(Circulation circulation);
 }

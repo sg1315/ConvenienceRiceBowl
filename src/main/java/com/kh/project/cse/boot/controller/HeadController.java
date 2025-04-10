@@ -148,9 +148,9 @@ public class HeadController {
         return "redirect:/head_announcement";
     }
     //공지사항 검색
-    @PostMapping("/searchAnnouncement")
+    @RequestMapping(value = "/searchAnnouncement", method = {RequestMethod.GET, RequestMethod.POST})
     public String searchAnnouncement(@RequestParam(defaultValue = "1") int cpage, @RequestParam String condition, @RequestParam String keyword, Model model) {
-        int listCount = headService.selectAnnouncementCount();
+        int listCount = headService.searchAnnouncementCount(condition, keyword);
         PageInfo pi = new PageInfo(listCount,cpage, 10,12);
 
         ArrayList<Announcement> list = headService.searchAnnouncement(condition, keyword, pi);

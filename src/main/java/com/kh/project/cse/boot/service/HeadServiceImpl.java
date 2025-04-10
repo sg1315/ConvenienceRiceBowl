@@ -4,6 +4,8 @@ import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.mappers.*;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,10 +23,11 @@ public class HeadServiceImpl implements HeadService {
     private final MemberMapper memberMapper;
     private final FilesMapper filesMapper;
     private final ReplyMapper replyMapper;
+    private final HeadService self; // 여기 추가됨
 
 
     @Autowired
-    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper, FilesMapper filesMapper, ReplyMapper replyMapper) {
+    public HeadServiceImpl(ProductMapper productMapper, AnnouncementMapper announcementMapper, StoreMapper storeMapper, CirculationMapper circulationMapper, MemberMapper memberMapper, FilesMapper filesMapper, ReplyMapper replyMapper, @Lazy HeadService self) {
         this.productMapper = productMapper;
         this.announcementMapper = announcementMapper;
         this.storeMapper = storeMapper;
@@ -32,6 +35,7 @@ public class HeadServiceImpl implements HeadService {
         this.memberMapper = memberMapper;
         this.filesMapper = filesMapper;
         this.replyMapper = replyMapper;
+        this.self = self;
     }
 
 
@@ -62,6 +66,10 @@ public class HeadServiceImpl implements HeadService {
     public int updateAnnouncementDetail(Announcement announcement){
         return announcementMapper.updateAnnouncementDetail(announcement);
     }
+    //공지사항검색수
+    @Override
+    public int searchAnnouncementCount(String condition, String keyword){return announcementMapper.searchAnnouncementCount(condition, keyword);}
+
     //공지사항검색
     @Override
     public ArrayList<Announcement> searchAnnouncement(String condition, String keyword, PageInfo pi) {
@@ -236,7 +244,25 @@ public class HeadServiceImpl implements HeadService {
 
     @Override
     public int updateheadorder(String setNo, int status) {
-        return circulationMapper.updateheadorder(setNo,status);
+        int result = circulationMapper.updateheadorder(setNo, status);
+
+        // 상태가 5번일 경우 20초 후 자동으로 7번으로 변경
+        if (result > 0 && status == 5) {
+            self.updateLaterToStatus7(setNo); // 프록시를 통해 호출해야 @Async가 동작함
+        }
+
+        return result;
+    }
+
+    @Async
+    public void updateLaterToStatus7(String setNo) {
+        try {
+            Thread.sleep(20000); // 20초 대기
+            circulationMapper.updateheadorder(setNo, 7);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
     }
 
     @Override

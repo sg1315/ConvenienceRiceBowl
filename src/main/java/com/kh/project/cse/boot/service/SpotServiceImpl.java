@@ -97,7 +97,7 @@ public class SpotServiceImpl implements SpotService {
     public int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate) {
         System.out.println(storeNo +" "+ productNo +" "+ inventoryCount +" "+ expirationDate);
         int result = 0;
-        result = expiryMapper.insertExpiry(storeNo,productNo,inventoryCount);
+        result = circulationMapper.insertExpiry(storeNo,productNo,inventoryCount);
         System.out.println("result:"+ result);
         if(result>0){
             return expiryMapper.deleteExpiry(storeNo,productNo,expirationDate);
