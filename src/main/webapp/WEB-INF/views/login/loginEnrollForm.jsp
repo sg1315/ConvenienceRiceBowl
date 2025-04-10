@@ -107,15 +107,18 @@
                 <div></div>
                 <div>
                     <div class="flexInput-2">
-                        <select id="position" name="position" onchange="resetCheck()" required>
+                        <select id="position" name="position" onchange="positionCheck()" required>
                             <option value="" selected disabled hidden>직급</option>
                             <option value="2">지점장</option>
                             <option value="4">알바</option>
                         </select>
                     </div>
-                    <div class="flexInput-1">
-                        <input type="text" id="storeName" name="storeName" oninput="resetStoreCheck()" required>
+                    <div class="flexInput-1" id="storeInputBox">
+                        <input type="text" id="storeName" name="storeName" oninput="resetStoreCheck()">
                         <button type="button" onclick="checkStoreName()">확인</button>
+                    </div>
+                    <div class="selectStyle" id="storeSelectBox" style="display: none;">
+                        <select id="StoreNameList" name="storeNo" onclick="selectStoreName()"></select>
                     </div>
                     <div></div>
                     <div></div>
@@ -163,6 +166,20 @@
                 let isUserIdOk = false;
                 let isStoreNameOk = false;
                 let isPasswordOk = false;
+                function positionCheck() {
+                    const position = document.getElementById("position").value;
+                    const storeSelectBox = document.getElementById("storeSelectBox");
+                    const storeInputBox = document.getElementById("storeInputBox");
+                    if(position === "4"){
+                        storeSelectBox.style.display = "block";
+                        storeInputBox.style.display = "none";
+                        isStoreNameOk = true;
+                    } else {
+                        storeSelectBox.style.display = "none";
+                        storeInputBox.style.display = "block";
+                        isStoreNameOk = false;
+                    }
+                }
                 function checkStoreName() {
                     const position = document.getElementById("position").value;
                     const storeName = document.getElementById("storeName").value;
@@ -200,6 +217,32 @@
                             }
                         })
                     }
+                }
+                function selectStoreName(){
+                    const checkResult = document.getElementById("checkResult");
+                    $.ajax({
+                        url: "/api/member/selectStoreName",
+                        type:'POST',
+                        success: function (storeNameList){
+                            if (storeNameList != null) {
+                                const select = document.getElementById("StoreNameList");
+                                // select.innerHTML = ""; // 초기화
+
+                                storeNameList.forEach(store => {
+                                    const option = document.createElement("option");
+                                    option.value = store.storeNo;
+                                    option.text = store.storeName;
+                                    select.appendChild(option);
+                                });
+                            } else {
+                                checkResult.style.color = "red";
+                                checkResult.innerText = "지점들을 불러오지 못하였습니다. 관리자에게 문의 주십시오.";
+                                isStoreNameOk = true;
+                            }
+                        }, error: function (){
+                            console.log("Select 지점명 ajax 실패");
+                        }
+                    })
                 }
                 function checkId() {
                     const memberId = document.getElementById("memberId").value;
@@ -248,9 +291,6 @@
                     } else{
                         checkResult.innerText = "";
                     }
-                }
-                function resetCheck(){
-                    isStoreNameOk = false;
                 }
                 function resetStoreCheck(){
                     isStoreNameOk = false;

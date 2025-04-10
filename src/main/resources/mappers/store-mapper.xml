@@ -106,20 +106,20 @@
         ORDER BY STORE_NO DESC
 
     </select>
-<select id="selectStoreStatus" resultMap="storeResult">
-    SELECT
-    STORE_NO,
-    STORE_NAME,
-    TO_CHAR(STORE_DATE,'YYYY-MM-DD') AS STORE_DATE,
-    STORE_STATUS,
-    MEMBER_NAME,
-    MEMBER_NO
-    FROM STORE
-    JOIN MEMBER USING (store_No)
-    WHERE
-    STORE_STATUS = 2
-    ORDER BY STORE_DATE DESC
-</select>
+    <select id="selectStoreStatus" resultMap="storeResult">
+        SELECT
+        STORE_NO,
+        STORE_NAME,
+        TO_CHAR(STORE_DATE,'YYYY-MM-DD') AS STORE_DATE,
+        STORE_STATUS,
+        MEMBER_NAME,
+        MEMBER_NO
+        FROM STORE
+        JOIN MEMBER USING (store_No)
+        WHERE
+        STORE_STATUS = 2
+        ORDER BY STORE_DATE DESC
+    </select>
 
     <update id="updateStoreNo">
         UPDATE STORE
@@ -132,4 +132,10 @@
         DELETE STORE
         WHERE STORE_NO = #{storeNo}
     </delete>
+
+    <select id="selectStoreName" resultMap="storeResult">
+        SELECT STORE_NO ,STORE_NAME
+        FROM STORE
+        WHERE STORE_STATUS = 1
+    </select>
 </mapper>
