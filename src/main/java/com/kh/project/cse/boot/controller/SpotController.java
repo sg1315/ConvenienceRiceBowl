@@ -94,13 +94,34 @@ public class SpotController {
         }
         int boardCount = spotService.selectOutputCount(storeNo);
         PageInfo pi = new PageInfo(boardCount,cpage,10,10);
-        ArrayList<Circulation> expiryList = spotService.selectOutputList(storeNo,pi);
+        ArrayList<Circulation> outputList = spotService.selectOutputList(storeNo,pi);
 
-        model.addAttribute("outputList",expiryList);
+        model.addAttribute("outputList",outputList);
+        model.addAttribute("pi",pi);
+        model.addAttribute("until",LocalDate.now().toString());
+        return "spot/spotOutput";
+    }
+    @RequestMapping("/search_output")
+    public String spot_searchOutput(@RequestParam(defaultValue = "1") int cpage,
+                                    @RequestParam Date since,@RequestParam Date until,
+                                    @RequestParam int status,@RequestParam String searchOutput,@RequestParam String keyword,
+                                    Model model, HttpSession session) {
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo;
+        if(member != null){
+            storeNo =  member.getStoreNo();
+        } else {
+            session.setAttribute("alertMsg", "비정상적인 접근입니다.");
+            return "redirect:/loginForm";
+        }
+        int boardCount = spotService.searchOutputCount(storeNo,since,until,status,searchOutput,keyword);
+        PageInfo pi = new PageInfo(boardCount,cpage,10,10);
+        ArrayList<Circulation> outputList = spotService.searchOutputList(storeNo,pi);
+
+        model.addAttribute("outputList",outputList);
         model.addAttribute("pi",pi);
         return "spot/spotOutput";
     }
-
     //년매출
     @RequestMapping("/spot_salesYear")
     public String spot_salesYear() {

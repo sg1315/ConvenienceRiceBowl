@@ -297,7 +297,8 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="waper">
+
+  <form class="waper" action="search_output">
   <div id="top-manu">
     <div id="top-left">
       <div id="top-left1">
@@ -306,41 +307,43 @@
       </div>
     </div>
 
-    <div id="top-right1">
-      <div id="top-right1-left">
-        <div id="top-right1-top">
-          <input type="button"  class="search-input-submit" value="저번 달">
+  <div id="top-right1">
+    <div id="top-right1-left">
+      <div id="top-right1-top">
+          <input type="button" class="search-input-submit" value="저번 달">
           <input type="button"  class="search-input-submit" value="최근">
-          <input type="date" class="date-input">
-          ~
-          <input type="date" class="date-input">
-        </div>
-        <div id="top-right1-bottom">
-          <div class="selectbox" id="status-check">
-            <select>
-              <option>상태</option>
-              <option>판매</option>
-              <option>폐기</option>
-            </select>
-          </div>
-          <div class="selectbox" id="category-select">
-            <select>
-              <option>카테고리</option>
-              <option>스낵</option>
-              <option>음료</option>
-            </select>
-          </div>
-          <div id="search-text">
-            <input class="search-input" type="text" placeholder="상품명 or 상품번호"/>
-          </div>
-        </div>
-      </div>
 
-      <div id="search-box">
-        <div id="margi"></div>
-        <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
+          <input type="date" class="date-input" id="since" name="since" value="${since}">
+          ~
+          <input type="date" class="date-input" id="until" name="until" value="${until}">
+
+      </div>
+      <div id="top-right1-bottom">
+        <div class="selectbox" id="status-check">
+          <select name="status">
+            <option value="" selected>상태</option>
+            <option value="3" ${status == '3' ? 'selected' : ''}>판매</option>
+            <option value="4" ${status == '4' ? 'selected' : ''}>폐기</option>
+          </select>
+        </div>
+        <div class="selectbox" id="category-select">
+          <select name="searchOutput">
+            <option value="productNo" ${searchOutput == 'productNo' ? 'selected' : ''}>상품번호</option>
+            <option value="productName" ${searchOutput == 'productName' ? 'selected' : ''}>상품명</option>
+            <option value="categoryName" ${searchOutput == 'categoryName' ? 'selected' : ''}>카테고리</option>
+          </select>
+        </div>
+        <div id="search-text">
+          <input class="search-input" type="text" name="keyword" value="${keyword}" placeholder="상품명 or 상품번호"/>
+        </div>
       </div>
     </div>
+
+    <div id="search-box">
+      <div id="margi"></div>
+      <input class="search-input-submit" type="submit" id="btn-search" value="검색" />
+    </div>
+  </div>
 
   </div>
   <div id="main">
@@ -366,125 +369,43 @@
             <td>${o.productName}</td>
             <td>${o.circulationAmount}</td>
             <td>${o.price}</td>
-            <td>${o.status}</td>
+            <td>
+                  <c:choose>
+                    <c:when test="${o.status == 3}">
+                      <p style="color: green; font-weight: 600">판매</p>
+                    </c:when>
+                    <c:otherwise>
+                      <p style="color: red; font-weight: 600">폐기</p>
+                    </c:otherwise>
+                  </c:choose>
+            </td>
           </tr>
         </c:forEach>
         </tbody>
       </table>
     </div>
     <div id="main-pageing">
-      <img src="/resources/common/공통_페이징바화살표.png">
-      <button type="button" class="btn btn-outline-secondary">1</button>
-      <button type="button" class="btn btn-outline-secondary">2</button>
-      <button type="button" class="btn btn-outline-secondary">3</button>
-      <button type="button" class="btn btn-outline-secondary">4</button>
-      <button type="button" class="btn btn-outline-secondary">5</button>
-      <button type="button" class="btn btn-outline-secondary">6</button>
-      <button type="button" class="btn btn-outline-secondary">7</button>
-      <button type="button" class="btn btn-outline-secondary">8</button>
-      <button type="button" class="btn btn-outline-secondary">9</button>
-      <button type="button" class="btn btn-outline-secondary">10</button>
-      <img src="/resources/common/공통_페이징바화살표.png">
+      <c:if test="${pi.startPage > 1}">
+        <a href="searchStore?cpage=${pi.startPage - 1}&condition=${condition}&keyword=${keyword}">
+          <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+        </a>
+      </c:if>
+      <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+        <button type="button"
+                class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                onclick="location.href='searchStore?cpage=${i}&condition=${condition}&keyword=${keyword}'">${i}</button>
+      </c:forEach>
+      <c:if test="${pi.endPage < pi.maxPage}">
+        <a href="searchStore?cpage=${pi.endPage + 1}&&condition=${condition}&keyword=${keyword}">
+          <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+        </a>
+      </c:if>
     </div>
   </div>
+  </form>
 
-  <!--start point-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-  <!-- Modal -->
-  <div class="modal fade"
-       id="staticBackdrop"
-       data-bs-backdrop="static"
-       data-bs-keyboard="false"
-       tabindex="-1"
-       aria-labelledby="staticBackdropLabel"
-       aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <div id="header-title">
-            <h1 class="modal-title fs-5">상품정보</h1>
-          </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn-close-modal">
-            <img src="<c:url value="/resources/common/공통_Icon.png"/>" id="x_img">
-          </button>
-        </div>
-        <div class="modal-body">
-          <!--모달 내용-->
-          <div id="product-modify-img">이미지사진</div>
-          <div id="product-detail-modify-box">
-            <div id="product-detail-modify">
-              <div id="product-detail-modify-puts">
-                <table id="product-detail-modify-table">
-                  <tr>
-                    <td>상품번호</td>
-                    <td>
-                      <input type="text" id="modal-productCode" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>카테고리</td>
-                    <td>
-                      <input type="text" id="modal-productCategory" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>상품명</td>
-                    <td>
-                      <input type="text" id="modal-productName" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>입고가</td>
-                    <td>
-                      <input type="text" id="modal-productInputPrice" readonly>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>판매가</td>
-                    <td>
-                      <input type="text" id="modal-productSalePrice" readonly>
-                    </td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
   <script>
-    <!-- 모달 funcion -->
-    document.addEventListener("DOMContentLoaded", function () {
-
-      const rows = document.querySelectorAll("#table1 tbody tr");
-
-      rows.forEach(row => {
-        row.classList.add("table-row");
-
-        row.addEventListener("click", function () {
-          const code = this.children[1].textContent;
-          const category = this.children[2].textContent;
-          const name = this.children[3].textContent;
-          const input = this.children[3].textContent;
-          const sale = this.children[3].textContent;
-          // input(입고가)과 sale(판매가)는 상품번호를 통해 정보를 가져올 것.
-
-          document.getElementById("modal-productCode").value = code;
-          document.getElementById("modal-productCategory").value = category;
-          document.getElementById("modal-productName").value = name;
-          document.getElementById("modal-productInputPrice").value = input;
-          document.getElementById("modal-productSalePrice").value = sale;
-
-          const modal = new bootstrap.Modal(document.getElementById("staticBackdrop"));
-          modal.show();
-        });
-      });
-    });
-
-    <!-- 검색 function -->
+    //저번달 버튼
 
   </script>
   <!--end point-->

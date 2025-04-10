@@ -201,6 +201,11 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.selectOutputList(storeNo,rowBounds);
     }
 
+    @Override
+    public int searchOutputCount(int storeNo, Date since, Date until, int status, String searchOutput, String keyword) {
+        return circulationMapper.searchOutputCount(storeNo,since,until,status,searchOutput,keyword);
+    }
+
 
     @Override
     public int inventoryCount(int storeNo) {
