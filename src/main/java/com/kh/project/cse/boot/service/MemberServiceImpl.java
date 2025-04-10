@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int insertMember(Member member) {
         int StoreNo = member.getStoreNo();
-
+        System.out.println(StoreNo);
         if(StoreNo > 0){
             return memberMapper.insertMembers(member);
         }else{
@@ -99,7 +99,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public ArrayList<String> selectStoreName() {
+    public ArrayList<Store> selectStoreName() {
         return storeMapper.selectStoreName();
     }
 

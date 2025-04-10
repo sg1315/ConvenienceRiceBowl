@@ -133,8 +133,8 @@
         WHERE STORE_NO = #{storeNo}
     </delete>
 
-    <select id="selectStoreName" resultType="String">
-        SELECT STORE_NAME
+    <select id="selectStoreName" resultMap="storeResult">
+        SELECT STORE_NO ,STORE_NAME
         FROM STORE
         WHERE STORE_STATUS = 1
     </select>

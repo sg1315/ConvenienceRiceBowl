@@ -32,5 +32,5 @@ public interface StoreMapper {
 
     int searchStoreListCount(@Param("condition") String condition, @Param("keyword") String keyword);
 
-    ArrayList<String> selectStoreName();
+    ArrayList<Store> selectStoreName();
 }

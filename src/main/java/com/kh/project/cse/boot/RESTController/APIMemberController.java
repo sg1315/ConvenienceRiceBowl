@@ -1,6 +1,8 @@
 package com.kh.project.cse.boot.RESTController;
 
 
+
+import com.kh.project.cse.boot.domain.vo.Store;
 import com.kh.project.cse.boot.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,9 @@ public class APIMemberController {
         }
     }
     @PostMapping("/selectStoreName")
-    public ArrayList<String> selectStoreName(){
-        ArrayList<String> storeNameList = memberService.selectStoreName();
+    public ArrayList<Store> selectStoreName(){
+        ArrayList<Store> storeNameList = memberService.selectStoreName();
+
         if(storeNameList != null){
             return storeNameList;
         } else {

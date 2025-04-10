@@ -109,15 +109,9 @@ public class LoginController {
                 mv.setViewName("login/loginForm");
             }
         } else {
-            Store store = new Store();
-            store.setStoreName(storeName);
-            store = memberService.checkStore(store);
-            if(store != null){
-                member.setStoreNo(store.getStoreNo());
                 result = memberService.insertMember(member);
-            }
         }
-
+        
         //메세지 구현해야됨!
         if(result > 0){
             session.setAttribute("alertMsg","성공적으로 회원가입을 완료하였습니다.");
