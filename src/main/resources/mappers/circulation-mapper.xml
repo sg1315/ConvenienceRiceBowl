@@ -16,6 +16,7 @@
         <result column="PRODUCT_NAME" property="productName"/>
         <result column="CATEGORY_NAME" property="categoryName"/>
         <result column="SUM_INPUT_PRICE" property="sumInputPrice"/>
+        <result column="PRICE" property="price"/>
 
         <!-- 발주목록 가져오기 -->
         <result column="SET_NO" property="setNo"/>
@@ -628,5 +629,104 @@
         AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
         AND
     </select>
+    <select id="selectOutputCount">
+        SELECT COUNT(*) FROM CIRCULATION
+        WHERE STATUS IN (3, 4)
+        AND STORE_NO =#{storeNo}
+    </select>
+    <select id="selectOutputList" resultMap="circulationResult">
+        SELECT
+        CI.CIRCULATION_DATE,
+        CI.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        CI.CIRCULATION_AMOUNT,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        CI.STATUS
+        FROM CIRCULATION CI
+        JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE CI.STORE_NO = #{storeNo}
+        AND CI.STATUS IN (3, 4)
+        ORDER BY CI.CIRCULATION_DATE DESC
+    </select>
+    <select id="searchOutputCount" resultType="int">
+        SELECT COUNT(*)
+        FROM CIRCULATION CI
+        JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE STORE_NO =#{storeNo}
+        <choose>
+            <when test="status > 0 ">
+                AND CI.STATUS IN (3, 4)
+            </when>
+            <when test="status == 3 ">
+                AND CI.STATUS = 3
+            </when>
+            <otherwise>
+                AND CI.STATUS = 4
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="searchOutput == 'productNo'">
+                AND CI.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchOutput == 'productName'">
+                AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+            AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
+        <if test="since !=null and since !=''">
+            AND CI.CIRCULATION_DATE &gt;= #{since}
+        </if>
+        <if test="until !=null and until !=''">
+            AND CI.CIRCULATION_DATE &lt;= #{until}
+        </if>
 
+    </select>
+    <select id="searchOutputList" resultMap="circulationResult">
+        SELECT
+        CI.CIRCULATION_DATE,
+        CI.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        CI.CIRCULATION_AMOUNT,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        CI.STATUS
+        FROM CIRCULATION CI
+        JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE CI.STORE_NO = #{storeNo}
+        <choose>
+            <when test="status =='' || status == null">
+                AND CI.STATUS IN (3, 4)
+            </when>
+            <when test="status == 3 ">
+                AND CI.STATUS = 3
+            </when>
+            <otherwise>
+                AND CI.STATUS = 4
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="searchOutput == 'productNo'">
+                AND CI.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchOutput == 'productName'">
+                AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+                AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
+        <if test="since != null and since !=''">
+            AND CI.CIRCULATION_DATE &gt;= #{since}
+        </if>
+        <if test="until != null and until !=''">
+            AND CI.CIRCULATION_DATE &lt;= #{until}
+        </if>
+        ORDER BY CI.CIRCULATION_DATE DESC
+    </select>
 </mapper>

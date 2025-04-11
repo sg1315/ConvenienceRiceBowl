@@ -116,4 +116,11 @@ public interface SpotService {
 
 
 
+    int selectOutputCount(int storeNo);
+
+    ArrayList<Circulation> selectOutputList(int storeNo, PageInfo pi);
+
+    int searchOutputCount(int storeNo, String since, String until, int status, String searchOutput, String keyword);
+
+    ArrayList<Circulation> searchOutputList(int storeNo, String since, String until, int status, String searchOutput, String keyword, PageInfo pi);
 }

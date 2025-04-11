@@ -20,6 +20,7 @@ public class Circulation {
     private Date circulationDate;
     private int status;
 
+    private String price; // 별칭 데이터베이스에 추가 안해도 됌
 
     private String storeName;
     private String productName;

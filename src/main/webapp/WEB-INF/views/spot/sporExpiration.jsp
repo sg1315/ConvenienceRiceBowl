@@ -147,7 +147,7 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="waper">
-    <form id="seach-form" action="/searchExpiry">
+    <form id="seach-form" action="searchExpiry">
         <div id="top-manu">
             <div id="top-left">
                 <div id="top-left1">
