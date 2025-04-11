@@ -197,12 +197,12 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public int insertInput(List<Circulation> inputList, int storeNo, String setNo) {
+    public int insertInput(List<Circulation> inputList, int storeNo) {
 
         int result = 1;
 
         for (Circulation circulation : inputList) {
-            int insertResult = circulationMapper.insertInput(circulation, storeNo, setNo);
+            int insertResult = circulationMapper.insertInput(circulation, storeNo);
             if (insertResult == 0) {
                 result = 0;
                 break;

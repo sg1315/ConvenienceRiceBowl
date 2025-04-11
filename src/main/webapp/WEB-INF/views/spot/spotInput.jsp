@@ -286,6 +286,29 @@
       font-weight: bold;
     }
     /* /modal */
+    #modal-body-table {
+      table-layout: fixed;
+      width: 100%;
+      height: 100%;
+      border-collapse: collapse;
+    }
+    #modal-body-table thead {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
+    #modal-body-table tbody {
+      display: block;
+      overflow-y: auto;
+      width: 100%;
+      height: 90%;
+    }
+
+    #modal-body-table tbody tr {
+      display: table;
+      width: 100%;
+      table-layout: fixed;
+    }
 
 
   </style>
@@ -349,8 +372,8 @@
             <c:forEach var="is" items="${islist}">
               <tr data-setno="${is.setNo}">
                 <c:choose>
-                  <c:when test="${i.status == 2}">
-                    <td>${i.minuteGroup}</td>
+                  <c:when test="${is.status == 2}">
+                    <td>${is.minuteGroup}</td>
                   </c:when>
                   <c:otherwise>
                     <td>-</td>
@@ -450,10 +473,10 @@
             <div class="header-info">
               <div id="header-info-title">
                 <p>
-                  종류 (총 수량) : <span id="input-kind-count">0</span> (<span id="input-total-quantity">0</span>)
+                  종류 (총 수량) : <span id="kind-count">0</span> (<span id="total-quantity">0</span>)
                 </p>
                 <p>
-                  총 <span id="input-total-price">0</span> 원
+                  총 <span id="total-price">0</span> 원
                 </p>
               </div>
               <button class="black-big-btn" id="insert-input-btn" style="display: none">입고완료</button>
@@ -531,7 +554,7 @@
                           "<td>" + i.productName + "</td>" +
                           "<td>" + i.circulationAmount + "</td>" +
                           "<td>" +
-                          "<input id='inputAmount' type='number' value='" + i.circulationAmount + "' readonly />" +
+                          "<input id='inputAmount' type='number' value='" + i.circulationAmount + "' readonly data-price='" + i.inputPrice + "' data-sale-price='" + i.salePrice + "' />" +
                           "</td>" +
                           "<td><span class='sum-price'>" + i.sumInputPrice.toLocaleString() + "</span></td>" +
                           "<td>" +
@@ -542,6 +565,22 @@
 
                 const inputDetail = document.querySelector("#modal-body-table tbody");
                 inputDetail.innerHTML = str;
+
+                document.querySelectorAll('#modal-body-table input[type="number"]').forEach(input => {
+                  input.addEventListener('input', () => {
+                    const unitPrice = parseFloat(input.dataset.price || "0");
+                    const quantity = parseInt(input.value || "0");
+                    const newPrice = unitPrice * quantity;
+
+                    const row = input.closest('tr');
+                    const priceCell = row.querySelector('.sum-price');
+                    if (priceCell) {
+                      priceCell.textContent = newPrice.toLocaleString();
+                    }
+
+                    updateOrderDetailSummary();
+                  });
+                });
 
                 document.querySelectorAll('.edit-check').forEach(checkbox => {
                   checkbox.addEventListener('change', function () {
@@ -561,7 +600,7 @@
                 const inputInfo = document.getElementById("input-info");
                 const inputDate = data[0]?.circulationDate || "날짜 없음";
 
-                inputInfo.innerHTML = `입고일자: `+ inputDate + ` | 발주번호: ` + setNo + ` | 상태: 입고 대기`;
+                inputInfo.innerHTML = `발주일자: `+ inputDate + ` | 발주번호: ` + setNo + ` | 상태: 입고 대기`;
                 const myModal = new bootstrap.Modal(document.getElementById('input_list_modal'));
                 myModal.show();
 
@@ -569,6 +608,45 @@
                   inputButton.style.display = "inline-block";
 
                 updateOrderDetailSummary();
+
+
+                document.getElementById('insert-input-btn').addEventListener('click', function () {
+                  const rows = document.querySelectorAll('#modal-body-table tbody tr');
+                  const result = [];
+
+                  rows.forEach(row => {
+                    const tds = row.querySelectorAll('td');
+                    const productNo = tds[0].textContent.trim();
+                    const input = row.querySelector('input[type="number"]');
+
+                    const inputPrice = parseFloat(input.dataset.price || "0");
+                    const salePrice = parseFloat(input.dataset.salePrice || "0");
+                    const circulationAmount = parseInt(input.value || "0");
+
+                    result.push({
+                      productNo: productNo,
+                      setNo: setNo,  // 전역 또는 상위 스코프에서 이미 선언된 값
+                      inputPrice: inputPrice,
+                      salePrice: salePrice,
+                      circulationAmount: circulationAmount
+                    });
+                  });
+
+                  // 이제 POST 요청
+                  $.ajax({
+                    url: '/spot_order/insertInput',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(result),
+                    success: function (response) {
+                      window.location.href = '/spot_input';
+                    },
+                    error: function (xhr, status, error) {
+                      console.error('입고 등록 실패:', error);
+                      alert('입고 등록 중 오류가 발생했습니다.');
+                    }
+                  });
+                });
 
 
               },
@@ -597,9 +675,9 @@
               });
 
               // 화면에 반영
-              $('#input-kind-count').text(kindCount);
-              $('#input-total-quantity').text(totalQuantity);
-              $('#input-total-price').text(totalPrice.toLocaleString());
+              $('#kind-count').text(kindCount);
+              $('#total-quantity').text(totalQuantity);
+              $('#total-price').text(totalPrice.toLocaleString());
             }
           }
 
@@ -667,9 +745,9 @@
               });
 
               // 화면에 반영
-              $('#input-kind-count').text(kindCount);
-              $('#input-total-quantity').text(totalQuantity);
-              $('#input-total-price').text(totalPrice.toLocaleString());
+              $('#kind-count').text(kindCount);
+              $('#total-quantity').text(totalQuantity);
+              $('#total-price').text(totalPrice.toLocaleString());
             }
           }
         });

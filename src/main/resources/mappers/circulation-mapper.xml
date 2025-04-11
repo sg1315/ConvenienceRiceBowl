@@ -67,6 +67,14 @@
                 TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI') AS MINUTE_GROUP
             FROM CIRCULATION
             WHERE STORE_NO = #{storeNo} AND STATUS IN (1,2,5,6,7)
+                AND NOT EXISTS (
+                    SELECT 1
+                FROM CIRCULATION c2
+                WHERE c2.SET_NO = CIRCULATION.SET_NO
+                    AND c2.STORE_NO = CIRCULATION.STORE_NO
+                    AND c2.STATUS = 2
+                    AND CIRCULATION.STATUS = 7
+                )
             GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI')
         )
     </select>
@@ -80,6 +88,14 @@
             STATUS
         FROM  CIRCULATION
         WHERE  STORE_NO = #{storeNo} AND STATUS IN (1,2,5,6,7)
+            AND NOT EXISTS (
+                SELECT 1
+            FROM CIRCULATION c2
+            WHERE c2.SET_NO = CIRCULATION.SET_NO
+                AND c2.STORE_NO = CIRCULATION.STORE_NO
+                AND c2.STATUS = 2
+                AND CIRCULATION.STATUS = 7
+            )
         GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
         ORDER BY SET_NO DESC
     </select>
@@ -110,6 +126,14 @@
                 <if test="setNo != null and setNo != ''">
                     AND SET_NO LIKE '%' || #{setNo} || '%'
                 </if>
+                AND NOT EXISTS (
+                    SELECT 1
+                FROM CIRCULATION c2
+                WHERE c2.SET_NO = CIRCULATION.SET_NO
+                    AND c2.STORE_NO = CIRCULATION.STORE_NO
+                    AND c2.STATUS = 2
+                    AND CIRCULATION.STATUS = 7
+                )
             GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
         )
     </select>
@@ -138,6 +162,15 @@
             <if test="setNo != null and setNo != ''">
                 AND SET_NO LIKE '%' || #{setNo} || '%'
             </if>
+            AND NOT EXISTS (
+                SELECT 1
+            FROM CIRCULATION c2
+            WHERE c2.SET_NO = CIRCULATION.SET_NO
+                AND c2.STORE_NO = CIRCULATION.STORE_NO
+                AND c2.STATUS = 2
+                AND CIRCULATION.STATUS = 7
+            )
+
         GROUP BY TO_CHAR(CIRCULATION_DATE, 'YYYY-MM-DD HH24:MI'), SET_NO, STATUS
         ORDER BY SET_NO DESC
     </select>
@@ -152,6 +185,7 @@
             C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
             (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE,
             C.INPUT_PRICE,
+            C.SALE_PRICE,
             C.STATUS
         FROM CIRCULATION C
             LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
@@ -305,12 +339,13 @@
             C.CIRCULATION_AMOUNT AS CIRCULATION_AMOUNT,
             (C.CIRCULATION_AMOUNT * C.INPUT_PRICE) AS SUM_INPUT_PRICE,
             C.INPUT_PRICE,
+            C.SALE_PRICE,
             C.STATUS
         FROM CIRCULATION C
             LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
             LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
             LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
-        WHERE C.SET_NO = #{setNo}
+        WHERE C.SET_NO = #{setNo} AND STATUS = 2
     </select>
 
     <insert id="insertInput">
@@ -327,7 +362,7 @@
     ) VALUES (
         SEQ_CIR.NEXTVAL,
         #{storeNo},
-        #{setNo},
+        #{circulation.setNo},
         #{circulation.productNo},
         #{circulation.inputPrice},
         #{circulation.salePrice},

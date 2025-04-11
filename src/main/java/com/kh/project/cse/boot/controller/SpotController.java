@@ -397,24 +397,17 @@ public class SpotController {
     @PostMapping("/spot_order/insertInput")
     public ResponseEntity<String> insertInput(@RequestBody List<Circulation> inputList, HttpSession session) {
 
-        for(Circulation c : inputList) {
-            System.out.println(c.getProductName());
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+
+        int result = 0;
+
+        result = spotService.insertInput(inputList, storeNo);
+        if (result > 0) {
+            return ResponseEntity.ok("입고 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("입고 실패");
         }
-
-        return null;
-
-//        Member loginUser = (Member) session.getAttribute("loginMember");
-//        int storeNo = loginUser.getStoreNo();
-//        String setNo = storeNo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyMMddHHmm"));
-//
-//        int result = 0;
-//
-//        result = spotService.insertInput(inputList, storeNo, setNo);
-//        if (result > 0) {
-//            return ResponseEntity.ok("입고 완료");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("입고 실패");
-//        }
     }
 
 

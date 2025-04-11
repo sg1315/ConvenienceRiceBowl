@@ -63,7 +63,7 @@ public interface CirculationMapper {
     //입고 상세
     ArrayList<Circulation> inputDetail(@Param("setNo") String setNo);
     //입고 완료
-    int insertInput(@Param("circulation") Circulation circulation, int storeNo, String setNo);
+    int insertInput(@Param("circulation") Circulation circulation, int storeNo);
 
 
 

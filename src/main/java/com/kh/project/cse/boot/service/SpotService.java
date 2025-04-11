@@ -73,7 +73,7 @@ public interface SpotService {
     //입고 - 입고 상세
     ArrayList<Circulation> inputDetail(String setNo);
     //입고 - 입고 완료
-    int insertInput(List<Circulation> inputList, int storeNo, String setNo);
+    int insertInput(List<Circulation> inputList, int storeNo);
 
 
     //매출집계 - 검색

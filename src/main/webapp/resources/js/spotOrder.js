@@ -56,7 +56,7 @@ document.addEventListener('click', function (e) {
 
         const categoryName = btn.dataset.categoryname;
         const productName = btn.dataset.productname;
-        const inputPrice = parseInt(btn.dataset.inputprice).toLocaleString();
+        const inputPrice = parseInt(btn.dataset.inputprice);
         const salePrice = parseInt(btn.dataset.saleprice);
 
         const newRow = `
@@ -68,7 +68,7 @@ document.addEventListener('click', function (e) {
                 <td>
                     <input type="number" class="form-control quantity-input" min="1" value="1" style="width: 80px;">
                 </td>
-                <td>${inputPrice}</td>
+                <td>${inputPrice.toLocaleString()}</td>
             </tr>
         `;
 
