@@ -136,4 +136,17 @@
         ORDER BY I.PRODUCT_NO DESC
     </select>
 
+    <select id="selectdashInventoryCount" resultType="_int">
+        SELECT COUNT(*)
+        FROM (
+        SELECT
+        (SUM(I.INVENTORY_COUNT) - MAX(P.SHORTAGE_AMOUNT)) AS INVENTORY_STATUS
+        FROM INVENTORY I
+        LEFT JOIN PRODUCT P ON I.PRODUCT_NO = P.PRODUCT_NO
+        WHERE I.STORE_NO = #{storeNo}
+        GROUP BY I.PRODUCT_NO
+        )
+        WHERE INVENTORY_STATUS = 0
+    </select>
+
 </mapper>

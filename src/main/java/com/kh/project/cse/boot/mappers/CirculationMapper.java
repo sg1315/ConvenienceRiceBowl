@@ -93,4 +93,6 @@ public interface CirculationMapper {
 
     ArrayList<Circulation> searchOutputList(@Param("storeNo")int storeNo,@Param("since") String since,@Param("until") String until,
                                             @Param("status") int status,@Param("searchOutput") String searchOutput,@Param("keyword") String keyword, RowBounds rowBounds);
+
+    ArrayList<Circulation> selectdashCirculationDispose(int storeNo);
 }

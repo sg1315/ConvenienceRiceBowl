@@ -342,4 +342,19 @@ public class SpotServiceImpl implements SpotService {
         return List.of();
     }
 
+    @Override
+    public int selectdashInventoryCount(int storeNo) {
+        return inventoryMapper.selectdashInventoryCount(storeNo);
+    }
+
+    @Override
+    public ArrayList<Announcement> selectdashAnnouncementlist() {
+        return announcementMapper.selectdashAnnouncementlist();
+    }
+
+    @Override
+    public ArrayList<Circulation> selectdashCirculationDispose(int storeNo) {
+        return circulationMapper.selectdashCirculationDispose(storeNo);
+    }
+
 }

@@ -127,4 +127,13 @@ public interface SpotService {
     int getSpotSalesCount();
     List<Circulation> getSpotSalesList(int cpage, int i);
 
+
+    //대쉬보드 오른쪽
+
+    int selectdashInventoryCount(int storeNo);
+
+    ArrayList<Announcement> selectdashAnnouncementlist ();
+
+    ArrayList<Circulation> selectdashCirculationDispose(int storeNo);
+
 }

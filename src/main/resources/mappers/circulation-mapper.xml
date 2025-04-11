@@ -729,4 +729,22 @@
         </if>
         ORDER BY CI.CIRCULATION_DATE DESC
     </select>
+
+    <select id="selectdashCirculationDispose" resultMap="circulationResult">
+        SELECT
+        P.PRODUCT_NAME,
+        P.INPUT_PRICE,
+        SUM(CI.CIRCULATION_AMOUNT) AS TOTAL_AMOUNT,
+        SUM(CI.CIRCULATION_AMOUNT * P.INPUT_PRICE) AS TOTAL_INPUT_PRICE
+        FROM
+        CIRCULATION CI
+        JOIN
+        PRODUCT P ON (CI.PRODUCT_NO = P.PRODUCT_NO)
+        WHERE
+        TRUNC(CI.CIRCULATION_DATE) = TRUNC(SYSDATE)
+        AND CI.STORE_NO = #{storeNo}
+        AND CI.STATUS = 4
+        GROUP BY
+        P.PRODUCT_NAME, P.INPUT_PRICE
+    </select>
 </mapper>

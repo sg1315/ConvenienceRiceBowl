@@ -24,4 +24,7 @@ public interface InventoryMapper {
     ArrayList<Inventory> posAllInventroySelect(int storeNo);
     //포스기 검색
     ArrayList<Inventory> posInventroySearch(String keyword, int storeNo);
+
+    //대쉬보드
+    int selectdashInventoryCount(int storeNo);
 }

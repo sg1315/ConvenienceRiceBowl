@@ -235,7 +235,19 @@
             height: 70%;
             padding-top: 10px;
             font-size: 14px;
+            max-width: 420px;
         }
+        #anntitle{
+            width: 100%;
+            padding: 10px;
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: #979797 solid 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
 
         #dash-dispose{
             width: 100%;
@@ -357,7 +369,6 @@
         #dispose-content table td{
             background: white;
         }
-
     </style>
 
 </head>
@@ -522,24 +533,28 @@
                     <div id="dash-alarm">
                         <div id="alarm-title">
                             <p>재고부족 알림</p>
-                            <img src="/resources/common/대시보드_알림창.png">
+                            <img src="/resources/common/대시보드_알림창.png" style="display: ${inventoryCount == 0 ? 'none' : 'block'}">
+                            <img src="/resources/common/대시보드_알림없음.png" style="display: ${inventoryCount == 0 ? 'block' : 'none'}">
                         </div>
                         <div id="alarm-text">
                             <div>
-                                <p>부족한 재고가 있습니다. 확인부탁드립니다.</p>
+                                <p style="display: ${inventoryCount == 0 ? 'none' : 'block'}">부족한 재고가 있습니다. 확인 부탁드립니다.</p>
+                                <p style="display: ${inventoryCount == 0 ? 'block' : 'none'}">부족한 재고가 없습니다.</p>
                             </div>
                             <div>
-                                <a><button id="move_inven">재고관리이동<img src="/resources/common/화살표_아이콘.png"></button></a>
+                                <a><button id="move_inven" onclick="moveInventory()" >재고관리이동<img src="/resources/common/화살표_아이콘.png"></button></a>
                             </div>
                         </div>
                     </div>
                     <div id="dash-announcement">
                         <div id="announcement-title">
                             <p>공지사항</p>
-                            <a><img src="/resources/common/대시보드_Plus%20Math.png"></a>
+                            <a href="/spot_notice"><img src="/resources/common/대시보드_Plus%20Math.png"></a>
                         </div>
                         <div id="announcement-text">
-                            가맹점주님들에게 알립니다. oo상품이 oo월부터........
+                            <c:forEach var="dashAnn" items="${annList}">
+                                <p id="anntitle"> ${dashAnn.announcementTitle}</p>
+                            </c:forEach>
                         </div>
                     </div>
                 </div>
@@ -560,7 +575,7 @@
                                 <p>금일 폐기수량</p>
                             </div>
                             <div>
-                                <p>35</p>
+                                <p>${totalAmountSum}</p>
                             </div>
                         </div>
                         <div id="dispose-amount">
@@ -568,13 +583,12 @@
                                 <p>금일 폐기금액</p>
                             </div>
                             <div>
-                                <p>20,000</p>
+                                <p><fmt:formatNumber value="${totalInputPriceSum}" type="number" groupingUsed="true"/></p>
                             </div>
                         </div>
                     </div>
                     <div id="dispose-content">
                         <table class="table table-bordered">
-                        
                             <thead>
                             <tr>
                                 <th>상품명</th>
@@ -583,31 +597,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>AA</td>
-                                <td>1ea</td>
-                                <td>5000</td>
-                            </tr>
-                            <tr>
-                                <td>BB</td>
-                                <td>3ea</td>
-                                <td>6000</td>
-                            </tr>
-                            <tr>
-                                <td>CC</td>
-                                <td>4ea</td>
-                                <td>4000</td>
-                            </tr>
-                            <tr>
-                                <td>DD</td>
-                                <td>2ea</td>
-                                <td>3000</td>
-                            </tr>
-                            <tr>
-                                <td>EE</td>
-                                <td>1ea</td>
-                                <td>1000</td>
-                            </tr>
+                            <c:forEach var="d" items="${disList}">
+                                <tr>
+                                    <td>${d.productName}</td>
+                                    <td>${d.totalAmount}</td>
+                                    <td><fmt:formatNumber value="${d.totalInputPrice}" type="number" groupingUsed="true"/></td>
+                                </tr>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -688,6 +684,11 @@
             }
         }
     });
+
+    //대쉬보드 오른쪽
+    function moveInventory() {
+        window.location.href = '/spot_inventory';
+    }
 </script>
 
 

@@ -40,6 +40,26 @@ public class SpotController {
     //대시보드
     @RequestMapping("/spot_dashboard")
     public String spot_dashboard(HttpSession session, Model model) {
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+        int inventoryCount = spotService.selectdashInventoryCount(storeNo);
+
+        ArrayList<Announcement> annList = spotService.selectdashAnnouncementlist();
+        ArrayList<Circulation> disList = spotService.selectdashCirculationDispose(storeNo);
+
+        int totalAmountSum = 0;
+        int totalInputPriceSum = 0;
+        for (Circulation c : disList) {
+            totalAmountSum += c.getTotalAmount();
+            totalInputPriceSum += c.getTotalInputPrice();
+        }
+
+        model.addAttribute("disList", disList);
+        model.addAttribute("annList", annList);
+        model.addAttribute("inventoryCount", inventoryCount);
+        model.addAttribute("totalAmountSum", totalAmountSum);
+        model.addAttribute("totalInputPriceSum", totalInputPriceSum);
+
         return "spot/spotDashboard";
     }
 
@@ -161,7 +181,7 @@ public class SpotController {
         Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
         int inventoryCount = spotService.inventoryCount(storeNo);
-        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 12);
+        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 10);
         ArrayList<Inventory> list = spotService.selectInventory(pi, storeNo);
 
         model.addAttribute("pi", pi);
@@ -178,7 +198,8 @@ public class SpotController {
             Model model,
             HttpSession session) {
 
-        int storeNo = 5;
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
 
         // 조건에 따라 Service 호출
         int count = spotService.searchInventoryCount(storeNo, condition, keyword, check);
