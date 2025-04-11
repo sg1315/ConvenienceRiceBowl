@@ -130,7 +130,15 @@ public class HeadServiceImpl implements HeadService {
     public int searchProductCount(String condition, String keyword) {
         return productMapper.searchProductCount(condition, keyword);
     }
+    @Override
+    public Product OneProductSelect(int productNo) {
+        return productMapper.OneProductSelect(productNo);
+    }
 
+    @Override
+    public int updateOnlyProduct(Product product) {
+        return productMapper.updateOnlyProduct(product);
+    }
 
     @Override
     public int deleteUpdateProduct(Product product) {
@@ -174,6 +182,8 @@ public class HeadServiceImpl implements HeadService {
         }
         return result;
     }
+
+
     @Override
     public int deleteStoreStatus(String[] storeNumbers, String[] memberNumbers) {
 
@@ -215,7 +225,6 @@ public class HeadServiceImpl implements HeadService {
         if (result > 0 && status == 5) {
             self.updateLaterToStatus7(setNo); // 프록시를 통해 호출해야 @Async가 동작함
         }
-
         return result;
     }
 
@@ -247,6 +256,8 @@ public class HeadServiceImpl implements HeadService {
 
         return circulationMapper.circulationSearchList(rowBounds,  setNo,  startDate, endDate);
     }
+
+
 
     @Override
     public int searchstoreListCount(String condition, String keyword) {

@@ -150,6 +150,17 @@
         PRODUCT_STATUS = #{status}
         WHERE PRODUCT_NO = #{productNo}
     </update>
+    <update id="updateOnlyProduct" >
+        UPDATE PRODUCT
+        SET
+        CATEGORY_NO = #{categoryNo},
+        PRODUCT_NAME= #{productName},
+        INPUT_PRICE = #{inputPrice},
+        SALE_PRICE = #{salePrice},
+        AVAILABILITY = #{availability},
+        PRODUCT_STATUS = #{status}
+        WHERE PRODUCT_NO = #{productNo}
+    </update>
 
     <update id="deleteUpdateProduct" >
         UPDATE PRODUCT

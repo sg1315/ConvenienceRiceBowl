@@ -105,7 +105,7 @@ public interface HeadService {
     ArrayList<Circulation> circulationSearchList(PageInfo pi, String setNo, Date startDate, Date endDate);
 
 
+    Product OneProductSelect(int productNo);
 
-
-
+    int updateOnlyProduct(Product product);
 }
