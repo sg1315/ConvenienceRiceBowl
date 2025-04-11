@@ -1,4 +1,5 @@
-
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -204,7 +205,7 @@
         }
 
         #detail-modal-body-top {
-            height: 8%;
+            height: 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -456,6 +457,11 @@
             </c:if>
         </div>
     </div>
+    <%
+        LocalDate today = LocalDate.now();
+        String formattedDate = today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        request.setAttribute("thisDate", formattedDate);
+    %>
 
     <!--start point-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
@@ -479,9 +485,9 @@
                         <!--모달 내용-->
                         <div id="modal-body-top">
                             <input type="text" placeholder="제목을 입력하세요" name="announcementTitle">
-                            <p>2025.04.01</p>
+                            <p> ${thisDate}</p>
                         </div>
-                        <textarea id="textbox" name="announcementDetail" placeholder="내용을 입력하세요(1000자 이하)"></textarea>
+                        <textarea id="textbox" name="announcementDetail" placeholder="내용을 입력하세요(2000자 이하)"></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="black-btn">완료</button>
@@ -712,6 +718,16 @@
         const replyBody = document.querySelector("#comment-table");
         replyBody.innerHTML = str;
     }
+
+    const textarea = document.getElementById("textbox");
+    const maxLength = 2000;
+
+    textarea.addEventListener("input", function () {
+        if (textarea.value.length > maxLength) {
+            alert("글자수가 초과되었습니다 (최대 2000자까지 입력 가능합니다)");
+            textarea.value = textarea.value.substring(0, maxLength); // 초과된 부분 자동 제거
+        }
+    });
 </script>
 </body>
 </html>
