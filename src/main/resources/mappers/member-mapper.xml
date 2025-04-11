@@ -31,7 +31,7 @@
         MEMBER_STATUS
         ) VALUES (
         SEQ_MNO.NEXTVAL,
-        SEQ_ST.CURRVAL,
+        SEQ_STNO.CURRVAL,
         #{position},
         #{memberName},
         #{phone},

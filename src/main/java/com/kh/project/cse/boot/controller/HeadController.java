@@ -116,8 +116,15 @@ public class HeadController {
     public String insertAnnouncement(Announcement announcement, HttpSession session) {
 
         int result = headService.insertAnnouncement(announcement);
+        if(result > 0){
+            session.setAttribute("alertMsg", "게시글 작성 성공");
+            return "redirect:/head_announcement";
+        } else {
+            session.setAttribute("alertMsg", "게시글 작성 실패");
+            return "redirect:/head_announcement";
+        }
 
-        return "redirect:/head_announcement";
+
     }
 
     //공지사항불러오기
@@ -169,11 +176,12 @@ public class HeadController {
     }
 
     //댓글추가
-    @PostMapping("insertReply")
-    public String insertReply(Reply reply, HttpSession session) {
-        headService.insertReply(reply);
-
-        return "redirect:/head_announcement";
+    @PostMapping("/insertReply")
+    @ResponseBody
+    public String insertReply(Reply reply) {
+        System.out.println(reply);
+        int result = headService.insertReply(reply);
+        return result > 0 ? "success" : "fail";
     }
     //댓글불러오기
     @GetMapping("replylist")
@@ -205,7 +213,7 @@ public class HeadController {
 
 
         if(!upfile.getOriginalFilename().equals("")){
-            String changeName = com.kh.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
+            String changeName = com.kh.project.cse.boot.utils.Template.saveFile(upfile, session, "/resources/uploadfile/");
 
             product.setChangeName(changeName);
             product.setOriginName(upfile.getOriginalFilename());
@@ -255,7 +263,7 @@ public class HeadController {
 
 
         if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
-            String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
+            String changeName = com.kh.project.cse.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             product.setChangeName(changeName);
             product.setOriginName(file1.getOriginalFilename());

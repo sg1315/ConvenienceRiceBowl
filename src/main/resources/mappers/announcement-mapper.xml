@@ -43,7 +43,7 @@
         SEQ_ATNO.NEXTVAL,
         #{announcementTitle},
         #{announcementDetail},
-        10005,
+        #{memberNo},
         1
         )
     </insert>

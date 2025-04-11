@@ -1,4 +1,4 @@
-package com.kh.boot.utils;
+package com.kh.project.cse.boot.utils;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.multipart.MultipartFile;

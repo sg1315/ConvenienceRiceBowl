@@ -20,7 +20,7 @@
         STORE_NO,
         STORE_NAME
         ) VALUES (
-        SEQ_ST.NEXTVAL,
+        SEQ_STNO.NEXTVAL,
         #{storeName}
         )
     </insert>
