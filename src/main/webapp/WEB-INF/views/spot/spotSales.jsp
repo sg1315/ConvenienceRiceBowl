@@ -332,21 +332,24 @@
     </div>
     <div id="main-pageing">
       <c:if test="${pi.startPage > 1}">
-        <a href="spot_sales?cpage=${pi.startPage - 1}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}">
+        <a href="spot_sales?cpage=${pi.startPage - 1}&startMonth=${param.startMonth}&endMonth=${param.endMonth}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
         </a>
       </c:if>
+
       <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
         <button type="button" class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                onclick="location.href='spot_sales?cpage=${i}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}'">
+                onclick="location.href='spot_sales?cpage=${i}&startMonth=${param.startMonth}&endMonth=${param.endMonth}'">
             ${i}
         </button>
       </c:forEach>
+
       <c:if test="${pi.endPage < pi.maxPage}">
-        <a href="spot_sales?cpage=${pi.endPage + 1}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}">
+        <a href="spot_sales?cpage=${pi.endPage + 1}&startMonth=${param.startMonth}&endMonth=${param.endMonth}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
         </a>
       </c:if>
+
     </div>
   </div>
 </div>

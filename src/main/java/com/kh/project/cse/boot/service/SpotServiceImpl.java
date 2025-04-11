@@ -212,7 +212,7 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.selectSalesMonth(storeNo,startDate,endDate);
     }
 
-    //매출집계 - 모달
+    //매출집계 - 초기
     @Override
     public List<Circulation> getDetailsByDate(String date, int storeNo) {
         if (date.length() == 4) {
@@ -334,12 +334,15 @@ public class SpotServiceImpl implements SpotService {
 
     //페이징 처리 - 매출집계
     @Override
-    public int getSpotSalesCount() {
-        return 0;
+    public int countSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate) {
+        return circulationMapper.countSalesByMonth(storeNo, startDate, endDate);
     }
     @Override
-    public List<Circulation> getSpotSalesList(int cpage, int i) {
-        return List.of();
+    public List<Circulation> selectSalesMonthWithPaging(int storeNo, LocalDate startDate, LocalDate endDate, int offset, int limit) {
+        return circulationMapper.selectSalesMonthWithPaging(storeNo, startDate, endDate, offset, limit);
     }
+
+
+
 
 }

@@ -124,7 +124,8 @@ public interface SpotService {
     int getSpotAttendanceCount(int storeNo);
     List<Attendance> getSpotAttendanceList(int storeNo, int cpage, int limit);
     //페이징처리 - 매출집계
-    int getSpotSalesCount();
-    List<Circulation> getSpotSalesList(int cpage, int i);
+    int countSalesByMonth(int storeNo, LocalDate startDate, LocalDate endDate);
+    List<Circulation> selectSalesMonthWithPaging(int storeNo, LocalDate startDate, LocalDate endDate, int offset, int limit);
+
 
 }

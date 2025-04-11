@@ -347,29 +347,31 @@
 
                 <tbody >
                 <c:if test="${not empty memberList}">
-                <c:forEach var="member" items="${memberList}">
-                    <tr data-residentno="${member.residentNo}"><%--주민번호 같이 전달--%>
-                        <td>
-                            <c:choose>
-                                <c:when test="${member.position == '1'}">본사</c:when>
-                                <c:when test="${member.position == '2'}">지점장</c:when>
-                                <c:when test="${member.position == '3'}">매니저</c:when>
-                                <c:when test="${member.position == '4'}">알바</c:when>
-                                <c:otherwise>없음</c:otherwise>
-                            </c:choose>
-                        </td>
-                            <td>${member.memberId}</td>
-                            <td>${member.memberName}</td>
-                            <td>${member.phone}</td>
-                        <td>
-                        <c:choose>
-                            <c:when test="${member.status == 'Y'}">재직</c:when>
-                            <c:when test="${member.status == 'N'}">퇴직</c:when>
-                            <c:otherwise>없음</c:otherwise>
-                        </c:choose>
-                        </td>
-                    </tr>
-                </c:forEach>
+                    <c:forEach var="member" items="${memberList}">
+                        <c:if test="${member.storeNo == loginMember.storeNo}">
+                            <tr data-residentno="${member.residentNo}">
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${member.position == '1'}">본사</c:when>
+                                        <c:when test="${member.position == '2'}">지점장</c:when>
+                                        <c:when test="${member.position == '3'}">매니저</c:when>
+                                        <c:when test="${member.position == '4'}">알바</c:when>
+                                        <c:otherwise>없음</c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${member.memberId}</td>
+                                <td>${member.memberName}</td>
+                                <td>${member.phone}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${member.status == 'Y'}">재직</c:when>
+                                        <c:when test="${member.status == 'N'}">퇴직</c:when>
+                                        <c:otherwise>없음</c:otherwise>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:if>
+                    </c:forEach>
                 </c:if>
 
 

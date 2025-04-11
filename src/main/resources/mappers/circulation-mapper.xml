@@ -537,22 +537,89 @@
         AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
     </select>
     <!-- 매출집게 - 년도-->
-    <select id="getDetailsByYear" resultMap="monthlySalesResultMap">
-        SELECT
-        TO_CHAR(CIRCULATION_DATE, 'MM') AS MONTH,
-        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS TOTAL_INPUT,
-        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS TOTAL_SALE,
-        SUM((SALE_PRICE - INPUT_PRICE) * CIRCULATION_AMOUNT) AS TOTAL_MARGIN
-        FROM
-        CIRCULATION
-        WHERE
-        TO_CHAR(CIRCULATION_DATE, 'YYYY') = #{year} -- 예: '2025'
-        AND STORE_NO = #{storeNo}
-        GROUP BY
-        TO_CHAR(CIRCULATION_DATE, 'MM')
-        ORDER BY
-        MONTH ASC
+<!--    <select id="getDetailsByYear" resultMap="monthlySalesResultMap">-->
+<!--        SELECT-->
+<!--        TO_CHAR(CIRCULATION_DATE, 'MM') AS MONTH,-->
+<!--        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS TOTAL_INPUT,-->
+<!--        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS TOTAL_SALE,-->
+<!--        SUM((SALE_PRICE - INPUT_PRICE) * CIRCULATION_AMOUNT) AS TOTAL_MARGIN-->
+<!--        FROM-->
+<!--        CIRCULATION-->
+<!--        WHERE-->
+<!--        TO_CHAR(CIRCULATION_DATE, 'YYYY') = #{year} &#45;&#45; 예: '2025'-->
+<!--        AND STORE_NO = #{storeNo}-->
+<!--        GROUP BY-->
+<!--        TO_CHAR(CIRCULATION_DATE, 'MM')-->
+<!--        ORDER BY-->
+<!--        MONTH ASC-->
+<!--    </select>-->
+
+    <!--test-->
+        <select id="getDetailsByYear" resultMap="monthlySalesResultMap">
+            SELECT
+            TO_CHAR(CIRCULATION_DATE, 'MM') AS MONTH,
+
+            SUM(
+            CASE
+            WHEN STATUS = 2 THEN INPUT_PRICE * CIRCULATION_AMOUNT
+            ELSE 0
+            END
+            ) AS TOTAL_INPUT,
+
+            SUM(
+            CASE
+            WHEN STATUS = 3 THEN SALE_PRICE * CIRCULATION_AMOUNT
+            ELSE 0
+            END
+            ) AS TOTAL_SALE
+
+            FROM CIRCULATION
+
+            WHERE
+            TO_CHAR(CIRCULATION_DATE, 'YYYY') = #{year}
+            AND STORE_NO = #{storeNo}
+            AND STATUS IN (2, 3)
+
+            GROUP BY
+            TO_CHAR(CIRCULATION_DATE, 'MM')
+
+            ORDER BY
+            MONTH ASC
+        </select>
+
+
+    <!--test-->
+
+    <!-- 매출집계 출력(페이징)-->
+    <!-- 페이징을 위한 카운트 쿼리 -->
+    <select id="countSalesByMonth" resultType="int">
+        SELECT COUNT(*) FROM (
+        SELECT CIRCULATION_DATE
+        FROM CIRCULATION
+        WHERE STORE_NO = #{storeNo}
+        AND CIRCULATION_DATE &gt;= #{startDate}
+        AND CIRCULATION_DATE &lt;= #{endDate}
+        GROUP BY CIRCULATION_DATE
+        )
     </select>
+
+    <!-- 페이징을 위한 매출 조회 쿼리 -->
+    <select id="selectSalesMonthWithPaging" resultMap="circulationSummaryResult">
+        SELECT
+        CIRCULATION_DATE,
+        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS INPUT_PRICE,
+        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS SALE_PRICE,
+        SUM(CIRCULATION_AMOUNT) AS CIRCULATION_AMOUNT
+        FROM CIRCULATION
+        WHERE STORE_NO = #{storeNo}
+        AND CIRCULATION_DATE &gt;= #{startDate}
+        AND CIRCULATION_DATE &lt;= #{endDate}
+        GROUP BY CIRCULATION_DATE
+        ORDER BY CIRCULATION_DATE ASC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+
     <!--본사 승인 미승인-->
     <update id="updateheadorder">
         UPDATE CIRCULATION
