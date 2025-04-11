@@ -8,13 +8,14 @@
     <title>enrollForm</title>
     <style>
         .enrollForm {
-            min-width: 700px;
+            min-width: 50em;
+            height: 32em;
             display: grid;
-            grid-template-rows: 2fr auto 1fr;
+            grid-template-rows: 1.5fr 6fr 1fr;
             background-color: white;
-            border-radius: 10px;
+            border-radius: 1em;
             margin: 0 auto;
-            padding: 10px;
+            padding: 1em;
         }
         .enrollForm input{
             min-width: 0;
@@ -28,7 +29,7 @@
         #enrollTitle{
             align-items: center ;
             font-size: 20pt;
-            border-radius: 8px 8px 0 0;
+            border-radius: 0.3em 0.3em 0 0;
         }
         .enrollForm p{
             width: max-content;
@@ -41,29 +42,42 @@
         .enrollForm input{
             font-optical-sizing: auto;
         }
-        .enrollForm input,.enrollForm button{
+        #storeSelectBox > select,.enrollForm input,.enrollForm button{
             border: 2px solid #8A8A8A;
-            border-radius: 8px;
+            border-radius: 0.5em;
         }
         /**/
         .enrollInput{
             width: 100%;
+            height:90%;
             display: grid;
-            grid-template-rows: 26px 1fr 1fr 1fr 1fr 26px;
+            grid-template-rows: repeat(1,15%);
+            align-self: center;
             gap: 10px;
         }
         .enrollInput>div{
-            min-height: 30px;
-            max-height: 40px;
+            width: 94%;
+            height: 90%;
             display: grid;
-            grid-template-columns: 12% 1fr 4% 8% 1fr;
-            gap: 10px;
-            margin: 0 20px;
+            grid-template-columns: 12% 38% 1% 8% 33%;
+            justify-self: center;
+            align-self: center;
+            gap: 1%;
         }
-        .flexInput-1{
-            display: grid;
-            grid-template-columns: 70% auto;
-            gap: 4px;
+        .flexInput1{
+            width: 100%;
+            display: flex;
+            gap: 0.8%;
+        }
+        .flexInput1 > input {
+            width: 67%;
+        }
+        .flexInput1 > button {
+            width: 32.2%;
+        }
+        #storeSelectBox > select{
+            width: 100%;
+            height: 100%;
         }
         .flexInput-2{
             display: grid;    
@@ -113,7 +127,7 @@
                             <option value="4">알바</option>
                         </select>
                     </div>
-                    <div class="flexInput-1" id="storeInputBox">
+                    <div class="flexInput1" id="storeInputBox">
                         <input type="text" id="storeName" name="storeName" oninput="resetStoreCheck()">
                         <button type="button" onclick="checkStoreName()">확인</button>
                     </div>
@@ -126,7 +140,7 @@
                 </div>
                 <div>
                     <div><p>아이디</p></div>
-                    <div class="flexInput-1">
+                    <div class="flexInput1" id="idInput">
                         <input type="text" id="memberId" name="memberId" oninput="resetIdCheck()" required>
                         <button type="button" onclick="checkId()">중복확인</button>
                     </div>
@@ -178,7 +192,7 @@
                         selectStoreName();
                     } else {
                         storeSelectBox.style.display = "none";
-                        storeInputBox.style.display = "block";
+                        storeInputBox.style.display = "flex";
                         isStoreNameOk = false;
                     }
                 }

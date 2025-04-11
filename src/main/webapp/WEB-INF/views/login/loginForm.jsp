@@ -70,7 +70,7 @@
             .login>div>div>button,
             input {
                 border: 1px solid white;
-                border-radius: 10px;
+                border-radius: 0.4em;
             }
 
             #input {
