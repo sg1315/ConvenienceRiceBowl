@@ -127,4 +127,9 @@ public interface SpotService {
     int getSpotSalesCount();
     List<Circulation> getSpotSalesList(int cpage, int i);
 
+    //대시보드 - 왼쪽
+    //상품 Best3, Worst3
+    ArrayList<Circulation> spotSalesBestList(int storeNo);
+    ArrayList<Circulation> spotSalesWorstList(int storeNo);
+
 }

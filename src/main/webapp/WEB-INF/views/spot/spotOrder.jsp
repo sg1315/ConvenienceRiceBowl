@@ -532,7 +532,7 @@
                     <c:when test="${not empty oslist}">
                         <c:forEach var="os" items="${oslist}">
                             <tr data-setno="${os.setNo}">
-                                <td >${os.minuteGroup}</td>
+                                <td>${os.minuteGroup}</td>
                                 <td>${os.setNo}</td>
                                 <td>${os.totalAmount}</td>
                                 <td><fmt:formatNumber value="${os.totalInputPrice}" type="number" groupingUsed="true" /></td>
@@ -633,9 +633,9 @@
                         <table class="table table-hover" id="order-product-table">
                             <thead>
                             <tr>
-                                <th class="col-2">상품번호</th>
-                                <th class="col-2">카테고리</th>
-                                <th class="col-5">상품명</th>
+                                <th class="col-1">상품번호</th>
+                                <th class="col-1">카테고리</th>
+                                <th class="col-1">상품명</th>
                                 <th class="col-1"></th>
                             </tr>
                             </thead>
@@ -698,11 +698,11 @@
                             <thead>
                             <tr>
                                 <th class="col-1"></th>
-                                <th class="col-2">상품번호</th>
-                                <th class="col-2">카테고리</th>
-                                <th class="col-4">상품명</th>
-                                <th class="col-2">수량</th>
-                                <th class="col-2">금액</th>
+                                <th class="col-1">상품번호</th>
+                                <th class="col-1">카테고리</th>
+                                <th class="col-1">상품명</th>
+                                <th class="col-1">수량</th>
+                                <th class="col-1">금액</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -752,10 +752,10 @@
                         <thead>
                         <tr>
                             <th class="col-1">상품번호</th>
-                            <th class="col-2">카테고리</th>
-                            <th class="col-5">상품명</th>
+                            <th class="col-1">카테고리</th>
+                            <th class="col-1">상품명</th>
                             <th class="col-1">수량</th>
-                            <th class="col-2">금액</th>
+                            <th class="col-1">금액</th>
                         </tr>
                         </thead>
                         <tbody>

@@ -20,7 +20,7 @@
     </resultMap>
 
     <select id="inventoryCount" resultType="_int">
-        SELECT COUNT(*)
+        SELECT COUNT(DISTINCT PRODUCT_NO)
         FROM INVENTORY
         WHERE STORE_NO = #{storeNo}
     </select>

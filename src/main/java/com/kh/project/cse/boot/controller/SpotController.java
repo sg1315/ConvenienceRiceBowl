@@ -39,7 +39,24 @@ public class SpotController {
 
     //대시보드
     @RequestMapping("/spot_dashboard")
-    public String spot_dashboard(HttpSession session, Model model) {
+    public String spot_dashboard(
+            HttpSession session,
+            Model model,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
+
+        Member member = (Member)session.getAttribute("loginMember");
+        int storeNo = member.getStoreNo();
+
+
+        ArrayList<Circulation> spotBestSalesList = spotService.spotSalesBestList(storeNo);
+        ArrayList<Circulation> spotWorstSalesList = spotService.spotSalesWorstList(storeNo);
+
+        model.addAttribute("spotBestSalesList", spotBestSalesList);
+        model.addAttribute("spotWorstSalesList", spotWorstSalesList);
+
+
+
         return "spot/spotDashboard";
     }
 
@@ -161,7 +178,7 @@ public class SpotController {
         Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
         int inventoryCount = spotService.inventoryCount(storeNo);
-        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 12);
+        PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 10);
         ArrayList<Inventory> list = spotService.selectInventory(pi, storeNo);
 
         model.addAttribute("pi", pi);
@@ -470,8 +487,6 @@ public class SpotController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("입고 실패");
         }
     }
-
-
 
 
     //지점관리

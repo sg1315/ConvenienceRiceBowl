@@ -490,7 +490,7 @@
             <tr>
               <th class="col-1">상품번호</th>
               <th class="col-1">카테고리</th>
-              <th class="col-3">상품명</th>
+              <th class="col-1">상품명</th>
               <th class="col-1">입고수량</th>
               <th class="col-1">금액</th>
             </tr>
@@ -532,7 +532,7 @@
             let headStr = "<tr>" +
                     "<th class='col-1'>" + "상품번호" + "</th>" +
                     "<th class='col-1'>" + "카테고리" + "</th>" +
-                    "<th class='col-3'>" + "상품명" + "</th>" +
+                    "<th class='col-1'>" + "상품명" + "</th>" +
                     "<th class='col-1'>" + "발주수량" + "</th>" +
                     "<th class='col-1'>" + "실입고수량" + "</th>" +
                     "<th class='col-1'>" + "금액" + "</th>" +
@@ -686,7 +686,7 @@
             let headStr = "<tr>" +
                     "<th class='col-1'>" + "상품번호" + "</th>" +
                     "<th class='col-1'>" + "카테고리" + "</th>" +
-                    "<th class='col-3'>" + "상품명" + "</th>" +
+                    "<th class='col-1'>" + "상품명" + "</th>" +
                     "<th class='col-1'>" + "입고수량" + "</th>" +
                     "<th class='col-1'>" + "금액" + "</th>";
 

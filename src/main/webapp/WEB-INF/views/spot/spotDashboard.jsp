@@ -60,9 +60,13 @@
             display: flex;
             justify-content: left;
             align-items: center;
+            margin-left: 50px;
+        }
+        #dash-date button{
+            border: none;
+            background: white;
         }
         #dash-date > p{
-            margin-left: 50px;
             font-size: 20px;
             font-weight: bold;
         }
@@ -105,23 +109,42 @@
             width: 100%;
             height: 70%;
             display: flex;
-            justify-content: space-around;
+            justify-content: center;
             align-items: center;
             padding: 5px;
         }
-        .best3{
+        .best3 {
+            width: 33%;
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             align-items: center;
             font-size: 12px;
+            box-sizing: border-box;
         }
-        #best-1-text{
+
+        .best3 > div {
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        .best3 p {
+            margin: 0;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        #best-1-text, #worst-1-text {
             font-weight: bold;
             font-size: 14px;
-        }
-        #worst-1-text{
-            font-weight: bold;
-            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            max-width: 100px;
         }
 
 
@@ -373,7 +396,9 @@
         <div id="dash-main">
             <div id="dash-left">
                 <div id="dash-date">
-                    <p>&lt; 3월 &gt;</p>
+                    <button type="button" id="dash-date-prevMonth">&lt;</button>
+                    <p id="dash-date-month"></p>
+                    <button type="button" id="dash-date-nextMonth">&gt;</button>
                 </div>
                 <div id="dash-product-top">
                     <div class="product-box" id="product-top-best">
@@ -386,8 +411,8 @@
                                     <img src="/resources/common/대시보드_Trophy.png">
                                 </div>
                                 <div id="best-1-text">
-                                    <p>아몬드 빼빼로</p>
-                                    <p>100개</p>
+                                    <p>${spotBestSalesList[0].productName}</p>
+                                    <p>${spotBestSalesList[0].totalAmount}개</p>
                                 </div>
                             </div>
                             <div class="best3">
@@ -395,8 +420,8 @@
                                     <img src="/resources/common/대시보드_Medal%20Second%20Place.png">
                                 </div>
                                 <div>
-                                    <p>oo커피</p>
-                                    <p>70개</p>
+                                    <p>${spotBestSalesList[1].productName}</p>
+                                    <p>${spotBestSalesList[1].totalAmount}개</p>
                                 </div>
                             </div>
                             <div class="best3">
@@ -404,8 +429,8 @@
                                     <img src="/resources/common/대시보드_Medal%20Third%20Place.png">
                                 </div>
                                 <div>
-                                    <p>ooo과자</p>
-                                    <p>50개</p>
+                                    <p>${spotBestSalesList[2].productName}</p>
+                                    <p>${spotBestSalesList[2].totalAmount}개</p>
                                 </div>
                             </div>
                         </div>
@@ -420,8 +445,8 @@
                                     <img src="/resources/common/대시보드_Thumbs%20Down.png">
                                 </div>
                                 <div id="worst-1-text">
-                                    <p>ooo음료</p>
-                                    <p>1개</p>
+                                    <p>${spotWorstSalesList[0].productName}</p>
+                                    <p>${spotWorstSalesList[0].totalAmount}개</p>
                                 </div>
                             </div>
                             <div class="best3">
@@ -429,8 +454,8 @@
                                     <img src="/resources/common/대시보드_Low%20Price.png">
                                 </div>
                                 <div>
-                                    <p>oo커피</p>
-                                    <p>5개</p>
+                                    <p>${spotWorstSalesList[1].productName}</p>
+                                    <p>${spotWorstSalesList[1].totalAmount}개</p>
                                 </div>
                             </div>
                             <div class="best3">
@@ -438,8 +463,8 @@
                                     <img src="/resources/common/대시보드_Low%20Price.png">
                                 </div>
                                 <div>
-                                    <p>ooo과자</p>
-                                    <p>10개</p>
+                                    <p>${spotWorstSalesList[2].productName}</p>
+                                    <p>${spotWorstSalesList[2].totalAmount}개</p>
                                 </div>
                             </div>
                         </div>
@@ -690,8 +715,8 @@
     });
 </script>
 
-
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/resources/js/spotDashboard.js"></script>
 
 </body>
 </html>
