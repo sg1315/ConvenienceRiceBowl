@@ -395,12 +395,15 @@ contentType="text/html;charset=UTF-8" language="java" %>
       function insertReply() {
         const ano = document.querySelector('#detail-modal-ano').innerHTML;
         const comment = document.querySelector('#reply-input');
+        const memberNo = "${loginMember.memberNo}";
+
         $.ajax({
-          url: "insertReply",
+          url: "/insertReply",
           type: "post",
           data: {
             announcementNo: ano,
-            replyContent: comment.value
+            replyContent: comment.value,
+            memberNo: memberNo
           },
           success: function (res) {
             if (res === "success") {
@@ -421,7 +424,8 @@ contentType="text/html;charset=UTF-8" language="java" %>
       function getReplyList(announcementNo, callback){
         $.ajax({
           url : "replylist",
-          dataType: "json",
+          // contextType: "application/json",
+          dataType: "json", //응답 데이터 타입(json, text, html, xml)
           data : {
             ano : announcementNo
           },
