@@ -10,7 +10,9 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -69,15 +71,6 @@ public class MemberServiceImpl implements MemberService {
     public int updateMemberStatus(Member member) {
         return memberMapper.updateMemberStatus(member);
     }
-    //직원정보검색
-    @Override
-    public List<Member> selectMemberList() {
-        return memberMapper.selectMemberList();
-    }
-    @Override
-    public List<Member> selectMemberBykeyword(String keyword) {
-        return memberMapper.selectMemberByKeyWord(keyword);
-    }
 
     @Override
     public int memberListCount() {
@@ -107,6 +100,43 @@ public class MemberServiceImpl implements MemberService {
 
         return memberMapper.searchMemberListCount(condition,keyword);
     }
+
+    // 페이징 처리 - 직원정보 시작
+    @Override
+    public int getSearchCount(String keyword) {
+        return memberMapper.getSearchCountKeyWord(keyword);
+    }
+
+    @Override
+    public List<Member> selectMemberByKeyword(String keyword, int cpage, int limit) {
+        int startRow = (cpage - 1) * limit + 1;
+        int endRow = cpage * limit;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("keyword", keyword);
+        param.put("startRow", startRow);
+        param.put("endRow", endRow);
+
+        return memberMapper.selectMemberByKeyword(param);
+    }
+
+    @Override
+    public int getSpotMemberCount() {
+        return memberMapper.getSpotMemberCount();
+    }
+
+    @Override
+    public List<Member> getSpotMemberList(int cpage, int limit) {
+        int startRow = (cpage - 1) * limit + 1;
+        int endRow = cpage * limit;
+
+        Map<String, Integer> param = new HashMap<>();
+        param.put("startRow", startRow);
+        param.put("endRow", endRow);
+
+        return memberMapper.getSpotMemberList(param);
+    }
+    // 페이징 처리 - 직원정보 끝
 
 
 }

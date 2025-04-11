@@ -10,9 +10,6 @@ import java.util.Map;
 
 @Mapper
 public interface AttendanceMapper {
-    //근태정보 조회 - 초기화면
-    @ResultMap("AttendanceMap")
-    List<Attendance> selectInfoList();
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
     //근태관리 - 출퇴근시간 업데이트
@@ -20,4 +17,11 @@ public interface AttendanceMapper {
     int updateWorkLeaveBtnTime(Map<String, Object> paramMap); //퇴근
     //근태관리 - 출퇴근 상태 가져오기
     int getAttendanceStatus(@Param("memberId")String memberId);
+
+
+    //페이징 처리 - 근퇴관리
+    @ResultMap("AttendanceMap")
+    int getSpotAttendanceCount(int storeNo);
+    List<Attendance> getSpotAttendanceList(Map<String, Object> param);
+
 }

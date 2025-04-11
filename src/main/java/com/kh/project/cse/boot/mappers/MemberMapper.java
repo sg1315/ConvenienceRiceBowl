@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface MemberMapper {
@@ -20,9 +21,6 @@ public interface MemberMapper {
     int updateMember(Member member);
     Member selectMemberById(@Param("memberId") String memberId);
     int updateMemberStatus(Member member);
-    //직원정보조회
-    List<Member> selectMemberList();
-    List<Member> selectMemberByKeyWord(@Param("keyword") String keyword);
 
     int memberListCount();
 
@@ -34,4 +32,11 @@ public interface MemberMapper {
     int deleteMember(String memberNumber);
 
     int searchMemberListCount(String condition, String keyword);
+
+    //페이징 처리 - 직원정보 시작
+    int getSearchCountKeyWord(String keyword);
+    List<Member> selectMemberByKeyword(Map<String, Object> param);
+    int getSpotMemberCount();
+    List<Member> getSpotMemberList(Map<String, Integer> param);
+    //페이징 처리 - 직원정보 끝
 }

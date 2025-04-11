@@ -4,7 +4,6 @@ import com.kh.project.cse.boot.domain.vo.Attendance;
 import com.kh.project.cse.boot.domain.vo.Expiry;
 import com.kh.project.cse.boot.domain.vo.PageInfo;
 import com.kh.project.cse.boot.domain.vo.*;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
@@ -22,8 +21,6 @@ public interface SpotService {
     // 유통기한 페이징
     int Expiry(int storeNo, int productNo, int inventoryCount, String expirationDate);
 
-    //근태정보 조회 - 초기화면
-    List<Attendance> selectInfoList();
 
     //근태정보 - 모달 수정버튼
     int updateWorkTime(Attendance attendance);
@@ -96,7 +93,6 @@ public interface SpotService {
     ArrayList<Inventory> searchInventory(PageInfo pi, int storeNo, String condition, String keyword, int check);
 
 
-
     int searchExpiryListCount(String searchExpiry, String keyword, int storeNo);
 
     ArrayList<Expiry> searchExpiryList(String searchExpiry, String keyword, int storeNo, PageInfo pi);
@@ -123,4 +119,12 @@ public interface SpotService {
     int searchOutputCount(int storeNo, String since, String until, int status, String searchOutput, String keyword);
 
     ArrayList<Circulation> searchOutputList(int storeNo, String since, String until, int status, String searchOutput, String keyword, PageInfo pi);
+
+    //페이징처리 - 근퇴관리조회
+    int getSpotAttendanceCount(int storeNo);
+    List<Attendance> getSpotAttendanceList(int storeNo, int cpage, int limit);
+    //페이징처리 - 매출집계
+    int getSpotSalesCount();
+    List<Circulation> getSpotSalesList(int cpage, int i);
+
 }
