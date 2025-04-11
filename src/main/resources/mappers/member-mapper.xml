@@ -144,7 +144,7 @@
         STORE_NAME
     FROM MEMBER
     JOIN STORE USING(STORE_NO)
-    ORDER BY MEMBER_NO DESC
+    ORDER BY  MEMBER_STATUS DESC, STORE_NO DESC
 </select>
     <select id="searchMember" resultMap="memberResult">
         SELECT

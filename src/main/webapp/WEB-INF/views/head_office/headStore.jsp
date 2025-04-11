@@ -256,7 +256,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
             >
               <option value="storeNo" ${condition == 'storeNo' ? 'selected' : ''}>지점번호</option>
               <option value="storeName" ${condition == 'storeName' ? 'selected' : ''}>지점명</option>
-              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>지점장</option>
+              <option value="memberName" ${condition == 'memberName' ? 'selected' : ''}>직원이름</option>
             </select>
             <input
               class="search-input-gray"

@@ -168,7 +168,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
       }
     </style>
   </head>
-  <body>
+  <body >
     <jsp:include page="../common/header2.jsp" />
 
     <c:if test="${not empty alertMsg}">
@@ -201,6 +201,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
               type="submit"
               value="검색"
             />
+
           </form>
         </div>
       </div>
@@ -368,6 +369,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
         </div>
       </div>
       <script>
+
         document.addEventListener('DOMContentLoaded', function () {
           const rows = document.querySelectorAll('#table1 tbody tr');
    
