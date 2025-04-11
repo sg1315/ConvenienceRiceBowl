@@ -47,6 +47,7 @@
         SELECT
         COUNT(*) AS COUNT
         FROM STORE
+        WHERE STORE_NO > 0
     </select>
 
     <select id="selectStore" resultMap="storeResult">
@@ -59,7 +60,7 @@
         FROM STORE
         JOIN MEMBER USING (store_No)
         WHERE
-        STORE_STATUS = 1
+        STORE_STATUS = 1 AND STORE_NO > 0
         ORDER BY STORE_STATUS DESC
     </select>
     <select id="searchStoreListCount" resultType="_int">
@@ -67,7 +68,7 @@
         COUNT(*) AS COUNT
         FROM STORE
         JOIN MEMBER USING(STORE_NO)
-        WHERE
+        WHERE STORE_NO > 0 AND
         <choose>
             <when test="condition == 'storeNo'">
                 STORE_NO
@@ -90,7 +91,7 @@
         MEMBER_NAME
         FROM STORE
         JOIN MEMBER USING(STORE_NO)
-        WHERE
+        WHERE STORE_NO > 0 AND
         <choose>
             <when test="condition == 'storeNo'">
                 STORE_NO

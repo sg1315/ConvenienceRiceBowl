@@ -30,11 +30,7 @@ public class HeadController {
             @RequestParam(required = false) String setNo,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-            HttpSession session,
             Model model) {
-
-//        Member loginUser = (Member) session.getAttribute("loginUser");
-//        int storeNo = loginUser.getStoreNo();
 
         //date값 보정
         if (startDate != null) {

@@ -55,7 +55,23 @@ public class SpotController {
         model.addAttribute("spotBestSalesList", spotBestSalesList);
         model.addAttribute("spotWorstSalesList", spotWorstSalesList);
 
+        int inventoryCount = spotService.selectdashInventoryCount(storeNo);
 
+        ArrayList<Announcement> annList = spotService.selectdashAnnouncementlist();
+        ArrayList<Circulation> disList = spotService.selectdashCirculationDispose(storeNo);
+
+        int totalAmountSum = 0;
+        int totalInputPriceSum = 0;
+        for (Circulation c : disList) {
+            totalAmountSum += c.getTotalAmount();
+            totalInputPriceSum += c.getTotalInputPrice();
+        }
+
+        model.addAttribute("disList", disList);
+        model.addAttribute("annList", annList);
+        model.addAttribute("inventoryCount", inventoryCount);
+        model.addAttribute("totalAmountSum", totalAmountSum);
+        model.addAttribute("totalInputPriceSum", totalInputPriceSum);
 
         return "spot/spotDashboard";
     }
@@ -195,7 +211,8 @@ public class SpotController {
             Model model,
             HttpSession session) {
 
-        int storeNo = 5;
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
 
         // 조건에 따라 Service 호출
         int count = spotService.searchInventoryCount(storeNo, condition, keyword, check);
@@ -593,15 +610,18 @@ public class SpotController {
         int pageLimit = 10;
         PageInfo pi = new PageInfo(listCount, cpage, pageLimit, boardLimit);
 
+        int start = (cpage - 1) * boardLimit;
+        int end = Math.min(start + boardLimit, listCount);
+        List<Circulation> pageList = result.subList(start, end);
+
         model.addAttribute("pi", pi);
         model.addAttribute("param", param);
-        model.addAttribute("list", result);
+        model.addAttribute("list", pageList);
         model.addAttribute("startMonth", startMonth);
         model.addAttribute("endMonth", endMonth);
 
         return "spot/spotSales";
     }
-
     // 맴버, 근퇴, 매출집계 조회 //
     // end point //
 

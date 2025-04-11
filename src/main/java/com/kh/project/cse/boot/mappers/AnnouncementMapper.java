@@ -28,4 +28,6 @@ public interface AnnouncementMapper {
 
     int deleteAnnouncement(@Param("ano") int announcementNo);
 
+    ArrayList<Announcement> selectdashAnnouncementlist();
+
 }

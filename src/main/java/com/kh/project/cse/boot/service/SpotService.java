@@ -133,4 +133,13 @@ public interface SpotService {
     ArrayList<Circulation> spotSalesBestList(int storeNo);
     ArrayList<Circulation> spotSalesWorstList(int storeNo);
 
+
+    //대쉬보드 오른쪽
+
+    int selectdashInventoryCount(int storeNo);
+
+    ArrayList<Announcement> selectdashAnnouncementlist ();
+
+    ArrayList<Circulation> selectdashCirculationDispose(int storeNo);
+
 }

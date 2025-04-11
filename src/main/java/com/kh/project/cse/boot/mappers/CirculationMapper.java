@@ -105,4 +105,6 @@ public interface CirculationMapper {
 
     ArrayList<Circulation> spotSalesBestList(@Param("storeNo") int storeNo, LocalDate startDate, LocalDate endDate);
     ArrayList<Circulation> spotSalesWorstList(@Param("storeNo") int storeNo, LocalDate startDate, LocalDate endDate);
+
+    ArrayList<Circulation> selectdashCirculationDispose(int storeNo);
 }

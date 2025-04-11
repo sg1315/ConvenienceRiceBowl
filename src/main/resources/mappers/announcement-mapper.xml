@@ -117,4 +117,13 @@
         WHERE ANNOUNCEMENT_NO = #{ano}
     </delete>
 
+<!--    대쉬보드 -->
+    <select id="selectdashAnnouncementlist" resultMap="anoucementResult">
+        SELECT ROWNUM,ANNOUNCEMENT_TITLE
+        FROM(SELECT ROWNUM,ANNOUNCEMENT_TITLE
+        FROM ANNOUNCEMENT
+        ORDER BY ANNOUNCEMENT_NO DESC)
+        WHERE ROWNUM &lt;= 3
+    </select>
+
 </mapper>

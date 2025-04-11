@@ -366,4 +366,19 @@ public class SpotServiceImpl implements SpotService {
         return circulationMapper.spotSalesWorstList(storeNo, startDate, endDate);
     }
 
+    @Override
+    public int selectdashInventoryCount(int storeNo) {
+        return inventoryMapper.selectdashInventoryCount(storeNo);
+    }
+
+    @Override
+    public ArrayList<Announcement> selectdashAnnouncementlist() {
+        return announcementMapper.selectdashAnnouncementlist();
+    }
+
+    @Override
+    public ArrayList<Circulation> selectdashCirculationDispose(int storeNo) {
+        return circulationMapper.selectdashCirculationDispose(storeNo);
+    }
+
 }
