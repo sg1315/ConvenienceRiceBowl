@@ -574,6 +574,7 @@
                     </div>
                     <div id="dispose-content">
                         <table class="table table-bordered">
+                        
                             <thead>
                             <tr>
                                 <th>상품명</th>

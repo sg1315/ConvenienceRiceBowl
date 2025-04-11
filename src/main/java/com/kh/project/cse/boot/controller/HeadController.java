@@ -253,14 +253,12 @@ public class HeadController {
             product.setAvailability("N");
         }
 
-
         if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
             String changeName = com.kh.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             product.setChangeName(changeName);
             product.setOriginName(file1.getOriginalFilename());
             product.setFilePath("/resources/uploadfile/" + changeName);
-
         }
         result = headService.updateProduct(product);
 
@@ -273,22 +271,23 @@ public class HeadController {
         }
 
     }
+//  상품삭제는 안된다.(기능 변경중)
+@RequestMapping("/deleteProduct")
+public String deleteProduct(@ModelAttribute Product product, HttpSession session, Model model){
 
-    @PostMapping("/deleteProduct")
-    public String deleteStoreStatus(@ModelAttribute Product product, HttpSession session, Model model){
+    product.setStatus(1);
+    int result = headService.deleteUpdateProduct(product);
 
-        int productNo = product.getProductNo();
 
-        int result = headService.deleteProduct(productNo);
-
-        if (result >= 1){
-            session.setAttribute("alertMsg", "상품삭제 성공");
-            return head_product(1, model);
-        }else {
-            session.setAttribute("alertMsg", "상품삭제 실패");
-            return "head_office/headProduct";
-        }
+    if (result >= 1){
+        session.setAttribute("alertMsg", "상품삭제 성공");
+        return head_product(1, model);
+    }else {
+        session.setAttribute("alertMsg", "상품삭제 실패");
+        return "head_office/headProduct";
     }
+}
+
 
 
     @RequestMapping("/head_store")

@@ -58,21 +58,24 @@ contentType="text/html;charset=UTF-8" language="java" %>
         table-layout: auto;
       }
       #table1 thead {
-        height: 30px;
+        height: 60px;
+        font-size: 22px;
         background-color: #d9d9d9;
         border-bottom: 3px solid #939393;
       }
       #table1 tbody tr {
         border-bottom: 3px solid #939393;
-        height: 50px;
+        font-size: 16px;
+        height: 60px;
       }
       #footer {
-        border-top: 3px solid #939393;
+        border-top: 2px solid #939393;
         background-color: #d9d9d9;
         height: 8%;
         border-bottom: 3px solid black;
         display: flex;
         justify-content: center;
+        align-items: center;
       }
       #main-pageing img {
         width: 70px;

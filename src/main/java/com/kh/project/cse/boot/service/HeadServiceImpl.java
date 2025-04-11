@@ -131,19 +131,10 @@ public class HeadServiceImpl implements HeadService {
         return productMapper.searchProductCount(condition, keyword);
     }
 
+
     @Override
-    public int deleteProduct(int productNo) {
-        int result = 0;
-        Product p = productMapper.OneProductSelect(productNo);
-
-        if(p.getFilePath() != null){
-           int result1 = filesMapper.deleteFile(productNo);
-           result += result1;
-        }
-        int result2 = productMapper.deleteProduct(productNo);
-        result +=result2;
-
-        return result;
+    public int deleteUpdateProduct(Product product) {
+        return productMapper.deleteUpdateProduct(product);
     }
 
     //지점목록 수

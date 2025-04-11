@@ -276,14 +276,14 @@
     <div id="top-right1">
       <form action="spotSearchForm" method="post">
       <div id="right-check">
-        <input type="checkbox" name="inputcheck">
+        <input type="checkbox" name="inputcheck" ${inputcheck == 'on' ? 'checked' : ''} >
         <p>입고불가</p>
       </div>
         <div class="selectbox" id="category-select" >
           <select name="condition">
-            <option value="productNo">상품번호</option>
-              <option value="category">카테고리</option>
-              <option value="productName">상품명</option>n>
+            <option value="productNo" ${condition == 'productNo' ? 'selected' : ''}>상품번호</option>
+              <option value="category" ${condition == 'category' ? 'selected' : ''}>카테고리</option>
+              <option value="productName" ${condition == 'productName' ? 'selected' : ''}>상품명</option>n>
           </select>
         </div>
         <div id="search-box">
@@ -329,11 +329,28 @@
       </table>
     </div>
     <div id="main-pageing">
-      <img src="/resources/common/공통_페이징바화살표.png">
-      <c:forEach var="i" begin="${ pi.startPage }" end="${ pi.endPage }" step="1">
-        <button type="button" class="btn btn-outline-secondary" onclick="location.href='head_product?cpage=${i}'">${i}</button>
+      <c:if test="${pi.startPage > 1}">
+        <a href="spotSearchForm?cpage=${pi.endPage - 1}&inputcheck=${inputcheck}&condition=${condition}&keyword=${keyword}">
+            <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+        </a>
+    </c:if>
+
+    <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+
+
+        <button type="button"
+                class="btn btn-outline-secondary
+                 <c:if test='${pi.currentPage == i}'>active</c:if>"
+                onclick="location.href='spotSearchForm?&inputcheck=${inputcheck}cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
+                ${i}
+        </button>
     </c:forEach>
-      <img src="/resources/common/공통_페이징바화살표.png">
+
+    <c:if test="${pi.endPage < pi.maxPage}">
+        <a href="spotSearchForm?cpage=${pi.endPage + 1}&inputcheck=${inputcheck}&condition=${condition}&keyword=${keyword}">
+            <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+        </a>
+    </c:if>
     </div>
   </div>
 

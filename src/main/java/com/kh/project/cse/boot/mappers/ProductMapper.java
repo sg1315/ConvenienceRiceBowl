@@ -24,9 +24,9 @@ public interface ProductMapper {
 
     int updateProduct(Product product);
 
-    int deleteProduct(int productNo);
 
 
+    int deleteUpdateProduct(Product product);
     //상품한개 가져오기
     Product OneProductSelect(int productNo);
 
@@ -53,4 +53,6 @@ public interface ProductMapper {
 
     // pos
     Product posOneProductSelect(int productNo);
+
+
 }

@@ -1,7 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %> <%@ taglib
 prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +32,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     .outer{
       font-family: "Open Sans", sans-serif;
       width: 1024px;
-      height: 768px;
+      height: 770px;
       border: 1px solid black;
       margin: auto;
     }
@@ -83,7 +83,7 @@ prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
                     <td>${p.productNo}</td>
                     <td>${p.productName}</td>
                     <td style="display: none;">${p.inventoryCount}</td>   
-                    <td>${p.salePrice}</td>      
+                    <td><fmt:formatNumber value="${p.salePrice}" type="number" groupingUsed="true" /></td>      
                     <td><img src="resources/common/포스기_추가 아이콘.png" onclick="addList(this)" alt=""></td>  
                     
                   </tr>
@@ -184,7 +184,7 @@ function searchProductList(){
             tbodyContent += "<tr> <td name='productNo'>" + data[i].productNo + "</td>"+
                                   "<td name='productName'>" + data[i].productName + "</td>"+
                                   "<td name ='count'>1</td>" +
-                                  "<td name='salePrice'>" + data[i].salePrice + "</td>"+
+                                  "<td name='salePrice'>" + parseInt(data[i].salePrice).toLocaleString()  + "</td>"+
                             "<td> <img src='resources/common/포스기_추가 아이콘.png' onclick='addList(this)'' alt=''> </td> </tr>"
                             
                     ;
@@ -245,7 +245,7 @@ function addList(this_tb) {
 
     // 가격
     cell = newRow.insertCell();
-    cell.innerText = price;
+    cell.innerText = price.toLocaleString();
 }
 
   priceCount();
@@ -293,7 +293,8 @@ function addList(this_tb) {
     for(i=0;i<table.length;i++){
       var cnt = table[i].cells[3].querySelector('input').value;
       var price = table[i].cells[4].innerText;
-      sum += cnt*price;
+     
+      sum += cnt* parseInt(price.replace(",", "")) ;
     }
  
 

@@ -63,4 +63,6 @@ public interface CirculationMapper {
     int insertExpiry(@Param("storeNo") int storeNo, @Param("productNo") int productNo, @Param("inventoryCount") int inventoryCount);
 
     int posCirculationInsert(Circulation circulation);
+
+
 }
