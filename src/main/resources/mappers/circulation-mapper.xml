@@ -572,7 +572,7 @@
         STATUS
         )
         SELECT
-        SEQ_CIR.NEXTVAL,
+        SEQ_CIRNO.NEXTVAL,
         #{storeNo},
         #{productNo},
         INPUT_PRICE,
@@ -596,7 +596,7 @@
         CIRCULATION_DATE,
         STATUS
         ) VALUES (
-        SEQ_CIR.NEXTVAL,
+        SEQ_CIRNO.NEXTVAL,
         #{storeNo},
         #{setNo},
         #{productNo},
