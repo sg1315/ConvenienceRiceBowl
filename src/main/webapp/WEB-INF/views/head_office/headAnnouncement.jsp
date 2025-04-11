@@ -467,7 +467,7 @@
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
-                <p value="${loginMember.memberNo}" name="memberNO"></p>
+                <p value="${loginMember.memberNo}" name="memberNo" style="display: none"></p>
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             id="btn-close-modal">
