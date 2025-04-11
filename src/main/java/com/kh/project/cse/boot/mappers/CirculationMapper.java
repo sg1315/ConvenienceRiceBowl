@@ -67,6 +67,9 @@ public interface CirculationMapper {
 
     ArrayList<Circulation> selectOutputList(@Param("storeNo") int storeNo, RowBounds rowBounds);
 
-    int searchOutputCount(@Param("storeNo")int storeNo,@Param("since") Date since,@Param("until") Date until,
+    int searchOutputCount(@Param("storeNo")int storeNo,@Param("since") String since,@Param("until") String until,
                           @Param("status") int status,@Param("searchOutput") String searchOutput,@Param("keyword") String keyword);
+
+    ArrayList<Circulation> searchOutputList(@Param("storeNo")int storeNo,@Param("since") String since,@Param("until") String until,
+                                            @Param("status") int status,@Param("searchOutput") String searchOutput,@Param("keyword") String keyword, RowBounds rowBounds);
 }

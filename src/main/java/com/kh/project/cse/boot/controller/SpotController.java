@@ -4,8 +4,6 @@ import com.kh.project.cse.boot.domain.vo.*;
 import com.kh.project.cse.boot.service.HeadService;
 import com.kh.project.cse.boot.service.MemberService;
 import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.service.SpotService;
-import com.kh.project.cse.boot.service.SpotServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,19 +13,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.*;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 
@@ -103,9 +99,12 @@ public class SpotController {
     }
     @RequestMapping("/search_output")
     public String spot_searchOutput(@RequestParam(defaultValue = "1") int cpage,
-                                    @RequestParam Date since,@RequestParam Date until,
-                                    @RequestParam int status,@RequestParam String searchOutput,@RequestParam String keyword,
+                                    @RequestParam(defaultValue = "") String lastMonth, @RequestParam(defaultValue = "") String today,
+                                    @RequestParam(defaultValue = "") String since,@RequestParam(defaultValue = "") String until,
+                                    @RequestParam(defaultValue = "") String OptionStatus,@RequestParam(defaultValue = "") String searchOutput,@RequestParam(defaultValue = "") String keyword,
                                     Model model, HttpSession session) {
+        System.out.println(since +"_"+ until+"_"+OptionStatus+"_"+searchOutput+"_"+keyword );
+        // 로그인 끊기면 로그아웃.
         Member member = (Member)session.getAttribute("loginMember");
         int storeNo;
         if(member != null){
@@ -114,12 +113,36 @@ public class SpotController {
             session.setAttribute("alertMsg", "비정상적인 접근입니다.");
             return "redirect:/loginForm";
         }
+        
+        //OptionStatus == null 이면 0 값
+        int status = 0;
+        if(!OptionStatus.isBlank()){
+            status = Integer.parseInt(OptionStatus);
+        }
+
+        //최근
+        LocalDate Today = LocalDate.now();
+        if(!today.isBlank()){
+           until = Today.toString();
+        }
+        //저번 달
+        if(!lastMonth.isBlank()){
+            LocalDate LastMonth = Today.minusMonths(1);
+            until = LastMonth.toString();
+        }
+
         int boardCount = spotService.searchOutputCount(storeNo,since,until,status,searchOutput,keyword);
         PageInfo pi = new PageInfo(boardCount,cpage,10,10);
-        ArrayList<Circulation> outputList = spotService.searchOutputList(storeNo,pi);
+        ArrayList<Circulation> outputList = spotService.searchOutputList(storeNo,since.trim(),until.trim(),status,searchOutput,keyword,pi);
 
         model.addAttribute("outputList",outputList);
         model.addAttribute("pi",pi);
+        model.addAttribute("since",since);
+        model.addAttribute("until", until);
+        model.addAttribute("OptionStatus",status);
+        model.addAttribute("searchOutput",searchOutput);
+        model.addAttribute("keyword",keyword);
+
         return "spot/spotOutput";
     }
     //년매출

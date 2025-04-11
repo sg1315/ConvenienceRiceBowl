@@ -361,7 +361,7 @@
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE STORE_NO =#{storeNo}
         <choose>
-            <when test="status =='' || status == null">
+            <when test="status > 0 ">
                 AND CI.STATUS IN (3, 4)
             </when>
             <when test="status == 3 ">
@@ -382,9 +382,55 @@
             AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
             </otherwise>
         </choose>
-        <if test="since == null || since == '' ">
-            AND CI.CIRCULATION_DATE &gt;= '#{since}'
+        <if test="since !=null and since !=''">
+            AND CI.CIRCULATION_DATE &gt;= #{since}
         </if>
-        AND CI.CIRCULATION_DATE &lt;= '#{until}'
+        <if test="until !=null and until !=''">
+            AND CI.CIRCULATION_DATE &lt;= #{until}
+        </if>
+
+    </select>
+    <select id="searchOutputList" resultMap="circulationResult">
+        SELECT
+        CI.CIRCULATION_DATE,
+        CI.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        CI.CIRCULATION_AMOUNT,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        CI.STATUS
+        FROM CIRCULATION CI
+        JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        WHERE CI.STORE_NO = #{storeNo}
+        <choose>
+            <when test="status =='' || status == null">
+                AND CI.STATUS IN (3, 4)
+            </when>
+            <when test="status == 3 ">
+                AND CI.STATUS = 3
+            </when>
+            <otherwise>
+                AND CI.STATUS = 4
+            </otherwise>
+        </choose>
+        <choose>
+            <when test="searchOutput == 'productNo'">
+                AND CI.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchOutput == 'productName'">
+                AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+                AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
+        <if test="since != null and since !=''">
+            AND CI.CIRCULATION_DATE &gt;= #{since}
+        </if>
+        <if test="until != null and until !=''">
+            AND CI.CIRCULATION_DATE &lt;= #{until}
+        </if>
+        ORDER BY CI.CIRCULATION_DATE DESC
     </select>
 </mapper>

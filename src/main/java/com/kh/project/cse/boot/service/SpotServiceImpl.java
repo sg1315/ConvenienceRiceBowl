@@ -202,8 +202,15 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public int searchOutputCount(int storeNo, Date since, Date until, int status, String searchOutput, String keyword) {
+    public int searchOutputCount(int storeNo, String since, String until, int status, String searchOutput, String keyword) {
         return circulationMapper.searchOutputCount(storeNo,since,until,status,searchOutput,keyword);
+    }
+
+    @Override
+    public ArrayList<Circulation> searchOutputList(int storeNo, String since, String until, int status, String searchOutput, String keyword, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset,pi.getBoardLimit());
+        return circulationMapper.searchOutputList(storeNo,since,until,status,searchOutput,keyword,rowBounds);
     }
 
 

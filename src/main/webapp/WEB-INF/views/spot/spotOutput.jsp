@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -310,8 +311,8 @@
   <div id="top-right1">
     <div id="top-right1-left">
       <div id="top-right1-top">
-          <input type="button" class="search-input-submit" value="저번 달">
-          <input type="button"  class="search-input-submit" value="최근">
+          <input type="submit" class="search-input-submit" name="lastMonth" value="저번 달">
+          <input type="submit"  class="search-input-submit" name="today"  value="최근">
 
           <input type="date" class="date-input" id="since" name="since" value="${since}">
           ~
@@ -320,10 +321,14 @@
       </div>
       <div id="top-right1-bottom">
         <div class="selectbox" id="status-check">
-          <select name="status">
-            <option value="" selected>상태</option>
-            <option value="3" ${status == '3' ? 'selected' : ''}>판매</option>
-            <option value="4" ${status == '4' ? 'selected' : ''}>폐기</option>
+          <select name="OptionStatus">
+            <option value=""
+            ${empty OptionStatus or
+                    (fn:contains(OptionStatus,'3') and fn:contains(OptionStatus,'4'))
+                    ? 'selected="selected"' : ''}
+            > 상태 </option>
+            <option value= "3" ${OptionStatus == '3' ? 'selected' : ''}>판매</option>
+            <option value= "4" ${OptionStatus == '4' ? 'selected' : ''}>폐기</option>
           </select>
         </div>
         <div class="selectbox" id="category-select">
@@ -386,19 +391,19 @@
     </div>
     <div id="main-pageing">
       <c:if test="${pi.startPage > 1}">
-        <a href="searchStore?cpage=${pi.startPage - 1}&condition=${condition}&keyword=${keyword}">
+        <input type="submit" name="cpage" value="${pi.startPage - 1}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
-        </a>
+        </input>
       </c:if>
       <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
-        <button type="button"
+        <button type="submit"
                 class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                onclick="location.href='searchStore?cpage=${i}&condition=${condition}&keyword=${keyword}'">${i}</button>
+                onclick="location.href='searchStore?cpage=${i}">${i}</button>
       </c:forEach>
       <c:if test="${pi.endPage < pi.maxPage}">
-        <a href="searchStore?cpage=${pi.endPage + 1}&&condition=${condition}&keyword=${keyword}">
+        <input type="submit" name="cpage" value="${pi.endPage + 1}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
-        </a>
+        </input>
       </c:if>
     </div>
   </div>
