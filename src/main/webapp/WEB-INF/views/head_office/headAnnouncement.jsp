@@ -363,6 +363,14 @@
 </head>
 <body>
 <jsp:include page="../common/header2.jsp"/>
+
+<c:if test="${not empty alertMsg}">
+    <script>
+        alert("${alertMsg}");
+    </script>
+    <c:remove var="alertMsg" scope="session"/>
+</c:if>
+
 <div id="form">
     <div id="form-top">
         <div id="form_name">
@@ -397,7 +405,7 @@
             <tr>
                 <th>번호</th>
                 <th>제목</th>
-                <th>아이디</th>
+                <th>작성자</th>
                 <th>날짜</th>
 
             </tr>
@@ -459,6 +467,7 @@
          aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
+                <p value="${loginMember.memberNo}" name="memberNO"></p>
                 <div class="modal-header">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                             id="btn-close-modal">
@@ -648,12 +657,15 @@
     function insertReply() {
         const ano = document.querySelector('#detail-modal-ano').innerHTML;
         const comment = document.querySelector('#reply-input');
+        const memberNo = "${loginMember.memberNo}";
+        
         $.ajax({
-            url: "insertReply",
+            url: "/insertReply",
             type: "post",
             data: {
                 announcementNo: ano,
-                replyContent: comment.value
+                replyContent: comment.value,
+                memberNo: memberNo
             },
             success: function (res) {
                 if (res === "success") {
