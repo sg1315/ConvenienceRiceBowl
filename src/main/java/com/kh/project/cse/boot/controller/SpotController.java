@@ -43,7 +43,7 @@ public class SpotController {
 
     //대시보드
     @RequestMapping("/spot_dashboard")
-    public String spot_dashboard() {
+    public String spot_dashboard(HttpSession session, Model model) {
         return "spot/spotDashboard";
     }
 
@@ -64,7 +64,7 @@ public class SpotController {
         return "spot/spotProduct";
     }
     //상품검색
-    @PostMapping("/spotSearchForm")
+    @RequestMapping("/spotSearchForm")
     public String spotSearchProduct(@RequestParam(defaultValue = "1") int cpage,@RequestParam(defaultValue = "Y") String inputcheck, @RequestParam String condition, @RequestParam String keyword, Model model) {
 
         ArrayList<Product> list ;
@@ -78,6 +78,7 @@ public class SpotController {
             list = headService.searchProduct(condition, keyword, pi);
         }else {
             listCount = spotService.spotSearchProductCount(inputcheck,condition,keyword);
+
             pi = new PageInfo(listCount,cpage, 10,10);
             list = spotService.spotSearchProduct(inputcheck, condition, keyword, pi);
         }

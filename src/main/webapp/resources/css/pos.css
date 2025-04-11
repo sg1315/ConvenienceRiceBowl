@@ -21,6 +21,7 @@
   margin-right: 10px;
 }
 
+
 /*main*/
 .main {
   display: grid;
@@ -84,6 +85,8 @@ td > img:hover{
 }
 
 /* pos-searchitem > itemList : 상품목록*/
+
+
 .itemList-outer {
   width: calc(100% - 10px);
   height: calc(100% - 10px);
@@ -129,7 +132,7 @@ td > img:hover{
 
   .item-table th:nth-child(1),
   .item-table td:nth-child(1) {
-    width: 10%;
+    width: 8%;
    }
    .item-table th:nth-child(2),
    .item-table td:nth-child(2) {
@@ -137,7 +140,7 @@ td > img:hover{
     }
     .item-table th:nth-child(3),
     .item-table td:nth-child(3) {
-     width: 10%;
+     width: 15%;
     }
     .item-table th:nth-child(4),
     .item-table td:nth-child(4) {
@@ -178,14 +181,12 @@ td > img:hover{
   display: flex;
   color: white;
   justify-content: center;
-
   margin-top: 2px;
 }
 
 .enter-title{
   width: 110px;
- gap: 2px;
-
+  gap: 2px;
 }
 
 .enter-title > img {
@@ -291,6 +292,7 @@ td > img:hover{
   width: 100%;
   display: block;
   max-height: 400px;
+  min-height: 400px;
   overflow-y: scroll;
 }
 .payTable tr {
@@ -337,7 +339,8 @@ td > img:hover{
 
 .payCount{
   display: flex;
-  width: calc(100% - 20px);
+  width: calc(100% - 30px);
+  height: calc(100% - 10px);
   border: 1px solid #636060;
   background-color: #d9d9d9;
   border-radius: 4px;
@@ -346,7 +349,7 @@ td > img:hover{
 
 .payCount-content{
   width: 70%;
-  padding: 8px 0;
+  padding: 8px 8px;
 
 }
 

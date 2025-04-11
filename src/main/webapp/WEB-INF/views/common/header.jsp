@@ -131,6 +131,7 @@
       }
       #btn-pos{
         width: 100%;
+        font-size: 15px
       }
 
       #logo{

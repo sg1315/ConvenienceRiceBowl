@@ -1,3 +1,7 @@
+.waper, #form{
+  font-family: "Open Sans", sans-serif;
+}
+
 /*hover*/
 
 .search-input-submit-gray:hover,
@@ -232,6 +236,7 @@
   position: absolute;
   right: 20px; /* 버튼 오른쪽 끝에서 떨어진 거리 조정 */
 }
+
 
 .white-btn-round:hover::after{
   filter: invert(100%) brightness(1000%);

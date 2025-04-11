@@ -55,7 +55,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
       #form {
         width: 100%;
         padding: 30px;
-        font-family: "Open Sans", sans-serif;
       }
       #form-top {
         display: flex;
@@ -81,7 +80,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
 
       #productadd{
         width: 100%;
-
         background: #d9d9d9;
         color: black;
       }
@@ -116,22 +114,24 @@ contentType="text/html;charset=UTF-8" language="java" %>
         table-layout: auto;
       }
       #table1 thead {
-        height: 50px;
-        font-size: 20px;
+        height: 60px;
+        font-size: 22px;
         background-color: #d9d9d9;
         border-bottom: 3px solid #939393;
       }
       #table1 tbody tr {
         border-bottom: 3px solid #939393;
-        height: 50px;
+        font-size: 16px;
+        height: 60px;
       }
       #footer {
-        border-top: 3px solid #939393;
+        border-top: 2px solid #939393;
         background-color: #d9d9d9;
         height: 8%;
         border-bottom: 3px solid black;
         display: flex;
         justify-content: center;
+        align-items: center;
       }
       #main-pageing img {
         width: 70px;
@@ -567,6 +567,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                   <div id="product-detail-modify">
                     <div id="product-detail-modify-puts">
                       <input type="hidden" id="modal-productNo" name="productNo"> 
+                      <input type="hidden"  name="product_status">   
                       <table id="product-detail-modify-table">
                         <tr>
                           <td>카테고리</td>

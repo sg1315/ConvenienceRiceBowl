@@ -97,4 +97,6 @@ public interface SpotService {
 
     int spotSearchProductCount(String inputcheck, String condition, String keyword);
 
+
+
 }

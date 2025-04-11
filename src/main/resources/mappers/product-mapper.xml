@@ -14,7 +14,7 @@
     <result column="SALE_PRICE" property="salePrice"/>
     <result column="SHORTAGE_AMOUNT" property="shortageAmount"/>
     <result column="AVAILABILITY" property="availability"/>
-    <result column="FILE_PATH" property="filePath"/>
+    <result column="PRODUCT_STATUS" property="status"/>
     <result column="CATEGORY_NAME" property="categoryName"/>
     <result column="COUNT" property="count"/>
 
@@ -36,7 +36,8 @@
         FILE_PATH,
         INPUT_PRICE,
         SALE_PRICE,
-        SHORTAGE_AMOUNT
+        SHORTAGE_AMOUNT,
+        PRODUCT_STATUS
         ) VALUES (
         SEQ_PRNO.NEXTVAL,
         #{categoryNo},
@@ -46,7 +47,8 @@
         #{filePath},
         #{inputPrice},
         #{salePrice},
-        #{shortageAmount}
+        #{shortageAmount},
+        0
         )
         <selectKey keyProperty="productNo"  resultType="int"  order ="AFTER">
             SELECT SEQ_PRNO.currval From dual
@@ -66,7 +68,9 @@
         FILE_PATH
         FROM PRODUCT P
         JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
+        WHERE PRODUCT_STATUS = 0
         ORDER BY P.PRODUCT_NO DESC
+
     </select>
 
     <select id="searchProduct" resultMap="headProductResult">
@@ -94,6 +98,7 @@
             </otherwise>
         </choose>
         LIKE '%${keyword}%'
+        AND PRODUCT_STATUS = 0
         ORDER BY PRODUCT_NO DESC
     </select>
 
@@ -108,6 +113,7 @@
     <select id="ProductListCount" resultType="_int">
         SELECT COUNT(*) AS COUNT
         FROM PRODUCT
+        WHERE PRODUCT_STATUS = 0
     </select>
 
     <select id="searchProductCount" resultType="_int">
@@ -127,6 +133,7 @@
             </otherwise>
         </choose>
         LIKE '%${keyword}%'
+        AND PRODUCT_STATUS = 0
     </select>
 
     <update id="updateProduct" >
@@ -139,15 +146,18 @@
         FILE_PATH = #{filePath},
         INPUT_PRICE = #{inputPrice},
         SALE_PRICE = #{salePrice},
-        AVAILABILITY = #{availability}
+        AVAILABILITY = #{availability},
+        PRODUCT_STATUS = #{status}
         WHERE PRODUCT_NO = #{productNo}
     </update>
 
-
-    <delete id="deleteProduct">
-        DELETE PRODUCT
+    <update id="deleteUpdateProduct" >
+        UPDATE PRODUCT
+        SET
+        PRODUCT_STATUS = #{status}
         WHERE PRODUCT_NO = #{productNo}
-    </delete>
+    </update>
+
 
     <select id="OneProductSelect" resultMap="headProductResult">
         SELECT
@@ -162,6 +172,7 @@
         FROM PRODUCT P
         JOIN CATEGORY C ON(C.CATEGORY_NO = P.CATEGORY_NO)
         WHERE P.PRODUCT_NO = #{productNo}
+        AND PRODUCT_STATUS = 0
         ORDER BY P.PRODUCT_NO DESC
     </select>
 
@@ -176,7 +187,9 @@
         SHORTAGE_AMOUNT
         FROM PRODUCT
         JOIN CATEGORY USING(CATEGORY_NO)
+        WHERE PRODUCT_STATUS = 0
         ORDER BY PRODUCT_NO ASC
+
     </select>
     <select id="orderRequestProductSearch" resultMap="headProductResult">
         SELECT
@@ -193,6 +206,7 @@
         <if test="category != null and category != 'all'">
             AND CATEGORY_NAME = #{category}
         </if>
+        AND PRODUCT_STATUS = 0
         ORDER BY PRODUCT_NO ASC
     </select>
 
@@ -224,6 +238,7 @@
         </choose>
         LIKE '%${keyword}%'
         and AVAILABILITY = #{inputcheck}
+        AND PRODUCT_STATUS = 0
         ORDER BY PRODUCT_NO DESC
     </select>
 
@@ -246,6 +261,7 @@
         </choose>
         LIKE '%${keyword}%'
         and AVAILABILITY = #{inputcheck}
+        AND PRODUCT_STATUS = 0
         ORDER BY PRODUCT_NO DESC
     </select>
 
@@ -260,6 +276,7 @@
         SHORTAGE_AMOUNT
         FROM PRODUCT
         WHERE  PRODUCT_NO = #{productNo}
+        AND PRODUCT_STATUS = 0
     </select>
 
 </mapper>

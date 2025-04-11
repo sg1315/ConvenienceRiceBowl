@@ -27,7 +27,8 @@ public interface HeadService {
     //상품수정
     int updateProduct(Product product);
     //상품삭제
-    int deleteProduct(int productNo);
+
+    int deleteUpdateProduct(Product product);
 
 
     //공지사항추가

@@ -200,6 +200,8 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public int spotSearchProductCount(String inputcheck, String condition, String keyword) {
+
+
         return productMapper.spotSearchProductCount(inputcheck,condition,keyword);
     }
     @Override
@@ -213,6 +215,8 @@ public class SpotServiceImpl implements SpotService {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return announcementMapper.selectAnnouncementlist(rowBounds);
     }
+
+
 
 
     @Override
