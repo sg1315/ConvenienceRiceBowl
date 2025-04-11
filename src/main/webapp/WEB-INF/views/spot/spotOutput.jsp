@@ -143,120 +143,17 @@
       font-weight: bold;
     }
 
-    #btn-close-modal{
-      width: 20px;
-      height: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #x_img{
-      width: 10px;
-      height: 10px;
-    }
-
-    /*모달창 시작*/
-    .modal-content {
-      height: 500px;
-    }
-    .modal-header, .modal-footer{
-      background-color: #D9D9D9;
-    }
-    .modal-body {
-      display: flex;
-      justify-content: space-between;
-      border: none !important;
-    }
-    #btn-close-modal {
-      border: none;
-      background: none;
-    }
-    #product-img {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #product-detail-box {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #product-detail {
-      background-color: white;
-      width: 100%;
-      height: 90%;
-    }
-    #product-detail-puts {
-      height: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    #product-detail-ok {
-      display: flex;
-      justify-content: right;
-      margin-right: 28px;
-    }
-    #product-detail-table {
-      border-collapse: separate;
-      border-spacing: 10px 30px; /* 상하 간격을 10px로 설정 */
-    }
     #product-detail-table tr td {
       font-size: 20px;
       font-weight: bold;
     }
 
-    /*
-      수정하기 모달창
-       */
-    #modify-x_img {
-      width: 15px;
-      height: 20px;
-    }
-    #btn-close-modify-modal {
-      border: none;
-      background: none;
-    }
-    #product-modify-img {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    #product-detail-modify-box {
-      background-color: #d9d9d9;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    #product-detail-modify {
-      background-color: white;
-      width: 100%;
-      height: 90%;
-    }
-    #product-detail-modify-puts {
-      height: 90%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+
     #product-detail-modify-table tr td input {
       /*border: 2px solid #d9d9d9;*/
       border-radius: 5px;
     }
 
-    #product-detail-modify-table {
-      border-collapse: separate;
-      /*border-spacing: 10px 30px; !* 상하 간격을 10px로 설정 *!*/
-      border-spacing: 10px 20px;
-    }
     #product-detail-modify-table tr td {
       font-size: 18px;
       font-weight: bold;
@@ -398,7 +295,7 @@
       <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
         <button type="submit"
                 class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                onclick="location.href='searchStore?cpage=${i}">${i}</button>
+                name="cpage" value="${i}">${i}</button>
       </c:forEach>
       <c:if test="${pi.endPage < pi.maxPage}">
         <input type="submit" name="cpage" value="${pi.endPage + 1}">

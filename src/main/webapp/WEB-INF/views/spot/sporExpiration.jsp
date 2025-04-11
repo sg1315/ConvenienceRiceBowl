@@ -133,21 +133,11 @@
         .expiryBtn:active{
             filter: brightness(85%);
         }
-        .pageBtn{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-
-        }
     </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="waper">
-    <form id="seach-form" action="searchExpiry">
+    <form class="waper" id="seach-form" action="searchExpiry">
         <div id="top-manu">
             <div id="top-left">
                 <div id="top-left1">
@@ -225,39 +215,23 @@
                 </table>
             </div>
             <div id="main-pageing">
-                <c:choose>
-                    <c:when test="${ pi.currentPage < 11 }">
-                        <button class="pageBtn" disabled>
-                            <img src="../../../resources/common/pagingbarLeftBtn.png">
-                        </button>
-                    </c:when>
-                    <c:otherwise>
-                        <button class="pageBtn" type="submit" name="cpage" value="${pi.startPage - 1}">
-                            <img src="../../../resources/common/pagingbarLeftBtn.png">
-                        </button>
-                    </c:otherwise>
-                </c:choose>
-
-                <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                    <button type="submit" class="btn btn-outline-secondary" name="cpage" value="${p}">${p}</button>
+                <c:if test="${pi.startPage > 1}">
+                    <input type="submit" name="cpage" value="${pi.startPage - 1}">
+                    <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+                    </input>
+                </c:if>
+                <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+                    <button type="submit"
+                            class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                            name="cpage" value="${i}">${i}</button>
                 </c:forEach>
-
-                <c:choose>
-                    <c:when test="${ pi.endPage eq pi.maxPage }">
-                        <button class="pageBtn" disabled>
-                            <img src="../../../resources/common/pagingbarRightBtn.png">
-                        </button>
-                    </c:when>
-                    <c:otherwise>
-                        <button class="pageBtn" type="submit" name="cpage" value="${pi.endPage + 1}">
-                            <img src="../../../resources/common/pagingbarRightBtn.png">
-                        </button>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${pi.endPage < pi.maxPage}">
+                    <input type="submit" name="cpage" value="${pi.endPage + 1}">
+                    <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+                    </input>
+                </c:if>
             </div>
         </div>
-    </form>
-</div>
 <script>
     function expiryBtn(btn){
         const storeNo = btn.dataset.store;
