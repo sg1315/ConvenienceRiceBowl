@@ -342,4 +342,25 @@ public class SpotServiceImpl implements SpotService {
         return List.of();
     }
 
+    //대시보드 - Best3
+    @Override
+    public ArrayList<Circulation> spotSalesBestList(int storeNo) {
+
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.withDayOfMonth(1);
+        LocalDate endDate = now.withDayOfMonth(now.lengthOfMonth());
+
+        return circulationMapper.spotSalesBestList(storeNo, startDate, endDate);
+    }
+    //대시보드 - Worst3
+    @Override
+    public ArrayList<Circulation> spotSalesWorstList(int storeNo) {
+
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.withDayOfMonth(1);
+        LocalDate endDate = now.withDayOfMonth(now.lengthOfMonth());
+
+        return circulationMapper.spotSalesWorstList(storeNo, startDate, endDate);
+    }
+
 }

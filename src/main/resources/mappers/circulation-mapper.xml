@@ -200,6 +200,19 @@
             LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
             LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
         WHERE C.SET_NO = #{setNo}
+            AND (
+                    (C.STATUS = 2 AND EXISTS (
+                        SELECT 1 FROM CIRCULATION
+                    WHERE SET_NO = #{setNo} AND STATUS = 2
+                    ))
+                    OR (
+                        C.STATUS IN (1, 5, 6, 7)
+                        AND NOT EXISTS (
+                        SELECT 1 FROM CIRCULATION
+                        WHERE SET_NO = #{setNo} AND STATUS = 2
+                    )
+                )
+            )
     </select>
 
     <delete id="cancelOrder">
@@ -422,7 +435,7 @@
         LEFT JOIN STORE S ON C.STORE_NO = S.STORE_NO
         LEFT JOIN PRODUCT P ON C.PRODUCT_NO = P.PRODUCT_NO
         LEFT JOIN CATEGORY Y ON P.CATEGORY_NO = Y.CATEGORY_NO
-        WHERE C.SET_NO = #{setNo}
+        WHERE C.SET_NO = #{setNo} AND STATUS IN (1,5,6,7)
     </select>
 
     <select id="head_lastorder" resultMap="circulationResult">
@@ -728,5 +741,45 @@
             AND CI.CIRCULATION_DATE &lt;= #{until}
         </if>
         ORDER BY CI.CIRCULATION_DATE DESC
+    </select>
+
+    <select id="spotSalesBestList" resultMap="circulationResult">
+        SELECT
+            PRODUCT_NO,
+            PRODUCT_NAME,
+            TOTAL_AMOUNT,
+            ROWNUM
+        FROM(
+            SELECT
+                PRODUCT_NO,
+                PRODUCT_NAME,
+                SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT
+            FROM CIRCULATION
+            JOIN PRODUCT USING(PRODUCT_NO)
+            WHERE STATUS = 3
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            GROUP BY PRODUCT_NO, PRODUCT_NAME
+            ORDER BY TOTAL_AMOUNT DESC)
+        WHERE ROWNUM &lt;= 3
+    </select>
+
+    <select id="spotSalesWorstList" resultMap="circulationResult">
+        SELECT
+            PRODUCT_NO,
+            PRODUCT_NAME,
+            TOTAL_AMOUNT,
+            ROWNUM
+        FROM(
+            SELECT
+                PRODUCT_NO,
+                PRODUCT_NAME,
+                SUM(CIRCULATION_AMOUNT) AS TOTAL_AMOUNT
+            FROM CIRCULATION
+            JOIN PRODUCT USING(PRODUCT_NO)
+            WHERE STATUS = 3
+                AND CIRCULATION_DATE BETWEEN #{startDate} AND #{endDate}
+            GROUP BY PRODUCT_NO, PRODUCT_NAME
+            ORDER BY TOTAL_AMOUNT ASC)
+        WHERE ROWNUM &lt;= 3
     </select>
 </mapper>
