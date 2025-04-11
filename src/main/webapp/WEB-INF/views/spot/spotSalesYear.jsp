@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -174,14 +175,13 @@
                 <!-- 초기 로딩 시 실행 -->
                 <c:forEach var="item" items="${circulationList}">
                     <tr>
-                        <td><span
-                                class='monthText'>${item.month < 10 ? Integer.parseInt(item.month) : item.month}</span>월
-                        </td>
-                        <td>${item.totalInput}</td>
-                        <td>${item.totalSale}</td>
-                        <td>${item.totalMargin}</td>
+                        <td><span class='monthText'>${item.month < 10 ? Integer.parseInt(item.month) : item.month}</span>월</td>
+                        <td><fmt:formatNumber value="${item.totalInput}" type="number"/></td>
+                        <td><fmt:formatNumber value="${item.totalSale}" type="number"/></td>
+                        <td><fmt:formatNumber value="${item.totalSale - item.totalInput}" type="number"/></td>
                     </tr>
                 </c:forEach>
+
                 </tbody>
             </table>
         </div>
@@ -254,6 +254,7 @@
     function handleRowClick() {
         const cells = this.querySelectorAll('td');
         const year = document.getElementById("year").textContent.trim();
+        const currentPage = new URLSearchParams(window.location.search).get('cpage') || 1;
 
         cells.forEach((cell) => {
             const span = cell.querySelector('.monthText');
@@ -262,11 +263,11 @@
                 if (month < 10) {
                     month = "0" + month;
                     let add = year + '-' + month;
-                    window.location.href = '/spot_sales?startMonth=' + add + '&endMonth=' + add;
+                    window.location.href = '/spot_sales?startMonth=' + add + '&endMonth=' + add + '&cpage=' + currentPage;
                 }
 
                 let add = year + '-' + month;
-                window.location.href = '/spot_sales?startMonth=' + add + '&endMonth=' + add;
+                window.location.href = '/spot_sales?startMonth=' + add + '&endMonth=' + add + '&cpage=' + currentPage;
             }
         });
     }

@@ -65,8 +65,16 @@ public interface CirculationMapper {
     //입고 완료
     int insertInput(@Param("circulation") Circulation circulation, int storeNo);
 
+    //매출집계 - 페이징
+    int countSalesByMonth(@Param("storeNo") int storeNo,
+                          @Param("startDate") LocalDate startDate,
+                          @Param("endDate") LocalDate endDate);
 
-
+    List<Circulation> selectSalesMonthWithPaging(@Param("storeNo") int storeNo,
+                                                 @Param("startDate") LocalDate startDate,
+                                                 @Param("endDate") LocalDate endDate,
+                                                 @Param("offset") int offset,
+                                                 @Param("limit") int limit);
 
     //매출집계 - 검색
     List<Circulation> selectSalesMonth(@Param("storeNo") int storeNo,
@@ -74,7 +82,7 @@ public interface CirculationMapper {
                                        @Param("endDate") LocalDate endDate);
     //매출집계 - 모달
     List<Circulation> getDetailsByDate(@Param("date") String date, int storeNo);
-    //매출집계 - 년도검색
+    //매출집계 - 년도 초기 및 검색
     List<Circulation> getDetailsByYear(@Param("year") String year, int storeNo);
 
     //유통기한폐기

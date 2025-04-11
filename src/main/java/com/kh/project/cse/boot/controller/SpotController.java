@@ -581,31 +581,27 @@ public class SpotController {
         }
 
         int storeNo = loginMember.getStoreNo();
-
         LocalDate startDate = LocalDate.parse(startMonth + "-01");
         LocalDate endDate = YearMonth.parse(endMonth).plusMonths(1).atDay(1); // 다음 달 1일
 
-        List<Circulation> result = spotService.getSalesByMonth(storeNo, startDate, endDate);
+        List<Circulation> result = spotService.selectSalesMonthWithPaging(storeNo, startDate, endDate, (cpage - 1) * 10, 10);
+
+        int listCount = spotService.countSalesByMonth(storeNo, startDate, endDate);
 
         // 페이징 처리
-        int listCount = result.size();
         int boardLimit = 10;
         int pageLimit = 10;
-
         PageInfo pi = new PageInfo(listCount, cpage, pageLimit, boardLimit);
-
-        int start = (cpage - 1) * boardLimit;
-        int end = Math.min(start + boardLimit, listCount);
-        List<Circulation> pageList = result.subList(start, end);
 
         model.addAttribute("pi", pi);
         model.addAttribute("param", param);
-        model.addAttribute("list", pageList);
+        model.addAttribute("list", result);
         model.addAttribute("startMonth", startMonth);
         model.addAttribute("endMonth", endMonth);
 
         return "spot/spotSales";
     }
+
     // 맴버, 근퇴, 매출집계 조회 //
     // end point //
 
