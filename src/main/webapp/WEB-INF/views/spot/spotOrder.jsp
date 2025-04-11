@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -308,6 +309,9 @@
         #modal-header1,#modal-header3{
             width: 70%;
         }
+        #modal-header1{
+            height: 15%;
+        }
         #modal-header3 form{
             display: flex;
             gap: 10px;
@@ -531,10 +535,10 @@
                                 <td >${os.minuteGroup}</td>
                                 <td>${os.setNo}</td>
                                 <td>${os.totalAmount}</td>
-                                <td>${os.totalInputPrice}</td>
+                                <td><fmt:formatNumber value="${os.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${os.status == 1}">발주 대기</c:when>
+                                        <c:when test="${os.status == 1}">대기</c:when>
                                         <c:when test="${os.status == 2}">입고</c:when>
                                         <c:when test="${os.status == 5}">발주 승인</c:when>
                                         <c:when test="${os.status == 6}">발주 거절</c:when>
@@ -552,10 +556,10 @@
                                 <td>${o.minuteGroup}</td>
                                 <td>${o.setNo}</td>
                                 <td>${o.totalAmount}</td>
-                                <td>${o.totalInputPrice}</td>
+                                <td><fmt:formatNumber value="${o.totalInputPrice}" type="number" groupingUsed="true" /></td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${o.status == 1}">발주 대기</c:when>
+                                        <c:when test="${o.status == 1}">대기</c:when>
                                         <c:when test="${o.status == 2}">입고</c:when>
                                         <c:when test="${o.status == 5}">발주 승인</c:when>
                                         <c:when test="${o.status == 6}">발주 거절</c:when>
@@ -721,8 +725,8 @@
             <div class="modal-content" id="modal-content2">
                 <div id="modal-header">
                     <div id="modal-header1">
-                        <p>
-                            <%--해당 발주 시간--%>
+                        <p id="order-info">
+                            <!-- 여기에 내용이 들어갑니다 -->
                         </p>
                         <h1 class="modal-title fs-5">발주 요청 목록</h1>
                     </div>
@@ -735,7 +739,7 @@
                         <%--           css 유지를 위해 만든 여백             --%>
                     </div>
                     <div id="modal-header4">
-                        <p id="order-summary">
+                        <p>
                             종류 (총 수량) : <span id="order-kind-count">0</span> (<span id="order-total-quantity">0</span>)
                         </p>
                         <p>
@@ -766,7 +770,7 @@
 
                     </div>
                     <div id="order-cancel">
-                        <button class="red-btn" type="button" onclick="deleteOrder()">발주취소</button>
+                        <button id="cancel-order-btn" class="red-btn" type="button" style="display: none;">발주취소</button>
                     </div>
                 </div>
             </div>
@@ -800,15 +804,49 @@
                                 "<td>" + o.categoryName + "</td>" +
                                 "<td>" + o.productName + "</td>" +
                                 "<td>" + o.circulationAmount + "</td>" +
-                                "<td>" + o.sumInputPrice + "</td>" +
+                                "<td>" + o.sumInputPrice.toLocaleString() + "</td>" +
                                 "</tr>";
                         }
 
                         const ordering = document.querySelector("#order-table tbody");
                         ordering.innerHTML = str;
 
+                        const orderInfo = document.getElementById("order-info");
+                        const orderDate = data[0]?.circulationDate || "날짜 없음";
+                        const status = data[0]?.status || "상태 없음";
+
+                        let statusText = "";
+                        switch (status) {
+                            case 1:
+                                statusText = "대기";
+                                break;
+                            case 2:
+                                statusText = "입고";
+                                break;
+                            case 5:
+                                statusText = "발주 승인";
+                                break;
+                            case 6:
+                                statusText = "발주 거절";
+                                break;
+                            case 7:
+                                statusText = "입고 대기";
+                                break;
+                            default:
+                                statusText = "알 수 없음";
+                        }
+
+                        // orderInfo.innerHTML = orderDate + setNo +  status;
+                        orderInfo.innerHTML = `발주일자: `+ orderDate + ` | 발주번호: ` + setNo + ` | 상태: ` + statusText;
                         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop2'));
                         myModal.show();
+
+                        const cancelButton = document.getElementById("cancel-order-btn");
+                        if (status === 1) {
+                            cancelButton.style.display = "inline-block";
+                        } else {
+                            cancelButton.style.display = "none";
+                        }
 
                         updateDetailSummary();
                     },
@@ -819,7 +857,40 @@
                 });
             });
         });
+
+        //발주 취소
+        const cancelButton = document.getElementById("cancel-order-btn");
+        cancelButton.addEventListener("click", function () {
+            const orderInfo = document.getElementById("order-info");
+            const setNoMatch = orderInfo.textContent.match(/발주번호: (\S+)/);
+            const setNo = setNoMatch ? setNoMatch[1] : null;
+
+            if (!setNo) {
+                alert("발주번호를 찾을 수 없습니다.");
+                return;
+            }
+
+            if (confirm("정말 발주를 취소하시겠습니까?")) {
+                $.ajax({
+                    url: '/spot_order/cancelOrder?setNo=' + setNo,
+                    method: 'POST',
+                    success: function (response) {
+                        if (response === "success") {
+                            alert("발주가 취소되었습니다.");
+                            location.reload();
+                        } else {
+                            alert("발주 취소에 실패했습니다.");
+                        }
+                    },
+                    error: function () {
+                        alert("서버와의 통신에 실패했습니다.");
+                    }
+                });
+            }
+        });
     });
+
+
 
     //총 수량, 금액 계산
     function updateDetailSummary() {
@@ -831,10 +902,11 @@
             const td = $(this).find('td');
             kindCount += 1;
             const quantity = parseInt(td[3]?.textContent?.trim()) || 0;
-            const price = parseInt(td[4]?.textContent?.trim()) || 0;
+            const priceText = td[4]?.textContent?.trim().replace(/,/g, '') || "0";
+            const price = parseInt(priceText);
 
             totalQuantity += quantity;
-            totalPrice += quantity * price;
+            totalPrice += price;
         });
 
         // 화면에 반영

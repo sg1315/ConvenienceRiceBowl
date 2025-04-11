@@ -319,32 +319,117 @@ public class SpotController {
     @GetMapping("/spot_order/orderDetail")
     public ArrayList<Circulation> spotOderDetail(@RequestParam("setNo") String setNo) {
         System.out.println(setNo);
-        ArrayList<Circulation> sodlist = spotService.spotOrderDetail(setNo);
-        for(Circulation c : sodlist){
-            System.out.println(sodlist);
-        }
-        return sodlist;
+        ArrayList<Circulation> odlist = spotService.spotOrderDetail(setNo);
+        return odlist;
     }
-    //발주 - 지난 달 발주 목록
+    //발주 - 발주 취소(삭제)
     @ResponseBody
-    @PostMapping("/spot_order/previousMonthOrder")
-    public List<Circulation> previousMonthOrder(
-            @RequestParam String startDate,
-            @RequestParam String endDate,
-            HttpSession session) {
+    @PostMapping("/spot_order/cancelOrder")
+    public String cancelOrder(@RequestParam("setNo") String setNo, HttpSession session) {
         Member loginUser = (Member) session.getAttribute("loginMember");
         int storeNo = loginUser.getStoreNo();
 
-        LocalDate start = LocalDate.parse(startDate);
-        LocalDate end = LocalDate.parse(endDate);
-
-        return spotService.previousMonthOrder(start, end, storeNo);
+        int result = spotService.cancelOrder(setNo, storeNo);
+        if (result > 0) {
+            return "success";
+        } else {
+            return "fail";
+        }
     }
 
 
     //입고
     @RequestMapping("/spot_input")
-    public String spot_input() { return "spot/spotInput"; }
+    public String spot_input(
+            @RequestParam(defaultValue = "1") int cpage,
+            @RequestParam(required = false) String setNo,
+            @RequestParam(required = false) Integer status,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            HttpSession session,
+            Model model) {
+
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+
+        //date값 보정
+        if (startDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(startDate);
+            cal.set(Calendar.HOUR_OF_DAY, 0);
+            cal.set(Calendar.MINUTE, 0);
+            cal.set(Calendar.SECOND, 0);
+            cal.set(Calendar.MILLISECOND, 0);
+            startDate = cal.getTime();
+        }
+        if (endDate != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(endDate);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            endDate = cal.getTime();
+        }
+
+        ArrayList<Circulation> resultList;
+        PageInfo pi;
+
+        if (setNo != null || status != null || startDate != null || endDate != null) {
+            int searchCount = spotService.inputSearchListCount(storeNo, setNo, status, startDate, endDate);
+            pi = new PageInfo(searchCount, cpage, 10, 10);
+
+            resultList = spotService.inputSearchList(pi, storeNo, setNo, status, startDate, endDate);
+
+            model.addAttribute("ilist", null);
+            model.addAttribute("islist", resultList);
+            model.addAttribute("pi", pi);
+        } else {
+            int listCount = spotService.inputListCount(storeNo);
+            pi = new PageInfo(listCount, cpage, 10, 10);
+
+            resultList = spotService.inputList(pi, storeNo);
+
+            model.addAttribute("ilist", resultList);
+            model.addAttribute("islist", null);
+            model.addAttribute("pi", pi);
+        }
+
+        model.addAttribute("setNo", setNo);
+        model.addAttribute("status", status);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+
+        return "spot/spotInput";
+    }
+    //입고 상세
+    @ResponseBody
+    @GetMapping("/spot_order/inputDetail")
+    public ArrayList<Circulation> inputDetail(@RequestParam("setNo") String setNo) {
+        System.out.println(setNo);
+        ArrayList<Circulation> idlist = spotService.inputDetail(setNo);
+
+        return idlist;
+    }
+    //입고 완료
+    @PostMapping("/spot_order/insertInput")
+    public ResponseEntity<String> insertInput(@RequestBody List<Circulation> inputList, HttpSession session) {
+
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
+
+        int result = 0;
+
+        result = spotService.insertInput(inputList, storeNo);
+        if (result > 0) {
+            return ResponseEntity.ok("입고 완료");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("입고 실패");
+        }
+    }
+
+
+
 
     //지점관리
     @PostMapping("/update_member")

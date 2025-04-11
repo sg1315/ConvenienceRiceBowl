@@ -114,7 +114,6 @@ public class SpotServiceImpl implements SpotService {
         int result = 1;
 
         for (Circulation circulation : orderList) {
-            System.out.println();
             int insertResult = circulationMapper.insertOrder(circulation, storeNo, setNo);
             if (insertResult == 0) {
                 result = 0;
@@ -156,8 +155,62 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public List<Circulation> previousMonthOrder(LocalDate startDate, LocalDate endDate, int storeNo) {
-        return circulationMapper.previousMonthOrder(startDate, endDate, storeNo);
+    public int cancelOrder(String setNo, int storeNo) {
+        int result = 0;
+        result = circulationMapper.cancelOrder(setNo, storeNo);
+
+        if(result>0){
+            return result;
+        }else{
+            return 0;
+        }
+    }
+
+    //입고 - setNo으로 묶은 수
+    @Override
+    public int inputListCount(int storeNo) {
+        return circulationMapper.inputListCount(storeNo);
+    }
+    //입고 - setNo 묶음 목록
+    @Override
+    public ArrayList<Circulation> inputList(PageInfo pi, int storeNo) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return circulationMapper.inputList(rowBounds, storeNo);
+    }
+    //입고 - 검색한 입고 setNo으로 묶은 수
+    @Override
+    public int inputSearchListCount(int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
+        return circulationMapper.inputSearchListCount(storeNo, setNo, status, startDate, endDate);
+    }
+    //검색한 - 입고 목록
+    @Override
+    public ArrayList<Circulation> inputSearchList(PageInfo pi, int storeNo, String setNo, Integer status, Date startDate, Date endDate) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return circulationMapper.inputSearchList(rowBounds, storeNo, setNo, status, startDate, endDate);
+    }
+
+    @Override
+    public ArrayList<Circulation> inputDetail(String setNo) {
+        return circulationMapper.inputDetail(setNo);
+    }
+
+    @Override
+    public int insertInput(List<Circulation> inputList, int storeNo) {
+
+        int result = 1;
+
+        for (Circulation circulation : inputList) {
+            int insertResult = circulationMapper.insertInput(circulation, storeNo);
+            if (insertResult == 0) {
+                result = 0;
+                break;
+            }
+        }
+        return result;
     }
 
     //매출집계 - 검색
