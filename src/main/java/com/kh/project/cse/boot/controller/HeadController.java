@@ -170,7 +170,6 @@ public class HeadController {
     @PostMapping("deleteAnnouncement")
     public String deleteAnnouncement(@RequestParam("ano") int ano, HttpSession session){
         headService.deleteAnnouncement(ano);
-
         return "redirect:/head_announcement";
 
     }
@@ -362,11 +361,20 @@ public String deleteProduct(@ModelAttribute Product product, HttpSession session
     public String searchMember(@RequestParam(defaultValue = "1") int cpage,@RequestParam String condition, @RequestParam String keyword, HttpSession session, Model model) {
 
         int listCount = memberService.searchMemberListCount(condition,keyword);
+        String[] checkList = { "본사", "지점장", "매니저", "알바" };
 
         PageInfo pi = new PageInfo(listCount,cpage, 10,10);
         if(condition.equals("position")){
-            keyword = newKeyword(keyword);
+            for (String s : checkList) {
+
+                if(s.contains(keyword)){
+                   keyword = newKeyword(s);
+
+                   break;
+                }
+            }
         }
+        System.out.println("keyword확인 :"+keyword);
 
         ArrayList<Member> list = memberService.searchMember(condition,keyword,pi);
         model.addAttribute("list",list);
@@ -381,6 +389,7 @@ public String deleteProduct(@ModelAttribute Product product, HttpSession session
         return "head_office/headMember";
     }
     private String newKeyword(String positionName) {
+
         switch (positionName.trim()) {
             case "본사":
                 return "1";

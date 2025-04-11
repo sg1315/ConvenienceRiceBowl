@@ -65,7 +65,6 @@ public class PosController {
 
         for (Circulation circulation : list) {
             circulation.setStoreNo(member.getStoreNo());
-            circulation.setStatus(3);
             circulation.setSetNo(setNo);
         };
 

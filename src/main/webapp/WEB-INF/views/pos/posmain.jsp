@@ -310,7 +310,7 @@ function addList(this_tb) {
     const productNo = parseInt(cells[1].innerText);
     const productName = cells[2].innerText;
     const circulationAmount = parseInt(cells[3].querySelector("input").value);
-    const salePrice = parseInt(cells[4].innerText);
+    const salePrice = parseInt(cells[4].innerText.replace(",", ""));
 
     dataList.push({
       productNo: productNo,
