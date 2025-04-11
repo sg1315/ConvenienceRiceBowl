@@ -113,9 +113,8 @@ public class SpotController {
     //재고
     @RequestMapping("/spot_inventory")
     public String spot_inventory(@RequestParam(defaultValue = "1") int cpage, Model model, HttpSession session) {
-//        Member loginUser = (Member) session.getAttribute("loginUser");
-//        int storeNo = loginUser.getStoreNo();
-        int storeNo = 5;
+        Member loginUser = (Member) session.getAttribute("loginMember");
+        int storeNo = loginUser.getStoreNo();
         int inventoryCount = spotService.inventoryCount(storeNo);
         PageInfo pi = new PageInfo(inventoryCount, cpage, 10 , 12);
         ArrayList<Inventory> list = spotService.selectInventory(pi, storeNo);

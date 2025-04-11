@@ -54,14 +54,14 @@
                 CIRCULATION_DATE,
                 STATUS
         ) VALUES (
-                SEQ_CIR.NEXTVAL,
+                SEQ_CIRNO.NEXTVAL,
                 #{storeNo},
                 #{setNo},
                 #{circulation.productNo},
                 #{circulation.inputPrice},
                 #{circulation.salePrice},
                 #{circulation.circulationAmount},
-                DEFAULT,
+                SYSDATE,
                 1
         )
     </insert>
@@ -367,14 +367,14 @@
         CIRCULATION_DATE,
         STATUS
     ) VALUES (
-        SEQ_CIR.NEXTVAL,
+        SEQ_CIRNO.NEXTVAL,
         #{storeNo},
         #{circulation.setNo},
         #{circulation.productNo},
         #{circulation.inputPrice},
         #{circulation.salePrice},
         #{circulation.circulationAmount},
-        DEFAULT,
+        SYSDATE,
         2
     )
     </insert>
@@ -602,7 +602,7 @@
         #{inputPrice},
         #{salePrice},
         #{circulationAmount},
-        sysdate,
+        SYSDATE,
         1
         )
     </insert>
