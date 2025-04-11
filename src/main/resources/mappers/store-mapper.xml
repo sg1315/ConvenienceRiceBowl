@@ -136,6 +136,9 @@
     <select id="selectStoreName" resultMap="storeResult">
         SELECT STORE_NO ,STORE_NAME
         FROM STORE
+        JOIN MEMBER USING(STORE_NO)
         WHERE STORE_STATUS = 1
+        AND POSITION != 1
+        GROUP BY STORE_NO, STORE_NAME
     </select>
 </mapper>
