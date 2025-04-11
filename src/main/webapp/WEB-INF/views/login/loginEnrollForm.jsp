@@ -226,7 +226,7 @@
                         success: function (storeNameList){
                             if (storeNameList != null) {
                                 const select = document.getElementById("StoreNameList");
-                                // select.innerHTML = ""; // 초기화
+                                select.innerHTML = ""; // 초기화
 
                                 storeNameList.forEach(store => {
                                     const option = document.createElement("option");

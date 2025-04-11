@@ -133,7 +133,7 @@ public class HeadController {
 
         int announcementCount = headService.selectAnnouncementCount();
 
-        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 12);
+        PageInfo pi = new PageInfo(announcementCount, cpage, 10 , 10);
         ArrayList<Announcement> list = headService.selectAnnouncementlist(pi);
 
         model.addAttribute("list", list);

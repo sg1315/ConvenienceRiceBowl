@@ -21,7 +21,6 @@ public class HeadServiceImpl implements HeadService {
     private final CirculationMapper circulationMapper;
     private final StoreMapper storeMapper;
     private final MemberMapper memberMapper;
-    private final FilesMapper filesMapper;
     private final ReplyMapper replyMapper;
     private final HeadService self; // 여기 추가됨
 
@@ -33,7 +32,6 @@ public class HeadServiceImpl implements HeadService {
         this.storeMapper = storeMapper;
         this.circulationMapper = circulationMapper;
         this.memberMapper = memberMapper;
-        this.filesMapper = filesMapper;
         this.replyMapper = replyMapper;
         this.self = self;
     }
