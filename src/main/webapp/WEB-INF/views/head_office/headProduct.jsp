@@ -312,6 +312,22 @@ contentType="text/html;charset=UTF-8" language="java" %>
         font-size: 20px;
         font-weight: bold;
       }
+
+      /*input numberType 화살표 숨기기*/
+        /* Firefox 브라우저용 사용자 정의 스타일 */
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+        /* 그 외(Chrome, Safari, Edge...)의 브라우저용 사용자 정의 스타일 */
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+      input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      /**/
+
     </style>
   </head>
   <body onload="drawCategoryList()">
