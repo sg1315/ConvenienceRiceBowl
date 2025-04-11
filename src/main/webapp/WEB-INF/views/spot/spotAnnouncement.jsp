@@ -121,15 +121,13 @@ contentType="text/html;charset=UTF-8" language="java" %>
         padding-left: 30px;
         padding-right: 15px;
       }
-
       #detail-modal-body-top {
-        height: 8%;
+        height: 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 3px solid #D9D9D9;
       }
-
       #comment-btn {
         border-bottom: 3px solid #B4B4B4;
         border-top: 3px solid #B4B4B4;

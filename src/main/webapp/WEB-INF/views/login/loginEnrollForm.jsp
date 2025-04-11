@@ -11,7 +11,7 @@
             min-width: 50em;
             height: 32em;
             display: grid;
-            grid-template-rows: 1.5fr 6fr 1fr;
+            grid-template-rows: 1.8fr 6fr 1fr;
             background-color: white;
             border-radius: 1em;
             margin: 0 auto;
@@ -49,15 +49,14 @@
         /**/
         .enrollInput{
             width: 100%;
-            height:90%;
+            height:100%;
             display: grid;
-            grid-template-rows: repeat(1,15%);
-            align-self: center;
-            gap: 10px;
+            grid-template-rows: repeat(6,15%);
+            gap: 2%;
         }
         .enrollInput>div{
             width: 94%;
-            height: 90%;
+            height: 100%;
             display: grid;
             grid-template-columns: 12% 38% 1% 8% 33%;
             justify-self: center;
@@ -91,6 +90,7 @@
         #checkResult{
             display: grid;
             justify-items: center;
+            align-items: center;
             grid-template-columns: 100%;
         }
         #enrollButton{border-radius: 0 0 8px 8px;}
