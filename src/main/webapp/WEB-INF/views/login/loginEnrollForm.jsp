@@ -117,8 +117,8 @@
                         <input type="text" id="storeName" name="storeName" oninput="resetStoreCheck()">
                         <button type="button" onclick="checkStoreName()">확인</button>
                     </div>
-                    <div class="selectStyle" id="storeSelectBox" style="display: none;">
-                        <select id="StoreNameList" name="storeNo" onclick="selectStoreName()"></select>
+                    <div id="storeSelectBox" style="display: none;">
+                        <select id="StoreNameList" name="storeNo"></select>
                     </div>
                     <div></div>
                     <div></div>
@@ -174,6 +174,8 @@
                         storeSelectBox.style.display = "block";
                         storeInputBox.style.display = "none";
                         isStoreNameOk = true;
+
+                        selectStoreName();
                     } else {
                         storeSelectBox.style.display = "none";
                         storeInputBox.style.display = "block";
