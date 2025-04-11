@@ -55,4 +55,5 @@ public interface ProductMapper {
     Product posOneProductSelect(int productNo);
 
 
+    int updateOnlyProduct(Product product);
 }

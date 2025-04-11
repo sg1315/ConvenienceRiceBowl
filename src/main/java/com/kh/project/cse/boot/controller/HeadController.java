@@ -261,14 +261,20 @@ public class HeadController {
             product.setAvailability("N");
         }
 
-        if(!file1.getOriginalFilename().equals("")){ //현재첨부파일이 있을때
+
+        if(!file1.getOriginalFilename().equals("")) { //현재첨부파일이 있을때
+
+
             String changeName = com.kh.project.cse.boot.utils.Template.saveFile(file1, session, "/resources/uploadfile/");
 
             product.setChangeName(changeName);
             product.setOriginName(file1.getOriginalFilename());
             product.setFilePath("/resources/uploadfile/" + changeName);
+            result = headService.updateProduct(product);
+
+        }else{
+            result = headService.updateOnlyProduct(product);
         }
-        result = headService.updateProduct(product);
 
         if (result >= 1){
             session.setAttribute("alertMsg", "상품수정 성공");
