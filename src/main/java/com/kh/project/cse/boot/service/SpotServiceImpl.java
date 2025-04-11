@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Transactional
 @RequiredArgsConstructor
@@ -44,11 +41,7 @@ public class SpotServiceImpl implements SpotService {
 
         return expiryMapper.searchExpiryList(searchExpiry,keyword,storeNo, rowBounds);
     }
-    //근태정보 조회 - 초기화면
-    @Override
-    public List<Attendance> selectInfoList() {
-        return attendanceMapper.selectInfoList();
-    }
+
     //근태정보 - 모달 수정버튼
     @Override
     public int updateWorkTime(Attendance attendance) {
@@ -239,6 +232,34 @@ public class SpotServiceImpl implements SpotService {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return inventoryMapper.searchInventory(rowBounds,storeNo,condition,keyword,check);
+    }
+
+    //페이징 처리 - 근퇴관리
+    @Override
+    public int getSpotAttendanceCount(int storeNo) {
+        return attendanceMapper.getSpotAttendanceCount(storeNo);
+    }
+    @Override
+    public List<Attendance> getSpotAttendanceList(int storeNo, int cpage, int limit) {
+        int startRow = (cpage - 1) * limit + 1;
+        int endRow = cpage * limit;
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("storeNo", storeNo);
+        param.put("startRow", startRow);
+        param.put("endRow", endRow);
+
+        return attendanceMapper.getSpotAttendanceList(param);
+    }
+
+    //페이징 처리 - 매출집계
+    @Override
+    public int getSpotSalesCount() {
+        return 0;
+    }
+    @Override
+    public List<Circulation> getSpotSalesList(int cpage, int i) {
+        return List.of();
     }
 
 }

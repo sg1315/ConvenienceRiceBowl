@@ -18,22 +18,6 @@
             <result column="MEMBER_STATUS" property="status"/>
         </association>
     </resultMap>
-    <!--근태관리 - 직원정보 불러오기-->
-    <select id="selectInfoList" resultMap="attendanceMap">
-        SELECT
-        A.ATTENDANCE_NO,
-        A.WORKING_TIME,
-        A.WORKOUT_TIME,
-        M.MEMBER_NO AS M_MEMBER_NO,
-        M.MEMBER_ID,
-        M.MEMBER_NAME,
-        M.PHONE_NUMBER,
-        M.POSITION,
-        M.MEMBER_STATUS
-        FROM ATTENDANCE A
-        JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
-        ORDER BY A.WORKING_TIME DESC
-    </select>
     <!--근태관리 - 출근 버튼 클릭시 상태확인-->
     <select id="getAttendanceStatus" resultType="Integer">
         SELECT *
@@ -48,9 +32,8 @@
             )
         )
         WHERE ROWNUM = 1
-
-
     </select>
+
     <!--근태관리 - 출근 버튼 클릭시-->
     <insert id="insertWorkingTime" parameterType="map">
         INSERT INTO ATTENDANCE (ATTENDANCE_NO, MEMBER_NO, WORKING_TIME,STATUS)
@@ -61,6 +44,7 @@
         #{status}
         )
     </insert>
+
     <!--근태관리 - 퇴근 버튼 클릭시-->
     <update id="updateWorkLeaveBtnTime" parameterType="map">
         UPDATE ATTENDANCE
@@ -83,10 +67,37 @@
         WHERE MEMBER_NO = (SELECT MEMBER_NO FROM MEMBER WHERE MEMBER_ID = #{member.memberId})
     </update>
 
+    <!--페이징 처리-->
+    <!-- 근퇴관리 데이터 지점별 제한-->
+    <select id="getSpotAttendanceCount" resultType="int" parameterType="int">
+        SELECT COUNT(*)
+        FROM ATTENDANCE A
+        JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
+        WHERE M.STORE_NO = #{storeNo}
+    </select>
 
-
-
-
-
+    <!-- 근퇴관리 페이징 조회 -->
+    <select id="getSpotAttendanceList" resultMap="attendanceMap" parameterType="map">
+        SELECT * FROM (
+        SELECT ROWNUM RNUM, A.* FROM (
+        SELECT
+        A.ATTENDANCE_NO,
+        A.WORKING_TIME,
+        A.WORKOUT_TIME,
+        M.MEMBER_NO AS M_MEMBER_NO,
+        M.MEMBER_ID,
+        M.MEMBER_NAME,
+        M.PHONE_NUMBER,
+        M.POSITION,
+        M.MEMBER_STATUS
+        FROM ATTENDANCE A
+        JOIN MEMBER M ON A.MEMBER_NO = M.MEMBER_NO
+        WHERE M.STORE_NO = #{storeNo}
+        ORDER BY A.WORKING_TIME DESC
+        ) A
+        )
+        WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+    </select>
+    <!--페이징 처리-->
 </mapper>
 

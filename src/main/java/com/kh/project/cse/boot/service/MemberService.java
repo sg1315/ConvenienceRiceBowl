@@ -27,9 +27,7 @@ public interface MemberService {
     int updateMember(Member member);
     Member selectMemberById(String memberId);
     int updateMemberStatus(Member member);
-    //직원정보 조회
-    List<Member> selectMemberList();
-    List<Member> selectMemberBykeyword(String keyword);
+
 
     int memberListCount();
 
@@ -39,4 +37,15 @@ public interface MemberService {
 
     ArrayList<Store> selectStoreName();
     int searchMemberListCount(String condition, String keyword);
+
+
+
+    // 직원정보조회 (검색어O)
+    int getSearchCount(String keyword);
+    List<Member> selectMemberByKeyword(String keyword, int cpage, int limit);  // ← 페이징 버전
+
+    // 직원정보조회 (검색어X)
+    int getSpotMemberCount();
+    List<Member> getSpotMemberList(int cpage, int limit);  // 페이징 처리된 전체 리스트
+
 }

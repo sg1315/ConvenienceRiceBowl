@@ -378,18 +378,22 @@
             </table>
         </div>
         <div id="main-pageing">
-            <img src="/resources/common/공통_페이징바화살표.png">
-            <button type="button" class="btn btn-outline-secondary">1</button>
-            <button type="button" class="btn btn-outline-secondary">2</button>
-            <button type="button" class="btn btn-outline-secondary">3</button>
-            <button type="button" class="btn btn-outline-secondary">4</button>
-            <button type="button" class="btn btn-outline-secondary">5</button>
-            <button type="button" class="btn btn-outline-secondary">6</button>
-            <button type="button" class="btn btn-outline-secondary">7</button>
-            <button type="button" class="btn btn-outline-secondary">8</button>
-            <button type="button" class="btn btn-outline-secondary">9</button>
-            <button type="button" class="btn btn-outline-secondary">10</button>
-            <img src="/resources/common/공통_페이징바화살표.png">
+            <c:if test="${pi.startPage > 1}">
+                <a href="spot_member?cpage=${pi.startPage - 1}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}">
+                    <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+                </a>
+            </c:if>
+            <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+                <button type="button" class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                        onclick="location.href='spot_member?cpage=${i}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}'">
+                        ${i}
+                </button>
+            </c:forEach>
+            <c:if test="${pi.endPage < pi.maxPage}">
+                <a href="spot_member?cpage=${pi.endPage + 1}&setNo=${param.setNo}&status=${param.status}&startDate=${param.startDate}&endDate=${param.endDate}">
+                    <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+                </a>
+            </c:if>
         </div>
     </div>
 
