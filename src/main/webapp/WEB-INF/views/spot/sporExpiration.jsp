@@ -45,6 +45,7 @@
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
             gap: 10px;
+            padding-right: 50px ;
         }
         #right-check p {
             padding-left: 5px;

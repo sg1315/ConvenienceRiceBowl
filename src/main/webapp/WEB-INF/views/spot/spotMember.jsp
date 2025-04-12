@@ -17,7 +17,6 @@
         #top-manu{
             display: flex;
             justify-content: space-between;
-            padding-left: 50px;
         }
         #top-left{
             background-color: #D9D9D9;
