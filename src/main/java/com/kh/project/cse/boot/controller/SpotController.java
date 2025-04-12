@@ -610,13 +610,10 @@ public class SpotController {
         int pageLimit = 10;
         PageInfo pi = new PageInfo(listCount, cpage, pageLimit, boardLimit);
 
-        int start = (cpage - 1) * boardLimit;
-        int end = Math.min(start + boardLimit, listCount);
-        List<Circulation> pageList = result.subList(start, end);
 
         model.addAttribute("pi", pi);
         model.addAttribute("param", param);
-        model.addAttribute("list", pageList);
+        model.addAttribute("list", result);
         model.addAttribute("startMonth", startMonth);
         model.addAttribute("endMonth", endMonth);
 

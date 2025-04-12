@@ -377,6 +377,7 @@
       </div>
 
       <div id="modal-body">
+        <div style="max-height: 100%; overflow-y: auto;">
         <table id="modal-body-table">
           <thead>
           <tr>
@@ -388,11 +389,11 @@
             <th class="col-1">구분</th>
           </tr>
           </thead>
-
-          <tbody id="modal-tbody" style="max-height: 300px; overflow-y: auto;">
-          <tr class="table-row"></tr>
-          </tbody>
+            <tbody id="modal-tbody">
+            <tr class="table-row"></tr>
+            </tbody>
         </table>
+      </div>
       </div>
 
       <div id="body-total-outline">
