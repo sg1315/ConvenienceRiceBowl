@@ -320,11 +320,11 @@
         <tbody>
         <c:forEach var="sales" items="${list}">
           <tr class="table-row" data-date="${sales.circulationDate}">
-            <td>${sales.circulationDate}</td>
+            <td><fmt:formatDate value="${sales.circulationDate}" pattern="yyyy-MM-dd" /></td>
             <td><fmt:formatNumber value="${sales.inputPrice}" type="number" /></td>
             <td class="sumPrice"><fmt:formatNumber value="${sales.salePrice}" type="number" /></td>
-            <td class="countAmount">0</td>
-            <td class="margin">0</td>
+            <td class="countAmount"><fmt:formatNumber value="${sales.circulationAmount}" type="number" /></td>
+            <td class="margin"><fmt:formatNumber value="${sales.inputPrice - sales.salePrice}" type="number" /></td>
           </tr>
         </c:forEach>
         </tbody>
@@ -389,7 +389,7 @@
           </tr>
           </thead>
 
-          <tbody id="modal-tbody">
+          <tbody id="modal-tbody" style="max-height: 300px; overflow-y: auto;">
           <tr class="table-row"></tr>
           </tbody>
         </table>
@@ -411,7 +411,8 @@
     const rows = document.querySelectorAll("#table1 .table-row");
 
     rows.forEach(row => {
-      const date = row.dataset.date;
+      const rawDate = new Date(row.dataset.date);
+      const date = rawDate.toISOString().split("T")[0];
       const countTd = row.querySelector(".countAmount");
       const marginTd = row.querySelector(".margin");
       const inputPrice = parseInt(row.querySelector("td:nth-child(2)")?.innerText.replace(/,/g, "") || "0");
