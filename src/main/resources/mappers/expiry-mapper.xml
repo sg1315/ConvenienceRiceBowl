@@ -14,7 +14,7 @@
     </resultMap>
 
     <select id="selectExpiryCount" resultType="_int">
-        SELECT SUM(COUNT(PRODUCT_NO)) FROM INVENTORY
+        SELECT NVL(SUM(COUNT(PRODUCT_NO)),0) FROM INVENTORY
         WHERE INVENTORY_COUNT > 0
         AND STORE_NO =#{storeNo}
         GROUP BY EXPIRATION_DATE
@@ -52,7 +52,7 @@
         ORDER BY EXPIRATION_DATE
     </select>
     <select id="searchExpiryListCount" resultType="_int">
-        SELECT SUM(COUNT(P.PRODUCT_NO)) FROM PRODUCT P
+        SELECT NVL(SUM(COUNT(P.PRODUCT_NO)),0) FROM PRODUCT P
         JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE I.INVENTORY_COUNT > 0

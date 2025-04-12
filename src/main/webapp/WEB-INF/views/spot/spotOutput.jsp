@@ -8,6 +8,7 @@
   <style>
     .waper{
       width:100%;
+      height: 100%;
       padding: 50px;
     }
     .main_name{
@@ -17,46 +18,43 @@
     }
     #top-manu{
       display: flex;
-      /*justify-content: space-between;*/
-      /*!*background-color: white;*!*/
-      /*background-color: #D9D9D9;*/
-      border-top-right-radius: 20px;
+      justify-content: space-between;
+      height: 15%;
     }
 
     #top-left{
       background-color: #D9D9D9;
-      width: 40%;
+      width: 50%;
     }
     #top-left1{
       background-color: white;
       display: flex;
       align-content: center;
       align-items: center;
-      height: 100%;
       width: 100%;
       border-bottom-right-radius: 20px;
       padding-bottom: 10px;
-      padding-left: 10px;
-    }
-    .search-input-submit{
-      margin: 0px;
+      height: 100%;
     }
 
     #top-right1{
       background-color: #D9D9D9;
-      width: 60%;
+      width: 50%;
       display: flex;
-      justify-content: center;
+      justify-content: right;
       align-items: center;
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
+      padding-right: 3%;
       flex-wrap: wrap;
       gap: 10px;
-      padding-top: 10px;
+      padding-top: 20px;
     }
-    #top-right1-left{
-      width: 80%;
-
+    #top-right1 form{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: right;
     }
     #top-right1-top{
       height: 50%;
@@ -65,11 +63,19 @@
       align-items: center;
     }
     #top-right1-bottom{
-      padding-top: 10px;
+      width: 100%;
       height: 50%;
       display: flex;
+      justify-content: right;
       align-items: center;
-      gap: 5%;
+      gap: 10px;
+    }
+    #top-left p {
+       padding-left: 15px;
+    }
+
+    #table1 td img{
+      width: 20px;
     }
     #search-text{
       width: 66.8%;
@@ -77,21 +83,22 @@
     #search-text input{
       width: 100%;
     }
+    #top-left p {
+      padding-left: 15px;
+    }
     #margi {
-      height: 60%;
+      height:50%;
     }
 
     #table1 td img{
       width: 20px;
     }
 
-    #top-left p {
-      padding-left: 15px;
-    }
+
     #main{
       background-color: #D9D9D9;
       width: 100%;
-      height: 90%;
+      height: 85%;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
       border-bottom-right-radius: 20px;
@@ -105,6 +112,7 @@
       border-radius: 20px;
       padding: 50px;
     }
+
     @media screen and (max-width: 1800px) {
       #main-in{
         overflow-x: auto;
