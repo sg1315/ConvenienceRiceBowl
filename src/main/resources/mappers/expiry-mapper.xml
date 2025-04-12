@@ -14,9 +14,10 @@
     </resultMap>
 
     <select id="selectExpiryCount" resultType="_int">
-        SELECT COUNT(*) FROM INVENTORY
+        SELECT SUM(COUNT(PRODUCT_NO)) FROM INVENTORY
         WHERE INVENTORY_COUNT > 0
         AND STORE_NO =#{storeNo}
+        GROUP BY EXPIRATION_DATE
     </select>
     <select id="selectExpiryList" resultMap="ExpiryResult">
         SELECT
@@ -24,52 +25,34 @@
         C.CATEGORY_NAME,
         P.PRODUCT_NAME,
         TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD') AS EXPIRATION_DATE,
-        I.INVENTORY_COUNT,
-        TO_CHAR(P.INPUT_PRICE*I.INVENTORY_COUNT,'999,999,999') AS PRICE,
-        CASE
-        WHEN TRUNC(I.EXPIRATION_DATE)+1 &lt;= TRUNC(SYSDATE) THEN 1
-        WHEN TRUNC(I.EXPIRATION_DATE) = TRUNC(SYSDATE) THEN 2
-        ELSE 0
-        END AS NEAR_EXPIRY
+        SUM(I.INVENTORY_COUNT) AS INVENTORY_COUNT,
+        TO_CHAR(SUM(P.INPUT_PRICE * I.INVENTORY_COUNT), '999,999,999') AS PRICE,
+        T.NEAR_EXPIRY
         FROM PRODUCT P
         JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        JOIN (
+            SELECT
+            INVENTORY_NO,
+            CASE
+            WHEN TRUNC(EXPIRATION_DATE) + 1 &lt;= TRUNC(SYSDATE) THEN 1
+            WHEN TRUNC(EXPIRATION_DATE) = TRUNC(SYSDATE) THEN 2
+            ELSE 0
+            END AS NEAR_EXPIRY
+            FROM INVENTORY
+            ) T ON I.INVENTORY_NO = T.INVENTORY_NO
         WHERE I.INVENTORY_COUNT > 0
         AND I.STORE_NO =#{storeNo}
-        ORDER BY I.EXPIRATION_DATE
+        GROUP BY
+            P.PRODUCT_NO,
+            P.PRODUCT_NAME,
+            TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD'),
+            C.CATEGORY_NAME,
+            T.NEAR_EXPIRY
+        ORDER BY EXPIRATION_DATE
     </select>
     <select id="searchExpiryListCount" resultType="_int">
-        SELECT COUNT(*) FROM PRODUCT
-        JOIN INVENTORY USING(PRODUCT_NO)
-        JOIN CATEGORY USING(CATEGORY_NO)
-        WHERE INVENTORY_COUNT > 0
-        AND STORE_NO = #{storeNo}
-        <choose>
-            <when test="searchExpiry == 'productNo'">
-                AND PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
-            </when>
-            <when test="searchExpiry == 'categoryName'">
-                AND CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
-            </when>
-            <otherwise>
-                AND PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
-            </otherwise>
-        </choose>
-    </select>
-    <select id="searchExpiryList" resultMap="ExpiryResult">
-        SELECT
-        P.PRODUCT_NO,
-        C.CATEGORY_NAME,
-        P.PRODUCT_NAME,
-        TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD') AS EXPIRATION_DATE,
-        I.INVENTORY_COUNT,
-        TO_CHAR(P.INPUT_PRICE*I.INVENTORY_COUNT,'999,999,999') AS PRICE,
-        CASE
-        WHEN TRUNC(I.EXPIRATION_DATE)+1 &lt;= TRUNC(SYSDATE) THEN 1
-        WHEN TRUNC(I.EXPIRATION_DATE) = TRUNC(SYSDATE) THEN 2
-        ELSE 0
-        END AS NEAR_EXPIRY
-        FROM PRODUCT P
+        SELECT SUM(COUNT(P.PRODUCT_NO)) FROM PRODUCT P
         JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE I.INVENTORY_COUNT > 0
@@ -85,8 +68,52 @@
                 AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
             </otherwise>
         </choose>
-        ORDER BY I.EXPIRATION_DATE
+        GROUP BY I.EXPIRATION_DATE
     </select>
+    <select id="searchExpiryList" resultMap="ExpiryResult">
+        SELECT
+        P.PRODUCT_NO,
+        C.CATEGORY_NAME,
+        P.PRODUCT_NAME,
+        TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD') AS EXPIRATION_DATE,
+        SUM(I.INVENTORY_COUNT) AS INVENTORY_COUNT,
+        TO_CHAR(SUM(P.INPUT_PRICE * I.INVENTORY_COUNT), '999,999,999') AS PRICE,
+        T.NEAR_EXPIRY
+        FROM PRODUCT P
+        JOIN INVENTORY I ON P.PRODUCT_NO = I.PRODUCT_NO
+        JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
+        JOIN (
+            SELECT
+            INVENTORY_NO,
+            CASE
+            WHEN TRUNC(EXPIRATION_DATE) + 1 &lt;= TRUNC(SYSDATE) THEN 1
+            WHEN TRUNC(EXPIRATION_DATE) = TRUNC(SYSDATE) THEN 2
+            ELSE 0
+            END AS NEAR_EXPIRY
+        FROM INVENTORY
+        ) T ON I.INVENTORY_NO = T.INVENTORY_NO
+        WHERE I.INVENTORY_COUNT > 0
+        AND I.STORE_NO =#{storeNo}
+        <choose>
+            <when test="searchExpiry == 'productNo'">
+                AND P.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <when test="searchExpiry == 'categoryName'">
+                AND C.CATEGORY_NAME LIKE '%'|| #{keyword} ||'%'
+            </when>
+            <otherwise>
+                AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'
+            </otherwise>
+        </choose>
+        GROUP BY
+        P.PRODUCT_NO,
+        P.PRODUCT_NAME,
+        TO_CHAR(I.EXPIRATION_DATE, 'YYYY-MM-DD'),
+        C.CATEGORY_NAME,
+        T.NEAR_EXPIRY
+        ORDER BY EXPIRATION_DATE
+    </select>
+
 <!--    <insert id="insertExpiry">-->
 <!--        INSERT INTO CIRCULATION (-->
 <!--            CIRCULATION_NO,-->
