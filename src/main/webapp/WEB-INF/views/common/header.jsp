@@ -212,6 +212,7 @@
         width: 100%;
         flex-direction: row;
         max-width: 24%;
+        max-height: 90vh;
       }
       #editInfo_modal-header,#editInfo_modal-footer{
         background-color: #D9D9D9;
@@ -286,7 +287,7 @@
         text-align: center;
         display: flex;
         width: 100%;
-        height: 100%;
+        max-height: 200px;
         margin-bottom: 10px;
       }
 
@@ -342,7 +343,7 @@
         <div>
   <%
     // 세션에서 로그인 유저 정보 가져오기
-    Member loginUser = (Member) session.getAttribute("loginUser");
+    Member loginUser = (Member) session.getAttribute("loginMember");
   %>
 
 

@@ -121,7 +121,6 @@ contentType="text/html;charset=UTF-8" language="java" %>
         }
 
         .modal-content {
-            max-height: 50vh;
             min-height: 40vh;
         }
 
