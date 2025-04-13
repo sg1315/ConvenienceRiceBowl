@@ -138,129 +138,130 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-    <form class="waper" id="seach-form" action="searchExpiry">
-        <div id="top-manu">
-            <div id="top-left">
-                <div id="top-left1">
-                    <img src="../resources/menu_icons/유통기한관리 아이콘.png">
-                    <p class="main_name">유통기한 관리</p>
-                </div>
-            </div>
-            <div id="top-right1">
-                <div class="selectbox" id="option-select">
-                    <select name="searchExpiry" >
-                        <option value="productNo" ${searchExpiry == 'productNo' ? 'selected' : ''}>상품번호</option>
-                        <option value="categoryName" ${searchExpiry == 'categoryName' ? 'selected' : ''}>카테고리</option>
-                        <option value="productName" ${searchExpiry == 'productName' ? 'selected' : ''}>상품명</option>
-                    </select>
-                </div>
-                <div id="search-box">
-                    <input class="search-input" type="text" name="keyword" value="${keyword}">
-                    <button class="search-input-submit" type="submit">검색</button>
-                </div>
+<form class="waper" id="seach-form" action="searchExpiry">
+    <div id="top-manu">
+        <div id="top-left">
+            <div id="top-left1">
+                <img src="../resources/menu_icons/유통기한관리 아이콘.png">
+                <p class="main_name">유통기한 관리</p>
             </div>
         </div>
-        <div id="main">
-            <div id="main-in">
-                <table class="table table-hover table-sm" id="table1">
-                    <colgroup>
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                        <col style="width: 20%;">
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                        <col style="width: 10%;">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>상품번호</th>
-                        <th>카테고리</th>
-                        <th>상품명</th>
-                        <th>유통기한</th>
-                        <th>수량</th>
-                        <th>금액</th>
-                        <th>폐기/임박</th>
+        <div id="top-right1">
+            <div class="selectbox" id="option-select">
+                <select name="searchExpiry" >
+                    <option value="productNo" ${searchExpiry == 'productNo' ? 'selected' : ''}>상품번호</option>
+                    <option value="categoryName" ${searchExpiry == 'categoryName' ? 'selected' : ''}>카테고리</option>
+                    <option value="productName" ${searchExpiry == 'productName' ? 'selected' : ''}>상품명</option>
+                </select>
+            </div>
+            <div id="search-box">
+                <input class="search-input" type="text" name="keyword" value="${keyword}">
+                <button class="search-input-submit" type="submit">검색</button>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="main-in">
+            <table class="table table-hover table-sm" id="table1">
+                <colgroup>
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 20%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                    <col style="width: 10%;">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>상품번호</th>
+                    <th>카테고리</th>
+                    <th>상품명</th>
+                    <th>유통기한</th>
+                    <th>수량</th>
+                    <th>금액</th>
+                    <th>폐기/임박</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="e" items="${expiryList}">
+                    <tr class="expiryList">
+                        <td>${e.productNo }</td>
+                        <td>${e.categoryName }</td>
+                        <td>${e.productName }</td>
+                        <td>${e.expirationDate }</td>
+                        <td>${e.inventoryCount}</td>
+                        <td>${e.price }</td>
+                        <td>
+                            <c:choose>
+                                <c:when test="${e.nearExpiry == 1}">
+                                    <button class="expiryBtn"
+                                            data-store="${loginMember.storeNo}"
+                                            data-product="${e.productNo}"
+                                            data-count="${e.inventoryCount}"
+                                            data-date="${e.expirationDate}"
+                                            onclick="expiryBtn(this)">폐기하기</button>
+                                </c:when>
+                                <c:when test="${e.nearExpiry == 2}">
+                                    <p style="color: red; font-weight: 600">임박 -1</p>
+                                </c:when>
+                                <c:otherwise>
+                                    -
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="e" items="${expiryList}">
-                        <tr class="expiryList">
-                            <td>${e.productNo }</td>
-                            <td>${e.categoryName }</td>
-                            <td>${e.productName }</td>
-                            <td>${e.expirationDate }</td>
-                            <td>${e.inventoryCount}</td>
-                            <td>${e.price }</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${e.nearExpiry == 1}">
-                                        <button class="expiryBtn"
-                                                data-store="${loginMember.storeNo}"
-                                                data-product="${e.productNo}"
-                                                data-count="${e.inventoryCount}"
-                                                data-date="${e.expirationDate}"
-                                                onclick="expiryBtn(this)">폐기하기</button>
-                                    </c:when>
-                                    <c:when test="${e.nearExpiry == 2}">
-                                        <p style="color: red; font-weight: 600">임박 -1</p>
-                                    </c:when>
-                                    <c:otherwise>
-                                        -
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <div id="main-pageing">
-                <c:if test="${pi.startPage > 1}">
-                    <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.startPage - 1}">
-                    <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
-                    </input>
-                </c:if>
-                <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
-                    <button type="button"
-                            class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                            onclick="location.href='/searchExpiry?cpage=${i}">${i}</button>
                 </c:forEach>
-                <c:if test="${pi.endPage < pi.maxPage}">
-                    <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.endPage + 1}">
-                    <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
-                    </input>
-                </c:if>
-            </div>
+                </tbody>
+            </table>
         </div>
-<script>
-    function expiryBtn(btn){
-        const storeNo = btn.dataset.store;
-        const productNo = btn.dataset.product;
-        const inventoryCount = btn.dataset.count;
-        const expirationDate = btn.dataset.date;
+        <div id="main-pageing">
+            <c:if test="${pi.startPage > 1}">
+                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.startPage - 1}&searchExpiry=${param.searchExpiry}'">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
+                </input>
+            </c:if>
+            <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
+                <button type="button"
+                        class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
+                        onclick="location.href='/searchExpiry?cpage=${i}&searchExpiry=${param.searchExpiry}'">${i}</button>
+            </c:forEach>
+            <c:if test="${pi.endPage < pi.maxPage}">
+                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.endPage + 1}&searchExpiry=${param.searchExpiry}'">
+                <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
+                </input>
+            </c:if>
+        </div>
+    </div>
+    <script>
+        function expiryBtn(btn){
+            const storeNo = btn.dataset.store;
+            const productNo = btn.dataset.product;
+            const inventoryCount = btn.dataset.count;
+            const expirationDate = btn.dataset.date;
 
-        if(confirm("폐기 하시겠습니까?")){
-            $.ajax({
-                url: "/api/circulation/expiry",
-                data: {
-                    storeNo: storeNo,
-                    productNo: productNo,
-                    inventoryCount: inventoryCount,
-                    expirationDate: expirationDate
-                },
-                success: function (isCheck){
-                    if (isCheck === "NNNNY") {
-                        location.reload();
-                    } else {
-                        alert("폐기가 되지 않았습니다. 다시 시도해 주시고 여러번 시도해도 안될 시 관리자에게 문의주세요.");
+            if(confirm("폐기 하시겠습니까?")){
+                $.ajax({
+                    url: "/api/circulation/expiry",
+                    data: {
+                        storeNo: storeNo,
+                        productNo: productNo,
+                        inventoryCount: inventoryCount,
+                        expirationDate: expirationDate
+                    },
+                    success: function (isCheck){
+                        if (isCheck === "NNNNY") {
+                            location.reload();
+                        } else {
+                            alert("폐기가 되지 않았습니다. 다시 시도해 주시고 여러번 시도해도 안될 시 관리자에게 문의주세요.");
+                        }
+                    }, error: function (){
+                        console.log("폐기 ajax 실패");
                     }
-                }, error: function (){
-                    console.log("폐기 ajax 실패");
-                }
-            })
+                })
+            }
         }
-    }
-</script>
+    </script>
+</form>
 </body>
 </html>
