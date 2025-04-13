@@ -305,7 +305,7 @@ public class SpotController {
     }
     //유통기한 검색
     @RequestMapping("/searchExpiry")
-    public String searchExpiry(@RequestParam(defaultValue = "1") int cpage, @RequestParam String searchExpiry,@RequestParam String keyword, HttpSession session, Model model){
+    public String searchExpiry(@RequestParam(defaultValue = "1") int cpage, @RequestParam String searchExpiry,@RequestParam(defaultValue = "") String keyword, HttpSession session, Model model){
         System.out.println(searchExpiry);
 
         Member member = (Member)session.getAttribute("loginMember");

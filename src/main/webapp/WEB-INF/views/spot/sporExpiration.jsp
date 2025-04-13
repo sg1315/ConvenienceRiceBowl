@@ -217,17 +217,17 @@
         </div>
         <div id="main-pageing">
             <c:if test="${pi.startPage > 1}">
-                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.startPage - 1}&searchExpiry=${param.searchExpiry}'">
+                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.startPage - 1}&searchExpiry=${param.searchExpiry}&keyword=${param.keyword}'">
                 <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
                 </input>
             </c:if>
             <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
                 <button type="button"
                         class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                        onclick="location.href='/searchExpiry?cpage=${i}&searchExpiry=${param.searchExpiry}'">${i}</button>
+                        onclick="location.href='/searchExpiry?cpage=${i}&searchExpiry=${param.searchExpiry}&keyword=${param.keyword}'">${i}</button>
             </c:forEach>
             <c:if test="${pi.endPage < pi.maxPage}">
-                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.endPage + 1}&searchExpiry=${param.searchExpiry}'">
+                <input type="button" onclick="location.href='/searchExpiry?cpage=${pi.endPage + 1}&searchExpiry=${param.searchExpiry}&keyword=${param.keyword}'">
                 <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
                 </input>
             </c:if>
