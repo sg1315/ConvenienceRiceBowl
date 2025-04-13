@@ -436,6 +436,8 @@
 
         modalTbody.innerHTML = "";
         bodyTotal.innerHTML = "";
+        let inputsal = 0;
+        let outsal = 0;
 
         fetch("/spot_sales/detail?date=" + encodeURIComponent(date))
                 .then(res => res.json())
@@ -452,6 +454,13 @@
                                         item.status === 6 ? "거절" :
                                         item.status === 7 ? "발주완료" :
                                         "알 수 없음";
+
+                    if (item.status === 2 && item.inputPrice && item.circulationAmount) {
+                      inputsal += item.circulationAmount * item.inputPrice;
+                    }
+                    if (item.status === 3 && item.inputPrice && item.circulationAmount) {
+                      outsal += item.circulationAmount * item.salePrice;
+                    }
 
                     countAmount += item.circulationAmount;
 
@@ -472,7 +481,7 @@
 
                   bodyTotal.innerHTML = "<p>" + date + "</p>" +
                           "<p></p>" +
-                          "<p>합계 : " + sumPrice.toLocaleString() + " 원</p>";
+                          "<p>합계 : " + (outsal-inputsal).toLocaleString() + " 원</p>";
 
                   new bootstrap.Modal(document.getElementById("detail-staticBackdrop")).show();
                 });
