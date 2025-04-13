@@ -531,12 +531,11 @@
     <!-- 상세 유통 내역 (모달용) -->
     <select id="getDetailsByDate" resultMap="circulationResult">
         SELECT
-        c.CIRCULATION_NO,
         c.STORE_NO,
         c.PRODUCT_NO,
-        (CASE WHEN c.STATUS = 2 THEN c.INPUT_PRICE ELSE NULL END) AS INPUT_PRICE,
-        (CASE WHEN c.STATUS = 3 THEN c.SALE_PRICE ELSE 0 END) AS SALE_PRICE,
-        c.CIRCULATION_AMOUNT,
+        P.INPUT_PRICE,
+        P.SALE_PRICE,
+        SUM(c.CIRCULATION_AMOUNT) AS CIRCULATION_AMOUNT,
         TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') AS CIRCULATION_DATE,
         c.STATUS,
         s.STORE_NAME,
@@ -546,10 +545,21 @@
         JOIN STORE s ON c.STORE_NO = s.STORE_NO
         JOIN PRODUCT p ON c.PRODUCT_NO = p.PRODUCT_NO
         JOIN CATEGORY ca ON p.CATEGORY_NO = ca.CATEGORY_NO
-        WHERE c.STORE_NO = #{storeNo}
-        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
-        AND c.STATUS IN (2, 3)
+        WHERE c.STORE_NO = '1'
+        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = '2025-04-13'
+        AND c.STATUS IN (2,3)
+        GROUP BY
+        c.STORE_NO,
+        c.PRODUCT_NO,
+        TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD'),
+        c.STATUS,
+        s.STORE_NAME,
+        p.PRODUCT_NAME,
+        P.INPUT_PRICE,
+        P.SALE_PRICE,
+        ca.CATEGORY_NAME
         ORDER BY c.STATUS, c.PRODUCT_NO
+
 
     </select>
 
