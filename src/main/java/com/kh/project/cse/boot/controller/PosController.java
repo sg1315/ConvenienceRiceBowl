@@ -71,9 +71,9 @@ public class PosController {
         int result = posService.posCirculationInsert(list);
 
         if (result > 0) {
-            return ResponseEntity.ok("발주 요청 완료");
+            return ResponseEntity.ok("판매 완료");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("발주 요청 실패");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("판매 실패");
         }
     }
 }

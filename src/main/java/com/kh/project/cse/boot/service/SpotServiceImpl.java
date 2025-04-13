@@ -241,14 +241,13 @@ public class SpotServiceImpl implements SpotService {
     public ArrayList<Product> spotSearchProduct(String inputcheck, String condition, String keyword, PageInfo pi) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-        return productMapper.spotSearchProduct(inputcheck, condition, keyword,rowBounds );
+        return productMapper.spotSearchProduct(inputcheck, condition, keyword, rowBounds );
     }
 
     @Override
     public int spotSearchProductCount(String inputcheck, String condition, String keyword) {
-
-
-        return productMapper.spotSearchProductCount(inputcheck,condition,keyword);
+        int result =  productMapper.spotSearchProductCount(inputcheck,condition,keyword);
+        return result;
     }
     @Override
     public int selectAnnouncementCount() {
