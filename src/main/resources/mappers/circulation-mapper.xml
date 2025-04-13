@@ -762,7 +762,7 @@
         </choose>
         <choose>
             <when test="searchOutput == 'productNo'">
-                AND CI.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
+                AND P.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
             </when>
             <when test="searchOutput == 'productName'">
                 AND P.PRODUCT_NAME LIKE '%'|| #{keyword} ||'%'

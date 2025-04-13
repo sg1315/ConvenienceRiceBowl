@@ -171,7 +171,7 @@ public class SpotController {
 
         model.addAttribute("outputList",outputList);
         model.addAttribute("pi",pi);
-        model.addAttribute("until",LocalDate.now().toString());
+        model.addAttribute("until",LocalDate.now().plusDays(1).toString());
         return "spot/spotOutput";
     }
     @RequestMapping("/search_output")
@@ -198,13 +198,13 @@ public class SpotController {
         }
 
         //최근
-        LocalDate Today = LocalDate.now();
+        LocalDate toDay = LocalDate.now().plusDays(1);
         if(!today.isBlank()){
-           until = Today.toString();
+           until = toDay.toString();
         }
         //저번 달
         if(!lastMonth.isBlank()){
-            LocalDate LastMonth = Today.minusMonths(1);
+            LocalDate LastMonth = toDay.minusMonths(1);
             until = LastMonth.toString();
         }
 
