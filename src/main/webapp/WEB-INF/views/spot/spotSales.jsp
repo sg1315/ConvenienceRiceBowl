@@ -431,11 +431,11 @@
       row.addEventListener("click", function () {
         const modalTbody = document.getElementById("modal-tbody");
         const bodyTotal = document.getElementById("body-total");
-        const sumPriceText = row.querySelector(".margin")?.innerText || "0";
-        const sumPrice = parseInt(sumPriceText.replace(/,/g, ""), 10);
 
         modalTbody.innerHTML = "";
         bodyTotal.innerHTML = "";
+        let inputtotalsal = 0;
+        let outtotalsal = 0;
         let inputsal = 0;
         let outsal = 0;
 
@@ -456,17 +456,19 @@
                                         "알 수 없음";
 
                     if (item.status === 2 && item.inputPrice && item.circulationAmount) {
-                      inputsal += item.circulationAmount * item.inputPrice;
+                      inputtotalsal += item.circulationAmount * item.inputPrice;
+                      inputsal = item.circulationAmount * item.inputPrice;
                     }
                     if (item.status === 3 && item.inputPrice && item.circulationAmount) {
-                      outsal += item.circulationAmount * item.salePrice;
+                      outtotalsal += item.circulationAmount * item.salePrice;
+                      outsal = item.circulationAmount * item.salePrice;
                     }
 
                     countAmount += item.circulationAmount;
 
                     const priceText =
-                            item.status === 2 ? item.inputPrice :
-                            item.status === 3 ? item.salePrice :
+                            item.status === 2 ? inputsal :
+                            item.status === 3 ? outsal :
                             "-";
 
                     tr.innerHTML =
@@ -481,7 +483,7 @@
 
                   bodyTotal.innerHTML = "<p>" + date + "</p>" +
                           "<p></p>" +
-                          "<p>합계 : " + (outsal-inputsal).toLocaleString() + " 원</p>";
+                          "<p>합계 : " + (outtotalsal-inputtotalsal).toLocaleString() + " 원</p>";
 
                   new bootstrap.Modal(document.getElementById("detail-staticBackdrop")).show();
                 });
