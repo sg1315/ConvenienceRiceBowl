@@ -49,12 +49,50 @@ public class SpotController {
         int storeNo = member.getStoreNo();
 
 
+        //left
         ArrayList<Circulation> spotBestSalesList = spotService.spotSalesBestList(storeNo);
         ArrayList<Circulation> spotWorstSalesList = spotService.spotSalesWorstList(storeNo);
 
         model.addAttribute("spotBestSalesList", spotBestSalesList);
         model.addAttribute("spotWorstSalesList", spotWorstSalesList);
 
+        String year = String.valueOf(LocalDate.now().getYear());
+
+        List<Circulation> monthList = new ArrayList<>();
+        for (int i = 1; i <= 12; i++) {
+            Circulation c = new Circulation();
+            c.setMonth(String.valueOf(i));
+            c.setTotalInput(0);
+            c.setTotalSale(0);
+            c.setTotalMargin(0);
+            monthList.add(c);
+        }
+
+        List<Circulation> realData = spotService.getDetailsByDate(year, storeNo);
+        for (Circulation real : realData) {
+            int index = Integer.parseInt(real.getMonth()) - 1;
+            monthList.set(index, real);
+        }
+
+        model.addAttribute("yearCurrent", year);
+        model.addAttribute("monthList", monthList);
+
+        System.out.println("realData:");
+        for (Circulation real : realData) {
+            System.out.println("Month: " + real.getMonth() + ", Input: " + real.getTotalInput() +
+                    ", Sale: " + real.getTotalSale() + ", Margin: " + real.getTotalMargin());
+        }
+
+        System.out.println("Final monthList:");
+        for (Circulation c : monthList) {
+            System.out.println("Month: " + c.getMonth() + ", Input: " + c.getTotalInput() +
+                    ", Sale: " + c.getTotalSale() + ", Margin: " + c.getTotalMargin());
+        }
+
+
+
+
+        //right
         int inventoryCount = spotService.selectdashInventoryCount(storeNo);
 
         ArrayList<Announcement> annList = spotService.selectdashAnnouncementlist();

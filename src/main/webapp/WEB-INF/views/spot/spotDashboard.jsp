@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <jsp:useBean id="now" class="java.util.Date" scope="page" />
 <html>
@@ -168,10 +169,17 @@
             width: 100%;
             height: 100%;
             font-size: 14px;
+            text-align: center;
         }
         #dash-inout-table table th{
             border-top: solid;
             border-bottom: solid;
+            text-align: center;
+            vertical-align: middle;
+        }
+        #dash-inout-table table td {
+            text-align: center;
+            vertical-align: middle;
         }
         #dash-inout-table table tr:nth-child(3){
             background: #FFC000;
@@ -407,9 +415,11 @@
         <div id="dash-main">
             <div id="dash-left">
                 <div id="dash-date">
-                    <button type="button" id="dash-date-prevMonth">&lt;</button>
+<%--                    <button type="button" id="dash-date-prevMonth">&lt;</button>--%>
+                    <h2>&lt;</h2>
                     <p id="dash-date-month"></p>
-                    <button type="button" id="dash-date-nextMonth">&gt;</button>
+<%--                    <button type="button" id="dash-date-nextMonth">&gt;</button>--%>
+                    <h2>&gt;</h2>
                 </div>
                 <div id="dash-product-top">
                     <div class="product-box" id="product-top-best">
@@ -485,6 +495,13 @@
                     <canvas id="barChart"></canvas>
                 </div>
                 <div id="dash-inout-table">
+                    <%
+                        String year = String.valueOf(java.time.LocalDate.now().getYear());
+                        request.setAttribute("yearCurrent", year);
+                    %>
+                    <div style="text-align: right; font-size: 12px; color: #555; margin-bottom: 5px;">
+                        (단위: 만원)
+                    </div>
                     <table class="table table-bordered">
                         <thead>
                         <tr>
@@ -506,48 +523,44 @@
                         <tbody>
                         <tr>
                             <td>입고가</td>
-                            <td>200</td>
-                            <td>400</td>
-                            <td>400</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>400</td>
-                            <td>400</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>400</td>
-                            <td>200</td>
+                            <c:forEach var="list" items="${monthList}">
+                                <c:choose>
+                                    <c:when test="${list.totalInput == 0}">
+                                        <td>0</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td><fmt:formatNumber value="${list.totalInput / 10000}" type="number" maxFractionDigits="0" /></td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </tr>
                         <tr>
                             <td>판매가</td>
-                            <td>600</td>
-                            <td>600</td>
-                            <td>600</td>
-                            <td>600</td>
-                            <td>600</td>
-                            <td>800</td>
-                            <td>600</td>
-                            <td>800</td>
-                            <td>600</td>
-                            <td>600</td>
-                            <td>800</td>
-                            <td>800</td>
+                            <c:forEach var="list" items="${monthList}">
+                                <c:choose>
+                                    <c:when test="${list.totalSale == 0}">
+                                        <td>0</td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td><fmt:formatNumber value="${list.totalSale / 10000}" type="number" maxFractionDigits="0" /></td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </tr>
                         <tr>
                             <td>마진</td>
-                            <td>400</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>200</td>
-                            <td>400</td>
-                            <td>400</td>
-                            <td>200</td>
-                            <td>600</td>
-                            <td>400</td>
-                            <td>400</td>
-                            <td>400</td>
-                            <td>600</td>
+                            <c:forEach var="list" items="${monthList}">
+                                <c:choose>
+                                    <c:when test="${list.totalSale != null && list.totalInput != null && list.totalSale != 0 && list.totalInput != 0}">
+                                        <td>
+                                            <fmt:formatNumber value="${(list.totalSale - list.totalInput) / 10000}" type="number" maxFractionDigits="0" />
+                                        </td>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <td>0</td>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
                         </tr>
                         </tbody>
                     </table>
@@ -640,8 +653,18 @@
 
 <script>
     const labels = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
-    const incomingData = [200, 400, 400, 200, 200, 400, 400, 200, 200, 200, 400, 200];
-    const salesData = [600, 600, 600, 600, 600, 800, 600, 800, 600, 600, 800, 800];
+    const incomingData = [
+        <c:forEach var="item" items="${monthList}" varStatus="loop">
+        ${item.totalInput / 10000}<c:if test="${!loop.last}">, </c:if>
+        </c:forEach>
+    ];
+
+    const salesData = [
+        <c:forEach var="item" items="${monthList}" varStatus="loop">
+        ${item.totalSale / 10000}<c:if test="${!loop.last}">, </c:if>
+        </c:forEach>
+    ];
+
     const ctx = document.getElementById('barChart').getContext('2d');
 
     new Chart(ctx, {
@@ -695,9 +718,10 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    min: 0,
-                    max: 1000,
                     ticks: {
+                        callback: function(value) {
+                            return value + '만';
+                        },
                         stepSize: 200
                     },
                 },

@@ -74,7 +74,7 @@
         /*max-height: 1080px;*/
         max-height: 953px;
         display: flex;
-        border: purple solid 5px;
+        /*border: purple solid 5px;*/
       }
       #outer{
 
