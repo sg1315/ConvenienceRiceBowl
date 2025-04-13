@@ -120,7 +120,7 @@ public class SpotController {
 
         int listCount = spotService.ProductListCount();
 
-        PageInfo pi = new PageInfo(listCount,cpage, 10,10);
+        PageInfo pi = new PageInfo(listCount, cpage, 10,10);
         ArrayList<Product> list = spotService.spotSelectAllProduct(pi);
 
         model.addAttribute("list",list);
@@ -149,6 +149,8 @@ public class SpotController {
 
         model.addAttribute("list",list);
         model.addAttribute("pi", pi);
+        model.addAttribute("condition", condition);
+        model.addAttribute("keyword", keyword);
         return "spot/spotProduct";
     }
 
@@ -641,12 +643,16 @@ public class SpotController {
 
         List<Circulation> result = spotService.selectSalesMonthWithPaging(storeNo, startDate, endDate, (cpage - 1) * 10, 10);
 
+
+
         int listCount = spotService.countSalesByMonth(storeNo, startDate, endDate);
 
         // 페이징 처리
         int boardLimit = 10;
         int pageLimit = 10;
         PageInfo pi = new PageInfo(listCount, cpage, pageLimit, boardLimit);
+
+
 
 
         model.addAttribute("pi", pi);

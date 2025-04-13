@@ -341,7 +341,7 @@
         <button type="button"
                 class="btn btn-outline-secondary
                  <c:if test='${pi.currentPage == i}'>active</c:if>"
-                onclick="location.href='spotSearchForm?&inputcheck=${inputcheck}cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
+                onclick="location.href='spotSearchForm?&inputcheck=${inputcheck}&cpage=${i}&condition=${param.condition}&keyword=${param.keyword}'">
                 ${i}
         </button>
     </c:forEach>

@@ -329,10 +329,12 @@ function addList(this_tb) {
     success: function(response) {
       alert("전송 성공!");
       // 필요 시 리다이렉트 or 초기화
+      location.reload();
     },
     error: function(xhr, status, error) {
       console.error("전송 실패", error);
       alert("전송 실패!");
+      location.reload();
     }
   });
 }
