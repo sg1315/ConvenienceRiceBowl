@@ -242,7 +242,7 @@ public class SpotController {
         return "spot/spotInventory";
     }
 
-    @PostMapping("/searchInventory")
+    @RequestMapping("/searchInventory")
     public String searchInventory(
             @RequestParam(defaultValue = "1") int cpage,
             @RequestParam String condition,
@@ -258,7 +258,6 @@ public class SpotController {
         int count = spotService.searchInventoryCount(storeNo, condition, keyword, check);
         PageInfo pi = new PageInfo(count, cpage, 10, 10);
         ArrayList<Inventory> list = spotService.searchInventory(pi, storeNo, condition, keyword, check);
-        System.out.println("수"+count);
         model.addAttribute("list", list);
         model.addAttribute("pi", pi);
         return "spot/spotInventory";
