@@ -296,17 +296,17 @@
     </div>
     <div id="main-pageing">
       <c:if test="${pi.startPage > 1}">
-        <input type="button" onclick="location.href='/search_output?cpage=${pi.startPage - 1}&since=${param.since}&until=${param.until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">
+        <input type="button" onclick="location.href='/search_output?cpage=${pi.startPage - 1}&since=${since}&until=${until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">
           <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
         </input>
       </c:if>
       <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
         <button type="button"
                 class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                onclick="location.href='/search_output?cpage=${i}&since=${param.since}&until=${param.until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">${i}</button>
+                onclick="location.href='/search_output?cpage=${i}&since=${since}&until=${until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">${i}</button>
       </c:forEach>
       <c:if test="${pi.endPage < pi.maxPage}">
-        <input type="button" onclick="location.href='/search_output?cpage=${pi.endPage + 1}&since=${param.since}&until=${param.until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">
+        <input type="button" onclick="location.href='/search_output?cpage=${pi.endPage + 1}&since=${since}&until=${until}&OptionStatus=${param.OptionStatus}&searchOutput=${param.searchOutput}&keyword=${keyword}'">
           <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
         </input>
       </c:if>
