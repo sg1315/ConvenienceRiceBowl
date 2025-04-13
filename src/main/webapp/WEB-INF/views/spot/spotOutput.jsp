@@ -110,14 +110,9 @@
       width: 100%;
       height: 100%;
       border-radius: 20px;
-      padding: 50px;
+      padding: 20px 50px 50px;
     }
-
-    @media screen and (max-width: 1800px) {
-      #main-in{
-        overflow-x: auto;
-      }
-    }
+    
     #main-pageing{
       padding-top: 10px;
       display: flex;
