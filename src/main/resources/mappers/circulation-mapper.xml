@@ -748,7 +748,7 @@
         C.CATEGORY_NAME,
         P.PRODUCT_NAME,
         CI.CIRCULATION_AMOUNT,
-        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'999,999,999') AS PRICE,
         CI.STATUS
         FROM CIRCULATION CI
         JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
@@ -764,7 +764,7 @@
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE STORE_NO =#{storeNo}
         <choose>
-            <when test="status > 0 ">
+            <when test="status == 0 ">
                 AND CI.STATUS IN (3, 4)
             </when>
             <when test="status == 3 ">
@@ -800,14 +800,14 @@
         C.CATEGORY_NAME,
         P.PRODUCT_NAME,
         CI.CIRCULATION_AMOUNT,
-        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'L999,999,999') AS PRICE,
+        TO_CHAR(CI.SALE_PRICE * CI.CIRCULATION_AMOUNT,'999,999,999') AS PRICE,
         CI.STATUS
         FROM CIRCULATION CI
         JOIN PRODUCT P ON CI.PRODUCT_NO = P.PRODUCT_NO
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE CI.STORE_NO = #{storeNo}
         <choose>
-            <when test="status =='' || status == null">
+            <when test="status == 0">
                 AND CI.STATUS IN (3, 4)
             </when>
             <when test="status == 3 ">
