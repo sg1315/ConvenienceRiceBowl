@@ -545,8 +545,8 @@
         JOIN STORE s ON c.STORE_NO = s.STORE_NO
         JOIN PRODUCT p ON c.PRODUCT_NO = p.PRODUCT_NO
         JOIN CATEGORY ca ON p.CATEGORY_NO = ca.CATEGORY_NO
-        WHERE c.STORE_NO = '1'
-        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = '2025-04-13'
+        WHERE c.STORE_NO = #{storeNo}
+        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
         AND c.STATUS IN (2,3)
         GROUP BY
         c.STORE_NO,
