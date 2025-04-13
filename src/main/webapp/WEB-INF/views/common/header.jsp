@@ -328,6 +328,10 @@
     </style>
   </head>
   <body>
+  <%
+    // 세션에서 로그인 유저 정보 가져오기
+    Member loginUser = (Member) session.getAttribute("loginMember");
+  %>
   <div id="outer">
     <nav>
       <div id="pos">
@@ -338,16 +342,10 @@
       </div>
       <div id="mypage">
         <div>
-          OO지점 사장님
+          <p><%=loginUser.getStoreName()%> / <%=loginUser.getMemberName()%></p>
         </div>
         <div>
-  <%
-    // 세션에서 로그인 유저 정보 가져오기
-    Member loginUser = (Member) session.getAttribute("loginMember");
-  %>
-
-
-  <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
+          <button id="myinfo" data-bs-toggle="modal" data-bs-target="#staticHeader">
             <img src="/resources/menubar_icons/개인정보수정.png">
           </button>
           <button id="logout"><img onclick="location.href='/logout.me'" src="/resources/menubar_icons/로그아웃.png"></button>
