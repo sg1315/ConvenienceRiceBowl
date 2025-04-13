@@ -621,14 +621,15 @@
     <!-- 페이징을 위한 카운트 쿼리 -->
     <select id="countSalesByMonth" resultType="int">
         SELECT COUNT(*) FROM (
-        SELECT CIRCULATION_DATE
+        SELECT TRUNC(CIRCULATION_DATE)
         FROM CIRCULATION
         WHERE STORE_NO = #{storeNo}
         AND CIRCULATION_DATE &gt;= #{startDate}
-        AND CIRCULATION_DATE &lt;= #{endDate}
-        GROUP BY CIRCULATION_DATE
+        AND CIRCULATION_DATE &lt; #{endDate}
+        GROUP BY TRUNC(CIRCULATION_DATE)
         )
     </select>
+
 
     <!-- 페이징을 위한 매출 조회 쿼리 -->
     <select id="selectSalesMonthWithPaging" resultMap="circulationSummaryResult">

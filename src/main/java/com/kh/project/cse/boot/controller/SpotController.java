@@ -638,7 +638,7 @@ public class SpotController {
 
         int storeNo = loginMember.getStoreNo();
         LocalDate startDate = LocalDate.parse(startMonth + "-01");
-        LocalDate endDate = YearMonth.parse(endMonth).plusMonths(1).atDay(1); // 다음 달 1일
+        LocalDate endDate = YearMonth.parse(endMonth).atEndOfMonth();
 
         List<Circulation> result = spotService.selectSalesMonthWithPaging(storeNo, startDate, endDate, (cpage - 1) * 10, 10);
 
