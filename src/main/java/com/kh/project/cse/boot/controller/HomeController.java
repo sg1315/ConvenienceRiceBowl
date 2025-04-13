@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String home(HttpSession session, Model model) {
-        Member member = (Member)session.getAttribute("loginMember");
-        int storeNo = member.getStoreNo();
-        model.addAttribute("storeNo", storeNo);
-        model.addAttribute("member", member);
+    public String home() {
 
         return "redirect:/loginForm";
     }
