@@ -312,7 +312,6 @@
           <th class="col-2">날짜</th>
           <th class="col-2">총입고가</th>
           <th class="col-2">총판매가</th>
-          <th class="col-2">총수량</th>
           <th class="col-2">마진</th>
         </tr>
         </thead>
@@ -323,8 +322,7 @@
             <td><fmt:formatDate value="${sales.circulationDate}" pattern="yyyy-MM-dd" /></td>
             <td><fmt:formatNumber value="${sales.inputPrice}" type="number" /></td>
             <td class="sumPrice"><fmt:formatNumber value="${sales.salePrice}" type="number" /></td>
-            <td class="countAmount"><fmt:formatNumber value="${sales.circulationAmount}" type="number" /></td>
-            <td class="margin"><fmt:formatNumber value="${sales.inputPrice - sales.salePrice}" type="number" /></td>
+            <td class="margin"><fmt:formatNumber value="${sales.salePrice - sales.inputPrice}" type="number" /></td>
           </tr>
         </c:forEach>
         </tbody>
@@ -385,7 +383,7 @@
             <th class="col-2">카테고리</th>
             <th class="col-4">상품명</th>
             <th class="col-1">수량</th>
-            <th class="col-2">판매가</th>
+            <th class="col-2">금액</th>
             <th class="col-1">구분</th>
           </tr>
           </thead>
@@ -433,7 +431,7 @@
       row.addEventListener("click", function () {
         const modalTbody = document.getElementById("modal-tbody");
         const bodyTotal = document.getElementById("body-total");
-        const sumPriceText = row.querySelector(".sumPrice")?.innerText || "0";
+        const sumPriceText = row.querySelector(".margin")?.innerText || "0";
         const sumPrice = parseInt(sumPriceText.replace(/,/g, ""), 10);
 
         modalTbody.innerHTML = "";
@@ -457,12 +455,17 @@
 
                     countAmount += item.circulationAmount;
 
+                    const priceText =
+                            item.status === 2 ? item.inputPrice :
+                            item.status === 3 ? item.salePrice :
+                            "-";
+
                     tr.innerHTML =
                             "<td>" + item.productNo + "</td>" +
                             "<td>" + item.categoryName + "</td>" +
                             "<td>" + item.productName + "</td>" +
-                            "<td>" + item.circulationAmount + "</td>" +
-                            "<td>" + item.salePrice + "</td>" +
+                            "<td>" + item.circulationAmount + "</td>"+
+                            "<td>" + priceText + "</td>" +
                             "<td>" + statusText + "</td>";
                     modalTbody.appendChild(tr);
                   });

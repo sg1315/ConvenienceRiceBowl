@@ -534,8 +534,8 @@
         c.CIRCULATION_NO,
         c.STORE_NO,
         c.PRODUCT_NO,
-        c.INPUT_PRICE,
-        c.SALE_PRICE,
+        (CASE WHEN c.STATUS = 2 THEN c.INPUT_PRICE ELSE NULL END) AS INPUT_PRICE,
+        (CASE WHEN c.STATUS = 3 THEN c.SALE_PRICE ELSE 0 END) AS SALE_PRICE,
         c.CIRCULATION_AMOUNT,
         TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') AS CIRCULATION_DATE,
         c.STATUS,
@@ -548,6 +548,9 @@
         JOIN CATEGORY ca ON p.CATEGORY_NO = ca.CATEGORY_NO
         WHERE c.STORE_NO = #{storeNo}
         AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
+        AND c.STATUS IN (2, 3)
+        ORDER BY c.STATUS, c.PRODUCT_NO
+
     </select>
 
     <!-- 매출집게 - 년도-->
