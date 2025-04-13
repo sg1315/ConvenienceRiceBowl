@@ -1,3 +1,4 @@
+<%@ page import="com.kh.project.cse.boot.domain.vo.Member" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
@@ -188,6 +189,10 @@
     </style>
   </head>
   <body>
+  <%
+    // 세션에서 로그인 유저 정보 가져오기
+    Member loginUser = (Member) session.getAttribute("loginMember");
+  %>
   <div id="outer">
     <nav>
       <div id="pos">
@@ -198,7 +203,7 @@
       </div>
       <div id="mypage">
         <div>
-          본사
+          <p><%=loginUser.getStoreName()%></p>
         </div>
         <div>
           <button type="button" id="logoutBtn" onclick="location.href='/logout.me'">로그아웃</button>
