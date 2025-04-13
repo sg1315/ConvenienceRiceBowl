@@ -162,7 +162,7 @@
     </div>
     <div id="main">
         <div id="main-in">
-            <table class="table table-hover table-sm" id="table1">
+            <table class="table table-hover" id="table1">
                 <colgroup>
                     <col style="width: 10%;">
                     <col style="width: 10%;">
