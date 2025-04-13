@@ -476,7 +476,7 @@
                             "<td>" + item.categoryName + "</td>" +
                             "<td>" + item.productName + "</td>" +
                             "<td>" + item.circulationAmount + "</td>"+
-                            "<td>" + priceText + "</td>" +
+                            "<td>" + priceText.toLocaleString() + "</td>" +
                             "<td>" + statusText + "</td>";
                     modalTbody.appendChild(tr);
                   });
