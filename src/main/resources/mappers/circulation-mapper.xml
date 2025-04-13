@@ -542,20 +542,12 @@
         s.STORE_NAME,
         p.PRODUCT_NAME,
         ca.CATEGORY_NAME
-        FROM (
-        SELECT *
-        FROM (
-        SELECT c.*,
-        ROW_NUMBER() OVER (PARTITION BY c.PRODUCT_NO ORDER BY c.CIRCULATION_DATE DESC) AS rn
         FROM CIRCULATION c
-        WHERE c.STORE_NO = #{storeNo}
-        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
-        )
-        WHERE rn = 1
-        ) c
         JOIN STORE s ON c.STORE_NO = s.STORE_NO
         JOIN PRODUCT p ON c.PRODUCT_NO = p.PRODUCT_NO
         JOIN CATEGORY ca ON p.CATEGORY_NO = ca.CATEGORY_NO
+        WHERE c.STORE_NO = #{storeNo}
+        AND TO_CHAR(c.CIRCULATION_DATE, 'YYYY-MM-DD') = #{date}
     </select>
 
     <!-- 매출집게 - 년도-->
@@ -629,8 +621,18 @@
     <select id="selectSalesMonthWithPaging" resultMap="circulationSummaryResult">
         SELECT
         TRUNC(CIRCULATION_DATE) AS CIRCULATION_DATE,
-        SUM(INPUT_PRICE * CIRCULATION_AMOUNT) AS INPUT_PRICE,
-        SUM(SALE_PRICE * CIRCULATION_AMOUNT) AS SALE_PRICE,
+        SUM(
+        CASE
+        WHEN STATUS = 2 THEN (INPUT_PRICE * CIRCULATION_AMOUNT)
+        ELSE 0
+        END
+        ) AS INPUT_PRICE,
+        SUM(
+        CASE
+        WHEN STATUS = 3 THEN (SALE_PRICE * CIRCULATION_AMOUNT)
+        ELSE 0
+        END
+        ) AS SALE_PRICE,
         SUM(CIRCULATION_AMOUNT) AS CIRCULATION_AMOUNT
         FROM CIRCULATION
         WHERE STORE_NO = #{storeNo}
