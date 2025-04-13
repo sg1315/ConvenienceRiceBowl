@@ -216,8 +216,8 @@
   <div id="top-right1">
     <div id="top-right1-left">
       <div id="top-right1-top">
-          <input type="submit" class="search-input-submit" name="lastMonth" value="저번 달">
-          <input type="submit"  class="search-input-submit" name="today"  value="최근">
+          <input type="button" class="search-input-submit" onclick="location.href='/search_output?lastMonth=lastMonth'" value="저번 달">
+          <input type="button" class="search-input-submit" onclick="location.href='/search_output?today=today'"  value="최근">
 
           <input type="date" class="date-input" id="since" name="since" value="${since}">
           ~
@@ -296,17 +296,17 @@
     </div>
     <div id="main-pageing">
       <c:if test="${pi.startPage > 1}">
-        <input type="submit" name="cpage" value="${pi.startPage - 1}">
+        <input type="button" onclick="location.href='/search_output?cpage=${pi.startPage - 1}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="이전">
         </input>
       </c:if>
       <c:forEach var="i" begin="${pi.startPage}" end="${pi.endPage}" step="1">
-        <button type="submit"
+        <button type="button"
                 class="btn btn-outline-secondary <c:if test='${pi.currentPage == i}'>active</c:if>'"
-                name="cpage" value="${i}">${i}</button>
+                onclick="location.href='/search_output?cpage=${i}">${i}</button>
       </c:forEach>
       <c:if test="${pi.endPage < pi.maxPage}">
-        <input type="submit" name="cpage" value="${pi.endPage + 1}">
+        <input type="button" onclick="location.href='/search_output?cpage=${pi.endPage + 1}">
           <img src="/resources/common/공통_페이징바화살표.png" alt="다음">
         </input>
       </c:if>
