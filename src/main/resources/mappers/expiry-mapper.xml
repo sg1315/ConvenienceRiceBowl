@@ -17,6 +17,7 @@
         SELECT NVL(SUM(COUNT(PRODUCT_NO)),0) FROM INVENTORY
         WHERE INVENTORY_COUNT > 0
         AND STORE_NO =#{storeNo}
+        AND EXPIRATION_DATE IS NOT NULL
         GROUP BY EXPIRATION_DATE
     </select>
     <select id="selectExpiryList" resultMap="ExpiryResult">
@@ -43,6 +44,7 @@
             ) T ON I.INVENTORY_NO = T.INVENTORY_NO
         WHERE I.INVENTORY_COUNT > 0
         AND I.STORE_NO =#{storeNo}
+        AND I.EXPIRATION_DATE IS NOT NULL
         GROUP BY
             P.PRODUCT_NO,
             P.PRODUCT_NAME,
@@ -57,6 +59,7 @@
         JOIN CATEGORY C ON P.CATEGORY_NO = C.CATEGORY_NO
         WHERE I.INVENTORY_COUNT > 0
         AND I.STORE_NO = #{storeNo}
+        AND I.EXPIRATION_DATE IS NOT NULL
         <choose>
             <when test="searchExpiry == 'productNo'">
                 AND P.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
@@ -94,6 +97,7 @@
         ) T ON I.INVENTORY_NO = T.INVENTORY_NO
         WHERE I.INVENTORY_COUNT > 0
         AND I.STORE_NO =#{storeNo}
+        AND I.EXPIRATION_DATE IS NOT NULL
         <choose>
             <when test="searchExpiry == 'productNo'">
                 AND P.PRODUCT_NO LIKE '%'|| #{keyword} ||'%'
