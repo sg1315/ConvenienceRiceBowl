@@ -371,7 +371,7 @@ contentType="text/html;charset=UTF-8" language="java" %>
                                 setTimeout(() => {
                                     alert("퇴근 처리 완료! 자동 로그아웃됩니다.");
                                     window.location.href = '/logout.me';
-                                }, 5000);
+                                }, 3000);
                             }
                             refreshAttendanceList();
                         } else {

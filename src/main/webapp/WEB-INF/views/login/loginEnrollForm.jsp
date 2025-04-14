@@ -150,11 +150,11 @@
                 </div>
                 <div>
                     <div><p>비밀번호</p></div>
-                    <div class="flexInput-2"><input type="password" id="memberPwd" name="memberPwd" oninput="resetPasswordCheck()" required></div>
+                    <div class="flexInput-2"><input type="password" id="memberPwd" name="memberPwd" pattern="\[A-Za-z0-9]{12}" oninput="resetPasswordCheck()" required placeholder="12자리 내로 입력하시오"></div>
                     <div></div>
                     <div><p>주민번호</p></div>
                     <div id="ssnInput">
-                        <input type="text" name="residentNo" pattern="\d{13}" required>
+                        <input type="text" name="residentNo" pattern="\d{13}" required placeholder="'-'없이 입력해주세요">
                     </div>
                 </div>
                 <div>
@@ -163,7 +163,7 @@
                     <div></div>
                     <div><p>핸드폰</p></div>
                     <div id="phoneInput">
-                        <input type="text" name="phone" pattern="\d{10,11}" required>
+                        <input type="text" name="phone" pattern="\d{10,11}" required placeholder="'-'없이 입력해주세요">
                     </div>
                 </div>
                 <div id="checkResult"></div>

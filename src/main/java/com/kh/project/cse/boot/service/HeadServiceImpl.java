@@ -229,7 +229,7 @@ public class HeadServiceImpl implements HeadService {
     @Async
     public void updateLaterToStatus7(String setNo) {
         try {
-            Thread.sleep(20000); // 20초 대기
+            Thread.sleep(10000); // 10초 대기
             circulationMapper.updateheadorder(setNo, 7);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
