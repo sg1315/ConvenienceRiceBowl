@@ -418,7 +418,6 @@ public String deleteProduct(@ModelAttribute Product product, HttpSession session
 
     //개인정보수정
     @PostMapping("/updateMemberInfo")
-    @ResponseBody
     public String updateMember(@RequestParam("currentPwd") String currentPwd, @RequestParam("newPwd") String newPwd,
                                Member member, HttpSession session, Model model) {
 
@@ -445,9 +444,11 @@ public String deleteProduct(@ModelAttribute Product product, HttpSession session
         if (result > 0) {
             Member updatedMember = memberService.selectMemberById(member.getMemberId());
             session.setAttribute("loginMember", updatedMember);
-            return "업데이트 성공";
+            session.setAttribute("alertMsg", "수정이 완료되었습니다. 자동로그아웃됩니다.");
+            session.removeAttribute("loginMember");
+            return "redirect:/loginForm";
         } else {
-            return "업데이트 실패";
+            return "redirect:/spot/spotDashboard";
         }
     }
 
