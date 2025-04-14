@@ -467,7 +467,7 @@
                     countAmount += item.circulationAmount;
 
                     const priceText =
-                            item.status === 2 ? inputsal :
+                            item.status === 2 ? '-'+inputsal :
                             item.status === 3 ? outsal :
                             "-";
 
