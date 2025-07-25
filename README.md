@@ -56,6 +56,7 @@ jsp와 Spring Boot를 활용한 편의점 ERP시스템입니다.
 ## 팀원 소개
 
 | 이름 | 포지션 | Contact |
+| ------ | ------ | --------------- |
 | 김승기 | 팀장 | tropicana1235@gmail.com |
 | 이인혜 | 일정 관리자 | ashes999@naver.com |
 | 김유하 | 형상 관리자 | extramin93@gmail.com |
