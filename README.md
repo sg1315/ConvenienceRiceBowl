@@ -33,6 +33,10 @@ jsp와 Spring Boot를 활용한 편의점 ERP시스템입니다.
 - MyBatis
 
 ## 설치 및 실행 방법(IntelliJ IDEA)
+```bash
+git clone https://github.com/sg1315/ConvenienceRiceBowl.git
+cd ConvenienceRiceBowl
+
 1. IntelliJ IDEA에서 `File > Open`으로 프로젝트 루트 폴더를 엽니다.
 2. Maven 의존성이 자동으로 다운로드됩니다. (안 될 경우 우측 Maven 패널에서 Reload)
 3. `src/main/resources/application.properties`에서 DB 등 환경설정 확인 및 수정
