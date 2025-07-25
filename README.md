@@ -32,7 +32,7 @@ jsp와 Spring Boot를 활용한 편의점 ERP시스템입니다.
 - Spring Boot
 - MyBatis
 
-## 설치 및 실행 방법(IntelliJ IDEA)
+## 설치 및 실행 방법
 ```bash
 git clone https://github.com/sg1315/ConvenienceRiceBowl.git
 cd ConvenienceRiceBowl
@@ -42,6 +42,7 @@ cd ConvenienceRiceBowl
 3. `src/main/resources/application.properties`에서 DB 등 환경설정 확인 및 수정
 4. `BootApplication.java` 파일을 열고, Run 버튼(▶)을 눌러 실행
 5. 브라우저에서 [http://localhost:8111] 접속
+```
 
 
 ## 주요 기능
@@ -64,3 +65,4 @@ cd ConvenienceRiceBowl
 | 김유하 | 형상 관리자 | extramin93@gmail.com |
 | 윤택봉 | 이슈 관리자 | mohae@kakao.com |
 | 최성진 | DB관리 | skskpoicxz@gmail.com |
+
