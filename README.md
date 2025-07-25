@@ -35,22 +35,12 @@ jsp와 Spring Boot를 활용한 편의점 ERP시스템입니다.
 - Spring Boot
 - MyBatis
 
-## 설치 및 실행 방법
-```bash
-git clone https://github.com/sg1315/ConvenienceRiceBowl.git
-cd mytodoapp
-
-# 프론트
-cd frontend
-npm install
-npm start
-
-# 백엔드
+## 설치 및 실행 방법(IntelliJ IDEA)
 1. IntelliJ IDEA에서 `File > Open`으로 프로젝트 루트 폴더를 엽니다.
 2. Maven 의존성이 자동으로 다운로드됩니다. (안 될 경우 우측 Maven 패널에서 Reload)
 3. `src/main/resources/application.properties`에서 DB 등 환경설정 확인 및 수정
 4. `BootApplication.java` 파일을 열고, Run 버튼(▶)을 눌러 실행
-5. 브라우저에서 [http://localhost:8111](http://localhost:8111) 접속
+5. 브라우저에서 [http://localhost:8111] 접속
 
 ## 주요 기능
 - 회원가입 및 로그인
