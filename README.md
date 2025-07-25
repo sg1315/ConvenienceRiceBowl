@@ -43,6 +43,7 @@ cd ConvenienceRiceBowl
 4. `BootApplication.java` 파일을 열고, Run 버튼(▶)을 눌러 실행
 5. 브라우저에서 [http://localhost:8111] 접속
 
+
 ## 주요 기능
 - 회원가입 및 로그인
 - 재고관리(해당 지점에서의 발주, 입고, 출고)
